@@ -24,7 +24,7 @@
  */
 package test.unit.gov.nist.javax.sip.parser;
 
-import gov.nist.javax.sip.parser.*;
+import gov.nist.javax.sip.parser.AllowEventsParser;
 
 /**
  *

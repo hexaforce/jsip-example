@@ -26,9 +26,9 @@ import javax.sip.message.MessageFactory;
 import javax.sip.message.Request;
 import javax.sip.message.Response;
 
-import junit.framework.TestCase;
-
 import org.apache.log4j.Logger;
+
+import junit.framework.TestCase;
 
 /**
  * This class is a UAC template. Shootist is the guy that shoots and shootme is

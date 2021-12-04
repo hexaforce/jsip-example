@@ -1,10 +1,7 @@
 package test.unit.gov.nist.javax.sip.stack;
 
-import gov.nist.javax.sip.DialogExt;
-import gov.nist.javax.sip.SipProviderExt;
-import gov.nist.javax.sip.stack.NioMessageProcessorFactory;
-
 import java.util.ArrayList;
+import java.util.List;
 import java.util.Properties;
 
 import javax.sip.ClientTransaction;
@@ -45,8 +42,10 @@ import org.apache.log4j.Level;
 import org.apache.log4j.Logger;
 import org.apache.log4j.PatternLayout;
 
-import test.unit.gov.nist.javax.sip.stack.tls.TlsTest;
+import gov.nist.javax.sip.DialogExt;
+import gov.nist.javax.sip.stack.NioMessageProcessorFactory;
 import junit.framework.TestCase;
+import test.unit.gov.nist.javax.sip.stack.tls.TlsTest;
 
 /**
  * Testing complete websocket scenario browser to server HTTP-Upgrade->INVITE->ACK->MESSAGE->BYE
@@ -445,7 +444,7 @@ public class WebsocketSelfTest extends TestCase {
         		requestURI.setHeader("Host", "dev.nist.gov");
         		requestURI.setHeader("Location", "/sip");
 
-                ArrayList viaHeaders = new ArrayList();
+                List<ViaHeader> viaHeaders = new ArrayList<>();
                 String ipAddress = udpListeningPoint.getIPAddress();
                 ViaHeader viaHeader = headerFactory.createViaHeader(ipAddress,
                         sipProvider.getListeningPoint(transport).getPort(),

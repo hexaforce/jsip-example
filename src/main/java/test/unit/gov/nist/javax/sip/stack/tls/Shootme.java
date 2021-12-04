@@ -1,15 +1,35 @@
     package test.unit.gov.nist.javax.sip.stack.tls;
+import java.security.cert.Certificate;
+import java.util.Properties;
+
+import javax.sip.ClientTransaction;
+import javax.sip.Dialog;
+import javax.sip.DialogTerminatedEvent;
+import javax.sip.IOExceptionEvent;
+import javax.sip.ListeningPoint;
+import javax.sip.PeerUnavailableException;
+import javax.sip.RequestEvent;
+import javax.sip.ResponseEvent;
+import javax.sip.ServerTransaction;
+import javax.sip.SipFactory;
+import javax.sip.SipListener;
+import javax.sip.SipProvider;
+import javax.sip.SipStack;
+import javax.sip.Transaction;
+import javax.sip.TransactionTerminatedEvent;
+import javax.sip.address.Address;
+import javax.sip.address.AddressFactory;
+import javax.sip.header.CSeqHeader;
+import javax.sip.header.ContactHeader;
+import javax.sip.header.ContentTypeHeader;
+import javax.sip.header.HeaderFactory;
+import javax.sip.header.ToHeader;
+import javax.sip.message.MessageFactory;
+import javax.sip.message.Request;
+import javax.sip.message.Response;
+
 import gov.nist.javax.sip.TransactionExt;
 import gov.nist.javax.sip.stack.NioMessageProcessorFactory;
-
-import javax.sip.*;
-import javax.sip.address.*;
-import javax.sip.header.*;
-import javax.sip.message.*;
-
-import java.net.Socket;
-import java.security.cert.Certificate;
-import java.util.*;
 
 /**
  * This class is a UAC template. Shootist is the guy that shoots and shootme

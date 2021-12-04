@@ -1,9 +1,8 @@
 package test.unit.gov.nist.javax.sip.stack;
 
-import gov.nist.javax.sip.stack.NioMessageProcessorFactory;
-
 import java.text.ParseException;
 import java.util.ArrayList;
+import java.util.List;
 import java.util.ListIterator;
 import java.util.Properties;
 import java.util.Timer;
@@ -46,8 +45,8 @@ import javax.sip.message.MessageFactory;
 import javax.sip.message.Request;
 import javax.sip.message.Response;
 
+import gov.nist.javax.sip.stack.NioMessageProcessorFactory;
 import junit.framework.TestCase;
-
 public class DialogIdentityTest extends TestCase {
     private static AddressFactory addressFactory;
 
@@ -657,7 +656,7 @@ public class DialogIdentityTest extends TestCase {
 
                 // Create ViaHeaders
 
-                ArrayList viaHeaders = new ArrayList();
+                List<ViaHeader> viaHeaders = new ArrayList<>();
                 String ipAddress = udpListeningPoint.getIPAddress();
                 ViaHeader viaHeader = headerFactory.createViaHeader(ipAddress,
                         sipProvider.getListeningPoint(transport).getPort(),

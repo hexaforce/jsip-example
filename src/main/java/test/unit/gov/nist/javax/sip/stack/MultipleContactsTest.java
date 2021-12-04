@@ -2,9 +2,6 @@ package test.unit.gov.nist.javax.sip.stack;
 
 
 
-import gov.nist.javax.sip.ListeningPointImpl;
-import gov.nist.javax.sip.stack.NioMessageProcessorFactory;
-
 import java.util.Arrays;
 import java.util.List;
 import java.util.ListIterator;
@@ -35,9 +32,10 @@ import javax.sip.header.ToHeader;
 import javax.sip.message.MessageFactory;
 import javax.sip.message.Request;
 
-import test.tck.msgflow.callflows.ScenarioHarness;
-
+import gov.nist.javax.sip.ListeningPointImpl;
+import gov.nist.javax.sip.stack.NioMessageProcessorFactory;
 import junit.framework.Assert;
+import test.tck.msgflow.callflows.ScenarioHarness;
 
 public class MultipleContactsTest extends ScenarioHarness {
 

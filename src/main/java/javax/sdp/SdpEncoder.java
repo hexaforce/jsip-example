@@ -6,7 +6,9 @@
 
 package javax.sdp;
 
-import java.io.*;
+import java.io.IOException;
+import java.io.OutputStream;
+import java.io.UnsupportedEncodingException;
 /** A SdpEncoder serializes SessionDescription objects in a customizable manner.
  * @author deruelle
  * @version 1.0

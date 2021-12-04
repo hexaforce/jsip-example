@@ -1,7 +1,8 @@
 package test.tck.factory;
 
-import javax.sip.header.*;
-import test.tck.*;
+import javax.sip.header.Header;
+
+import test.tck.TestHarness;
 
 public class FactoryTestHarness extends TestHarness {
 

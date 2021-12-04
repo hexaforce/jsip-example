@@ -22,8 +22,6 @@
  */
 package test.unit.gov.nist.javax.sip.stack.no491;
 
-import gov.nist.javax.sip.SipStackImpl;
-
 import java.util.EventObject;
 
 import javax.sip.DialogTerminatedEvent;
@@ -37,6 +35,7 @@ import javax.sip.TransactionTerminatedEvent;
 
 import org.apache.log4j.Logger;
 
+import gov.nist.javax.sip.SipStackImpl;
 import test.tck.msgflow.callflows.ScenarioHarness;
 
 /**

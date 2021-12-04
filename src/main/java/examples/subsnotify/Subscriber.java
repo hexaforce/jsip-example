@@ -215,7 +215,7 @@ public class Subscriber implements SipListener {
 
             // Create ViaHeaders
 
-            ArrayList viaHeaders = new ArrayList();
+            List<ViaHeader> viaHeaders = new ArrayList<>();
             int port = sipProvider.getListeningPoint(transport).getPort();
             ViaHeader viaHeader = headerFactory.createViaHeader("127.0.0.1",
                     port, transport, null);

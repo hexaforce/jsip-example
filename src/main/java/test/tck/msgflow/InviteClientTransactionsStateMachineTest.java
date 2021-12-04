@@ -21,7 +21,11 @@ package test.tck.msgflow;
 
 import java.util.TooManyListenersException;
 
-import javax.sip.*;
+import javax.sip.ClientTransaction;
+import javax.sip.RequestEvent;
+import javax.sip.ResponseEvent;
+import javax.sip.SipException;
+import javax.sip.TransactionState;
 import javax.sip.header.ContactHeader;
 import javax.sip.header.ToHeader;
 import javax.sip.message.Request;

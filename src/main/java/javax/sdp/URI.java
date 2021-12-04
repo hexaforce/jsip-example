@@ -6,7 +6,7 @@
 
 package javax.sdp;
 
-import java.net.*;
+import java.net.URL;
 
 /** An URI represents the u= field within a SessionDescription.
  *

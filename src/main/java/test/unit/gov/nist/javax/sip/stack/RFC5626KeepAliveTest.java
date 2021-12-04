@@ -1,22 +1,10 @@
 package test.unit.gov.nist.javax.sip.stack;
 
-import gov.nist.javax.sip.DialogTimeoutEvent;
-import gov.nist.javax.sip.IOExceptionEventExt;
-import gov.nist.javax.sip.IOExceptionEventExt.Reason;
-import gov.nist.javax.sip.ListeningPointExt;
-import gov.nist.javax.sip.ListeningPointImpl;
-import gov.nist.javax.sip.SipListenerExt;
-import gov.nist.javax.sip.SipStackImpl;
-import gov.nist.javax.sip.stack.ConnectionOrientedMessageChannel;
-import gov.nist.javax.sip.stack.ConnectionOrientedMessageProcessor;
-import gov.nist.javax.sip.stack.MessageProcessor;
-import gov.nist.javax.sip.stack.SIPTransactionStack;
-import gov.nist.javax.sip.stack.TCPMessageChannel;
-
 import java.lang.reflect.Field;
 import java.util.ArrayList;
 import java.util.EventObject;
 import java.util.Iterator;
+import java.util.List;
 import java.util.Map;
 import java.util.Timer;
 import java.util.TimerTask;
@@ -49,6 +37,18 @@ import javax.sip.message.Response;
 
 import org.apache.log4j.Logger;
 
+import gov.nist.javax.sip.DialogTimeoutEvent;
+import gov.nist.javax.sip.IOExceptionEventExt;
+import gov.nist.javax.sip.IOExceptionEventExt.Reason;
+import gov.nist.javax.sip.ListeningPointExt;
+import gov.nist.javax.sip.ListeningPointImpl;
+import gov.nist.javax.sip.SipListenerExt;
+import gov.nist.javax.sip.SipStackImpl;
+import gov.nist.javax.sip.stack.ConnectionOrientedMessageChannel;
+import gov.nist.javax.sip.stack.ConnectionOrientedMessageProcessor;
+import gov.nist.javax.sip.stack.MessageProcessor;
+import gov.nist.javax.sip.stack.SIPTransactionStack;
+import gov.nist.javax.sip.stack.TCPMessageChannel;
 import test.tck.msgflow.callflows.ProtocolObjects;
 import test.tck.msgflow.callflows.ScenarioHarness;
 
@@ -464,7 +464,7 @@ public class RFC5626KeepAliveTest extends ScenarioHarness implements SipListener
 
                 // Create ViaHeaders
 
-                ArrayList viaHeaders = new ArrayList();
+                List<ViaHeader> viaHeaders = new ArrayList<>();
                 int port = provider.getListeningPoint(protocolObjects.transport)
                         .getPort();
 

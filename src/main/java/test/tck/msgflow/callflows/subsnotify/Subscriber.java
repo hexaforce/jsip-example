@@ -19,10 +19,43 @@
 */
 package test.tck.msgflow.callflows.subsnotify;
 
-import javax.sip.*;
-import javax.sip.address.*;
-import javax.sip.header.*;
-import javax.sip.message.*;
+import java.util.ArrayList;
+import java.util.HashSet;
+import java.util.List;
+
+import javax.sip.ClientTransaction;
+import javax.sip.Dialog;
+import javax.sip.DialogState;
+import javax.sip.DialogTerminatedEvent;
+import javax.sip.IOExceptionEvent;
+import javax.sip.ListeningPoint;
+import javax.sip.RequestEvent;
+import javax.sip.ResponseEvent;
+import javax.sip.ServerTransaction;
+import javax.sip.SipListener;
+import javax.sip.SipProvider;
+import javax.sip.SipStack;
+import javax.sip.Transaction;
+import javax.sip.TransactionState;
+import javax.sip.TransactionTerminatedEvent;
+import javax.sip.address.Address;
+import javax.sip.address.AddressFactory;
+import javax.sip.address.SipURI;
+import javax.sip.header.CSeqHeader;
+import javax.sip.header.CallIdHeader;
+import javax.sip.header.ContactHeader;
+import javax.sip.header.EventHeader;
+import javax.sip.header.ExpiresHeader;
+import javax.sip.header.FromHeader;
+import javax.sip.header.HeaderFactory;
+import javax.sip.header.MaxForwardsHeader;
+import javax.sip.header.RouteHeader;
+import javax.sip.header.SubscriptionStateHeader;
+import javax.sip.header.ToHeader;
+import javax.sip.header.ViaHeader;
+import javax.sip.message.MessageFactory;
+import javax.sip.message.Request;
+import javax.sip.message.Response;
 
 import org.apache.log4j.FileAppender;
 import org.apache.log4j.Level;
@@ -31,8 +64,6 @@ import org.apache.log4j.SimpleLayout;
 
 import test.tck.TestHarness;
 import test.tck.msgflow.callflows.ProtocolObjects;
-
-import java.util.*;
 
 /**
  * This class is a Subscriber template.
@@ -278,7 +309,7 @@ public class Subscriber implements SipListener {
 
             // Create ViaHeaders
 
-            ArrayList viaHeaders = new ArrayList();
+            List<ViaHeader> viaHeaders = new ArrayList<>();
             int port = sipProvider.getListeningPoint(transport).getPort();
             ViaHeader viaHeader = headerFactory.createViaHeader("127.0.0.1",
                     port, transport, null);

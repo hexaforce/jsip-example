@@ -1,9 +1,5 @@
 package test.unit.gov.nist.javax.sip.parser;
 
-import java.nio.charset.Charset;
-
-import javax.sip.header.FromHeader;
-
 import gov.nist.javax.sip.message.SIPMessage;
 import gov.nist.javax.sip.parser.StringMsgParser;
 import junit.framework.TestCase;

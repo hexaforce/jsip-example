@@ -1,10 +1,15 @@
 package test.tck.factory;
 import java.text.ParseException;
 
-import javax.sip.address.*;
+import javax.sip.address.Address;
+import javax.sip.address.SipURI;
+import javax.sip.address.TelURL;
+import javax.sip.address.URI;
 
-import junit.framework.*;
-import test.tck.*;
+import junit.framework.Test;
+import junit.framework.TestSuite;
+import test.tck.TckInternalError;
+import test.tck.TiUnexpectedError;
 
 public class AddressFactoryTest extends FactoryTestHarness {
 

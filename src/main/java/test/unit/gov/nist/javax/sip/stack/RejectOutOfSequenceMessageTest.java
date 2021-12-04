@@ -1,8 +1,7 @@
 package test.unit.gov.nist.javax.sip.stack;
 
-import gov.nist.javax.sip.stack.NioMessageProcessorFactory;
-
 import java.util.ArrayList;
+import java.util.List;
 import java.util.Properties;
 
 import javax.sip.ClientTransaction;
@@ -37,8 +36,8 @@ import javax.sip.message.MessageFactory;
 import javax.sip.message.Request;
 import javax.sip.message.Response;
 
+import gov.nist.javax.sip.stack.NioMessageProcessorFactory;
 import junit.framework.TestCase;
-
 public class RejectOutOfSequenceMessageTest extends TestCase {
     public class Shootme implements SipListener {
 
@@ -403,7 +402,7 @@ public class RejectOutOfSequenceMessageTest extends TestCase {
 
                 // Create ViaHeaders
 
-                ArrayList viaHeaders = new ArrayList();
+                List<ViaHeader> viaHeaders = new ArrayList<>();
                 String ipAddress = udpListeningPoint.getIPAddress();
                 ViaHeader viaHeader = headerFactory.createViaHeader(ipAddress,
                         sipProvider.getListeningPoint(transport).getPort(),

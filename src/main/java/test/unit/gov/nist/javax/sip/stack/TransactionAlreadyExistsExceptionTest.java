@@ -1,8 +1,5 @@
 package test.unit.gov.nist.javax.sip.stack;
 
-import gov.nist.javax.sip.message.MessageFactoryImpl;
-import gov.nist.javax.sip.stack.NioMessageProcessorFactory;
-
 import java.text.ParseException;
 import java.util.Properties;
 
@@ -32,6 +29,8 @@ import javax.sip.message.MessageFactory;
 import javax.sip.message.Request;
 import javax.sip.message.Response;
 
+import gov.nist.javax.sip.message.MessageFactoryImpl;
+import gov.nist.javax.sip.stack.NioMessageProcessorFactory;
 import junit.framework.TestCase;
 
 public class TransactionAlreadyExistsExceptionTest extends TestCase {

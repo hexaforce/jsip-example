@@ -312,7 +312,7 @@ public class Shootist  implements SipListener {
 
             // Create ViaHeaders
 
-            ArrayList viaHeaders = new ArrayList();
+            List<ViaHeader> viaHeaders = new ArrayList<>();
             int port = provider.getListeningPoint(protocolObjects.transport)
                     .getPort();
 

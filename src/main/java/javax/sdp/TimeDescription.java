@@ -6,8 +6,8 @@
 
 package javax.sdp;
 
-import java.io.*;
-import java.util.*;
+import java.io.Serializable;
+import java.util.Vector;
 
 /** A TimeDescription represents the fields present within a SDP time description.
  *

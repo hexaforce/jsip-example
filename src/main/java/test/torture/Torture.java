@@ -30,24 +30,31 @@
 
 package test.torture;
 
-import gov.nist.javax.sip.address.*;
-import gov.nist.javax.sip.parser.*;
-import gov.nist.javax.sip.header.*;
-import gov.nist.javax.sip.message.*;
-import java.io.*;
-import java.util.Hashtable;
+import java.io.ByteArrayOutputStream;
+import java.io.FileOutputStream;
+import java.io.IOException;
+import java.io.PrintStream;
+import java.text.ParseException;
 import java.util.Enumeration;
+import java.util.Hashtable;
+
 // ifdef J2SDK1.4
 import javax.xml.parsers.SAXParserFactory;
+
 // endif
 import org.xml.sax.Attributes;
 import org.xml.sax.EntityResolver;
 import org.xml.sax.InputSource;
-import org.xml.sax.XMLReader;
 import org.xml.sax.SAXException;
 import org.xml.sax.SAXParseException;
+import org.xml.sax.XMLReader;
 import org.xml.sax.helpers.DefaultHandler;
-import java.text.ParseException;
+
+import gov.nist.javax.sip.address.SipUri;
+import gov.nist.javax.sip.header.SIPHeader;
+import gov.nist.javax.sip.message.SIPMessage;
+import gov.nist.javax.sip.parser.ParseExceptionListener;
+import gov.nist.javax.sip.parser.StringMsgParser;
 
 public class Torture extends DefaultHandler implements ParseExceptionListener,
         TagNames, TokenValues, ConfigurationSwitches {

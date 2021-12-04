@@ -1,14 +1,8 @@
 package test.unit.gov.nist.javax.sip.stack;
 
 import java.util.ArrayList;
+import java.util.List;
 import java.util.Properties;
-
-import gov.nist.javax.sip.ServerTransactionExt;
-import gov.nist.javax.sip.SipProviderExt;
-import gov.nist.javax.sip.SipStackExt;
-import gov.nist.javax.sip.header.HeaderFactoryExt;
-import gov.nist.javax.sip.message.MessageFactoryExt;
-import gov.nist.javax.sip.stack.NioMessageProcessorFactory;
 
 import javax.sip.ClientTransaction;
 import javax.sip.Dialog;
@@ -33,7 +27,6 @@ import javax.sip.header.ContactHeader;
 import javax.sip.header.ContentTypeHeader;
 import javax.sip.header.ExpiresHeader;
 import javax.sip.header.FromHeader;
-import javax.sip.header.Header;
 import javax.sip.header.MaxForwardsHeader;
 import javax.sip.header.RouteHeader;
 import javax.sip.header.ToHeader;
@@ -44,8 +37,13 @@ import javax.sip.message.Response;
 import org.apache.log4j.ConsoleAppender;
 import org.apache.log4j.Logger;
 
+import gov.nist.javax.sip.ServerTransactionExt;
+import gov.nist.javax.sip.SipProviderExt;
+import gov.nist.javax.sip.SipStackExt;
+import gov.nist.javax.sip.header.HeaderFactoryExt;
+import gov.nist.javax.sip.message.MessageFactoryExt;
+import gov.nist.javax.sip.stack.NioMessageProcessorFactory;
 import junit.framework.TestCase;
-
 public class CtxExpiredTest extends TestCase {
 
     AddressFactory addressFactory;
@@ -143,7 +141,7 @@ public class CtxExpiredTest extends TestCase {
 
                 // Create ViaHeaders
 
-                ArrayList viaHeaders = new ArrayList();
+                List<ViaHeader> viaHeaders = new ArrayList<>();
                 int port = provider.getListeningPoint("udp").getPort();
 
                 ViaHeader viaHeader = headerFactory.createViaHeader(myAddress,

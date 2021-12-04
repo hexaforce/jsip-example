@@ -22,13 +22,11 @@
  */
 package test.unit.gov.nist.javax.sip.stack;
 
-import gov.nist.javax.sip.stack.IOHandler;
-import gov.nist.javax.sip.stack.SIPTransactionStack;
-
 import java.lang.reflect.Constructor;
 import java.lang.reflect.Field;
 import java.util.ArrayList;
 import java.util.EventObject;
+import java.util.List;
 import java.util.Timer;
 import java.util.TimerTask;
 
@@ -62,6 +60,8 @@ import javax.sip.message.Response;
 
 import org.apache.log4j.Logger;
 
+import gov.nist.javax.sip.stack.IOHandler;
+import gov.nist.javax.sip.stack.SIPTransactionStack;
 import test.tck.msgflow.callflows.ProtocolObjects;
 import test.tck.msgflow.callflows.ScenarioHarness;
 
@@ -497,7 +497,7 @@ public class ReconnectTCPTest extends ScenarioHarness implements SipListener {
 
                 // Create ViaHeaders
 
-                ArrayList viaHeaders = new ArrayList();
+                List<ViaHeader> viaHeaders = new ArrayList<>();
                 int port = provider.getListeningPoint(protocolObjects.transport)
                         .getPort();
 

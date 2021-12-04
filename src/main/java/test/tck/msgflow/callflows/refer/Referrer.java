@@ -1,6 +1,7 @@
 package test.tck.msgflow.callflows.refer;
 
 import java.util.ArrayList;
+import java.util.List;
 
 import javax.sip.ClientTransaction;
 import javax.sip.Dialog;
@@ -39,7 +40,6 @@ import org.apache.log4j.SimpleLayout;
 
 import test.tck.TestHarness;
 import test.tck.msgflow.callflows.ProtocolObjects;
-
 /**
  * This example shows an out-of-dialog REFER scenario:
  *
@@ -266,7 +266,7 @@ public class Referrer implements SipListener {
 
             // Create ViaHeaders
 
-            ArrayList viaHeaders = new ArrayList();
+            List<ViaHeader> viaHeaders = new ArrayList<>();
             int port = sipProvider.getListeningPoint(transport).getPort();
             ViaHeader viaHeader = headerFactory.createViaHeader("127.0.0.1",
                     port, transport, null);

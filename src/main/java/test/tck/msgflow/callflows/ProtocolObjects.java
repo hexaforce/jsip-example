@@ -1,7 +1,5 @@
 package test.tck.msgflow.callflows;
 
-import gov.nist.javax.sip.stack.NioMessageProcessorFactory;
-
 import java.util.HashSet;
 import java.util.Iterator;
 import java.util.Properties;
@@ -16,6 +14,8 @@ import javax.sip.header.HeaderFactory;
 import javax.sip.message.MessageFactory;
 
 import org.apache.log4j.Logger;
+
+import gov.nist.javax.sip.stack.NioMessageProcessorFactory;
 
 /**
  * @author M. Ranganathan

@@ -15,7 +15,6 @@ import javax.sip.TransactionTerminatedEvent;
 
 import test.tck.TckInternalError;
 import test.tck.TestHarness;
-import test.tck.TiUnexpectedError;
 
 public abstract class ScenarioHarness extends TestHarness {
     private HashSet<ProtocolObjects> tiProtocolObjects = new HashSet<ProtocolObjects>();

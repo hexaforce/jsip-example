@@ -24,12 +24,11 @@
  */
 package test.unit.gov.nist.javax.sip.parser;
 
+import java.lang.reflect.Constructor;
+
 import gov.nist.javax.sip.header.SIPHeader;
 import gov.nist.javax.sip.header.SIPHeaderList;
 import gov.nist.javax.sip.parser.HeaderParser;
-
-import java.lang.reflect.Constructor;
-
 import junit.framework.TestCase;
 
 /**

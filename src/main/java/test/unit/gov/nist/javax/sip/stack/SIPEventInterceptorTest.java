@@ -1,12 +1,5 @@
 package test.unit.gov.nist.javax.sip.stack;
 
-import gov.nist.javax.sip.DialogExt;
-import gov.nist.javax.sip.stack.CallAnalysisInterceptor;
-import gov.nist.javax.sip.stack.CallAnalyzer;
-import gov.nist.javax.sip.stack.NioMessageProcessorFactory;
-import gov.nist.javax.sip.stack.CallAnalyzer.MetricAnalysisConfiguration;
-import gov.nist.javax.sip.stack.CallAnalyzer.MetricReference;
-
 import java.lang.management.ManagementFactory;
 import java.lang.management.RuntimeMXBean;
 import java.util.ArrayList;
@@ -49,7 +42,12 @@ import javax.sip.message.MessageFactory;
 import javax.sip.message.Request;
 import javax.sip.message.Response;
 
-
+import gov.nist.javax.sip.DialogExt;
+import gov.nist.javax.sip.stack.CallAnalysisInterceptor;
+import gov.nist.javax.sip.stack.CallAnalyzer;
+import gov.nist.javax.sip.stack.CallAnalyzer.MetricAnalysisConfiguration;
+import gov.nist.javax.sip.stack.CallAnalyzer.MetricReference;
+import gov.nist.javax.sip.stack.NioMessageProcessorFactory;
 import junit.framework.TestCase;
 
 public class SIPEventInterceptorTest extends TestCase{
@@ -534,7 +532,7 @@ public class SIPEventInterceptorTest extends TestCase{
 
                 // Create ViaHeaders
 
-                ArrayList viaHeaders = new ArrayList();
+                List<ViaHeader> viaHeaders = new ArrayList<>();
                 String ipAddress = udpListeningPoint.getIPAddress();
                 ViaHeader viaHeader = headerFactory.createViaHeader(ipAddress,
                         sipProvider.getListeningPoint(transport).getPort(),

@@ -1,7 +1,5 @@
 package test.tck.msgflow.callflows.recroute;
 
-import java.util.Hashtable;
-
 import javax.sip.ClientTransaction;
 import javax.sip.DialogTerminatedEvent;
 import javax.sip.IOExceptionEvent;

@@ -1,10 +1,10 @@
 package test.tck.msgflow.callflows.prack;
 
 import java.util.ArrayList;
+import java.util.List;
 
 import javax.sip.ClientTransaction;
 import javax.sip.Dialog;
-import javax.sip.DialogState;
 import javax.sip.DialogTerminatedEvent;
 import javax.sip.IOExceptionEvent;
 import javax.sip.ListeningPoint;
@@ -36,7 +36,6 @@ import org.apache.log4j.Logger;
 
 import test.tck.TestHarness;
 import test.tck.msgflow.callflows.ProtocolObjects;
-
 /**
  * This class is a UAC template. Shootist is the guy that shoots and shootme is
  * the guy that gets shot.
@@ -219,7 +218,7 @@ public class Shootist implements SipListener {
 
             // Create ViaHeaders
 
-            ArrayList viaHeaders = new ArrayList();
+            List<ViaHeader> viaHeaders = new ArrayList<>();
             ViaHeader viaHeader = headerFactory.createViaHeader("127.0.0.1",
                     sipProvider.getListeningPoint(transport).getPort(),
                     transport, null);

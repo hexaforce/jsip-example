@@ -1,12 +1,5 @@
 package performance.b2bua;
 
-import gov.nist.javax.sip.ListeningPointImpl;
-import gov.nist.javax.sip.header.Route;
-import gov.nist.javax.sip.header.RouteList;
-import gov.nist.javax.sip.header.Via;
-import gov.nist.javax.sip.header.ViaList;
-import gov.nist.javax.sip.message.SIPRequest;
-
 import java.text.ParseException;
 import java.util.Collections;
 import java.util.HashSet;
@@ -40,6 +33,13 @@ import javax.sip.header.ViaHeader;
 import javax.sip.message.MessageFactory;
 import javax.sip.message.Request;
 import javax.sip.message.Response;
+
+import gov.nist.javax.sip.ListeningPointImpl;
+import gov.nist.javax.sip.header.Route;
+import gov.nist.javax.sip.header.RouteList;
+import gov.nist.javax.sip.header.Via;
+import gov.nist.javax.sip.header.ViaList;
+import gov.nist.javax.sip.message.SIPRequest;
 
 public class TestCall {
 	

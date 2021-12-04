@@ -19,12 +19,20 @@
 */
 package test.tck.msgflow;
 
-import junit.framework.*;
+import java.util.TooManyListenersException;
 
-import javax.sip.*;
-import javax.sip.message.*;
-import java.util.*;
-import test.tck.*;
+import javax.sip.ClientTransaction;
+import javax.sip.RequestEvent;
+import javax.sip.ResponseEvent;
+import javax.sip.SipException;
+import javax.sip.TransactionState;
+import javax.sip.message.Request;
+import javax.sip.message.Response;
+
+import junit.framework.Test;
+import junit.framework.TestSuite;
+import test.tck.TckInternalError;
+import test.tck.TiUnexpectedError;
 
 /**
  *

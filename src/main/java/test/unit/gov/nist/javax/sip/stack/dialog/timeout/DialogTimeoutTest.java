@@ -15,12 +15,11 @@
  */
  package test.unit.gov.nist.javax.sip.stack.dialog.timeout;
 
-import gov.nist.javax.sip.SipStackImpl;
-
 import javax.sip.SipProvider;
 
 import org.apache.log4j.Logger;
 
+import gov.nist.javax.sip.SipStackImpl;
 import test.tck.msgflow.callflows.ProtocolObjects;
 import test.tck.msgflow.callflows.ScenarioHarness;
 

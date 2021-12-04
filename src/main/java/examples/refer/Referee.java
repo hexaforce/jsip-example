@@ -291,7 +291,7 @@ public class Referee implements SipListener {
 
             // Create ViaHeaders
 
-            ArrayList viaHeaders = new ArrayList();
+            List<ViaHeader> viaHeaders = new ArrayList<>();
             ViaHeader viaHeader = headerFactory.createViaHeader("127.0.0.1",
                     lp.getPort(), transport, null);
 

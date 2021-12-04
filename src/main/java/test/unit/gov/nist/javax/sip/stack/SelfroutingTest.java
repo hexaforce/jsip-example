@@ -1,9 +1,7 @@
 package test.unit.gov.nist.javax.sip.stack;
 
-import gov.nist.javax.sip.SipStackImpl;
-
 import java.util.ArrayList;
-import java.util.EventObject;
+import java.util.List;
 
 import javax.sip.ClientTransaction;
 import javax.sip.Dialog;
@@ -15,7 +13,6 @@ import javax.sip.ResponseEvent;
 import javax.sip.ServerTransaction;
 import javax.sip.SipListener;
 import javax.sip.SipProvider;
-import javax.sip.TimeoutEvent;
 import javax.sip.Transaction;
 import javax.sip.TransactionTerminatedEvent;
 import javax.sip.address.Address;
@@ -35,6 +32,7 @@ import javax.sip.message.Response;
 
 import org.apache.log4j.Logger;
 
+import gov.nist.javax.sip.SipStackImpl;
 import test.tck.msgflow.callflows.ProtocolObjects;
 import test.tck.msgflow.callflows.ScenarioHarness;
 
@@ -245,7 +243,7 @@ public class SelfroutingTest extends ScenarioHarness {
 
                 // Create ViaHeaders
 
-                ArrayList viaHeaders = new ArrayList();
+                List<ViaHeader> viaHeaders = new ArrayList<>();
                 int port = provider.getListeningPoint(protocolObjects.transport)
                         .getPort();
 

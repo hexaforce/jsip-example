@@ -1,10 +1,4 @@
 package test.unit.gov.nist.javax.sip.stack.tls;
-import gov.nist.javax.sip.ClientTransactionExt;
-import gov.nist.javax.sip.TlsSecurityPolicy;
-import gov.nist.javax.sip.header.HeaderExt;
-import gov.nist.javax.sip.stack.NioMessageProcessorFactory;
-import gov.nist.javax.sip.stack.SIPTransactionStack;
-
 import java.security.cert.Certificate;
 import java.util.ArrayList;
 import java.util.List;
@@ -43,6 +37,12 @@ import javax.sip.header.ViaHeader;
 import javax.sip.message.MessageFactory;
 import javax.sip.message.Request;
 import javax.sip.message.Response;
+
+import gov.nist.javax.sip.ClientTransactionExt;
+import gov.nist.javax.sip.TlsSecurityPolicy;
+import gov.nist.javax.sip.header.HeaderExt;
+import gov.nist.javax.sip.stack.NioMessageProcessorFactory;
+import gov.nist.javax.sip.stack.SIPTransactionStack;
 
 
 
@@ -297,7 +297,7 @@ public class Shootist implements SipListener, TlsSecurityPolicy {
 
             // Create ViaHeaders
 
-           ArrayList viaHeaders = new ArrayList();
+           List<ViaHeader> viaHeaders = new ArrayList<>();
            ViaHeader viaHeader =
                 headerFactory.createViaHeader(
                     "127.0.0.1",

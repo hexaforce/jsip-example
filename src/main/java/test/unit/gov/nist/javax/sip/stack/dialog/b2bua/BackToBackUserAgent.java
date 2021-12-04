@@ -1,10 +1,5 @@
 package test.unit.gov.nist.javax.sip.stack.dialog.b2bua;
 
-import gov.nist.javax.sip.DialogTimeoutEvent;
-import gov.nist.javax.sip.ListeningPointExt;
-import gov.nist.javax.sip.SipListenerExt;
-import gov.nist.javax.sip.SipProviderExt;
-
 import java.text.ParseException;
 import java.util.HashSet;
 import java.util.Hashtable;
@@ -27,7 +22,6 @@ import javax.sip.SipStack;
 import javax.sip.TimeoutEvent;
 import javax.sip.TransactionAlreadyExistsException;
 import javax.sip.TransactionTerminatedEvent;
-import javax.sip.TransactionUnavailableException;
 import javax.sip.address.AddressFactory;
 import javax.sip.address.SipURI;
 import javax.sip.header.CSeqHeader;
@@ -40,6 +34,10 @@ import javax.sip.message.MessageFactory;
 import javax.sip.message.Request;
 import javax.sip.message.Response;
 
+import gov.nist.javax.sip.DialogTimeoutEvent;
+import gov.nist.javax.sip.ListeningPointExt;
+import gov.nist.javax.sip.SipListenerExt;
+import gov.nist.javax.sip.SipProviderExt;
 import test.tck.msgflow.callflows.ProtocolObjects;
 
 

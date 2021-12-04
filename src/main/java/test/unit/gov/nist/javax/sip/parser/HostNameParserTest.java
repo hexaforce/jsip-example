@@ -1,10 +1,9 @@
 package test.unit.gov.nist.javax.sip.parser;
 
-import gov.nist.core.HostNameParser;
-import gov.nist.core.HostPort;
-
 import java.text.ParseException;
 
+import gov.nist.core.HostNameParser;
+import gov.nist.core.HostPort;
 import junit.framework.TestCase;
 
 /**

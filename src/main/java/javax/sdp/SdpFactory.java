@@ -1,12 +1,33 @@
 package javax.sdp;
 
-import gov.nist.javax.sdp.*;
-import gov.nist.javax.sdp.fields.*;
-import gov.nist.javax.sdp.parser.*;
+import java.net.InetAddress;
+import java.net.URL;
+import java.net.UnknownHostException;
+import java.text.ParseException;
+import java.util.Date;
+import java.util.Hashtable;
+import java.util.Vector;
 
-import java.util.*;
-import java.net.*;
-import java.text.*;
+import gov.nist.javax.sdp.MediaDescriptionImpl;
+import gov.nist.javax.sdp.SessionDescriptionImpl;
+import gov.nist.javax.sdp.TimeDescriptionImpl;
+import gov.nist.javax.sdp.fields.AttributeField;
+import gov.nist.javax.sdp.fields.BandwidthField;
+import gov.nist.javax.sdp.fields.ConnectionField;
+import gov.nist.javax.sdp.fields.EmailField;
+import gov.nist.javax.sdp.fields.InformationField;
+import gov.nist.javax.sdp.fields.KeyField;
+import gov.nist.javax.sdp.fields.MediaField;
+import gov.nist.javax.sdp.fields.OriginField;
+import gov.nist.javax.sdp.fields.PhoneField;
+import gov.nist.javax.sdp.fields.ProtoVersionField;
+import gov.nist.javax.sdp.fields.RepeatField;
+import gov.nist.javax.sdp.fields.SDPKeywords;
+import gov.nist.javax.sdp.fields.SessionNameField;
+import gov.nist.javax.sdp.fields.TimeField;
+import gov.nist.javax.sdp.fields.URIField;
+import gov.nist.javax.sdp.fields.ZoneField;
+import gov.nist.javax.sdp.parser.SDPAnnounceParser;
 
 /**
  * The SdpFactory enables applications to encode and decode SDP messages. The

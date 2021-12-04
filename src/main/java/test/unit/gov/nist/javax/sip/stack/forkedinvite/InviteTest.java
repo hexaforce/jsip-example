@@ -7,13 +7,12 @@ import java.util.HashSet;
 
 import javax.sip.SipProvider;
 
-import junit.framework.TestCase;
-
 import org.apache.log4j.Appender;
 import org.apache.log4j.ConsoleAppender;
 import org.apache.log4j.Logger;
-import org.apache.log4j.PropertyConfigurator;
 import org.apache.log4j.SimpleLayout;
+
+import junit.framework.TestCase;
 
 /**
  * @author M. Ranganathan

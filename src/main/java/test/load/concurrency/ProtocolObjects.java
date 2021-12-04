@@ -2,6 +2,7 @@
 package test.load.concurrency;
 
 import java.util.Properties;
+
 import javax.sip.SipException;
 import javax.sip.SipFactory;
 import javax.sip.SipStack;

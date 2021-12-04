@@ -1,8 +1,7 @@
 package test.unit.gov.nist.javax.sip.stack;
 
-import gov.nist.javax.sip.stack.NioMessageProcessorFactory;
-
 import java.util.ArrayList;
+import java.util.List;
 import java.util.Properties;
 import java.util.Timer;
 import java.util.TimerTask;
@@ -38,8 +37,8 @@ import javax.sip.message.MessageFactory;
 import javax.sip.message.Request;
 import javax.sip.message.Response;
 
+import gov.nist.javax.sip.stack.NioMessageProcessorFactory;
 import junit.framework.TestCase;
-
 public class DeliverUnsolicitedNotifyTest extends TestCase implements
         SipListener {
 
@@ -197,7 +196,7 @@ public class DeliverUnsolicitedNotifyTest extends TestCase implements
 
             // Create ViaHeaders
 
-            ArrayList viaHeaders = new ArrayList();
+            List<ViaHeader> viaHeaders = new ArrayList<>();
 
             ViaHeader viaHeader = headerFactory.createViaHeader("127.0.0.1",
                     port, transport, null);

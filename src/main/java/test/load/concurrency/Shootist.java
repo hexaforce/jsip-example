@@ -1,6 +1,7 @@
 package test.load.concurrency;
 
 import java.util.ArrayList;
+import java.util.List;
 import java.util.Timer;
 import java.util.TimerTask;
 import java.util.concurrent.atomic.AtomicInteger;
@@ -35,6 +36,7 @@ import javax.sip.header.ViaHeader;
 import javax.sip.message.MessageFactory;
 import javax.sip.message.Request;
 import javax.sip.message.Response;
+
 import junit.framework.TestCase;
 
 /**
@@ -297,7 +299,7 @@ public class Shootist extends TestCase implements SipListener {
 
             // Create ViaHeaders
 
-            ArrayList viaHeaders = new ArrayList();
+            List<ViaHeader> viaHeaders = new ArrayList<>();
             SipProvider sipProvider = getNextProvider();
             int port = sipProvider.getListeningPoint(transport).getPort();
             ViaHeader viaHeader = headerFactory.createViaHeader(sipProvider

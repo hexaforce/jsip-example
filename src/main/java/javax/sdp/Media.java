@@ -6,7 +6,7 @@
 
 package javax.sdp;
 
-import java.util.*;
+import java.util.Vector;
 /** A Media represents an m= field contained within a MediaDescription. The Media
  * identifies information about the format(s) of the
  * media associated with the MediaDescription.

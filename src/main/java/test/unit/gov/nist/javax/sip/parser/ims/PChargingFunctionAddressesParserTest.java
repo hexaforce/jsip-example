@@ -25,7 +25,7 @@
 package test.unit.gov.nist.javax.sip.parser.ims;
 
 import gov.nist.javax.sip.parser.ims.PChargingFunctionAddressesParser;
-import test.unit.gov.nist.javax.sip.parser.*;
+import test.unit.gov.nist.javax.sip.parser.ParserTestCase;
 
 /**
  * @author Miguel Freitas

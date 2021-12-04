@@ -20,10 +20,10 @@
 package test.tck.msgflow.callflows.router;
 
 import java.util.ArrayList;
+import java.util.List;
 
 import javax.sip.ClientTransaction;
 import javax.sip.Dialog;
-import javax.sip.DialogState;
 import javax.sip.DialogTerminatedEvent;
 import javax.sip.IOExceptionEvent;
 import javax.sip.ListeningPoint;
@@ -41,11 +41,9 @@ import javax.sip.address.URI;
 import javax.sip.header.CSeqHeader;
 import javax.sip.header.CallIdHeader;
 import javax.sip.header.ContactHeader;
-import javax.sip.header.ContentTypeHeader;
 import javax.sip.header.FromHeader;
 import javax.sip.header.HeaderFactory;
 import javax.sip.header.MaxForwardsHeader;
-import javax.sip.header.RequireHeader;
 import javax.sip.header.ToHeader;
 import javax.sip.header.ViaHeader;
 import javax.sip.message.MessageFactory;
@@ -59,7 +57,6 @@ import org.apache.log4j.SimpleLayout;
 
 import test.tck.TestHarness;
 import test.tck.msgflow.callflows.ProtocolObjects;
-
 /**
  * This class is a UAC template.
  *
@@ -235,7 +232,7 @@ public class Shootist implements SipListener {
 
             // Create ViaHeaders
 
-            ArrayList viaHeaders = new ArrayList();
+            List<ViaHeader> viaHeaders = new ArrayList<>();
             ViaHeader viaHeader = headerFactory.createViaHeader("127.0.0.1",
                     sipProvider.getListeningPoint(transport).getPort(),
                     transport, null);

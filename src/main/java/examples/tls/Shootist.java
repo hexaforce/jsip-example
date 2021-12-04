@@ -294,7 +294,7 @@ public class Shootist implements SipListener, TlsSecurityPolicy {
 
             // Create ViaHeaders
 
-           ArrayList viaHeaders = new ArrayList();
+           List<ViaHeader> viaHeaders = new ArrayList<>();
            ViaHeader viaHeader =
                 headerFactory.createViaHeader(
                     "127.0.0.1",

@@ -2,7 +2,7 @@ package test.tck.msgflow.callflows.refer;
 
 import java.text.ParseException;
 import java.util.ArrayList;
-import java.util.Properties;
+import java.util.List;
 
 import javax.sip.ClientTransaction;
 import javax.sip.Dialog;
@@ -11,12 +11,10 @@ import javax.sip.DialogTerminatedEvent;
 import javax.sip.IOExceptionEvent;
 import javax.sip.InvalidArgumentException;
 import javax.sip.ListeningPoint;
-import javax.sip.PeerUnavailableException;
 import javax.sip.RequestEvent;
 import javax.sip.ResponseEvent;
 import javax.sip.ServerTransaction;
 import javax.sip.SipException;
-import javax.sip.SipFactory;
 import javax.sip.SipListener;
 import javax.sip.SipProvider;
 import javax.sip.SipStack;
@@ -49,8 +47,6 @@ import org.apache.log4j.SimpleLayout;
 
 import test.tck.TestHarness;
 import test.tck.msgflow.callflows.ProtocolObjects;
-
-
 
 /**
  * This example shows an out-of-dialog REFER scenario:
@@ -372,7 +368,7 @@ public class Referee implements SipListener {
 
             // Create ViaHeaders
 
-            ArrayList viaHeaders = new ArrayList();
+            List<ViaHeader> viaHeaders = new ArrayList<>();
             ViaHeader viaHeader = headerFactory.createViaHeader("127.0.0.1",
                     lp.getPort(), transport, null);
 

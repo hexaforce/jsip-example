@@ -1,6 +1,7 @@
 package test.unit.gov.nist.javax.sip.stack;
 
 import java.util.ArrayList;
+import java.util.List;
 
 import javax.sip.ClientTransaction;
 import javax.sip.Dialog;
@@ -279,7 +280,7 @@ public class UdpPrackTimeoutTest extends ScenarioHarness implements SipListener 
 
                 // Create ViaHeaders
 
-                ArrayList viaHeaders = new ArrayList();
+                List<ViaHeader> viaHeaders = new ArrayList<>();
                 ViaHeader viaHeader = headerFactory.createViaHeader("127.0.0.1",
                         sipProvider.getListeningPoint(transport).getPort(),
                         transport, null);

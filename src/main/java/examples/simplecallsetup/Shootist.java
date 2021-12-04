@@ -290,7 +290,7 @@ public class Shootist implements SipListener {
 
             // Create ViaHeaders
 
-            ArrayList viaHeaders = new ArrayList();
+            List<ViaHeader> viaHeaders = new ArrayList<>();
             String ipAddress = udpListeningPoint.getIPAddress();
             ViaHeader viaHeader = headerFactory.createViaHeader(ipAddress,
                     sipProvider.getListeningPoint(transport).getPort(),

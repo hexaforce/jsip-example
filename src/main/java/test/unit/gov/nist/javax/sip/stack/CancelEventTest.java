@@ -1,7 +1,5 @@
 package test.unit.gov.nist.javax.sip.stack;
 
-import gov.nist.javax.sip.stack.NioMessageProcessorFactory;
-
 import java.util.ArrayList;
 import java.util.Properties;
 import java.util.Random;
@@ -39,10 +37,10 @@ import javax.sip.message.MessageFactory;
 import javax.sip.message.Request;
 import javax.sip.message.Response;
 
-import junit.framework.TestCase;
-
 import org.apache.log4j.Logger;
 
+import gov.nist.javax.sip.stack.NioMessageProcessorFactory;
+import junit.framework.TestCase;
 import test.tck.msgflow.callflows.ScenarioHarness;
 
 public class CancelEventTest extends  ScenarioHarness {

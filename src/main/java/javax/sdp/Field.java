@@ -6,7 +6,7 @@
 
 package javax.sdp;
 
-import java.io.*;
+import java.io.Serializable;
 
 /** A Field represents a single line of information within a SDP
  * session description.

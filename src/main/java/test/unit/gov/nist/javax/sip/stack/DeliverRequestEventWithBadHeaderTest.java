@@ -1,13 +1,8 @@
 package test.unit.gov.nist.javax.sip.stack;
 
-import gov.nist.javax.sip.message.MessageFactoryImpl;
-import gov.nist.javax.sip.stack.NioMessageProcessorFactory;
-
 import java.text.ParseException;
-import java.util.ArrayList;
 import java.util.Properties;
 
-import javax.security.sasl.SaslException;
 import javax.sip.ClientTransaction;
 import javax.sip.Dialog;
 import javax.sip.DialogTerminatedEvent;
@@ -25,21 +20,16 @@ import javax.sip.Transaction;
 import javax.sip.TransactionTerminatedEvent;
 import javax.sip.address.Address;
 import javax.sip.address.AddressFactory;
-import javax.sip.address.SipURI;
 import javax.sip.header.CSeqHeader;
-import javax.sip.header.CallIdHeader;
 import javax.sip.header.ContactHeader;
-import javax.sip.header.ContentTypeHeader;
-import javax.sip.header.FromHeader;
-import javax.sip.header.Header;
 import javax.sip.header.HeaderFactory;
-import javax.sip.header.MaxForwardsHeader;
 import javax.sip.header.ToHeader;
-import javax.sip.header.ViaHeader;
 import javax.sip.message.MessageFactory;
 import javax.sip.message.Request;
 import javax.sip.message.Response;
 
+import gov.nist.javax.sip.message.MessageFactoryImpl;
+import gov.nist.javax.sip.stack.NioMessageProcessorFactory;
 import junit.framework.TestCase;
 
 public class DeliverRequestEventWithBadHeaderTest extends TestCase {

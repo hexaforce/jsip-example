@@ -5,12 +5,12 @@ package test.unit.gov.nist.javax.sip.stack.timeoutontermineted;
 
 import javax.sip.SipProvider;
 
-import junit.framework.TestCase;
-
 import org.apache.log4j.Appender;
 import org.apache.log4j.ConsoleAppender;
 import org.apache.log4j.Logger;
 import org.apache.log4j.SimpleLayout;
+
+import junit.framework.TestCase;
 
 /**
  * @author <a href="mailto:baranowb@gmail.com"> Bartosz Baranowski </a>

@@ -1,11 +1,11 @@
 package test.unit.gov.nist.javax.sip.address;
 
-import gov.nist.javax.sip.address.SipUri;
-
 import java.text.ParseException;
 
 import javax.sip.address.SipURI;
 import javax.sip.address.URI;
+
+import gov.nist.javax.sip.address.SipUri;
 
 /**
  * Tests from RFC3261 ��19.1.4 URI Comparison

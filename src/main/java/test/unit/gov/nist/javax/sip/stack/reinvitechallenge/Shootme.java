@@ -19,22 +19,37 @@
 */
 package test.unit.gov.nist.javax.sip.stack.reinvitechallenge;
 
-import gov.nist.javax.sip.DialogExt;
-import gov.nist.javax.sip.SipStackExt;
-import gov.nist.javax.sip.clientauthutils.AuthenticationHelper;
-
-import javax.sip.*;
-import javax.sip.address.*;
-import javax.sip.header.*;
-import javax.sip.message.*;
-
-import junit.framework.TestCase;
+import javax.sip.ClientTransaction;
+import javax.sip.Dialog;
+import javax.sip.DialogState;
+import javax.sip.DialogTerminatedEvent;
+import javax.sip.IOExceptionEvent;
+import javax.sip.ListeningPoint;
+import javax.sip.RequestEvent;
+import javax.sip.ResponseEvent;
+import javax.sip.ServerTransaction;
+import javax.sip.SipListener;
+import javax.sip.SipProvider;
+import javax.sip.Transaction;
+import javax.sip.TransactionTerminatedEvent;
+import javax.sip.address.Address;
+import javax.sip.address.SipURI;
+import javax.sip.header.CSeqHeader;
+import javax.sip.header.ContactHeader;
+import javax.sip.header.ContentTypeHeader;
+import javax.sip.header.MaxForwardsHeader;
+import javax.sip.header.ToHeader;
+import javax.sip.header.ViaHeader;
+import javax.sip.message.Request;
+import javax.sip.message.Response;
 
 import org.apache.log4j.ConsoleAppender;
 import org.apache.log4j.Logger;
 import org.apache.log4j.SimpleLayout;
 import org.apache.log4j.helpers.NullEnumeration;
 
+import gov.nist.javax.sip.SipStackExt;
+import gov.nist.javax.sip.clientauthutils.AuthenticationHelper;
 import test.tck.msgflow.callflows.ProtocolObjects;
 
 /**

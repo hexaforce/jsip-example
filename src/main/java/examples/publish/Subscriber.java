@@ -190,7 +190,7 @@ public class Subscriber implements SipListener {
 
             // Create ViaHeaders
 
-            ArrayList viaHeaders = new ArrayList();
+            List<ViaHeader> viaHeaders = new ArrayList<>();
             int port = sipProvider.getListeningPoint("udp").getPort();
             ViaHeader viaHeader =
                 headerFactory.createViaHeader(

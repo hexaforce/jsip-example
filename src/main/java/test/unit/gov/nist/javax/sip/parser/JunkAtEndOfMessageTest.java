@@ -1,11 +1,10 @@
 package test.unit.gov.nist.javax.sip.parser;
 
-import gov.nist.javax.sip.message.MessageFactoryImpl;
-
 import java.text.ParseException;
 
 import javax.sip.message.Request;
 
+import gov.nist.javax.sip.message.MessageFactoryImpl;
 import junit.framework.TestCase;
 
 public class JunkAtEndOfMessageTest extends TestCase {

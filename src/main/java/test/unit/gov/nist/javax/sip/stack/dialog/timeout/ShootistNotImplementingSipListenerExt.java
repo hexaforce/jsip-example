@@ -15,11 +15,8 @@
  */
 package test.unit.gov.nist.javax.sip.stack.dialog.timeout;
 
-import gov.nist.javax.sip.DialogTimeoutEvent;
-import gov.nist.javax.sip.SipStackImpl;
-import gov.nist.javax.sip.DialogTimeoutEvent.Reason;
-
 import java.util.ArrayList;
+import java.util.List;
 import java.util.Properties;
 
 import javax.sip.ClientTransaction;
@@ -55,8 +52,9 @@ import org.apache.log4j.Logger;
 import org.apache.log4j.SimpleLayout;
 import org.apache.log4j.helpers.NullEnumeration;
 
+import gov.nist.javax.sip.DialogTimeoutEvent;
+import gov.nist.javax.sip.SipStackImpl;
 import test.tck.msgflow.callflows.ProtocolObjects;
-
 /**
  * This class sends an INVITE and upon receiving a 200 OK it doesn't send the ACK to test is the Dialog Timeout Event is correctly passed to the application
  * The timeout Reason should be ACK not sent
@@ -308,7 +306,7 @@ public class ShootistNotImplementingSipListenerExt implements SipListener {
                     + "a=rtpmap:0 PCMU/8000\r\n" + "a=rtpmap:4 G723/8000\r\n"
                     + "a=rtpmap:18 G729A/8000\r\n" + "a=ptime:20\r\n";
             // Create ViaHeaders
-            ArrayList viaHeaders = new ArrayList();
+            List<ViaHeader> viaHeaders = new ArrayList<>();
             ViaHeader viaHeader = headerFactory.createViaHeader(myAddress,
                     listeningPoint.getPort(), transport, null);
 

@@ -1,13 +1,8 @@
 package test.unit.gov.nist.javax.sip.stack.acktransport;
 
-import gov.nist.javax.sip.DialogTimeoutEvent;
-import gov.nist.javax.sip.ResponseEventExt;
-import gov.nist.javax.sip.SipListenerExt;
-import gov.nist.javax.sip.SipStackImpl;
-import gov.nist.javax.sip.message.ResponseExt;
-
 import java.util.ArrayList;
 import java.util.HashSet;
+import java.util.List;
 import java.util.Timer;
 import java.util.TimerTask;
 
@@ -20,8 +15,6 @@ import javax.sip.ListeningPoint;
 import javax.sip.RequestEvent;
 import javax.sip.ResponseEvent;
 import javax.sip.ServerTransaction;
-import javax.sip.SipException;
-import javax.sip.SipListener;
 import javax.sip.SipProvider;
 import javax.sip.SipStack;
 import javax.sip.TransactionTerminatedEvent;
@@ -43,12 +36,15 @@ import javax.sip.message.MessageFactory;
 import javax.sip.message.Request;
 import javax.sip.message.Response;
 
-import junit.framework.TestCase;
-
 import org.apache.log4j.ConsoleAppender;
 import org.apache.log4j.Logger;
 import org.apache.log4j.SimpleLayout;
 import org.apache.log4j.helpers.NullEnumeration;
+
+import gov.nist.javax.sip.DialogTimeoutEvent;
+import gov.nist.javax.sip.ResponseEventExt;
+import gov.nist.javax.sip.SipListenerExt;
+import junit.framework.TestCase;
 
 
 /**
@@ -309,7 +305,7 @@ public class Shootist implements SipListenerExt {
 
             // Create ViaHeaders
 
-            ArrayList viaHeaders = new ArrayList();
+            List<ViaHeader> viaHeaders = new ArrayList<>();
             ViaHeader viaHeader = headerFactory
                     .createViaHeader(host, sipProvider.getListeningPoint(
                             transport).getPort(),

@@ -2,7 +2,6 @@ package test.tck.msgflow.callflows;
 
 import java.util.LinkedList;
 import java.util.ListIterator;
-import java.util.StringTokenizer;
 
 import javax.sip.SipException;
 import javax.sip.SipStack;
@@ -10,8 +9,6 @@ import javax.sip.address.Hop;
 import javax.sip.address.Router;
 import javax.sip.address.URI;
 import javax.sip.message.Request;
-
-import junit.framework.TestCase;
 
 /**
  * This is a Router for NON-SIP URI requests.

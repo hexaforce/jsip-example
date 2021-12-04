@@ -1,7 +1,5 @@
 package performance.uas;
 
-import gov.nist.javax.sip.message.RequestExt;
-
 import java.util.Properties;
 import java.util.Timer;
 import java.util.TimerTask;
@@ -35,7 +33,7 @@ import org.apache.log4j.Level;
 import org.apache.log4j.Logger;
 import org.apache.log4j.PatternLayout;
 
-import test.unit.gov.nist.javax.sip.stack.tls.TlsTest;
+import gov.nist.javax.sip.message.RequestExt;
 
 /**
  * This is the UAS application for performance testing

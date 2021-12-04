@@ -1,11 +1,9 @@
 package test.unit.gov.nist.javax.sip.stack;
 
-import gov.nist.javax.sip.stack.NioMessageProcessorFactory;
-import gov.nist.javax.sip.stack.SIPTransactionStack;
-
 import java.text.ParseException;
 import java.util.ArrayList;
 import java.util.Iterator;
+import java.util.List;
 import java.util.Properties;
 import java.util.Timer;
 import java.util.TimerTask;
@@ -46,6 +44,8 @@ import javax.sip.message.MessageFactory;
 import javax.sip.message.Request;
 import javax.sip.message.Response;
 
+import gov.nist.javax.sip.stack.NioMessageProcessorFactory;
+import gov.nist.javax.sip.stack.SIPTransactionStack;
 import junit.framework.TestCase;
 /**
  * This test aims to test the fact when a 1xx is received with no to tag it was letting a dialog in the sip stack not being removed
@@ -642,7 +642,7 @@ public class NoToTagOn1xxDialogLeakTest extends TestCase {
 
                 // Create ViaHeaders
 
-                ArrayList viaHeaders = new ArrayList();
+                List<ViaHeader> viaHeaders = new ArrayList<>();
                 String ipAddress = udpListeningPoint.getIPAddress();
                 ViaHeader viaHeader = headerFactory.createViaHeader(ipAddress,
                         sipProvider.getListeningPoint(transport).getPort(),

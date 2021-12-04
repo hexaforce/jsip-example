@@ -24,6 +24,7 @@ package test.unit.gov.nist.javax.sip.stack;
 
 import java.util.ArrayList;
 import java.util.EventObject;
+import java.util.List;
 
 import javax.sip.ClientTransaction;
 import javax.sip.Dialog;
@@ -53,10 +54,7 @@ import javax.sip.header.ViaHeader;
 import javax.sip.message.Request;
 import javax.sip.message.Response;
 
-import org.apache.log4j.ConsoleAppender;
 import org.apache.log4j.Logger;
-import org.apache.log4j.SimpleLayout;
-import org.apache.log4j.helpers.NullEnumeration;
 
 import test.tck.msgflow.callflows.ProtocolObjects;
 import test.tck.msgflow.callflows.ScenarioHarness;
@@ -488,7 +486,7 @@ public class AckReTransmissionTest extends ScenarioHarness implements SipListene
 
                 // Create ViaHeaders
 
-                ArrayList viaHeaders = new ArrayList();
+                List<ViaHeader> viaHeaders = new ArrayList<>();
                 int port = provider.getListeningPoint(protocolObjects.transport)
                         .getPort();
 

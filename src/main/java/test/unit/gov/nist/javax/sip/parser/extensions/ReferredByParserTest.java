@@ -1,7 +1,7 @@
 package test.unit.gov.nist.javax.sip.parser.extensions;
 
-import test.unit.gov.nist.javax.sip.parser.ParserTestCase;
 import gov.nist.javax.sip.parser.extensions.ReferredByParser;
+import test.unit.gov.nist.javax.sip.parser.ParserTestCase;
 
 public class ReferredByParserTest extends ParserTestCase {
 

@@ -1,11 +1,5 @@
 package test.unit.gov.nist.javax.sip.stack.tls;
 
-import gov.nist.javax.sip.ClientTransactionExt;
-import gov.nist.javax.sip.TlsSecurityPolicy;
-import gov.nist.javax.sip.TransactionExt;
-import gov.nist.javax.sip.stack.NioMessageProcessorFactory;
-import gov.nist.javax.sip.stack.SIPTransactionStack;
-
 import java.security.cert.Certificate;
 import java.util.ArrayList;
 import java.util.List;
@@ -45,12 +39,17 @@ import javax.sip.message.MessageFactory;
 import javax.sip.message.Request;
 import javax.sip.message.Response;
 
-import junit.framework.TestCase;
-
 import org.apache.log4j.ConsoleAppender;
 import org.apache.log4j.Level;
 import org.apache.log4j.Logger;
 import org.apache.log4j.PatternLayout;
+
+import gov.nist.javax.sip.ClientTransactionExt;
+import gov.nist.javax.sip.TlsSecurityPolicy;
+import gov.nist.javax.sip.TransactionExt;
+import gov.nist.javax.sip.stack.NioMessageProcessorFactory;
+import gov.nist.javax.sip.stack.SIPTransactionStack;
+import junit.framework.TestCase;
 
 
 public class DeadSocketTlsTest extends TestCase {
@@ -368,7 +367,7 @@ public class DeadSocketTlsTest extends TestCase {
 
 				// Create ViaHeaders
 
-				ArrayList viaHeaders = new ArrayList();
+				List<ViaHeader> viaHeaders = new ArrayList<>();
 				ViaHeader viaHeader =
 						headerFactory.createViaHeader(
 								"127.0.0.1",

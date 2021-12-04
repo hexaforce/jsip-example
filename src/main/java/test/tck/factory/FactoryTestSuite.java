@@ -1,6 +1,7 @@
 package test.tck.factory;
 
-import junit.framework.*;
+import junit.framework.Test;
+import junit.framework.TestSuite;
 
 /**
  * <p>Title: TCK</p>

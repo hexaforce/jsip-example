@@ -1,13 +1,8 @@
 package test.unit.gov.nist.javax.sip.stack.forkedinvite;
 
-import gov.nist.javax.sip.ResponseEventExt;
-import gov.nist.javax.sip.SipStackImpl;
-import gov.nist.javax.sip.header.ims.PAssertedServiceHeader;
-import gov.nist.javax.sip.header.ims.PPreferredServiceHeader;
-import gov.nist.javax.sip.message.ResponseExt;
-
 import java.util.ArrayList;
 import java.util.HashSet;
+import java.util.List;
 import java.util.Timer;
 import java.util.TimerTask;
 
@@ -43,14 +38,17 @@ import javax.sip.message.MessageFactory;
 import javax.sip.message.Request;
 import javax.sip.message.Response;
 
-import junit.framework.TestCase;
-
 import org.apache.log4j.ConsoleAppender;
 import org.apache.log4j.Logger;
 import org.apache.log4j.SimpleLayout;
 import org.apache.log4j.helpers.NullEnumeration;
 
-
+import gov.nist.javax.sip.ResponseEventExt;
+import gov.nist.javax.sip.SipStackImpl;
+import gov.nist.javax.sip.header.ims.PAssertedServiceHeader;
+import gov.nist.javax.sip.header.ims.PPreferredServiceHeader;
+import gov.nist.javax.sip.message.ResponseExt;
+import junit.framework.TestCase;
 /**
  * This class is a UAC template. Shootist is the guy that shoots and shootme is
  * the guy that gets shot.
@@ -430,7 +428,7 @@ public class Shootist implements SipListener {
 
             // Create ViaHeaders
 
-            ArrayList viaHeaders = new ArrayList();
+            List<ViaHeader> viaHeaders = new ArrayList<>();
             ViaHeader viaHeader = headerFactory
                     .createViaHeader(host, sipProvider.getListeningPoint(
                             transport).getPort(),

@@ -282,7 +282,7 @@ public class Controller4 implements SipListener {
         SipURI requestURI = addressFactory.createSipURI(toVal, peerHostPort);
 
         // Create ViaHeaders
-        ArrayList viaHeaders = new ArrayList();
+        List<ViaHeader> viaHeaders = new ArrayList<>();
         ViaHeader viaHeader = headerFactory.createViaHeader("127.0.0.1",
                 sipProvider.getListeningPoint(transport).getPort(), transport,
                 null);

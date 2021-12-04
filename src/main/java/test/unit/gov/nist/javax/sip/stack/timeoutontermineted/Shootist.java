@@ -1,6 +1,7 @@
 package test.unit.gov.nist.javax.sip.stack.timeoutontermineted;
 
 import java.util.ArrayList;
+import java.util.List;
 
 import javax.sip.ClientTransaction;
 import javax.sip.Dialog;
@@ -31,10 +32,9 @@ import javax.sip.message.MessageFactory;
 import javax.sip.message.Request;
 import javax.sip.message.Response;
 
-import junit.framework.TestCase;
-
 import org.apache.log4j.Logger;
 
+import junit.framework.TestCase;
 /**
  * This class is a UAC template. Shootist is the guy that shoots and shootme is
  * the guy that gets shot.
@@ -188,7 +188,7 @@ public class Shootist implements SipListener {
 
             // Create ViaHeaders
 
-            ArrayList viaHeaders = new ArrayList();
+            List<ViaHeader> viaHeaders = new ArrayList<>();
             ViaHeader viaHeader = headerFactory.createViaHeader(host, sipProvider.getListeningPoint(transport).getPort(), transport, null);
 
             // add via headers

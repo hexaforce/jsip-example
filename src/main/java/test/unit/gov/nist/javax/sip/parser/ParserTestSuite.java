@@ -19,7 +19,8 @@
 */
 package test.unit.gov.nist.javax.sip.parser;
 
-import junit.framework.*;
+import junit.framework.Test;
+import junit.framework.TestSuite;
 
 /** A test suite for all parser tests
 

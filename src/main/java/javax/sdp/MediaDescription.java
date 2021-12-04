@@ -6,13 +6,13 @@
 
 package javax.sdp;
 
-import java.io.*;
-import java.util.*;
+import java.io.Serializable;
+import java.util.Vector;
 
-// issued by Miguel Freitas - work-around
-import gov.nist.javax.sdp.fields.PreconditionFields;
 import gov.nist.javax.sdp.fields.AttributeField;
 // end //
+// issued by Miguel Freitas - work-around
+import gov.nist.javax.sdp.fields.PreconditionFields;
 
 
 /** A MediaDescription identifies the set of medias that may be received on a specific port or set of ports. It includes:

@@ -6,7 +6,7 @@
 
 package javax.sdp;
 
-import java.util.*;
+import java.util.Date;
 
 /** A RepeatTime represents a t= field contained within a TimeDescription.
  *

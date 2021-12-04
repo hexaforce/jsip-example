@@ -23,8 +23,8 @@
  *The JAIN-SIP project.
  */
 package test.unit.gov.nist.javax.sip.parser;
-import gov.nist.javax.sip.address.*;
-import gov.nist.javax.sip.parser.*;
+import gov.nist.javax.sip.address.GenericURI;
+import gov.nist.javax.sip.parser.URLParser;
 import junit.framework.TestCase;
 
 /**

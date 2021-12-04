@@ -6,7 +6,7 @@
 
 package javax.sdp;
 
-import java.util.*;
+import java.util.Hashtable;
 
 /** A TimeZoneAdjustment represents the z= fields contained within a TimeDescription.
  * A TimeZoneAdjustment

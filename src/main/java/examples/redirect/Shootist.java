@@ -151,7 +151,7 @@ public class Shootist extends TestCase implements SipListener {
                     CSeqHeader cseqNew = protocolObjects.headerFactory
                             .createCSeqHeader(++seqNo, "INVITE");
                     // Create ViaHeaders (either use tcp or udp)
-                    ArrayList viaHeaders = new ArrayList();
+                    List<ViaHeader> viaHeaders = new ArrayList<>();
                     ViaHeader viaHeader = protocolObjects.headerFactory
                             .createViaHeader("127.0.0.1", sipProvider
                                     .getListeningPoint(protocolObjects.transport).getPort(),
@@ -279,7 +279,7 @@ public class Shootist extends TestCase implements SipListener {
 
             // Create ViaHeaders
 
-            ArrayList viaHeaders = new ArrayList();
+            List<ViaHeader> viaHeaders = new ArrayList<>();
             ViaHeader viaHeader = protocolObjects.headerFactory
                     .createViaHeader("127.0.0.1", sipProvider
                             .getListeningPoint(protocolObjects.transport).getPort(), protocolObjects.transport,

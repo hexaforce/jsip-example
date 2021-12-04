@@ -335,7 +335,7 @@ public class B2BUA implements SipListener {
 
 			// Create ViaHeaders
 
-			ArrayList viaHeaders = new ArrayList();
+			List<ViaHeader> viaHeaders = new ArrayList<>();
 			String ipAddress = listeningPoint.getIPAddress();
 			ViaHeader viaHeader = headerFactory.createViaHeader(ipAddress,
 					sipProvider.getListeningPoint(transport).getPort(),

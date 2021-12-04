@@ -19,8 +19,6 @@
 */
 package test.tck.msgflow;
 
-import gov.nist.javax.sip.stack.SIPTransactionStack;
-
 import java.text.ParseException;
 import java.util.LinkedList;
 import java.util.List;
@@ -46,6 +44,7 @@ import javax.sip.message.MessageFactory;
 import javax.sip.message.Request;
 import javax.sip.message.Response;
 
+import gov.nist.javax.sip.stack.SIPTransactionStack;
 import test.tck.TckInternalError;
 import test.tck.TestHarness;
 import test.tck.TiUnexpectedError;

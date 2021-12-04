@@ -3,10 +3,7 @@ package test.tck.msgflow.callflows.prack;
 import javax.sip.SipListener;
 import javax.sip.SipProvider;
 
-import org.apache.log4j.Appender;
-import org.apache.log4j.ConsoleAppender;
 import org.apache.log4j.Logger;
-import org.apache.log4j.SimpleLayout;
 
 import test.tck.msgflow.callflows.ScenarioHarness;
 

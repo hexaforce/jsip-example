@@ -2,6 +2,7 @@ package test.tck.msgflow.callflows.forkedinvite;
 
 import java.util.ArrayList;
 import java.util.HashSet;
+import java.util.List;
 
 import javax.sip.ClientTransaction;
 import javax.sip.Dialog;
@@ -34,7 +35,6 @@ import org.apache.log4j.Logger;
 
 import test.tck.TestHarness;
 import test.tck.msgflow.callflows.ProtocolObjects;
-
 /**
  * This class is a UAC template. Shootist is the guy that shoots and shootme is
  * the guy that gets shot.
@@ -275,7 +275,7 @@ public class Shootist implements SipListener {
 
             // Create ViaHeaders
 
-            ArrayList viaHeaders = new ArrayList();
+            List<ViaHeader> viaHeaders = new ArrayList<>();
             ViaHeader viaHeader = protocolObjects.headerFactory
                     .createViaHeader(host, sipProvider.getListeningPoint(
                             protocolObjects.transport).getPort(),

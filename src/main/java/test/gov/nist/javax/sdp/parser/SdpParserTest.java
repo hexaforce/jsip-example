@@ -1,19 +1,17 @@
 package test.gov.nist.javax.sdp.parser;
 
-import gov.nist.javax.sdp.SessionDescriptionImpl;
-import gov.nist.javax.sdp.fields.AttributeField;
-import gov.nist.javax.sdp.parser.AttributeFieldParser;
-import gov.nist.javax.sdp.parser.SDPAnnounceParser;
-
 import java.io.File;
 import java.io.FileOutputStream;
 import java.io.ObjectOutputStream;
 import java.util.Vector;
 
 import javax.sdp.Attribute;
-import javax.sdp.Connection;
 import javax.sdp.MediaDescription;
 
+import gov.nist.javax.sdp.SessionDescriptionImpl;
+import gov.nist.javax.sdp.fields.AttributeField;
+import gov.nist.javax.sdp.parser.AttributeFieldParser;
+import gov.nist.javax.sdp.parser.SDPAnnounceParser;
 import junit.framework.TestCase;
 
 public class SdpParserTest extends TestCase {

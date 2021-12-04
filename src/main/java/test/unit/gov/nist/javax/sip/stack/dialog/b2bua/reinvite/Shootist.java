@@ -1,10 +1,8 @@
 package test.unit.gov.nist.javax.sip.stack.dialog.b2bua.reinvite;
 
-import gov.nist.javax.sip.SipStackImpl;
-
 import java.util.ArrayList;
 import java.util.HashSet;
-import java.util.Properties;
+import java.util.List;
 import java.util.Timer;
 import java.util.TimerTask;
 
@@ -17,8 +15,6 @@ import javax.sip.ListeningPoint;
 import javax.sip.RequestEvent;
 import javax.sip.ResponseEvent;
 import javax.sip.ServerTransaction;
-import javax.sip.SipException;
-import javax.sip.SipFactory;
 import javax.sip.SipListener;
 import javax.sip.SipProvider;
 import javax.sip.SipStack;
@@ -41,12 +37,10 @@ import javax.sip.message.MessageFactory;
 import javax.sip.message.Request;
 import javax.sip.message.Response;
 
-import junit.framework.TestCase;
-
 import org.apache.log4j.Logger;
 
+import junit.framework.TestCase;
 import test.tck.msgflow.callflows.ProtocolObjects;
-
 
 /**
  * This class is a UAC template. Shootist is the guy that shoots and shootme is
@@ -351,7 +345,7 @@ public class Shootist implements SipListener {
 
             // Create ViaHeaders
 
-            ArrayList viaHeaders = new ArrayList();
+            List<ViaHeader> viaHeaders = new ArrayList<>();
             ViaHeader viaHeader = headerFactory
                     .createViaHeader(host, sipProvider.getListeningPoint(
                             transport).getPort(),

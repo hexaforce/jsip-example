@@ -1,7 +1,6 @@
 package test.unit.gov.nist.javax.sip.stack.forkedinviteloopdisabled;
 
 import java.util.HashSet;
-import java.util.Hashtable;
 import java.util.Iterator;
 
 import javax.sip.ClientTransaction;
@@ -14,7 +13,6 @@ import javax.sip.ServerTransaction;
 import javax.sip.SipListener;
 import javax.sip.SipProvider;
 import javax.sip.TimeoutEvent;
-import javax.sip.Transaction;
 import javax.sip.TransactionTerminatedEvent;
 import javax.sip.address.Address;
 import javax.sip.address.SipURI;

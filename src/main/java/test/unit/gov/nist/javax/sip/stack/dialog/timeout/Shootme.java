@@ -15,11 +15,6 @@
  */
 package test.unit.gov.nist.javax.sip.stack.dialog.timeout;
 
-import gov.nist.javax.sip.DialogTimeoutEvent;
-import gov.nist.javax.sip.SipListenerExt;
-import gov.nist.javax.sip.DialogTimeoutEvent.Reason;
-import gov.nist.javax.sip.stack.SIPDialog;
-
 import java.util.Timer;
 import java.util.TimerTask;
 
@@ -48,6 +43,9 @@ import org.apache.log4j.Logger;
 import org.apache.log4j.SimpleLayout;
 import org.apache.log4j.helpers.NullEnumeration;
 
+import gov.nist.javax.sip.DialogTimeoutEvent;
+import gov.nist.javax.sip.DialogTimeoutEvent.Reason;
+import gov.nist.javax.sip.SipListenerExt;
 import test.tck.msgflow.callflows.ProtocolObjects;
 
 /**

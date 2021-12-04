@@ -1,7 +1,5 @@
 package test.unit.gov.nist.javax.sip.stack.tls;
 
-import gov.nist.javax.sip.stack.NioMessageProcessorFactory;
-
 import java.io.DataInputStream;
 import java.io.DataOutputStream;
 import java.io.IOException;
@@ -11,6 +9,7 @@ import java.util.Properties;
 
 import javax.sip.ListeningPoint;
 
+import gov.nist.javax.sip.stack.NioMessageProcessorFactory;
 import junit.framework.TestCase;
 
 public class TlsTest extends TestCase {

@@ -19,12 +19,20 @@
 */
 package test.tck.msgflow;
 
-import javax.sip.*;
+import java.util.TooManyListenersException;
+
+import javax.sip.DialogTerminatedEvent;
+import javax.sip.IOExceptionEvent;
+import javax.sip.RequestEvent;
+import javax.sip.ResponseEvent;
+import javax.sip.SipListener;
+import javax.sip.SipProvider;
+import javax.sip.TimeoutEvent;
+import javax.sip.TransactionTerminatedEvent;
 
 import org.apache.log4j.Logger;
 
-import java.util.TooManyListenersException;
-import test.tck.*;
+import test.tck.TckInternalError;
 
 /**
  * <p>

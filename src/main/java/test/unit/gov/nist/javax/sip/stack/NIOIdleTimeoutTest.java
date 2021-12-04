@@ -2,9 +2,6 @@ package test.unit.gov.nist.javax.sip.stack;
 
 
 
-import gov.nist.javax.sip.ListeningPointImpl;
-import gov.nist.javax.sip.stack.NioMessageProcessorFactory;
-
 import java.net.Socket;
 import java.net.SocketTimeoutException;
 import java.util.Arrays;
@@ -40,6 +37,8 @@ import javax.sip.header.ViaHeader;
 import javax.sip.message.MessageFactory;
 import javax.sip.message.Request;
 
+import gov.nist.javax.sip.ListeningPointImpl;
+import gov.nist.javax.sip.stack.NioMessageProcessorFactory;
 import junit.framework.Assert;
 import test.tck.msgflow.callflows.ScenarioHarness;
 import test.unit.gov.nist.javax.sip.stack.tls.TlsTest;
