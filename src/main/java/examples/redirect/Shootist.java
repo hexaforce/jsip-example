@@ -44,6 +44,7 @@ import junit.framework.TestCase;
  * @author M. Ranganathan
  */
 
+@SuppressWarnings("unused")
 public class Shootist extends TestCase implements SipListener {
 
     private SipProvider sipProvider;

@@ -27,7 +27,7 @@ import junit.framework.TestCase;
  */
 public class ForkedInviteTest extends TestCase implements SipListener {
 
-    private Hashtable providerTable;
+    private Hashtable<SipProvider, TestCase> providerTable;
 
     protected Shootist shootist;
 
@@ -50,13 +50,12 @@ public class ForkedInviteTest extends TestCase implements SipListener {
         return listener;
     }
 
-    @SuppressWarnings("unchecked")
 	public ForkedInviteTest() {
 
         try {
             ProtocolObjects.logFileDirectory = "logs/";
             ProtocolObjects.init("frokedinvite",true);
-            providerTable = new Hashtable();
+            providerTable = new Hashtable<SipProvider, TestCase>();
             shootist = new Shootist();
             SipProvider shootistProvider = shootist.createSipProvider();
             providerTable.put(shootistProvider, shootist);

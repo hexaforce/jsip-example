@@ -2,10 +2,11 @@ package examples.nistgoodies.configlogger;
 
 import gov.nist.javax.sip.LogRecord;
 
+@SuppressWarnings("unused")
 public class LogRecordImpl implements LogRecord {
 
     private String message;
-    private String source;
+	private String source;
     private String destination;
     private long timeStamp;
     private String tid;

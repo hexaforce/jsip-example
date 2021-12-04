@@ -60,7 +60,6 @@ import gov.nist.javax.sip.header.ims.PrivacyHeader;
 import gov.nist.javax.sip.header.ims.SecurityClientHeader;
 import gov.nist.javax.sip.header.ims.SecurityServerHeader;
 import gov.nist.javax.sip.header.ims.SecurityVerifyHeader;
-import gov.nist.javax.sip.header.ims.SecurityVerifyList;
 
 /**
  * <p>This class is a UAC template.</p>
@@ -172,7 +171,7 @@ public class Shootist implements SipListener {
 
             RequireHeader require = null;
             String requireOptionTags = new String();
-            ListIterator li = ok.getHeaders(RequireHeader.NAME);
+            ListIterator<?> li = ok.getHeaders(RequireHeader.NAME);
             if (li != null) {
                 try {
                     while(li.hasNext())
@@ -192,10 +191,10 @@ public class Shootist implements SipListener {
 
             // this is only to illustrate the usage of this headers
             // send Security-Verify (based on Security-Server) if Require: sec-agree
-            SecurityVerifyList secVerifyList = null;
+//            SecurityVerifyList secVerifyList = null;
             if (requireOptionTags.indexOf("sec-agree") != -1)
             {
-                ListIterator secServerReceived =
+                ListIterator<?> secServerReceived =
                     ok.getHeaders(SecurityServerHeader.NAME);
                 if (secServerReceived != null && secServerReceived.hasNext())
                 {
@@ -213,7 +212,7 @@ public class Shootist implements SipListener {
                         }
 
                         try {
-                            Iterator parameters = security.getParameterNames();
+                            Iterator<?> parameters = security.getParameterNames();
                             SecurityVerifyHeader newSecVerify = headerFactoryImpl.createSecurityVerifyHeader();
                             newSecVerify.setSecurityMechanism(security.getSecurityMechanism());
                             while (parameters.hasNext())
@@ -239,13 +238,13 @@ public class Shootist implements SipListener {
             CSeqHeader cseq = (CSeqHeader) ok.getHeader(CSeqHeader.NAME);
             ackRequest = dialog.createAck( cseq.getSeqNumber() );
 
-            if (secVerifyList != null && !secVerifyList.isEmpty())
-            {
-                RequireHeader requireSecAgree = headerFactory.createRequireHeader("sec-agree");
-                ackRequest.setHeader(requireSecAgree);
-
-                ackRequest.setHeader(secVerifyList);
-            }
+//            if (secVerifyList != null && !secVerifyList.isEmpty())
+//            {
+//                RequireHeader requireSecAgree = headerFactory.createRequireHeader("sec-agree");
+//                ackRequest.setHeader(requireSecAgree);
+//
+//                ackRequest.setHeader(secVerifyList);
+//            }
 
             System.out.println("Sending ACK");
             dialog.sendAck(ackRequest);

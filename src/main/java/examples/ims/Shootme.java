@@ -63,6 +63,7 @@ import gov.nist.javax.sip.header.ims.SecurityServerList;
  * <p>issued by Miguel Freitas (IT) PT-Inovacao</p>
  */
 
+@SuppressWarnings("unused")
 public class Shootme implements SipListener {
 
     private static AddressFactory addressFactory;
@@ -178,7 +179,7 @@ public class Shootme implements SipListener {
         // check headers Allow, Require and Supported
 
         // Allow header
-        ListIterator li = null;
+        ListIterator<?> li = null;
         AllowHeader allow = null;
         String allowMethods = new String();         // all the methods in Allow Header
         li = request.getHeaders(AllowHeader.NAME);  // get all the allow methods
@@ -298,7 +299,7 @@ public class Shootme implements SipListener {
 
 
         // check P-Associated-URI
-        ListIterator associatedURIList;
+        ListIterator<?> associatedURIList;
         try {
             associatedURIList = request.getHeaders(PAssociatedURIHeader.NAME);
             if (associatedURIList != null)
@@ -363,7 +364,7 @@ public class Shootme implements SipListener {
 
 
         // check P-Visited-Network-ID
-        ListIterator visitedNetList;
+        ListIterator<?> visitedNetList;
         try {
             visitedNetList = request.getHeaders(PVisitedNetworkIDHeader.NAME);
             if (visitedNetList != null)
@@ -389,7 +390,7 @@ public class Shootme implements SipListener {
 
 
         // check Privacy
-        ListIterator privacyList;
+        ListIterator<?> privacyList;
         try {
             privacyList = request.getHeaders(PrivacyHeader.NAME);
             if (privacyList != null && privacyList.hasNext())
@@ -439,7 +440,7 @@ public class Shootme implements SipListener {
 
 
         // P-Asserted-Identity
-        ListIterator assertedIDList;
+        ListIterator<?> assertedIDList;
         try {
             assertedIDList =
                 request.getHeaders(PAssertedIdentityHeader.NAME);
@@ -474,7 +475,7 @@ public class Shootme implements SipListener {
 
             if (chargAddr != null)
             {
-                Iterator param = chargAddr.getParameterNames();
+                Iterator<?> param = chargAddr.getParameterNames();
 
                 System.out.print(".: P-Charging-Function-Addresses = ");
 
@@ -503,7 +504,7 @@ public class Shootme implements SipListener {
                 request.getHeader(PChargingVectorHeader.NAME);
             if (chargVect != null)
             {
-                Iterator param = chargVect.getParameterNames();
+                Iterator<?> param = chargVect.getParameterNames();
 
                 System.out.print(".: P-Charging-Vector = ");
 
@@ -528,7 +529,7 @@ public class Shootme implements SipListener {
 
 
         // P-Media-Authorization
-        ListIterator mediaAuthList;
+        ListIterator<?> mediaAuthList;
         try {
             mediaAuthList = request.getHeaders(PMediaAuthorizationHeader.NAME);
 
@@ -554,7 +555,7 @@ public class Shootme implements SipListener {
         }
 
         // Security-Client header
-        ListIterator secClientList;
+        ListIterator<?> secClientList;
         try {
             secClientList = request.getHeaders(SecurityClientHeader.NAME);
 
@@ -616,7 +617,7 @@ public class Shootme implements SipListener {
         }
 
         // check Path header
-        ListIterator<Header> pathList = (ListIterator<Header>)request.getHeaders(PathHeader.NAME);
+        ListIterator<?> pathList = request.getHeaders(PathHeader.NAME);
         if (pathList != null && pathList.hasNext())
         {
             System.out.print(".: Path received : ");
@@ -724,7 +725,7 @@ public class Shootme implements SipListener {
 
     public void processCancel(RequestEvent requestEvent,
             ServerTransaction serverTransactionId) {
-        SipProvider sipProvider = (SipProvider) requestEvent.getSource();
+		SipProvider sipProvider = (SipProvider) requestEvent.getSource();
         Request request = requestEvent.getRequest();
         try {
             System.out.println("shootme:  got a cancel.");

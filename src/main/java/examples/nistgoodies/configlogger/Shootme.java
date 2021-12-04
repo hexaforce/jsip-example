@@ -38,6 +38,7 @@ import javax.sip.message.Response;
  * @author M. Ranganathan
  */
 
+@SuppressWarnings("unused")
 public class Shootme implements SipListener {
 
     private static AddressFactory addressFactory;

@@ -43,6 +43,7 @@ import org.apache.log4j.SimpleLayout;
  * @author M. Ranganathan
  */
 
+@SuppressWarnings("unused")
 public class Notifier implements SipListener {
 
     private static AddressFactory addressFactory;
@@ -270,7 +271,7 @@ public class Notifier implements SipListener {
 
     public synchronized void processResponse(ResponseEvent responseReceivedEvent) {
         Response response = (Response) responseReceivedEvent.getResponse();
-        Transaction tid = responseReceivedEvent.getClientTransaction();
+		Transaction tid = responseReceivedEvent.getClientTransaction();
 
         if ( response.getStatusCode() !=  200 ) {
             this.notifyCount --;

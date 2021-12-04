@@ -40,6 +40,7 @@ import junit.framework.TestCase;
  * @author M. Ranganathan
  */
 
+@SuppressWarnings("unused")
 public class Shootme extends TestCase implements SipListener {
 
 
@@ -53,7 +54,7 @@ public class Shootme extends TestCase implements SipListener {
 
     private Response okResponse;
 
-    private Request inviteRequest;
+	private Request inviteRequest;
 
     private Dialog dialog;
 

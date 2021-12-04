@@ -27,7 +27,7 @@ import junit.framework.TestCase;
  */
 public abstract class AbstractCancelTest extends TestCase implements SipListener {
 
-    private Hashtable providerTable;
+    private Hashtable<SipProvider, TestCase> providerTable;
 
     protected Shootist shootist;
 
@@ -55,7 +55,7 @@ public abstract class AbstractCancelTest extends TestCase implements SipListener
         try {
             ProtocolObjects.logFileDirectory = "logs/";
             ProtocolObjects.init("canceltest");
-            providerTable = new Hashtable();
+            providerTable = new Hashtable<SipProvider, TestCase>();
             shootist = new Shootist();
             SipProvider shootistProvider = shootist.createSipProvider();
             providerTable.put(shootistProvider, shootist);

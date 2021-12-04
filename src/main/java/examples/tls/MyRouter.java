@@ -20,11 +20,11 @@ public class MyRouter implements Router {
 
     /** Always send requests to the default route location.
     */
-    public ListIterator getNextHops(Request sipRequest) {
-        LinkedList ll = null;
+    public ListIterator<HopImpl> getNextHops(Request sipRequest) {
+        LinkedList<HopImpl> ll = null;
         if (defaultRoute != null) {
             if (ll == null)
-                ll = new LinkedList();
+                ll = new LinkedList<HopImpl>();
             ll.add(defaultRoute);
             return ll.listIterator();
         } else

@@ -2,6 +2,7 @@ package examples.nistgoodies.pluggablelogger;
 
 import gov.nist.javax.sip.LogRecord;
 
+@SuppressWarnings("unused")
 public class LogRecordImpl implements LogRecord {
 
     private String message;

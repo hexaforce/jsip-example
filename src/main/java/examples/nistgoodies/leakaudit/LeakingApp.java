@@ -3,6 +3,7 @@ package examples.nistgoodies.leakaudit;
 import java.text.ParseException;
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 import java.util.Set;
 
@@ -48,7 +49,7 @@ import gov.nist.javax.sip.stack.SIPTransactionStack;
 public class LeakingApp implements SipListener {
 
     /// Dialogs indexed by call id
-    private Map dialogs = new HashMap();
+    private Map<String, ClientTransaction> dialogs = new HashMap<String, ClientTransaction>();
 
     /// Current CSeq
     private long cseq = 0;
@@ -134,7 +135,7 @@ public class LeakingApp implements SipListener {
                     null);
 
             // add via headers
-            ArrayList viaList = new ArrayList();
+            List<ViaHeader> viaList = new ArrayList<>();
             viaList.add(viaHeader);
 
             MaxForwardsHeader maxForwards = headerFactory.createMaxForwardsHeader(70);
@@ -233,7 +234,7 @@ public class LeakingApp implements SipListener {
 
 
     /// Returns a list (set) of active call IDs used by this application
-    public Set getActiveCallIDs() {
+    public Set<String> getActiveCallIDs() {
         return dialogs.keySet();
     }
 }
