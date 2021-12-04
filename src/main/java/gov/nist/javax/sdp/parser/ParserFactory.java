@@ -24,10 +24,12 @@
 *
 */
 package gov.nist.javax.sdp.parser;
-import java.util.*;
-import gov.nist.core.*;
+import java.lang.reflect.Constructor;
 import java.text.ParseException;
-import java.lang.reflect.*;
+import java.util.Hashtable;
+
+import gov.nist.core.InternalErrorHandler;
+import gov.nist.core.PackageNames;
 
 /** Factory for creating parsers for the SDP stuff.
 *

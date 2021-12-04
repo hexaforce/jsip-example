@@ -28,9 +28,7 @@
 *******************************************************************************/
 package gov.nist.javax.sip.header;
 
-import javax.sip.header.*;
-
-import java.util.ListIterator;
+import javax.sip.header.ContactHeader;
 
 /**
  * List of contact headers.ContactLists are also maintained in a hashtable

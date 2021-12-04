@@ -28,9 +28,13 @@
  *******************************************************************************/
 package gov.nist.javax.sip.address;
 
-import gov.nist.core.*;
+import java.lang.reflect.Field;
+import java.lang.reflect.Modifier;
 
-import java.lang.reflect.*;
+import gov.nist.core.GenericObject;
+import gov.nist.core.GenericObjectList;
+import gov.nist.core.InternalErrorHandler;
+import gov.nist.core.PackageNames;
 
 /**
  * Root object for all objects in this package.

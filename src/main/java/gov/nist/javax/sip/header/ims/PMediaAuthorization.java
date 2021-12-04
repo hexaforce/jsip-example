@@ -34,12 +34,10 @@ package gov.nist.javax.sip.header.ims;
 
 import java.text.ParseException;
 
-import gov.nist.javax.sip.header.SIPHeader;
-
 import javax.sip.InvalidArgumentException;
 import javax.sip.header.ExtensionHeader;
-import javax.sip.header.HeaderAddress;
-import javax.sip.header.Parameters;
+
+import gov.nist.javax.sip.header.SIPHeader;
 
 
 /**

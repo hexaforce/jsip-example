@@ -27,13 +27,14 @@
 * Product of NIST/ITL Advanced Networking Technologies Division (ANTD).        *
 *******************************************************************************/
 package gov.nist.javax.sip.header;
-import gov.nist.core.*;
-import java.util.Calendar;
-import java.util.TimeZone;
-import java.util.Locale;
-import java.util.GregorianCalendar;
 import java.io.Serializable;
-import java.lang.IllegalArgumentException;
+import java.util.Calendar;
+import java.util.GregorianCalendar;
+import java.util.Locale;
+import java.util.TimeZone;
+
+import gov.nist.core.InternalErrorHandler;
+import gov.nist.core.Separators;
 
 /**
 * Implements a parser class for tracking expiration time

@@ -24,10 +24,10 @@
 *
 */
 package gov.nist.javax.sip.parser;
+import java.text.ParseException;
+
 import gov.nist.javax.sip.header.From;
 import gov.nist.javax.sip.header.SIPHeader;
-
-import java.text.ParseException;
 
 /** From header parser.
  *

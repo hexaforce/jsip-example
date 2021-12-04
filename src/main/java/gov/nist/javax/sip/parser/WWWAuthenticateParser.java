@@ -25,7 +25,9 @@
 */
 package gov.nist.javax.sip.parser;
 import java.text.ParseException;
-import gov.nist.javax.sip.header.*;
+
+import gov.nist.javax.sip.header.SIPHeader;
+import gov.nist.javax.sip.header.WWWAuthenticate;
 
 /**
  * Parser for WWW authenitcate header.

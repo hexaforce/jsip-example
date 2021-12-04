@@ -27,9 +27,15 @@
 * Product of NIST/ITL Advanced Networking Technologies Division (ANTD).        *
 *******************************************************************************/
 package gov.nist.javax.sdp.fields;
-import gov.nist.core.*;
-import java.util.*;
-import javax.sdp.*;
+import java.util.Date;
+import java.util.Enumeration;
+import java.util.Hashtable;
+import java.util.ListIterator;
+
+import javax.sdp.SdpException;
+import javax.sdp.SdpParseException;
+
+import gov.nist.core.Separators;
 
 /**
 * Z= SDP field.

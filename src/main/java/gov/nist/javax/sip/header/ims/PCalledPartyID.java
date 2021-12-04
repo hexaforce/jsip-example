@@ -35,7 +35,6 @@ import java.text.ParseException;
 import javax.sip.header.ExtensionHeader;
 
 import gov.nist.javax.sip.address.AddressImpl;
-import gov.nist.javax.sip.header.ims.PCalledPartyIDHeader;
 
 /**
  * P-Called-Party-ID SIP Private Header.

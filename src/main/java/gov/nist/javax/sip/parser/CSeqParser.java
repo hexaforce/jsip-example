@@ -25,13 +25,14 @@
 */
 package gov.nist.javax.sip.parser;
 
-import gov.nist.javax.sip.header.*;
-import gov.nist.javax.sip.message.SIPRequest;
-
 import java.text.ParseException;
-import javax.sip.*;
 
-import gov.nist.core.*;
+import javax.sip.InvalidArgumentException;
+
+import gov.nist.core.Debug;
+import gov.nist.javax.sip.header.CSeq;
+import gov.nist.javax.sip.header.SIPHeader;
+import gov.nist.javax.sip.message.SIPRequest;
 
 /**
  * Parser for CSeq headers.

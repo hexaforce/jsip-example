@@ -28,8 +28,6 @@
  *******************************************************************************/
 package gov.nist.javax.sip.message;
 
-import gov.nist.core.Separators;
-
 import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
@@ -37,6 +35,8 @@ import java.util.List;
 import javax.sip.header.ContentDispositionHeader;
 import javax.sip.header.ContentTypeHeader;
 import javax.sip.header.Header;
+
+import gov.nist.core.Separators;
 
 /**
  * Implementation of multipart content type.

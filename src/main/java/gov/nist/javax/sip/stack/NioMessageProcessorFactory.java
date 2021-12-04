@@ -25,13 +25,13 @@
  */
 package gov.nist.javax.sip.stack;
 
-import gov.nist.javax.sip.ListeningPointExt;
-import gov.nist.javax.sip.SipStackImpl;
-
 import java.io.IOException;
 import java.net.InetAddress;
 
 import javax.sip.ListeningPoint;
+
+import gov.nist.javax.sip.ListeningPointExt;
+import gov.nist.javax.sip.SipStackImpl;
 
 public class NioMessageProcessorFactory implements MessageProcessorFactory {
 

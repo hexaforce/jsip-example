@@ -30,13 +30,14 @@
  */
 package gov.nist.javax.sip;
 
-import gov.nist.javax.sip.header.Via;
-import gov.nist.javax.sip.message.SIPResponse;
-
 import java.security.MessageDigest;
-import java.util.*;
+import java.util.HashSet;
+import java.util.Locale;
 import java.util.concurrent.Executor;
 import java.util.concurrent.Executors;
+
+import gov.nist.javax.sip.header.Via;
+import gov.nist.javax.sip.message.SIPResponse;
 
 /**
  * A few utilities that are used in various places by the stack. This is used to

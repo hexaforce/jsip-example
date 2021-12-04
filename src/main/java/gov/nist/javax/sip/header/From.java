@@ -28,12 +28,13 @@
  ******************************************************************************/
 package gov.nist.javax.sip.header;
 
+import java.text.ParseException;
+
+import javax.sip.header.FromHeader;
+
 import gov.nist.core.HostPort;
 import gov.nist.javax.sip.address.AddressImpl;
 import gov.nist.javax.sip.parser.Parser;
-
-import javax.sip.header.FromHeader;
-import java.text.ParseException;
 
 /**
  * From SIP Header.

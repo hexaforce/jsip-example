@@ -23,8 +23,10 @@
 */
 package gov.nist.javax.sip.header;
 
-import gov.nist.core.*;
 import java.text.ParseException;
+
+import gov.nist.core.NameValue;
+import gov.nist.core.Separators;
 
 /**
  * Authentication info SIP Header.

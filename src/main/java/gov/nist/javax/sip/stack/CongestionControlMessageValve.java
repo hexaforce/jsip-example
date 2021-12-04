@@ -27,15 +27,15 @@ package gov.nist.javax.sip.stack;
 
 import java.io.IOException;
 
+import javax.sip.SipStack;
+import javax.sip.message.Request;
+import javax.sip.message.Response;
+
 import gov.nist.core.CommonLogger;
 import gov.nist.core.StackLogger;
 import gov.nist.javax.sip.SipStackImpl;
 import gov.nist.javax.sip.message.SIPRequest;
 import gov.nist.javax.sip.message.SIPResponse;
-
-import javax.sip.SipStack;
-import javax.sip.message.Request;
-import javax.sip.message.Response;
 
 /**
  * This is just a simple reusable congestion control valve JSIP apps can use to stop traffic when the number of

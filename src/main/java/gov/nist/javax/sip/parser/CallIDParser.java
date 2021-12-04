@@ -25,8 +25,10 @@
 */
 package gov.nist.javax.sip.parser;
 
-import gov.nist.javax.sip.header.*;
-import java.text.*;
+import java.text.ParseException;
+
+import gov.nist.javax.sip.header.CallID;
+import gov.nist.javax.sip.header.SIPHeader;
 
 /** Parser for CALL ID header.
  *

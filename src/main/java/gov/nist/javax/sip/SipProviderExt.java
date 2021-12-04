@@ -1,7 +1,6 @@
 package gov.nist.javax.sip;
 
 import javax.sip.SipProvider;
-import javax.sip.SipStack;
 
 /**
  * Extensions to SipProvider under consideration for Version 2.0.

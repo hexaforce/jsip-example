@@ -27,7 +27,7 @@
 * Product of NIST/ITL Advanced Networking Technologies Division (ANTD).        *
 *******************************************************************************/
 package gov.nist.javax.sip.header;
-import javax.sip.header.*;
+import javax.sip.header.AcceptLanguageHeader;
 
 /**
  * AcceptLanguageList: Strings together a list of AcceptLanguage SIPHeaders.

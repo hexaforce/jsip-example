@@ -25,17 +25,33 @@
  */
 package gov.nist.javax.sip;
 
-import java.util.*;
-import gov.nist.javax.sip.stack.*;
-import gov.nist.javax.sip.message.*;
-import javax.sip.message.*;
-import javax.sip.*;
+import java.util.EventObject;
+import java.util.LinkedList;
+import java.util.ListIterator;
+
+import javax.sip.DialogState;
+import javax.sip.DialogTerminatedEvent;
+import javax.sip.IOExceptionEvent;
+import javax.sip.RequestEvent;
+import javax.sip.ResponseEvent;
+import javax.sip.SipListener;
+import javax.sip.TimeoutEvent;
+import javax.sip.TransactionState;
+import javax.sip.TransactionTerminatedEvent;
+import javax.sip.message.Request;
+import javax.sip.message.Response;
 
 import gov.nist.core.CommonLogger;
 import gov.nist.core.LogLevels;
 import gov.nist.core.LogWriter;
 import gov.nist.core.StackLogger;
 import gov.nist.core.ThreadAuditor;
+import gov.nist.javax.sip.message.SIPRequest;
+import gov.nist.javax.sip.message.SIPResponse;
+import gov.nist.javax.sip.stack.SIPClientTransaction;
+import gov.nist.javax.sip.stack.SIPDialog;
+import gov.nist.javax.sip.stack.SIPServerTransaction;
+import gov.nist.javax.sip.stack.SIPTransaction;
 
 /* bug fixes SIPQuest communications and Shu-Lin Chen. */
 

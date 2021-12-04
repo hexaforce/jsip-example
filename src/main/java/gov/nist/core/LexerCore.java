@@ -25,11 +25,11 @@
 */
 package gov.nist.core;
 
-import gov.nist.javax.sip.*;
-
 import java.text.ParseException;
 import java.util.Map;
 import java.util.concurrent.ConcurrentHashMap;
+
+import gov.nist.javax.sip.Utils;
 
 /** A lexical analyzer that is used by all parsers in our implementation.
  *

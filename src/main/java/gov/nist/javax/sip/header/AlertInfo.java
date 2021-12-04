@@ -28,8 +28,9 @@ package gov.nist.javax.sip.header;
 
 import java.text.ParseException;
 
-import gov.nist.javax.sip.address.*;
-import javax.sip.address.*;
+import javax.sip.address.URI;
+
+import gov.nist.javax.sip.address.GenericURI;
 
 /**
  * AlertInfo SIP Header.

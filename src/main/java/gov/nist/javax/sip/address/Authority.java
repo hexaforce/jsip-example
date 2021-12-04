@@ -27,7 +27,8 @@
 * Product of NIST/ITL Advanced Networking Technologies Division (ANTD).        *
 *******************************************************************************/
 package gov.nist.javax.sip.address;
-import gov.nist.core.*;
+import gov.nist.core.Host;
+import gov.nist.core.HostPort;
 
 /**
  * Authority part of a URI structure. Section 3.2.2 RFC2396

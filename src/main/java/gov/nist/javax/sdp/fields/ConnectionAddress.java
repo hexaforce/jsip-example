@@ -27,7 +27,8 @@
 * Product of NIST/ITL Advanced Networking Technologies Division (ANTD).        *
 *******************************************************************************/
 package gov.nist.javax.sdp.fields;
-import gov.nist.core.*;
+import gov.nist.core.Host;
+import gov.nist.core.Separators;
 /**
 * Connection Address of the SDP header (appears as part of the Connection field)
 *

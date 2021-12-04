@@ -7,10 +7,11 @@
 package gov.nist.javax.sip.header.extensions;
 
 import java.text.ParseException;
-import gov.nist.javax.sip.header.*;
 
-import javax.sip.*;
+import javax.sip.InvalidArgumentException;
 import javax.sip.header.ExtensionHeader;
+
+import gov.nist.javax.sip.header.ParametersHeader;
 
 /**
  * MinSE SIP Header.

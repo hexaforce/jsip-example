@@ -25,9 +25,11 @@
 */
 package gov.nist.javax.sdp.parser;
 
-import gov.nist.javax.sdp.fields.*;
-import gov.nist.core.*;
-import java.text.*;
+import java.text.ParseException;
+
+import gov.nist.core.Token;
+import gov.nist.javax.sdp.fields.ProtoVersionField;
+import gov.nist.javax.sdp.fields.SDPField;
 
 /**
  * Parser for Proto Version.

@@ -31,12 +31,11 @@ package gov.nist.javax.sip.parser.ims;
 
 import java.text.ParseException;
 
-import gov.nist.javax.sip.parser.Lexer;
-import gov.nist.javax.sip.parser.TokenTypes;
 import gov.nist.javax.sip.header.SIPHeader;
 import gov.nist.javax.sip.header.ims.PPreferredIdentity;
-
 import gov.nist.javax.sip.parser.AddressParametersParser;
+import gov.nist.javax.sip.parser.Lexer;
+import gov.nist.javax.sip.parser.TokenTypes;
 
 /**
  * P-Preferred-Identity header parser.

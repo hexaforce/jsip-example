@@ -24,8 +24,9 @@
 *
 */
 package gov.nist.javax.sip.parser;
-import gov.nist.javax.sip.header.*;
 import java.text.ParseException;
+
+import gov.nist.javax.sip.header.StatusLine;
 
 /**
  * Parser for the SIP status line.

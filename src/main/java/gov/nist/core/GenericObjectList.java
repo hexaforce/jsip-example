@@ -28,8 +28,11 @@
  *******************************************************************************/
 package gov.nist.core;
 
-import java.util.*;
 import java.io.Serializable;
+import java.util.Iterator;
+import java.util.LinkedList;
+import java.util.ListIterator;
+import java.util.NoSuchElementException;
 
 /**
  * Implements a homogenous consistent linked list. All the objects in the linked

@@ -25,9 +25,13 @@
 */
 package gov.nist.javax.sip.parser;
 
-import gov.nist.javax.sip.header.*;
-import gov.nist.core.*;
 import java.text.ParseException;
+
+import gov.nist.core.Token;
+import gov.nist.javax.sip.header.ProxyRequire;
+import gov.nist.javax.sip.header.ProxyRequireList;
+import gov.nist.javax.sip.header.SIPHeader;
+import gov.nist.javax.sip.header.SIPHeaderNames;
 
 /**
  * Parser for ProxyRequire header.

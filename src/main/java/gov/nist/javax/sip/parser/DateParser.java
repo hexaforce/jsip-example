@@ -24,9 +24,11 @@
 *
 */
 package gov.nist.javax.sip.parser;
-import gov.nist.javax.sip.header.*;
-import java.util.*;
 import java.text.ParseException;
+import java.util.Calendar;
+
+import gov.nist.javax.sip.header.SIPDateHeader;
+import gov.nist.javax.sip.header.SIPHeader;
 
 /**
  * Parser for SIP Date field. Converts from SIP Date to the

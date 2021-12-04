@@ -1,8 +1,8 @@
 package gov.nist.javax.sip.header;
 
-import java.util.HashMap;
 import java.lang.reflect.Field;
 import java.lang.reflect.Modifier;
+import java.util.HashMap;
 
 /**
  * @author yanick.belanger

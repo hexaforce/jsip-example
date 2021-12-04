@@ -29,9 +29,10 @@
 
 package gov.nist.javax.sip.header;
 
-import javax.sip.*;
 import java.text.ParseException;
-import javax.sip.header.*;
+
+import javax.sip.InvalidArgumentException;
+import javax.sip.header.RetryAfterHeader;
 
 /**
  * Retry-After SIP Header.

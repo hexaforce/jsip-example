@@ -1,8 +1,8 @@
 /**
  * ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
  * Unpublished - rights reserved under the Copyright Laws of the United States.
- * Copyright © 2003 Sun Microsystems, Inc. All rights reserved.
- * Copyright © 2005 BEA Systems, Inc. All rights reserved.
+ * Copyright ï¿½ 2003 Sun Microsystems, Inc. All rights reserved.
+ * Copyright ï¿½ 2005 BEA Systems, Inc. All rights reserved.
  *
  * Use is subject to license terms.
  *
@@ -25,11 +25,14 @@
 
 package javax.sip;
 
-import javax.sip.address.AddressFactory;
-import javax.sip.message.MessageFactory;
-import javax.sip.header.HeaderFactory;
-import java.util.*;
 import java.lang.reflect.Constructor;
+import java.util.Hashtable;
+import java.util.LinkedList;
+import java.util.Properties;
+
+import javax.sip.address.AddressFactory;
+import javax.sip.header.HeaderFactory;
+import javax.sip.message.MessageFactory;
 
 /**
  * The SipFactory is a singleton class which applications can use a single

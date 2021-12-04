@@ -28,11 +28,12 @@
  ******************************************************************************/
 package gov.nist.javax.sip.header;
 
-import gov.nist.javax.sip.message.SIPRequest;
+import java.text.ParseException;
 
 import javax.sip.InvalidArgumentException;
 import javax.sip.header.CSeqHeader;
-import java.text.ParseException;
+
+import gov.nist.javax.sip.message.SIPRequest;
 
 /**
  *  CSeq SIP Header.

@@ -28,31 +28,6 @@
  ******************************************************************************/
 package gov.nist.javax.sip;
 
-import gov.nist.core.CommonLogger;
-import gov.nist.core.InternalErrorHandler;
-import gov.nist.core.LogLevels;
-import gov.nist.core.LogWriter;
-import gov.nist.core.StackLogger;
-import gov.nist.javax.sip.DialogTimeoutEvent.Reason;
-import gov.nist.javax.sip.address.RouterExt;
-import gov.nist.javax.sip.header.CallID;
-import gov.nist.javax.sip.header.Via;
-import gov.nist.javax.sip.message.RequestExt;
-import gov.nist.javax.sip.message.SIPMessage;
-import gov.nist.javax.sip.message.SIPRequest;
-import gov.nist.javax.sip.message.SIPResponse;
-import gov.nist.javax.sip.stack.HopImpl;
-import gov.nist.javax.sip.stack.MessageChannel;
-import gov.nist.javax.sip.stack.SIPClientTransaction;
-import gov.nist.javax.sip.stack.SIPDialog;
-import gov.nist.javax.sip.stack.SIPDialogErrorEvent;
-import gov.nist.javax.sip.stack.SIPDialogEventListener;
-import gov.nist.javax.sip.stack.SIPServerTransaction;
-import gov.nist.javax.sip.stack.SIPTransaction;
-import gov.nist.javax.sip.stack.SIPTransactionErrorEvent;
-import gov.nist.javax.sip.stack.SIPTransactionEventListener;
-import gov.nist.javax.sip.stack.SIPTransactionStack;
-
 import java.io.IOException;
 import java.text.ParseException;
 import java.util.EventObject;
@@ -82,6 +57,29 @@ import javax.sip.address.Hop;
 import javax.sip.header.CallIdHeader;
 import javax.sip.message.Request;
 import javax.sip.message.Response;
+
+import gov.nist.core.CommonLogger;
+import gov.nist.core.InternalErrorHandler;
+import gov.nist.core.LogLevels;
+import gov.nist.core.StackLogger;
+import gov.nist.javax.sip.DialogTimeoutEvent.Reason;
+import gov.nist.javax.sip.address.RouterExt;
+import gov.nist.javax.sip.header.CallID;
+import gov.nist.javax.sip.header.Via;
+import gov.nist.javax.sip.message.SIPMessage;
+import gov.nist.javax.sip.message.SIPRequest;
+import gov.nist.javax.sip.message.SIPResponse;
+import gov.nist.javax.sip.stack.HopImpl;
+import gov.nist.javax.sip.stack.MessageChannel;
+import gov.nist.javax.sip.stack.SIPClientTransaction;
+import gov.nist.javax.sip.stack.SIPDialog;
+import gov.nist.javax.sip.stack.SIPDialogErrorEvent;
+import gov.nist.javax.sip.stack.SIPDialogEventListener;
+import gov.nist.javax.sip.stack.SIPServerTransaction;
+import gov.nist.javax.sip.stack.SIPTransaction;
+import gov.nist.javax.sip.stack.SIPTransactionErrorEvent;
+import gov.nist.javax.sip.stack.SIPTransactionEventListener;
+import gov.nist.javax.sip.stack.SIPTransactionStack;
 
 /*
  * Contributions (bug fixes) made by: Daniel J. Martinez Manzano, Hagai Sela.

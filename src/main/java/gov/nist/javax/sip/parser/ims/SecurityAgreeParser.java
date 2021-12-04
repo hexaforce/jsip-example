@@ -30,6 +30,8 @@
 
 package gov.nist.javax.sip.parser.ims;
 
+import java.text.ParseException;
+
 /**
  * Security Agreement for SIP.
  * <p>headers: Security-Client, Security-Server and Security-Verify</p>
@@ -41,12 +43,16 @@ package gov.nist.javax.sip.parser.ims;
 import gov.nist.core.NameValue;
 import gov.nist.core.Token;
 import gov.nist.javax.sip.header.SIPHeaderList;
-import gov.nist.javax.sip.header.ims.*;
+import gov.nist.javax.sip.header.ims.SecurityAgree;
+import gov.nist.javax.sip.header.ims.SecurityClient;
+import gov.nist.javax.sip.header.ims.SecurityClientList;
+import gov.nist.javax.sip.header.ims.SecurityServer;
+import gov.nist.javax.sip.header.ims.SecurityServerList;
+import gov.nist.javax.sip.header.ims.SecurityVerify;
+import gov.nist.javax.sip.header.ims.SecurityVerifyList;
 import gov.nist.javax.sip.parser.HeaderParser;
 import gov.nist.javax.sip.parser.Lexer;
 import gov.nist.javax.sip.parser.TokenTypes;
-
-import java.text.ParseException;
 
 
 

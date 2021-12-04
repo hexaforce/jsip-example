@@ -28,8 +28,9 @@
 *******************************************************************************/
 package gov.nist.javax.sdp.fields;
 
-import gov.nist.core.*;
-import java.net.*;
+import java.net.URL;
+
+import gov.nist.core.Separators;
 
 /** Implementation of URI field.
 *@version  JSR141-PUBLIC-REVIEW (subject to change).

@@ -25,13 +25,13 @@
  */
 package gov.nist.javax.sip.stack;
 
-import gov.nist.core.CommonLogger;
-import gov.nist.core.LogLevels;
-import gov.nist.core.StackLogger;
-
 import java.util.Queue;
 import java.util.Timer;
 import java.util.TimerTask;
+
+import gov.nist.core.CommonLogger;
+import gov.nist.core.LogLevels;
+import gov.nist.core.StackLogger;
 
 public class BlockingQueueDispatchAuditor extends TimerTask {
   private Timer timer = null;

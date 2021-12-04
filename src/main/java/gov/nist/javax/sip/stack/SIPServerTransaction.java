@@ -1,9 +1,5 @@
 package gov.nist.javax.sip.stack;
 
-import gov.nist.javax.sip.ServerTransactionExt;
-import gov.nist.javax.sip.message.SIPMessage;
-import gov.nist.javax.sip.message.SIPRequest;
-
 import java.io.IOException;
 
 import javax.sip.Dialog;
@@ -12,6 +8,10 @@ import javax.sip.ServerTransaction;
 import javax.sip.SipException;
 import javax.sip.TransactionState;
 import javax.sip.message.Response;
+
+import gov.nist.javax.sip.ServerTransactionExt;
+import gov.nist.javax.sip.message.SIPMessage;
+import gov.nist.javax.sip.message.SIPRequest;
 
 public interface SIPServerTransaction extends SIPTransaction, ServerTransaction, ServerTransactionExt, ServerRequestInterface {
 

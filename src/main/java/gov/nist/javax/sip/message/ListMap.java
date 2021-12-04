@@ -28,6 +28,9 @@
  *******************************************************************************/
 package gov.nist.javax.sip.message;
 
+import java.util.HashMap;
+import java.util.Map;
+
 import gov.nist.javax.sip.header.Accept;
 import gov.nist.javax.sip.header.AcceptEncoding;
 import gov.nist.javax.sip.header.AcceptEncodingList;
@@ -104,9 +107,6 @@ import gov.nist.javax.sip.header.ims.SecurityVerify;
 import gov.nist.javax.sip.header.ims.SecurityVerifyList;
 import gov.nist.javax.sip.header.ims.ServiceRoute;
 import gov.nist.javax.sip.header.ims.ServiceRouteList;
-
-import java.util.HashMap;
-import java.util.Map;
 
 /**
  * A map of which of the standard headers may appear as a list

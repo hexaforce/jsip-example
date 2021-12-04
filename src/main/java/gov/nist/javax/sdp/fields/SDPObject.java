@@ -27,8 +27,13 @@
 * Product of NIST/ITL Advanced Networking Technologies Division (ANTD).        *
 *******************************************************************************/
 package gov.nist.javax.sdp.fields;
-import gov.nist.core.*;
-import java.lang.reflect.*;
+import java.lang.reflect.Field;
+import java.lang.reflect.Modifier;
+
+import gov.nist.core.GenericObject;
+import gov.nist.core.GenericObjectList;
+import gov.nist.core.InternalErrorHandler;
+import gov.nist.core.PackageNames;
 
 /**
 * Root class for everything in this package.

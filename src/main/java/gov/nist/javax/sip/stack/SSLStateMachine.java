@@ -25,10 +25,6 @@
  */
 package gov.nist.javax.sip.stack;
 
-import gov.nist.core.CommonLogger;
-import gov.nist.core.LogWriter;
-import gov.nist.core.StackLogger;
-
 import java.io.IOException;
 import java.nio.ByteBuffer;
 import java.util.LinkedList;
@@ -40,6 +36,10 @@ import javax.net.ssl.SSLEngineResult.HandshakeStatus;
 import javax.net.ssl.SSLEngineResult.Status;
 import javax.net.ssl.SSLException;
 import javax.net.ssl.SSLPeerUnverifiedException;
+
+import gov.nist.core.CommonLogger;
+import gov.nist.core.LogWriter;
+import gov.nist.core.StackLogger;
 
 /**
  * This is a helper state machine that negotiates the SSL connection automatically

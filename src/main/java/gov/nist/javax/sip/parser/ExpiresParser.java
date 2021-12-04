@@ -25,9 +25,12 @@
 */
 package gov.nist.javax.sip.parser;
 
-import gov.nist.javax.sip.header.*;
 import java.text.ParseException;
-import javax.sip.*;
+
+import javax.sip.InvalidArgumentException;
+
+import gov.nist.javax.sip.header.Expires;
+import gov.nist.javax.sip.header.SIPHeader;
 
 /**
  * Parser for SIP Expires Parser. Converts from SIP Date to the

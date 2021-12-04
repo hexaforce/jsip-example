@@ -28,9 +28,9 @@
 *******************************************************************************/
 package gov.nist.javax.sip.header;
 
-import gov.nist.javax.sip.*;
-
 import java.text.ParseException;
+
+import gov.nist.javax.sip.Utils;
 
 /**
  *  Protocol name and version.

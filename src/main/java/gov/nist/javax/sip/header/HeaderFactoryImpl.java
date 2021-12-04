@@ -25,18 +25,128 @@
 * Product of NIST/ITL Advanced Networking Technologies Division (ANTD).        *
 *******************************************************************************/
 package gov.nist.javax.sip.header;
-import gov.nist.javax.sip.header.ims.*; /* IMS headers - issued by Miguel Freitas */
-import gov.nist.javax.sip.header.extensions.*; // extension headers - pmusgrave
-import javax.sip.header.*;
-
-import gov.nist.javax.sip.parser.*;
-import gov.nist.javax.sip.parser.extensions.ReferencesParser;
-
-import javax.sip.address.*;
 import java.text.ParseException;
+import java.util.Calendar;
+import java.util.List;
+import java.util.Locale;
+
 import javax.sip.InvalidArgumentException;
-import java.util.*;
-import gov.nist.javax.sip.address.*;
+import javax.sip.address.Address;
+import javax.sip.address.URI;
+import javax.sip.header.AcceptEncodingHeader;
+import javax.sip.header.AcceptHeader;
+import javax.sip.header.AcceptLanguageHeader;
+import javax.sip.header.AlertInfoHeader;
+import javax.sip.header.AllowEventsHeader;
+import javax.sip.header.AllowHeader;
+import javax.sip.header.AuthenticationInfoHeader;
+import javax.sip.header.AuthorizationHeader;
+import javax.sip.header.CSeqHeader;
+import javax.sip.header.CallIdHeader;
+import javax.sip.header.CallInfoHeader;
+import javax.sip.header.ContactHeader;
+import javax.sip.header.ContentDispositionHeader;
+import javax.sip.header.ContentEncodingHeader;
+import javax.sip.header.ContentLanguageHeader;
+import javax.sip.header.ContentLengthHeader;
+import javax.sip.header.ContentTypeHeader;
+import javax.sip.header.DateHeader;
+import javax.sip.header.ErrorInfoHeader;
+import javax.sip.header.EventHeader;
+import javax.sip.header.ExpiresHeader;
+import javax.sip.header.ExtensionHeader;
+import javax.sip.header.FromHeader;
+import javax.sip.header.Header;
+import javax.sip.header.HeaderFactory;
+import javax.sip.header.InReplyToHeader;
+import javax.sip.header.MaxForwardsHeader;
+import javax.sip.header.MimeVersionHeader;
+import javax.sip.header.MinExpiresHeader;
+import javax.sip.header.OrganizationHeader;
+import javax.sip.header.PriorityHeader;
+import javax.sip.header.ProxyAuthenticateHeader;
+import javax.sip.header.ProxyAuthorizationHeader;
+import javax.sip.header.ProxyRequireHeader;
+import javax.sip.header.RAckHeader;
+import javax.sip.header.RSeqHeader;
+import javax.sip.header.ReasonHeader;
+import javax.sip.header.RecordRouteHeader;
+import javax.sip.header.ReferToHeader;
+import javax.sip.header.ReplyToHeader;
+import javax.sip.header.RequireHeader;
+import javax.sip.header.RetryAfterHeader;
+import javax.sip.header.RouteHeader;
+import javax.sip.header.SIPETagHeader;
+import javax.sip.header.SIPIfMatchHeader;
+import javax.sip.header.ServerHeader;
+import javax.sip.header.SubjectHeader;
+import javax.sip.header.SubscriptionStateHeader;
+import javax.sip.header.SupportedHeader;
+import javax.sip.header.TimeStampHeader;
+import javax.sip.header.ToHeader;
+import javax.sip.header.UnsupportedHeader;
+import javax.sip.header.UserAgentHeader;
+import javax.sip.header.ViaHeader;
+import javax.sip.header.WWWAuthenticateHeader;
+import javax.sip.header.WarningHeader;
+
+import gov.nist.javax.sip.address.GenericURI;
+// extension headers - pmusgrave
+import gov.nist.javax.sip.header.extensions.Join;
+import gov.nist.javax.sip.header.extensions.JoinHeader;
+import gov.nist.javax.sip.header.extensions.MinSE;
+import gov.nist.javax.sip.header.extensions.References;
+import gov.nist.javax.sip.header.extensions.ReferencesHeader;
+import gov.nist.javax.sip.header.extensions.ReferredBy;
+import gov.nist.javax.sip.header.extensions.ReferredByHeader;
+import gov.nist.javax.sip.header.extensions.Replaces;
+import gov.nist.javax.sip.header.extensions.ReplacesHeader;
+import gov.nist.javax.sip.header.extensions.SessionExpires;
+import gov.nist.javax.sip.header.extensions.SessionExpiresHeader;
+/* IMS headers - issued by Miguel Freitas */
+import gov.nist.javax.sip.header.ims.PAccessNetworkInfo;
+import gov.nist.javax.sip.header.ims.PAccessNetworkInfoHeader;
+import gov.nist.javax.sip.header.ims.PAssertedIdentity;
+import gov.nist.javax.sip.header.ims.PAssertedIdentityHeader;
+import gov.nist.javax.sip.header.ims.PAssertedService;
+import gov.nist.javax.sip.header.ims.PAssertedServiceHeader;
+import gov.nist.javax.sip.header.ims.PAssociatedURI;
+import gov.nist.javax.sip.header.ims.PAssociatedURIHeader;
+import gov.nist.javax.sip.header.ims.PCalledPartyID;
+import gov.nist.javax.sip.header.ims.PCalledPartyIDHeader;
+import gov.nist.javax.sip.header.ims.PChargingFunctionAddresses;
+import gov.nist.javax.sip.header.ims.PChargingFunctionAddressesHeader;
+import gov.nist.javax.sip.header.ims.PChargingVector;
+import gov.nist.javax.sip.header.ims.PChargingVectorHeader;
+import gov.nist.javax.sip.header.ims.PMediaAuthorization;
+import gov.nist.javax.sip.header.ims.PMediaAuthorizationHeader;
+import gov.nist.javax.sip.header.ims.PPreferredIdentity;
+import gov.nist.javax.sip.header.ims.PPreferredIdentityHeader;
+import gov.nist.javax.sip.header.ims.PPreferredService;
+import gov.nist.javax.sip.header.ims.PPreferredServiceHeader;
+import gov.nist.javax.sip.header.ims.PProfileKey;
+import gov.nist.javax.sip.header.ims.PProfileKeyHeader;
+import gov.nist.javax.sip.header.ims.PServedUser;
+import gov.nist.javax.sip.header.ims.PServedUserHeader;
+import gov.nist.javax.sip.header.ims.PUserDatabase;
+import gov.nist.javax.sip.header.ims.PUserDatabaseHeader;
+import gov.nist.javax.sip.header.ims.PVisitedNetworkID;
+import gov.nist.javax.sip.header.ims.PVisitedNetworkIDHeader;
+import gov.nist.javax.sip.header.ims.Path;
+import gov.nist.javax.sip.header.ims.PathHeader;
+import gov.nist.javax.sip.header.ims.Privacy;
+import gov.nist.javax.sip.header.ims.PrivacyHeader;
+import gov.nist.javax.sip.header.ims.SecurityClient;
+import gov.nist.javax.sip.header.ims.SecurityClientHeader;
+import gov.nist.javax.sip.header.ims.SecurityServer;
+import gov.nist.javax.sip.header.ims.SecurityServerHeader;
+import gov.nist.javax.sip.header.ims.SecurityVerify;
+import gov.nist.javax.sip.header.ims.SecurityVerifyHeader;
+import gov.nist.javax.sip.header.ims.ServiceRoute;
+import gov.nist.javax.sip.header.ims.ServiceRouteHeader;
+import gov.nist.javax.sip.parser.RequestLineParser;
+import gov.nist.javax.sip.parser.StatusLineParser;
+import gov.nist.javax.sip.parser.StringMsgParser;
 
 /*
 * This file contains enhancements contributed by Alexandre Silva Santos

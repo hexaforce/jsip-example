@@ -28,10 +28,6 @@
  *******************************************************************************/
 package gov.nist.javax.sip.message;
 
-import gov.nist.core.Separators;
-import gov.nist.javax.sip.header.HeaderFactoryExt;
-import gov.nist.javax.sip.header.HeaderFactoryImpl;
-
 import java.text.ParseException;
 import java.util.Iterator;
 import java.util.LinkedList;
@@ -42,6 +38,10 @@ import java.util.Scanner;
 import javax.sip.header.ContentDispositionHeader;
 import javax.sip.header.ContentTypeHeader;
 import javax.sip.header.Header;
+
+import gov.nist.core.Separators;
+import gov.nist.javax.sip.header.HeaderFactoryExt;
+import gov.nist.javax.sip.header.HeaderFactoryImpl;
 
 /**
  * Content list for multipart mime content type.

@@ -27,9 +27,7 @@
 * Product of NIST/ITL Advanced Networking Technologies Division (ANTD).        *
 *******************************************************************************/
 package gov.nist.javax.sip.header;
-import java.util.Iterator;
-
-import javax.sip.header.*;
+import javax.sip.header.UnsupportedHeader;
 
 /**
  * List of Unsupported headers.

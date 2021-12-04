@@ -28,12 +28,6 @@
  *******************************************************************************/
 package gov.nist.javax.sip.stack;
 
-import gov.nist.core.CommonLogger;
-import gov.nist.core.LogLevels;
-import gov.nist.core.LogWriter;
-import gov.nist.core.StackLogger;
-import gov.nist.javax.sip.SipStackImpl;
-
 import java.io.IOException;
 import java.net.InetAddress;
 import java.net.InetSocketAddress;
@@ -41,14 +35,17 @@ import java.net.SocketAddress;
 import java.net.SocketException;
 import java.nio.channels.SocketChannel;
 import java.util.Enumeration;
-import java.util.HashSet;
 import java.util.Iterator;
-import java.util.Map.Entry;
 import java.util.LinkedList;
+import java.util.Map.Entry;
 import java.util.Set;
-import java.util.Timer;
-import java.util.TimerTask;
 import java.util.concurrent.ConcurrentHashMap;
+
+import gov.nist.core.CommonLogger;
+import gov.nist.core.LogLevels;
+import gov.nist.core.LogWriter;
+import gov.nist.core.StackLogger;
+import gov.nist.javax.sip.SipStackImpl;
 
 /**
  * Low level Input output to a socket. Caches TCP connections and takes care of

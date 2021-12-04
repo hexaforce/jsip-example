@@ -27,8 +27,9 @@
 * Product of NIST/ITL Advanced Networking Technologies Division (ANTD).        *
 *******************************************************************************/
 package gov.nist.javax.sip.header;
-import javax.sip.header.*;
 import javax.sip.InvalidArgumentException;
+import javax.sip.header.MaxForwardsHeader;
+import javax.sip.header.TooManyHopsException;
 
 /**
  * MaxForwards SIPHeader

@@ -33,13 +33,14 @@
 *******************************************************************************/
 package gov.nist.javax.sip.header;
 
-import gov.nist.core.NameValue;
-import gov.nist.core.NameValueList;
-import gov.nist.javax.sip.address.AddressImpl;
+import java.text.ParseException;
 
 import javax.sip.InvalidArgumentException;
 import javax.sip.header.ContactHeader;
-import java.text.ParseException;
+
+import gov.nist.core.NameValue;
+import gov.nist.core.NameValueList;
+import gov.nist.javax.sip.address.AddressImpl;
 
 /**
  * Contact Item.

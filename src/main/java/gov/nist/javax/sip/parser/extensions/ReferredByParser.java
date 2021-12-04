@@ -2,9 +2,12 @@ package gov.nist.javax.sip.parser.extensions;
 
 
 import java.text.ParseException;
-import gov.nist.javax.sip.header.*;
-import gov.nist.javax.sip.header.extensions.*;
-import gov.nist.javax.sip.parser.*;
+
+import gov.nist.javax.sip.header.SIPHeader;
+import gov.nist.javax.sip.header.extensions.ReferredBy;
+import gov.nist.javax.sip.parser.AddressParametersParser;
+import gov.nist.javax.sip.parser.Lexer;
+import gov.nist.javax.sip.parser.TokenTypes;
 
 
 /**

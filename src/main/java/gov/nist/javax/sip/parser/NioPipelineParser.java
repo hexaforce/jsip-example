@@ -28,15 +28,6 @@
  ******************************************************************************/
 package gov.nist.javax.sip.parser;
 
-import gov.nist.core.CommonLogger;
-import gov.nist.core.LogLevels;
-import gov.nist.core.LogWriter;
-import gov.nist.core.StackLogger;
-import gov.nist.javax.sip.message.SIPMessage;
-import gov.nist.javax.sip.stack.ConnectionOrientedMessageChannel;
-import gov.nist.javax.sip.stack.QueuedMessageDispatchBase;
-import gov.nist.javax.sip.stack.SIPTransactionStack;
-
 import java.io.ByteArrayInputStream;
 import java.io.IOException;
 import java.io.InputStream;
@@ -49,6 +40,15 @@ import java.util.concurrent.TimeUnit;
 
 import javax.sip.header.CallIdHeader;
 import javax.sip.header.ContentLengthHeader;
+
+import gov.nist.core.CommonLogger;
+import gov.nist.core.LogLevels;
+import gov.nist.core.LogWriter;
+import gov.nist.core.StackLogger;
+import gov.nist.javax.sip.message.SIPMessage;
+import gov.nist.javax.sip.stack.ConnectionOrientedMessageChannel;
+import gov.nist.javax.sip.stack.QueuedMessageDispatchBase;
+import gov.nist.javax.sip.stack.SIPTransactionStack;
 
 /**
  * This is a FSM that can parse a single stream of messages with they bodies and 

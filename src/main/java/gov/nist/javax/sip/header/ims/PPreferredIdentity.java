@@ -34,7 +34,6 @@ import java.text.ParseException;
 import javax.sip.header.ExtensionHeader;
 
 import gov.nist.javax.sip.address.AddressImpl;
-
 import gov.nist.javax.sip.header.AddressParametersHeader;
 
 

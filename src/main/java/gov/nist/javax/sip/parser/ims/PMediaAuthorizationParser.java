@@ -33,11 +33,11 @@ import java.text.ParseException;
 
 import javax.sip.InvalidArgumentException;
 
-import gov.nist.javax.sip.header.ims.PMediaAuthorizationList;
-import gov.nist.javax.sip.header.ims.PMediaAuthorization;
-import gov.nist.javax.sip.header.ims.SIPHeaderNamesIms;
 import gov.nist.core.Token;
 import gov.nist.javax.sip.header.SIPHeader;
+import gov.nist.javax.sip.header.ims.PMediaAuthorization;
+import gov.nist.javax.sip.header.ims.PMediaAuthorizationList;
+import gov.nist.javax.sip.header.ims.SIPHeaderNamesIms;
 import gov.nist.javax.sip.parser.HeaderParser;
 import gov.nist.javax.sip.parser.Lexer;
 import gov.nist.javax.sip.parser.TokenTypes;

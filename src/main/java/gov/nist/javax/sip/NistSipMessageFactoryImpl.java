@@ -29,12 +29,19 @@
 
 package gov.nist.javax.sip;
 
+import javax.sip.TransactionState;
+
 import gov.nist.core.CommonLogger;
 import gov.nist.core.LogLevels;
 import gov.nist.core.StackLogger;
-import gov.nist.javax.sip.stack.*;
-import gov.nist.javax.sip.message.*;
-import javax.sip.*;
+import gov.nist.javax.sip.message.SIPRequest;
+import gov.nist.javax.sip.message.SIPResponse;
+import gov.nist.javax.sip.stack.MessageChannel;
+import gov.nist.javax.sip.stack.SIPTransaction;
+import gov.nist.javax.sip.stack.SIPTransactionStack;
+import gov.nist.javax.sip.stack.ServerRequestInterface;
+import gov.nist.javax.sip.stack.ServerResponseInterface;
+import gov.nist.javax.sip.stack.StackMessageFactory;
 
 /**
  * Implements all the support classes that are necessary for the nist-sip stack

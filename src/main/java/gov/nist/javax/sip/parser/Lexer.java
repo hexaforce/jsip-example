@@ -25,34 +25,6 @@
  */
 package gov.nist.javax.sip.parser;
 
-import gov.nist.core.LexerCore;
-import gov.nist.javax.sip.header.extensions.JoinHeader;
-import gov.nist.javax.sip.header.extensions.MinSEHeader;
-import gov.nist.javax.sip.header.extensions.ReferencesHeader;
-import gov.nist.javax.sip.header.extensions.ReferredByHeader;
-import gov.nist.javax.sip.header.extensions.ReplacesHeader;
-import gov.nist.javax.sip.header.extensions.SessionExpiresHeader;
-import gov.nist.javax.sip.header.ims.PAccessNetworkInfoHeader;
-import gov.nist.javax.sip.header.ims.PAssertedIdentityHeader;
-import gov.nist.javax.sip.header.ims.PAssertedServiceHeader;
-import gov.nist.javax.sip.header.ims.PAssociatedURIHeader;
-import gov.nist.javax.sip.header.ims.PCalledPartyIDHeader;
-import gov.nist.javax.sip.header.ims.PChargingFunctionAddressesHeader;
-import gov.nist.javax.sip.header.ims.PChargingVectorHeader;
-import gov.nist.javax.sip.header.ims.PMediaAuthorizationHeader;
-import gov.nist.javax.sip.header.ims.PPreferredIdentityHeader;
-import gov.nist.javax.sip.header.ims.PPreferredServiceHeader;
-import gov.nist.javax.sip.header.ims.PProfileKeyHeader;
-import gov.nist.javax.sip.header.ims.PServedUserHeader;
-import gov.nist.javax.sip.header.ims.PUserDatabaseHeader;
-import gov.nist.javax.sip.header.ims.PVisitedNetworkIDHeader;
-import gov.nist.javax.sip.header.ims.PathHeader;
-import gov.nist.javax.sip.header.ims.PrivacyHeader;
-import gov.nist.javax.sip.header.ims.SecurityClientHeader;
-import gov.nist.javax.sip.header.ims.SecurityServerHeader;
-import gov.nist.javax.sip.header.ims.SecurityVerifyHeader;
-import gov.nist.javax.sip.header.ims.ServiceRouteHeader;
-
 import java.util.concurrent.ConcurrentHashMap;
 
 import javax.sip.header.AcceptEncodingHeader;
@@ -108,6 +80,34 @@ import javax.sip.header.UserAgentHeader;
 import javax.sip.header.ViaHeader;
 import javax.sip.header.WWWAuthenticateHeader;
 import javax.sip.header.WarningHeader;
+
+import gov.nist.core.LexerCore;
+import gov.nist.javax.sip.header.extensions.JoinHeader;
+import gov.nist.javax.sip.header.extensions.MinSEHeader;
+import gov.nist.javax.sip.header.extensions.ReferencesHeader;
+import gov.nist.javax.sip.header.extensions.ReferredByHeader;
+import gov.nist.javax.sip.header.extensions.ReplacesHeader;
+import gov.nist.javax.sip.header.extensions.SessionExpiresHeader;
+import gov.nist.javax.sip.header.ims.PAccessNetworkInfoHeader;
+import gov.nist.javax.sip.header.ims.PAssertedIdentityHeader;
+import gov.nist.javax.sip.header.ims.PAssertedServiceHeader;
+import gov.nist.javax.sip.header.ims.PAssociatedURIHeader;
+import gov.nist.javax.sip.header.ims.PCalledPartyIDHeader;
+import gov.nist.javax.sip.header.ims.PChargingFunctionAddressesHeader;
+import gov.nist.javax.sip.header.ims.PChargingVectorHeader;
+import gov.nist.javax.sip.header.ims.PMediaAuthorizationHeader;
+import gov.nist.javax.sip.header.ims.PPreferredIdentityHeader;
+import gov.nist.javax.sip.header.ims.PPreferredServiceHeader;
+import gov.nist.javax.sip.header.ims.PProfileKeyHeader;
+import gov.nist.javax.sip.header.ims.PServedUserHeader;
+import gov.nist.javax.sip.header.ims.PUserDatabaseHeader;
+import gov.nist.javax.sip.header.ims.PVisitedNetworkIDHeader;
+import gov.nist.javax.sip.header.ims.PathHeader;
+import gov.nist.javax.sip.header.ims.PrivacyHeader;
+import gov.nist.javax.sip.header.ims.SecurityClientHeader;
+import gov.nist.javax.sip.header.ims.SecurityServerHeader;
+import gov.nist.javax.sip.header.ims.SecurityVerifyHeader;
+import gov.nist.javax.sip.header.ims.ServiceRouteHeader;
 
 /**
  * Lexer class for the parser.

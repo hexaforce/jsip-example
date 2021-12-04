@@ -38,9 +38,9 @@
 
 package gov.nist.javax.sip.header;
 
-import gov.nist.javax.sip.Utils;
-
 import java.text.ParseException;
+
+import gov.nist.javax.sip.Utils;
 
 /**
  * Definition of the Reason SIP Header.

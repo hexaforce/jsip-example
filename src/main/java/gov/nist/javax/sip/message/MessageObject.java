@@ -28,8 +28,11 @@
  ******************************************************************************/
 package gov.nist.javax.sip.message;
 
-import gov.nist.core.*;
-import java.lang.reflect.*;
+import java.lang.reflect.Field;
+import java.lang.reflect.Modifier;
+
+import gov.nist.core.GenericObject;
+import gov.nist.core.GenericObjectList;
 
 /**
  * This is the root object from which all other objects in this package

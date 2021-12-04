@@ -30,8 +30,11 @@
  */
 package gov.nist.javax.sdp.parser;
 
-import gov.nist.javax.sdp.fields.*;
-import java.text.*;
+import java.text.ParseException;
+
+import gov.nist.javax.sdp.fields.SDPField;
+import gov.nist.javax.sdp.fields.TimeField;
+import gov.nist.javax.sdp.fields.TypedTime;
 
 /**
  * @author  deruelle

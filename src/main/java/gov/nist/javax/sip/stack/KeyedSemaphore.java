@@ -25,13 +25,13 @@
  */
 package gov.nist.javax.sip.stack;
 
-import gov.nist.core.CommonLogger;
-import gov.nist.core.StackLogger;
-
 import java.io.IOException;
 import java.util.concurrent.ConcurrentHashMap;
 import java.util.concurrent.Semaphore;
 import java.util.concurrent.TimeUnit;
+
+import gov.nist.core.CommonLogger;
+import gov.nist.core.StackLogger;
 
 public class KeyedSemaphore {
 	ConcurrentHashMap<String, Semaphore> map = new ConcurrentHashMap<String, Semaphore>();

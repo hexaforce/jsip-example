@@ -28,7 +28,7 @@
 *******************************************************************************/
 package gov.nist.javax.sip.header;
 
-import javax.sip.header.*;
+import javax.sip.header.ProxyAuthenticateHeader;
 
 /**
  * List of ProxyAuthenticate headers.

@@ -24,6 +24,9 @@
 *
 */
 package gov.nist.javax.sip.header;
+import java.util.HashMap;
+import java.util.Map;
+
 import gov.nist.core.PackageNames;
 import gov.nist.javax.sip.header.ims.PAccessNetworkInfo;
 import gov.nist.javax.sip.header.ims.PAccessNetworkInfoHeader;
@@ -44,9 +47,6 @@ import gov.nist.javax.sip.header.ims.PVisitedNetworkID;
 import gov.nist.javax.sip.header.ims.Path;
 import gov.nist.javax.sip.header.ims.Privacy;
 import gov.nist.javax.sip.header.ims.ServiceRoute;
-
-import java.util.HashMap;
-import java.util.Map;
 
 /**
  * A mapping class that returns the SIPHeader for a given header name.

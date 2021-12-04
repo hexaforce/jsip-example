@@ -24,6 +24,8 @@
 *
 */
 package gov.nist.javax.sip.parser;
+import java.text.ParseException;
+
 import gov.nist.core.HostNameParser;
 import gov.nist.core.HostPort;
 import gov.nist.core.NameValue;
@@ -33,7 +35,6 @@ import gov.nist.javax.sip.address.GenericURI;
 import gov.nist.javax.sip.address.SipUri;
 import gov.nist.javax.sip.address.TelURLImpl;
 import gov.nist.javax.sip.address.TelephoneNumber;
-import java.text.ParseException;
 
 /**
  * Parser For SIP and Tel URLs. Other kinds of URL's are handled by the

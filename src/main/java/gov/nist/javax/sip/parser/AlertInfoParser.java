@@ -25,13 +25,13 @@
 */
 package gov.nist.javax.sip.parser;
 
+import java.text.ParseException;
+
 import gov.nist.javax.sip.address.GenericURI;
 import gov.nist.javax.sip.header.AlertInfo;
 import gov.nist.javax.sip.header.AlertInfoList;
 import gov.nist.javax.sip.header.SIPHeader;
 import gov.nist.javax.sip.header.SIPHeaderNames;
-
-import java.text.ParseException;
 
 /**
  * Parser for AlertInfo header.

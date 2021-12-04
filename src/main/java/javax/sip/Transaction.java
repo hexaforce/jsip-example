@@ -25,9 +25,9 @@
  */
 package javax.sip;
 
-import javax.sip.Dialog;
-import javax.sip.message.Request;
 import java.io.Serializable;
+
+import javax.sip.message.Request;
 
 /**
  * Transactions are a fundamental component of SIP. A transaction is a request 

@@ -25,8 +25,6 @@
 */
 package gov.nist.core.net;
 
-import gov.nist.javax.sip.SipStackImpl;
-
 import java.io.IOException;
 import java.net.DatagramSocket;
 import java.net.InetAddress;
@@ -37,6 +35,8 @@ import java.net.SocketException;
 // Added by Daniel J. Martinez Manzano <dani@dif.um.es>
 import javax.net.ssl.SSLServerSocket;
 import javax.net.ssl.SSLSocket;
+
+import gov.nist.javax.sip.SipStackImpl;
 
 
 /**

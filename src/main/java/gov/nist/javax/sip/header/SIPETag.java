@@ -26,8 +26,10 @@
 *******************************************************************************/
 package gov.nist.javax.sip.header;
 
-import javax.sip.header.*;
 import java.text.ParseException;
+
+import javax.sip.header.ExtensionHeader;
+import javax.sip.header.SIPETagHeader;
 
 /**
  * the SIP-ETag header.

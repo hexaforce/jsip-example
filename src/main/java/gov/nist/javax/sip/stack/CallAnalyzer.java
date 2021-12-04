@@ -24,21 +24,21 @@
  *
  */
 package gov.nist.javax.sip.stack;
-import gov.nist.core.CommonLogger;
-import gov.nist.core.StackLogger;
-import gov.nist.javax.sip.SipStackImpl;
-
 import java.util.HashMap;
 import java.util.Iterator;
 import java.util.LinkedList;
 import java.util.Map;
+import java.util.Map.Entry;
 import java.util.Timer;
 import java.util.TimerTask;
 import java.util.WeakHashMap;
-import java.util.Map.Entry;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 import java.util.concurrent.TimeUnit;
+
+import gov.nist.core.CommonLogger;
+import gov.nist.core.StackLogger;
+import gov.nist.javax.sip.SipStackImpl;
 
 /**
  * This class is a simple thread analysis utility which tracks the time each request is stuck inside a JAIN SIP thread.

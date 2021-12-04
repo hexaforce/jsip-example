@@ -30,10 +30,14 @@
  */
 
 package gov.nist.javax.sip.parser;
-import gov.nist.core.*;
-import gov.nist.javax.sip.header.*;
-import javax.sip.*;
 import java.text.ParseException;
+
+import javax.sip.InvalidArgumentException;
+
+import gov.nist.core.Token;
+import gov.nist.javax.sip.header.AcceptLanguage;
+import gov.nist.javax.sip.header.AcceptLanguageList;
+import gov.nist.javax.sip.header.SIPHeader;
 
 
 /**

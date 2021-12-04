@@ -25,13 +25,13 @@
 */
 package gov.nist.javax.sip.stack;
 
-import gov.nist.core.CommonLogger;
-import gov.nist.core.LogWriter;
-import gov.nist.core.StackLogger;
-
 import java.nio.channels.SocketChannel;
 import java.util.Iterator;
 import java.util.Map.Entry;
+
+import gov.nist.core.CommonLogger;
+import gov.nist.core.LogWriter;
+import gov.nist.core.StackLogger;
 
 /**
  * @author jean.deruelle@gmail.com

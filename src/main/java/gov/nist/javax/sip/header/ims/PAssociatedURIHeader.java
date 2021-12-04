@@ -28,10 +28,10 @@
 
 package gov.nist.javax.sip.header.ims;
 
+import javax.sip.address.URI;
 import javax.sip.header.Header;
 import javax.sip.header.HeaderAddress;
 import javax.sip.header.Parameters;
-import javax.sip.address.URI;
 
 
 

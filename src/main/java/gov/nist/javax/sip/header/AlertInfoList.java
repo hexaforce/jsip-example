@@ -25,7 +25,7 @@
 * Product of NIST/ITL Advanced Networking Technologies Division (ANTD).        *
 *******************************************************************************/
 package gov.nist.javax.sip.header;
-import javax.sip.header.*;
+import javax.sip.header.AlertInfoHeader;
 
 /**
 * AlertInfo SIPHeader - there can be several AlertInfo headers.

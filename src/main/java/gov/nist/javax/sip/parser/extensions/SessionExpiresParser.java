@@ -1,11 +1,14 @@
 package gov.nist.javax.sip.parser.extensions;
 
-import gov.nist.javax.sip.header.*;
-import gov.nist.javax.sip.header.extensions.*;
-import gov.nist.javax.sip.parser.*;
-
 import java.text.ParseException;
-import javax.sip.*;
+
+import javax.sip.InvalidArgumentException;
+
+import gov.nist.javax.sip.header.SIPHeader;
+import gov.nist.javax.sip.header.extensions.SessionExpires;
+import gov.nist.javax.sip.parser.Lexer;
+import gov.nist.javax.sip.parser.ParametersParser;
+import gov.nist.javax.sip.parser.TokenTypes;
 
 /**
  * Parser for SIP Session Expires Header.

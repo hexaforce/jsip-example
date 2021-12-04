@@ -25,9 +25,14 @@
  */
 package gov.nist.javax.sdp.parser;
 
-import gov.nist.javax.sdp.fields.*;
-import gov.nist.core.*;
 import java.text.ParseException;
+
+import gov.nist.core.LexerCore;
+import gov.nist.core.Token;
+import gov.nist.javax.sdp.fields.SDPField;
+import gov.nist.javax.sdp.fields.TypedTime;
+import gov.nist.javax.sdp.fields.ZoneAdjustment;
+import gov.nist.javax.sdp.fields.ZoneField;
 
 /**
  * Parser For the Zone field.

@@ -30,16 +30,14 @@ import java.security.NoSuchAlgorithmException;
 import java.util.Date;
 import java.util.Random;
 
-import gov.nist.core.InternalErrorHandler;
-import gov.nist.javax.sip.stack.SIPTransactionStack;
-
 import javax.sip.address.URI;
-import javax.sip.header.AuthorizationHeader;
 import javax.sip.header.HeaderFactory;
 import javax.sip.header.ProxyAuthenticateHeader;
 import javax.sip.header.ProxyAuthorizationHeader;
 import javax.sip.message.Request;
 import javax.sip.message.Response;
+
+import gov.nist.core.InternalErrorHandler;
 /**
  * Implements the HTTP digest authentication method server side functionality.
  * 

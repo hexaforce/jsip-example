@@ -26,7 +26,10 @@
 package gov.nist.javax.sip.parser;
 
 import java.text.ParseException;
-import gov.nist.javax.sip.header.*;
+
+import gov.nist.javax.sip.header.ReplyTo;
+import gov.nist.javax.sip.header.SIPHeader;
+import gov.nist.javax.sip.header.SIPHeaderNames;
 
 /**
  * Parser for a list of RelpyTo headers.

@@ -25,24 +25,23 @@
  */
 package gov.nist.javax.sip.stack;
 
-import gov.nist.core.CommonLogger;
-import gov.nist.core.LogLevels;
-import gov.nist.core.LogWriter;
-import gov.nist.core.StackLogger;
-import gov.nist.javax.sip.SipStackImpl;
-import gov.nist.javax.sip.stack.SSLStateMachine.MessageSendCallback;
-
-import javax.net.ssl.HandshakeCompletedListener;
-import javax.net.ssl.SSLSession;
-import javax.net.ssl.SSLContext;
-import javax.net.ssl.SSLSocket;
-
 import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.net.InetAddress;
 import java.nio.ByteBuffer;
 import java.nio.channels.SocketChannel;
 import java.security.cert.CertificateException;
+
+import javax.net.ssl.HandshakeCompletedListener;
+import javax.net.ssl.SSLContext;
+import javax.net.ssl.SSLSession;
+
+import gov.nist.core.CommonLogger;
+import gov.nist.core.LogLevels;
+import gov.nist.core.LogWriter;
+import gov.nist.core.StackLogger;
+import gov.nist.javax.sip.SipStackImpl;
+import gov.nist.javax.sip.stack.SSLStateMachine.MessageSendCallback;
 
 public class NioTlsMessageChannel extends NioTcpMessageChannel implements NioTlsChannelInterface{
 

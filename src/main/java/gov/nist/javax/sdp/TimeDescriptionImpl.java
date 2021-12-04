@@ -25,9 +25,14 @@
  */
 package gov.nist.javax.sdp;
 
-import gov.nist.javax.sdp.fields.*;
-import javax.sdp.*;
-import java.util.*;
+import java.util.Vector;
+
+import javax.sdp.SdpException;
+import javax.sdp.Time;
+import javax.sdp.TimeDescription;
+
+import gov.nist.javax.sdp.fields.RepeatField;
+import gov.nist.javax.sdp.fields.TimeField;
 
 /**
  * Implementation of Time Description

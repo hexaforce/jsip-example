@@ -26,7 +26,9 @@
 package gov.nist.javax.sip.parser;
 
 import java.text.ParseException;
-import gov.nist.javax.sip.header.*;
+
+import gov.nist.javax.sip.header.ReferTo;
+import gov.nist.javax.sip.header.SIPHeader;
 
 /**
  * To Header parser.

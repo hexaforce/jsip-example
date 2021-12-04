@@ -25,9 +25,14 @@
  */
 package gov.nist.javax.sdp.parser;
 
-import gov.nist.javax.sdp.fields.*;
-import gov.nist.core.*;
-import java.text.*;
+import java.text.ParseException;
+
+import gov.nist.core.Host;
+import gov.nist.core.HostNameParser;
+import gov.nist.core.LexerCore;
+import gov.nist.core.Token;
+import gov.nist.javax.sdp.fields.OriginField;
+import gov.nist.javax.sdp.fields.SDPField;
 
 /**
  * @author deruelle

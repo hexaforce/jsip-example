@@ -27,7 +27,7 @@
 * Product of NIST/ITL Advanced Networking Technologies Division (ANTD).        *
 *******************************************************************************/
 package gov.nist.core;
-import java.net.*;
+import java.net.InetAddress;
 
 /**
 * Holds the hostname:port.

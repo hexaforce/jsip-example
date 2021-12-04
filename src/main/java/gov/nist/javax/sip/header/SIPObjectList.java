@@ -27,11 +27,10 @@
  * Product of NIST/ITL Advanced Networking Technologies Division (ANTD).      *
  ******************************************************************************/
 package gov.nist.javax.sip.header;
-import java.util.ListIterator;
-import java.util.LinkedList;
 import java.util.Iterator;
-import java.lang.reflect.*;
-import gov.nist.core.*;
+
+import gov.nist.core.GenericObject;
+import gov.nist.core.GenericObjectList;
 
 /**
  * Root class for all the collection objects in this list:

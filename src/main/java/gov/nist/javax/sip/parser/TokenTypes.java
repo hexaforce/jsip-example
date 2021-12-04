@@ -25,7 +25,7 @@
 */
 package gov.nist.javax.sip.parser;
 
-import gov.nist.core.*;
+import gov.nist.core.LexerCore;
 
 /**
  * @version 1.2 $Revision: 1.13 $ $Date: 2010-01-12 00:05:25 $

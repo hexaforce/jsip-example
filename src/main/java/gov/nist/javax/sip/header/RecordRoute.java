@@ -28,7 +28,7 @@
 *******************************************************************************/
 package gov.nist.javax.sip.header;
 
-import gov.nist.javax.sip.address.*;
+import gov.nist.javax.sip.address.AddressImpl;
 
 /**
  * The Request-Route header is added to a request by any proxy that insists on

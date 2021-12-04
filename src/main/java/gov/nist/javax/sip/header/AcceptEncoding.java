@@ -28,9 +28,10 @@
  *******************************************************************************/
 package gov.nist.javax.sip.header;
 
-import javax.sip.InvalidArgumentException;
-import javax.sip.header.*;
 import java.text.ParseException;
+
+import javax.sip.InvalidArgumentException;
+import javax.sip.header.AcceptEncodingHeader;
 
 /**
  * Accept-Encoding SIP (HTTP) Header.

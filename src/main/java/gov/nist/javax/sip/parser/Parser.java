@@ -24,11 +24,12 @@
 *
 */
 package gov.nist.javax.sip.parser;
+import java.text.ParseException;
+
 import gov.nist.core.Debug;
 import gov.nist.core.LexerCore;
 import gov.nist.core.ParserCore;
 import gov.nist.core.Token;
-import java.text.ParseException;
 
 /**
  * Base parser class.

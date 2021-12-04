@@ -31,9 +31,9 @@ package gov.nist.javax.sip.parser.ims;
 
 import java.text.ParseException;
 
+import gov.nist.javax.sip.header.SIPHeader;
 import gov.nist.javax.sip.header.ims.ServiceRoute;
 import gov.nist.javax.sip.header.ims.ServiceRouteList;
-import gov.nist.javax.sip.header.SIPHeader;
 import gov.nist.javax.sip.parser.AddressParametersParser;
 import gov.nist.javax.sip.parser.Lexer;
 import gov.nist.javax.sip.parser.TokenTypes;

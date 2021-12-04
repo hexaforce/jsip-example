@@ -26,14 +26,14 @@
 package gov.nist.javax.sip.stack;
 
 
+import java.io.IOException;
+import java.net.InetAddress;
+import java.nio.channels.SocketChannel;
+
 import gov.nist.core.CommonLogger;
 import gov.nist.core.HostPort;
 import gov.nist.core.LogWriter;
 import gov.nist.core.StackLogger;
-
-import java.io.IOException;
-import java.net.InetAddress;
-import java.nio.channels.SocketChannel;
 
 public class NioWebSocketMessageProcessor extends NioTcpMessageProcessor {
 

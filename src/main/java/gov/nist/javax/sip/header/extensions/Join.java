@@ -3,12 +3,15 @@
 *******************************************************************************/
 package gov.nist.javax.sip.header.extensions;
 import java.text.ParseException;
-import gov.nist.javax.sip.header.*;
 
 import javax.sip.header.ExtensionHeader;
 /*
 * This code is in the public domain.
 */
+
+import gov.nist.javax.sip.header.CallIdentifier;
+import gov.nist.javax.sip.header.ParameterNames;
+import gov.nist.javax.sip.header.ParametersHeader;
 
 /**
  * Join SIPHeader.

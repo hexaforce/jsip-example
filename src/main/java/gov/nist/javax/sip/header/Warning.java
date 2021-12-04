@@ -27,9 +27,10 @@
 * Product of NIST/ITL Advanced Networking Technologies Division (ANTD).        *
 *******************************************************************************/
 package gov.nist.javax.sip.header;
-import javax.sip.header.*;
 import java.text.ParseException;
+
 import javax.sip.InvalidArgumentException;
+import javax.sip.header.WarningHeader;
 
 /**
  * the WarningValue SIPObject.

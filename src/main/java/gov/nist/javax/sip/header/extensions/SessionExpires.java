@@ -5,12 +5,12 @@
 
 package gov.nist.javax.sip.header.extensions;
 
-import gov.nist.javax.sip.header.ParametersHeader;
-
 import java.text.ParseException;
 
 import javax.sip.InvalidArgumentException;
 import javax.sip.header.ExtensionHeader;
+
+import gov.nist.javax.sip.header.ParametersHeader;
 
 /**
  * ReferredBy SIP Header.

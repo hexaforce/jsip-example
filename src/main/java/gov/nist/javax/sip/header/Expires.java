@@ -28,7 +28,7 @@
 *******************************************************************************/
 package gov.nist.javax.sip.header;
 
-import javax.sip.*;
+import javax.sip.InvalidArgumentException;
 
 /**
  * Expires SIP Header.

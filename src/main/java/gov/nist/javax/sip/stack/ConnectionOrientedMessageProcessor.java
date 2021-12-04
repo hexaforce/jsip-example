@@ -25,17 +25,17 @@
  */
 package gov.nist.javax.sip.stack;
 
+import java.net.InetAddress;
+import java.net.ServerSocket;
+import java.util.Map;
+import java.util.concurrent.ConcurrentHashMap;
+
 import gov.nist.core.CommonLogger;
 import gov.nist.core.Host;
 import gov.nist.core.HostPort;
 import gov.nist.core.LogLevels;
 import gov.nist.core.LogWriter;
 import gov.nist.core.StackLogger;
-
-import java.net.InetAddress;
-import java.net.ServerSocket;
-import java.util.Map;
-import java.util.concurrent.ConcurrentHashMap;
 
 /**
  * @author jean.deruelle@gmail.com

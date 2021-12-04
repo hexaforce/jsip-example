@@ -25,16 +25,16 @@
 */
 package gov.nist.javax.sip.stack.timers;
 
+import java.util.Properties;
+import java.util.concurrent.ScheduledFuture;
+import java.util.concurrent.ScheduledThreadPoolExecutor;
+import java.util.concurrent.TimeUnit;
+
 import gov.nist.core.CommonLogger;
 import gov.nist.core.NamingThreadFactory;
 import gov.nist.core.StackLogger;
 import gov.nist.javax.sip.SipStackImpl;
 import gov.nist.javax.sip.stack.SIPStackTimerTask;
-
-import java.util.Properties;
-import java.util.concurrent.ScheduledFuture;
-import java.util.concurrent.ScheduledThreadPoolExecutor;
-import java.util.concurrent.TimeUnit;
 
 /**
  * Implementation of the SIP Timer based on java.util.concurrent.ScheduledThreadPoolExecutor

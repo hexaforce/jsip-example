@@ -1,10 +1,10 @@
 package gov.nist.javax.sip.clientauthutils;
 
-import gov.nist.core.LogWriter;
-import gov.nist.core.StackLogger;
-
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
+
+import gov.nist.core.LogWriter;
+import gov.nist.core.StackLogger;
 
 /**
  * The class takes standard Http Authentication details and returns a response according to the

@@ -27,7 +27,7 @@
 * Product of NIST/ITL Advanced Networking Technologies Division (ANTD).        *
 *******************************************************************************/
 package gov.nist.javax.sip.header;
-import gov.nist.core.*;
+import gov.nist.core.NameValueList;
 
 /**
  * Credentials  that are used in authentication and authorization headers.

@@ -1,5 +1,16 @@
 package gov.nist.javax.sip.stack.sctp;
 
+import java.io.IOException;
+import java.net.InetAddress;
+import java.net.InetSocketAddress;
+import java.net.SocketAddress;
+import java.nio.ByteBuffer;
+import java.nio.channels.SelectionKey;
+import java.text.ParseException;
+
+import com.sun.nio.sctp.MessageInfo;
+import com.sun.nio.sctp.SctpChannel;
+
 import gov.nist.core.CommonLogger;
 import gov.nist.core.LogWriter;
 import gov.nist.core.ServerLogger;
@@ -23,17 +34,6 @@ import gov.nist.javax.sip.stack.SIPTransaction;
 import gov.nist.javax.sip.stack.SIPTransactionStack;
 import gov.nist.javax.sip.stack.ServerRequestInterface;
 import gov.nist.javax.sip.stack.ServerResponseInterface;
-
-import java.io.IOException;
-import java.net.InetAddress;
-import java.net.InetSocketAddress;
-import java.net.SocketAddress;
-import java.nio.ByteBuffer;
-import java.nio.channels.SelectionKey;
-import java.text.ParseException;
-
-import com.sun.nio.sctp.MessageInfo;
-import com.sun.nio.sctp.SctpChannel;
 
 /**
  * SCTP message channel

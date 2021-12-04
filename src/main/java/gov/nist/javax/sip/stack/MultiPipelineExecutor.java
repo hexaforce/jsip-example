@@ -25,14 +25,14 @@
  */
 package gov.nist.javax.sip.stack;
 
-import gov.nist.core.NamingThreadFactory;
-
 import java.util.Enumeration;
 import java.util.LinkedList;
 import java.util.concurrent.ConcurrentHashMap;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 import java.util.concurrent.Semaphore;
+
+import gov.nist.core.NamingThreadFactory;
 
 public class MultiPipelineExecutor<K> {
 	private ExecutorService executor;

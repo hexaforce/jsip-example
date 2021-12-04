@@ -1,13 +1,5 @@
 package gov.nist.core.net;
 
-import gov.nist.core.CommonLogger;
-import gov.nist.core.LogWriter;
-import gov.nist.core.StackLogger;
-
-import javax.net.ssl.KeyManager;
-import javax.net.ssl.KeyManagerFactory;
-import javax.net.ssl.TrustManager;
-import javax.net.ssl.TrustManagerFactory;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.IOException;
@@ -15,6 +7,15 @@ import java.security.GeneralSecurityException;
 import java.security.KeyStore;
 import java.security.Security;
 import java.util.Properties;
+
+import javax.net.ssl.KeyManager;
+import javax.net.ssl.KeyManagerFactory;
+import javax.net.ssl.TrustManager;
+import javax.net.ssl.TrustManagerFactory;
+
+import gov.nist.core.CommonLogger;
+import gov.nist.core.LogWriter;
+import gov.nist.core.StackLogger;
 
 /**
  * Implement the default TLS security policy by loading kays specified in stack

@@ -25,12 +25,6 @@
 */
 package gov.nist.core.net;
 
-import gov.nist.core.CommonLogger;
-import gov.nist.core.LogWriter;
-import gov.nist.core.StackLogger;
-import gov.nist.javax.sip.SipStackImpl;
-import gov.nist.javax.sip.stack.ClientAuthType;
-
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.IOException;
@@ -56,6 +50,12 @@ import javax.net.ssl.SSLSocketFactory;
 import javax.net.ssl.TrustManager;
 import javax.net.ssl.TrustManagerFactory;
 import javax.net.ssl.X509TrustManager;
+
+import gov.nist.core.CommonLogger;
+import gov.nist.core.LogWriter;
+import gov.nist.core.StackLogger;
+import gov.nist.javax.sip.SipStackImpl;
+import gov.nist.javax.sip.stack.ClientAuthType;
 
 /**
  * extended implementation of a network layer that allows to define a private java

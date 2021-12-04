@@ -25,7 +25,9 @@
  */
 package gov.nist.javax.sip.header.extensions;
 
-import javax.sip.header.*;
+import javax.sip.header.Header;
+import javax.sip.header.HeaderAddress;
+import javax.sip.header.Parameters;
 
 /**
  * This header is described in a draft RFC which has expired. HOwever it appears to be

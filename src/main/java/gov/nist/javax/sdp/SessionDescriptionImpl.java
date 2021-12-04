@@ -30,12 +30,37 @@
  */
 package gov.nist.javax.sdp;
 
-import java.util.*;
-import javax.sdp.*;
-
-import gov.nist.javax.sdp.fields.*;
-
 import java.text.ParseException;
+import java.util.Iterator;
+import java.util.Vector;
+
+import javax.sdp.Connection;
+import javax.sdp.Info;
+import javax.sdp.Key;
+import javax.sdp.Origin;
+import javax.sdp.SdpException;
+import javax.sdp.SdpParseException;
+import javax.sdp.SessionDescription;
+import javax.sdp.SessionName;
+import javax.sdp.URI;
+import javax.sdp.Version;
+
+import gov.nist.javax.sdp.fields.AttributeField;
+import gov.nist.javax.sdp.fields.BandwidthField;
+import gov.nist.javax.sdp.fields.ConnectionField;
+import gov.nist.javax.sdp.fields.EmailField;
+import gov.nist.javax.sdp.fields.InformationField;
+import gov.nist.javax.sdp.fields.KeyField;
+import gov.nist.javax.sdp.fields.MediaField;
+import gov.nist.javax.sdp.fields.OriginField;
+import gov.nist.javax.sdp.fields.PhoneField;
+import gov.nist.javax.sdp.fields.ProtoVersionField;
+import gov.nist.javax.sdp.fields.RepeatField;
+import gov.nist.javax.sdp.fields.SDPField;
+import gov.nist.javax.sdp.fields.SessionNameField;
+import gov.nist.javax.sdp.fields.TimeField;
+import gov.nist.javax.sdp.fields.URIField;
+import gov.nist.javax.sdp.fields.ZoneField;
 
 /**
  * Implementation of the SessionDescription interface.

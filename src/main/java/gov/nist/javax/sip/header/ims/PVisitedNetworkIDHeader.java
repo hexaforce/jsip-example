@@ -29,10 +29,10 @@
 
 package gov.nist.javax.sip.header.ims;
 
-import gov.nist.core.Token;
-
 import javax.sip.header.Header;
 import javax.sip.header.Parameters;
+
+import gov.nist.core.Token;
 
 
 

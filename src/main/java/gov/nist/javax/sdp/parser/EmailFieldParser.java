@@ -25,8 +25,12 @@
 */
 package gov.nist.javax.sdp.parser;
 
-import gov.nist.javax.sdp.fields.*;
 import java.text.ParseException;
+
+import gov.nist.javax.sdp.fields.Email;
+import gov.nist.javax.sdp.fields.EmailAddress;
+import gov.nist.javax.sdp.fields.EmailField;
+import gov.nist.javax.sdp.fields.SDPField;
 
 /**
  * Parser for Email Field

@@ -28,9 +28,9 @@
  ******************************************************************************/
 package gov.nist.javax.sip.header;
 
-import gov.nist.javax.sip.address.AddressImpl;
-
 import javax.sip.header.RouteHeader;
+
+import gov.nist.javax.sip.address.AddressImpl;
 
 /**
  * Route  SIPHeader Object

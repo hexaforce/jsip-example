@@ -25,10 +25,10 @@
 */
 package gov.nist.javax.sip.address;
 
-import gov.nist.core.NameValueList;
-
 import java.text.ParseException;
 import java.util.Iterator;
+
+import gov.nist.core.NameValueList;
 
 /**
  * Implementation of the TelURL interface.

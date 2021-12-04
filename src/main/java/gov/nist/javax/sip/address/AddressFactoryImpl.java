@@ -25,12 +25,15 @@
 */
 package gov.nist.javax.sip.address;
 
-import gov.nist.javax.sip.parser.*;
-
+import java.net.URISyntaxException;
 import java.text.ParseException;
 import java.util.regex.Pattern;
 
-import javax.sip.address.*;
+import javax.sip.address.SipURI;
+import javax.sip.address.TelURL;
+
+import gov.nist.javax.sip.parser.StringMsgParser;
+import gov.nist.javax.sip.parser.URLParser;
 
 /**
  * Implementation of the JAIN-SIP address factory.

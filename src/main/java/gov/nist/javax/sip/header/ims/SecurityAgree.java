@@ -34,12 +34,12 @@ package gov.nist.javax.sip.header.ims;
 
 
 import java.text.ParseException;
+
 import javax.sip.InvalidArgumentException;
 import javax.sip.header.Parameters;
 
 import gov.nist.core.NameValue;
 import gov.nist.core.Separators;
-import gov.nist.javax.sip.header.ims.ParameterNamesIms;
 import gov.nist.javax.sip.header.ParametersHeader;
 
 

@@ -28,8 +28,10 @@
 *******************************************************************************/
 package gov.nist.javax.sdp.fields;
 
-import gov.nist.core.*;
-import javax.sdp.*;
+import javax.sdp.SdpException;
+import javax.sdp.SdpParseException;
+
+import gov.nist.core.Separators;
 
 /**
 *   Key field part of an SDP header.

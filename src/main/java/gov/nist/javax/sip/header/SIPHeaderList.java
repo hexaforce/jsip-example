@@ -28,13 +28,18 @@
  ******************************************************************************/
 package gov.nist.javax.sip.header;
 
+import java.lang.reflect.Constructor;
+import java.util.Collection;
+import java.util.Iterator;
+import java.util.LinkedList;
+import java.util.List;
+import java.util.ListIterator;
+
+import javax.sip.header.Header;
+
 import gov.nist.core.GenericObject;
 import gov.nist.core.Separators;
 import gov.nist.javax.sip.header.ims.PrivacyHeader;
-
-import javax.sip.header.Header;
-import java.lang.reflect.Constructor;
-import java.util.*;
 
 /**
  *

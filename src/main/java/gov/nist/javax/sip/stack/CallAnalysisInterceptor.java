@@ -27,12 +27,12 @@ package gov.nist.javax.sip.stack;
 
 import java.util.Properties;
 
+import javax.sip.SipStack;
+import javax.sip.message.Message;
+
 import gov.nist.javax.sip.SipStackImpl;
 import gov.nist.javax.sip.stack.CallAnalyzer.MetricAnalysisConfiguration;
 import gov.nist.javax.sip.stack.CallAnalyzer.MetricReference;
-
-import javax.sip.SipStack;
-import javax.sip.message.Message;
 
 /**
  * This sample interceptor keeps track of requests stuck in JAIN SIP threads and prints a thread dump

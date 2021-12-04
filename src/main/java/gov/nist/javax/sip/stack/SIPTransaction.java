@@ -25,13 +25,6 @@
  */
 package gov.nist.javax.sip.stack;
 
-import gov.nist.javax.sip.SipProviderImpl;
-import gov.nist.javax.sip.TransactionExt;
-import gov.nist.javax.sip.header.Via;
-import gov.nist.javax.sip.message.SIPMessage;
-import gov.nist.javax.sip.message.SIPRequest;
-import gov.nist.javax.sip.message.SIPResponse;
-
 import java.io.IOException;
 import java.net.InetAddress;
 import java.util.List;
@@ -41,6 +34,13 @@ import javax.sip.Dialog;
 import javax.sip.TransactionState;
 import javax.sip.message.Request;
 import javax.sip.message.Response;
+
+import gov.nist.javax.sip.SipProviderImpl;
+import gov.nist.javax.sip.TransactionExt;
+import gov.nist.javax.sip.header.Via;
+import gov.nist.javax.sip.message.SIPMessage;
+import gov.nist.javax.sip.message.SIPRequest;
+import gov.nist.javax.sip.message.SIPResponse;
 
 public interface SIPTransaction extends TransactionExt {
 

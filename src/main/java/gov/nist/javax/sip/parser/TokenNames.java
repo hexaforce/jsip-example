@@ -25,8 +25,9 @@
 */
 package gov.nist.javax.sip.parser;
 import javax.sip.message.Request;
-import gov.nist.javax.sip.address.*;
-import gov.nist.javax.sip.header.*;
+
+import gov.nist.javax.sip.address.GenericURI;
+import gov.nist.javax.sip.header.SIPDate;
 
 /**
  * A grab bag of SIP Token names.

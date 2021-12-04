@@ -30,8 +30,11 @@
 package gov.nist.javax.sip.header;
 
 import java.text.ParseException;
-import javax.sip.header.*;
-import java.util.*;
+import java.util.LinkedList;
+import java.util.List;
+import java.util.ListIterator;
+
+import javax.sip.header.ServerHeader;
 
 /**
  * Supported SIP Header.

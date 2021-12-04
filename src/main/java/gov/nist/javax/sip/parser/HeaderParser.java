@@ -25,9 +25,12 @@
 */
 package gov.nist.javax.sip.parser;
 
-import gov.nist.javax.sip.header.*;
-import java.util.*;
 import java.text.ParseException;
+import java.util.Calendar;
+import java.util.TimeZone;
+
+import gov.nist.javax.sip.header.ExtensionHeaderImpl;
+import gov.nist.javax.sip.header.SIPHeader;
 
 /**
  * Generic header parser class. The parsers for various headers extend this

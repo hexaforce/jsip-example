@@ -30,6 +30,8 @@
 
 package gov.nist.javax.sip.parser.ims;
 
+import java.text.ParseException;
+
 /**
  * Security-Verify header parser.
  *
@@ -38,11 +40,10 @@ package gov.nist.javax.sip.parser.ims;
 
 
 import gov.nist.javax.sip.header.SIPHeader;
-import gov.nist.javax.sip.parser.Lexer;
-import gov.nist.javax.sip.parser.TokenTypes;
-import java.text.ParseException;
 import gov.nist.javax.sip.header.ims.SecurityVerify;
 import gov.nist.javax.sip.header.ims.SecurityVerifyList;
+import gov.nist.javax.sip.parser.Lexer;
+import gov.nist.javax.sip.parser.TokenTypes;
 
 
 public class SecurityVerifyParser extends SecurityAgreeParser

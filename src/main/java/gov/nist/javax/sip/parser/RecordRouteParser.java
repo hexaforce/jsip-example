@@ -25,11 +25,11 @@
 */
 package gov.nist.javax.sip.parser;
 
+import java.text.ParseException;
+
 import gov.nist.javax.sip.header.RecordRoute;
 import gov.nist.javax.sip.header.RecordRouteList;
 import gov.nist.javax.sip.header.SIPHeader;
-
-import java.text.ParseException;
 
 /**
  * Parser for a list of route headers.

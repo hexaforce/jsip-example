@@ -24,7 +24,8 @@
 *
 */
 package gov.nist.javax.sdp.parser;
-import gov.nist.core.*;
+import gov.nist.core.LexerCore;
+import gov.nist.core.Separators;
 
 public class Lexer extends LexerCore {
     public Lexer(String lexerName, String buffer) {

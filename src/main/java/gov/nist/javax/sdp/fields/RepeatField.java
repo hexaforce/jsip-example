@@ -27,10 +27,13 @@
 * Product of NIST/ITL Advanced Networking Technologies Division (ANTD).        *
 *******************************************************************************/
 package gov.nist.javax.sdp.fields;
-import gov.nist.core.*;
 import java.util.LinkedList;
 import java.util.ListIterator;
-import javax.sdp.*;
+
+import javax.sdp.SdpException;
+import javax.sdp.SdpParseException;
+
+import gov.nist.core.Separators;
 /**
 * Repeat SDP Field (part of the time field).
 *

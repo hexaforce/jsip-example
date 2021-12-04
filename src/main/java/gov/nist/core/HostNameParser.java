@@ -33,9 +33,9 @@
  */
 package gov.nist.core;
 
-import gov.nist.javax.sdp.parser.Lexer;
-
 import java.text.ParseException;
+
+import gov.nist.javax.sdp.parser.Lexer;
 
 /**
  * Parser for host names.

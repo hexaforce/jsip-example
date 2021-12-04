@@ -28,6 +28,40 @@
  ******************************************************************************/
 package gov.nist.javax.sip.message;
 
+import java.io.UnsupportedEncodingException;
+import java.lang.reflect.Field;
+import java.net.InetAddress;
+import java.text.ParseException;
+import java.util.Collection;
+import java.util.Iterator;
+import java.util.LinkedList;
+import java.util.List;
+import java.util.ListIterator;
+import java.util.Map;
+import java.util.concurrent.ConcurrentHashMap;
+import java.util.concurrent.ConcurrentLinkedQueue;
+
+import javax.sip.InvalidArgumentException;
+import javax.sip.SipException;
+import javax.sip.header.AuthorizationHeader;
+import javax.sip.header.CSeqHeader;
+import javax.sip.header.CallIdHeader;
+import javax.sip.header.ContactHeader;
+import javax.sip.header.ContentDispositionHeader;
+import javax.sip.header.ContentEncodingHeader;
+import javax.sip.header.ContentLanguageHeader;
+import javax.sip.header.ContentLengthHeader;
+import javax.sip.header.ContentTypeHeader;
+import javax.sip.header.ExpiresHeader;
+import javax.sip.header.FromHeader;
+import javax.sip.header.Header;
+import javax.sip.header.MaxForwardsHeader;
+import javax.sip.header.RecordRouteHeader;
+import javax.sip.header.RouteHeader;
+import javax.sip.header.ToHeader;
+import javax.sip.header.ViaHeader;
+import javax.sip.message.Request;
+
 import gov.nist.core.InternalErrorHandler;
 import gov.nist.core.Separators;
 import gov.nist.javax.sip.SIPConstants;
@@ -73,40 +107,6 @@ import gov.nist.javax.sip.parser.HeaderParser;
 import gov.nist.javax.sip.parser.ParserFactory;
 import gov.nist.javax.sip.parser.PipelinedMsgParser;
 import gov.nist.javax.sip.parser.StringMsgParser;
-
-import java.io.UnsupportedEncodingException;
-import java.lang.reflect.Field;
-import java.net.InetAddress;
-import java.text.ParseException;
-import java.util.Collection;
-import java.util.Iterator;
-import java.util.LinkedList;
-import java.util.List;
-import java.util.ListIterator;
-import java.util.Map;
-import java.util.concurrent.ConcurrentHashMap;
-import java.util.concurrent.ConcurrentLinkedQueue;
-
-import javax.sip.InvalidArgumentException;
-import javax.sip.SipException;
-import javax.sip.header.AuthorizationHeader;
-import javax.sip.header.CSeqHeader;
-import javax.sip.header.CallIdHeader;
-import javax.sip.header.ContactHeader;
-import javax.sip.header.ContentDispositionHeader;
-import javax.sip.header.ContentEncodingHeader;
-import javax.sip.header.ContentLanguageHeader;
-import javax.sip.header.ContentLengthHeader;
-import javax.sip.header.ContentTypeHeader;
-import javax.sip.header.ExpiresHeader;
-import javax.sip.header.FromHeader;
-import javax.sip.header.Header;
-import javax.sip.header.MaxForwardsHeader;
-import javax.sip.header.RecordRouteHeader;
-import javax.sip.header.RouteHeader;
-import javax.sip.header.ToHeader;
-import javax.sip.header.ViaHeader;
-import javax.sip.message.Request;
 
 /*
  * Acknowledgements: Yanick Belanger sent in a patch for the right content length when the content

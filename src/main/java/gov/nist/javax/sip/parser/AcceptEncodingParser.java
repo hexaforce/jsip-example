@@ -24,10 +24,14 @@
 *
 */
 package gov.nist.javax.sip.parser;
-import gov.nist.javax.sip.header.*;
-import gov.nist.core.*;
 import java.text.ParseException;
-import javax.sip.*;
+
+import javax.sip.InvalidArgumentException;
+
+import gov.nist.core.Token;
+import gov.nist.javax.sip.header.AcceptEncoding;
+import gov.nist.javax.sip.header.AcceptEncodingList;
+import gov.nist.javax.sip.header.SIPHeader;
 
 /**
  * Accept-Encoding SIP (HTTP) Header parser.

@@ -24,9 +24,10 @@
 *
 */
 package gov.nist.javax.sdp.parser;
-import gov.nist.core.*;
 import java.text.ParseException;
-import gov.nist.javax.sdp.fields.*;
+
+import gov.nist.core.ParserCore;
+import gov.nist.javax.sdp.fields.SDPField;
 
 /**
 *@version 1.2

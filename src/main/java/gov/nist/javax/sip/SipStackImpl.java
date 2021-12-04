@@ -25,6 +25,37 @@
  */
 package gov.nist.javax.sip;
 
+import java.io.BufferedReader;
+import java.io.IOException;
+import java.io.InputStream;
+import java.io.InputStreamReader;
+import java.lang.reflect.Constructor;
+import java.lang.reflect.InvocationTargetException;
+import java.net.InetAddress;
+import java.security.GeneralSecurityException;
+import java.util.Collections;
+import java.util.Hashtable;
+import java.util.LinkedList;
+import java.util.List;
+import java.util.Properties;
+import java.util.StringTokenizer;
+import java.util.concurrent.Semaphore;
+import java.util.concurrent.TimeUnit;
+
+import javax.sip.InvalidArgumentException;
+import javax.sip.ListeningPoint;
+import javax.sip.ObjectInUseException;
+import javax.sip.PeerUnavailableException;
+import javax.sip.ProviderDoesNotExistException;
+import javax.sip.SipException;
+import javax.sip.SipListener;
+import javax.sip.SipProvider;
+import javax.sip.SipStack;
+import javax.sip.TransportNotSupportedException;
+import javax.sip.address.Router;
+import javax.sip.header.HeaderFactory;
+import javax.sip.message.Request;
+
 import gov.nist.core.CommonLogger;
 import gov.nist.core.LogLevels;
 import gov.nist.core.ServerLogger;
@@ -56,37 +87,6 @@ import gov.nist.javax.sip.stack.SIPTransactionStack;
 import gov.nist.javax.sip.stack.SocketTimeoutAuditor;
 import gov.nist.javax.sip.stack.timers.DefaultSipTimer;
 import gov.nist.javax.sip.stack.timers.SipTimer;
-
-import java.io.BufferedReader;
-import java.io.IOException;
-import java.io.InputStream;
-import java.io.InputStreamReader;
-import java.lang.reflect.Constructor;
-import java.lang.reflect.InvocationTargetException;
-import java.net.InetAddress;
-import java.security.GeneralSecurityException;
-import java.util.Collections;
-import java.util.Hashtable;
-import java.util.LinkedList;
-import java.util.List;
-import java.util.Properties;
-import java.util.StringTokenizer;
-import java.util.concurrent.Semaphore;
-import java.util.concurrent.TimeUnit;
-
-import javax.sip.InvalidArgumentException;
-import javax.sip.ListeningPoint;
-import javax.sip.ObjectInUseException;
-import javax.sip.PeerUnavailableException;
-import javax.sip.ProviderDoesNotExistException;
-import javax.sip.SipException;
-import javax.sip.SipListener;
-import javax.sip.SipProvider;
-import javax.sip.SipStack;
-import javax.sip.TransportNotSupportedException;
-import javax.sip.address.Router;
-import javax.sip.header.HeaderFactory;
-import javax.sip.message.Request;
 
 /**
  * Implementation of SipStack.

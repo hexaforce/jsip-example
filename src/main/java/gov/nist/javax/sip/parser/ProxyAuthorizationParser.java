@@ -25,8 +25,10 @@
 */
 package gov.nist.javax.sip.parser;
 
-import gov.nist.javax.sip.header.*;
 import java.text.ParseException;
+
+import gov.nist.javax.sip.header.ProxyAuthorization;
+import gov.nist.javax.sip.header.SIPHeader;
 
 /**
  * Parser for ProxyAuthorization headers.

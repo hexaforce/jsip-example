@@ -1,12 +1,12 @@
 package gov.nist.javax.sip.header.extensions;
 
-import gov.nist.core.Separators;
-import gov.nist.javax.sip.header.ParametersHeader;
-
 import java.text.ParseException;
 import java.util.Iterator;
 
 import javax.sip.header.ExtensionHeader;
+
+import gov.nist.core.Separators;
+import gov.nist.javax.sip.header.ParametersHeader;
 
 public class References extends ParametersHeader  implements ReferencesHeader,ExtensionHeader  {
 

@@ -29,6 +29,20 @@
 
 package gov.nist.javax.sip.stack;
 
+import java.io.IOException;
+import java.io.OutputStream;
+import java.net.DatagramPacket;
+import java.net.DatagramSocket;
+import java.net.InetAddress;
+import java.net.Socket;
+import java.text.ParseException;
+import java.util.Arrays;
+import java.util.Hashtable;
+import java.util.concurrent.TimeUnit;
+
+import javax.sip.address.Hop;
+import javax.sip.message.Response;
+
 import gov.nist.core.CommonLogger;
 import gov.nist.core.InternalErrorHandler;
 import gov.nist.core.LogLevels;
@@ -50,20 +64,6 @@ import gov.nist.javax.sip.message.SIPRequest;
 import gov.nist.javax.sip.message.SIPResponse;
 import gov.nist.javax.sip.parser.MessageParser;
 import gov.nist.javax.sip.parser.ParseExceptionListener;
-
-import java.io.IOException;
-import java.io.OutputStream;
-import java.net.DatagramPacket;
-import java.net.DatagramSocket;
-import java.net.InetAddress;
-import java.net.Socket;
-import java.text.ParseException;
-import java.util.Arrays;
-import java.util.Hashtable;
-import java.util.concurrent.TimeUnit;
-
-import javax.sip.address.Hop;
-import javax.sip.message.Response;
 
 /*
  * Kim Kirby (Keyvoice) suggested that duplicate checking should be added to the

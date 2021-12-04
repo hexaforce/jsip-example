@@ -28,16 +28,16 @@
 /**************************************************************************/
 
 package gov.nist.javax.sip.header;
-import gov.nist.core.DuplicateNameValueList;
-import gov.nist.core.NameValue;
-import gov.nist.core.NameValueList;
-import gov.nist.javax.sip.address.GenericURI;
-
 import java.io.Serializable;
 import java.text.ParseException;
 import java.util.Iterator;
 
 import javax.sip.header.Parameters;
+
+import gov.nist.core.DuplicateNameValueList;
+import gov.nist.core.NameValue;
+import gov.nist.core.NameValueList;
+import gov.nist.javax.sip.address.GenericURI;
 
 /**
  * Parameters header. Suitable for extension by headers that have parameters.

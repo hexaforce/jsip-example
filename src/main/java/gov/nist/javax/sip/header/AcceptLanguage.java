@@ -27,10 +27,12 @@
  * Product of NIST/ITL Advanced Networking Technologies Division (ANTD).    *
  ****************************************************************************/
 package gov.nist.javax.sip.header;
-import gov.nist.core.*;
-import javax.sip.header.AcceptLanguageHeader;
-import javax.sip.InvalidArgumentException;
 import java.util.Locale;
+
+import javax.sip.InvalidArgumentException;
+import javax.sip.header.AcceptLanguageHeader;
+
+import gov.nist.core.NameValue;
 
 /**
  * Accept Language body.

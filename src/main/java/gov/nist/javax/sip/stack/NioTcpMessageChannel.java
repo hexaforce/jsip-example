@@ -25,8 +25,16 @@
  */
 package gov.nist.javax.sip.stack;
 
+import java.io.IOException;
+import java.net.InetAddress;
+import java.nio.ByteBuffer;
+import java.nio.channels.SocketChannel;
+import java.text.ParseException;
+import java.util.HashMap;
+
+import javax.net.ssl.SSLException;
+
 import gov.nist.core.CommonLogger;
-import gov.nist.core.InternalErrorHandler;
 import gov.nist.core.LogWriter;
 import gov.nist.core.StackLogger;
 import gov.nist.javax.sip.header.CSeq;
@@ -39,15 +47,6 @@ import gov.nist.javax.sip.header.To;
 import gov.nist.javax.sip.header.Via;
 import gov.nist.javax.sip.message.SIPMessage;
 import gov.nist.javax.sip.parser.NioPipelineParser;
-
-import java.io.IOException;
-import java.net.InetAddress;
-import java.nio.ByteBuffer;
-import java.nio.channels.SocketChannel;
-import java.text.ParseException;
-import java.util.HashMap;
-
-import javax.net.ssl.SSLException;
 
 public class NioTcpMessageChannel extends ConnectionOrientedMessageChannel {
 	private static StackLogger logger = CommonLogger

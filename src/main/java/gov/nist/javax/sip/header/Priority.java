@@ -28,10 +28,9 @@
 *******************************************************************************/
 package gov.nist.javax.sip.header;
 
-import javax.sip.header.*;
-
-import java.nio.Buffer;
 import java.text.ParseException;
+
+import javax.sip.header.PriorityHeader;
 
 /**
  * the Priority header.

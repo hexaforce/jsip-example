@@ -27,12 +27,12 @@
  * Product of NIST/ITL Advanced Networking Technologies Division (ANTD).     *
  *****************************************************************************/
 package gov.nist.javax.sip.header;
+import java.lang.reflect.Field;
+import java.lang.reflect.Modifier;
+
 import gov.nist.core.GenericObject;
 import gov.nist.core.GenericObjectList;
 import gov.nist.core.InternalErrorHandler;
-
-import java.lang.reflect.Field;
-import java.lang.reflect.Modifier;
 
 /**
  * Root class for all singleton objects in this package:

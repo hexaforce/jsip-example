@@ -28,8 +28,9 @@
 *******************************************************************************/
 package gov.nist.javax.sip.header;
 
-import javax.sip.header.ContentTypeHeader;
 import java.text.ParseException;
+
+import javax.sip.header.ContentTypeHeader;
 
 /**
 *  ContentType SIP Header

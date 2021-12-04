@@ -25,9 +25,13 @@
 */
 package gov.nist.javax.sip.parser;
 
-import gov.nist.javax.sip.header.*;
 import java.text.ParseException;
-import javax.sip.*;
+
+import javax.sip.InvalidArgumentException;
+
+import gov.nist.javax.sip.header.SIPHeader;
+import gov.nist.javax.sip.header.SIPHeaderNames;
+import gov.nist.javax.sip.header.TimeStamp;
 
 /**
  * Parser for TimeStamp header.

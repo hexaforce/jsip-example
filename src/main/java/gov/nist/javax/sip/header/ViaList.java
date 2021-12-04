@@ -28,9 +28,7 @@
  ******************************************************************************/
 package gov.nist.javax.sip.header;
 
-import javax.sip.header.*;
-
-import java.util.Iterator;
+import javax.sip.header.ViaHeader;
 
 /**
  * Keeps a list and a hashtable of via header functions.

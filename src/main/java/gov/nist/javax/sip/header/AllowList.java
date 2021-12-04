@@ -28,9 +28,13 @@
 *******************************************************************************/
 package gov.nist.javax.sip.header;
 
-import java.util.*;
 import java.text.ParseException;
-import javax.sip.header.*;
+import java.util.Iterator;
+import java.util.LinkedList;
+import java.util.List;
+import java.util.ListIterator;
+
+import javax.sip.header.AllowHeader;
 
 /**
  * List of ALLOW headers. The sip message can have multiple Allow headers

@@ -25,9 +25,10 @@
 */
 package gov.nist.javax.sip.parser;
 
-import gov.nist.javax.sip.header.*;
-import gov.nist.core.*;
 import java.text.ParseException;
+
+import gov.nist.core.NameValue;
+import gov.nist.javax.sip.header.ParametersHeader;
 
 /** parameters parser header.
  *

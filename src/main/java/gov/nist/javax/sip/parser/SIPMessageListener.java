@@ -27,7 +27,7 @@
 * Product of NIST/ITL Advanced Networking Technologies Division (ANTD)         *
 *******************************************************************************/
 package gov.nist.javax.sip.parser;
-import gov.nist.javax.sip.message.*;
+import gov.nist.javax.sip.message.SIPMessage;
 
 /**
  * Interface  that provides methods for processing good

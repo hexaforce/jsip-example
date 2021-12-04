@@ -2,13 +2,13 @@
 * Product of NIST/ITL Advanced Networking Technologies Division (ANTD).        *
 *******************************************************************************/
 package gov.nist.javax.sip.header.extensions;
-import gov.nist.javax.sip.header.CallIdentifier;
-import gov.nist.javax.sip.header.ParameterNames;
-import gov.nist.javax.sip.header.ParametersHeader;
-
 import java.text.ParseException;
 
 import javax.sip.header.ExtensionHeader;
+
+import gov.nist.javax.sip.header.CallIdentifier;
+import gov.nist.javax.sip.header.ParameterNames;
+import gov.nist.javax.sip.header.ParametersHeader;
 
 /**
  * Replaces SIPHeader.

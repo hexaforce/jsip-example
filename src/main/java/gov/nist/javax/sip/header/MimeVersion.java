@@ -29,7 +29,7 @@
 package gov.nist.javax.sip.header;
 
 import javax.sip.InvalidArgumentException;
-import javax.sip.header.*;
+import javax.sip.header.MimeVersionHeader;
 
 /**
  * MimeVersion SIP Header.

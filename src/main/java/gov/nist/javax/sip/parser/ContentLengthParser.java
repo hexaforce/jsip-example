@@ -25,9 +25,12 @@
 */
 package gov.nist.javax.sip.parser;
 
-import javax.sip.*;
-import gov.nist.javax.sip.header.*;
 import java.text.ParseException;
+
+import javax.sip.InvalidArgumentException;
+
+import gov.nist.javax.sip.header.ContentLength;
+import gov.nist.javax.sip.header.SIPHeader;
 
 /**
  * Parser for Content-Length Header.

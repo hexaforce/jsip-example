@@ -25,9 +25,13 @@
 */
 package gov.nist.javax.sip.parser;
 
-import gov.nist.javax.sip.header.*;
-import gov.nist.javax.sip.address.*;
 import java.text.ParseException;
+
+import gov.nist.javax.sip.address.GenericURI;
+import gov.nist.javax.sip.header.ErrorInfo;
+import gov.nist.javax.sip.header.ErrorInfoList;
+import gov.nist.javax.sip.header.SIPHeader;
+import gov.nist.javax.sip.header.SIPHeaderNames;
 
 /**
  * Parser for ErrorInfo header.

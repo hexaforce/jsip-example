@@ -28,19 +28,6 @@
  *******************************************************************************/
 package gov.nist.javax.sip.message;
 
-import gov.nist.core.InternalErrorHandler;
-import gov.nist.javax.sip.address.GenericURI;
-import gov.nist.javax.sip.address.SipUri;
-import gov.nist.javax.sip.header.CSeq;
-import gov.nist.javax.sip.header.RecordRouteList;
-import gov.nist.javax.sip.header.RequestLine;
-import gov.nist.javax.sip.header.SIPHeader;
-import gov.nist.javax.sip.header.SIPHeaderList;
-import gov.nist.javax.sip.header.To;
-import gov.nist.javax.sip.header.Via;
-import gov.nist.javax.sip.header.ViaList;
-import gov.nist.javax.sip.stack.SIPTransactionStack;
-
 import java.io.UnsupportedEncodingException;
 import java.text.ParseException;
 import java.util.HashSet;
@@ -69,6 +56,19 @@ import javax.sip.header.TimeStampHeader;
 import javax.sip.header.ToHeader;
 import javax.sip.header.ViaHeader;
 import javax.sip.message.Request;
+
+import gov.nist.core.InternalErrorHandler;
+import gov.nist.javax.sip.address.GenericURI;
+import gov.nist.javax.sip.address.SipUri;
+import gov.nist.javax.sip.header.CSeq;
+import gov.nist.javax.sip.header.RecordRouteList;
+import gov.nist.javax.sip.header.RequestLine;
+import gov.nist.javax.sip.header.SIPHeader;
+import gov.nist.javax.sip.header.SIPHeaderList;
+import gov.nist.javax.sip.header.To;
+import gov.nist.javax.sip.header.Via;
+import gov.nist.javax.sip.header.ViaList;
+import gov.nist.javax.sip.stack.SIPTransactionStack;
 
 /*
  * Acknowledgements: Mark Bednarek made a few fixes to this code. Jeff Keyser added two methods

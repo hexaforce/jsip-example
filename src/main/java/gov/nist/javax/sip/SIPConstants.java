@@ -28,7 +28,7 @@
 *******************************************************************************/
 package gov.nist.javax.sip;
 
-import gov.nist.javax.sip.header.*;
+import gov.nist.javax.sip.header.SIPHeaderNames;
 
 /**
  * Default constants for SIP.

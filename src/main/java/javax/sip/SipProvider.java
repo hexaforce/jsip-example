@@ -28,9 +28,11 @@
  */
 package javax.sip;
 
-import java.util.*;
-import javax.sip.message.*;
-import javax.sip.header.*;
+import java.util.TooManyListenersException;
+
+import javax.sip.header.CallIdHeader;
+import javax.sip.message.Request;
+import javax.sip.message.Response;
 
 /**
  * This interface represents the messaging entity of a SIP stack and as

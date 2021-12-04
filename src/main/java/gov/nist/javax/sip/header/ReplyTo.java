@@ -28,10 +28,10 @@
 *******************************************************************************/
 package gov.nist.javax.sip.header;
 
-import gov.nist.core.*;
-import gov.nist.javax.sip.address.*;
+import javax.sip.header.ReplyToHeader;
 
-import javax.sip.header.*;
+import gov.nist.core.HostPort;
+import gov.nist.javax.sip.address.AddressImpl;
 
 /**
  * ReplyTo Header.

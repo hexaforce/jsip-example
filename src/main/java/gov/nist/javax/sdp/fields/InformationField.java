@@ -27,8 +27,10 @@
 * Product of NIST/ITL Advanced Networking Technologies Division (ANTD).        *
 *******************************************************************************/
 package gov.nist.javax.sdp.fields;
-import gov.nist.core.*;
-import javax.sdp.*;
+import javax.sdp.SdpException;
+import javax.sdp.SdpParseException;
+
+import gov.nist.core.Separators;
 
 /** Information field implementation
 *@version  JSR141-PUBLIC-REVIEW (subject to change)

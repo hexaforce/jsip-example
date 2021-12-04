@@ -25,10 +25,10 @@
 */
 package gov.nist.javax.sip.stack.timers;
 
+import java.util.Properties;
+
 import gov.nist.javax.sip.SipStackImpl;
 import gov.nist.javax.sip.stack.SIPStackTimerTask;
-
-import java.util.Properties;
 
 /**
  * Interface to implement to plug a new Timer implementation. currently the  ones provided with the stack are based on java.util.Timer

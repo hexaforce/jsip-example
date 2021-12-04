@@ -30,7 +30,7 @@ package gov.nist.javax.sip.header;
 
 import javax.sip.address.URI;
 
-import gov.nist.javax.sip.address.*;
+import gov.nist.javax.sip.address.GenericURI;
 
 /**
  * RequestLine of SIP Request.

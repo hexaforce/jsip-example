@@ -30,8 +30,12 @@
  */
 
 package gov.nist.javax.sdp;
-import javax.sdp.*;
-import java.io.*;
+import java.io.IOException;
+import java.io.ObjectOutputStream;
+import java.io.OutputStream;
+import java.io.UnsupportedEncodingException;
+
+import javax.sdp.SessionDescription;
 
 /** Implementation of SDP encoder.
 *

@@ -18,9 +18,6 @@
  */
 package gov.nist.javax.sip.stack;
 
-import gov.nist.core.CommonLogger;
-import gov.nist.core.StackLogger;
-
 import java.io.IOException;
 import java.net.Socket;
 import java.nio.channels.SocketChannel;
@@ -28,6 +25,9 @@ import java.security.cert.Certificate;
 
 import javax.net.ssl.HandshakeCompletedEvent;
 import javax.net.ssl.HandshakeCompletedListener;
+
+import gov.nist.core.CommonLogger;
+import gov.nist.core.StackLogger;
 
 public class HandshakeCompletedListenerImpl implements HandshakeCompletedListener {
 	private static StackLogger logger = CommonLogger.getLogger(HandshakeCompletedListenerImpl.class);          

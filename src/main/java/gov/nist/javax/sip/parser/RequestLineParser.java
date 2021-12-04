@@ -25,9 +25,10 @@
 */
 package gov.nist.javax.sip.parser;
 
-import gov.nist.javax.sip.address.*;
 import java.text.ParseException;
-import gov.nist.javax.sip.header.*;
+
+import gov.nist.javax.sip.address.GenericURI;
+import gov.nist.javax.sip.header.RequestLine;
 
 /**
  * Parser for the SIP request line.

@@ -27,8 +27,11 @@
 * Product of NIST/ITL Advanced Networking Technologies Division (ANTD).        *
 *******************************************************************************/
 package gov.nist.javax.sdp.fields;
-import gov.nist.core.*;
-import javax.sdp.*;
+import javax.sdp.SdpException;
+import javax.sdp.SdpParseException;
+import javax.sdp.SessionName;
+
+import gov.nist.core.Separators;
 
 public class SessionNameField extends SDPField implements SessionName {
     protected String sessionName;

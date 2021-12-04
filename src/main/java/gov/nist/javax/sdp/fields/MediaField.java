@@ -27,9 +27,13 @@
 * Product of NIST/ITL Advanced Networking Technologies Division (ANTD).        *
 *******************************************************************************/
 package gov.nist.javax.sdp.fields;
-import gov.nist.core.*;
-import javax.sdp.*;
-import java.util.*;
+import java.util.Vector;
+
+import javax.sdp.Media;
+import javax.sdp.SdpException;
+import javax.sdp.SdpParseException;
+
+import gov.nist.core.Separators;
 /**
 *    Media field SDP header.
 *@version  JSR141-PUBLIC-REVIEW (subject to change).

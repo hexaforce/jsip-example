@@ -15,8 +15,6 @@
  */
 package gov.nist.javax.sip;
 
-import gov.nist.javax.sip.DialogTimeoutEvent.Reason;
-
 import javax.sip.IOExceptionEvent;
 
 /**

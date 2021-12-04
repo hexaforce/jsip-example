@@ -28,8 +28,9 @@
 *******************************************************************************/
 package gov.nist.javax.sip.header;
 
-import java.util.*;
-import javax.sip.header.*;
+import java.util.Calendar;
+
+import javax.sip.header.DateHeader;
 
 /**
 * Date Header.

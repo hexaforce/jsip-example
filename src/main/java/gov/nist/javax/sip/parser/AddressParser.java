@@ -25,8 +25,10 @@
 */
 package gov.nist.javax.sip.parser;
 
-import gov.nist.javax.sip.address.*;
 import java.text.ParseException;
+
+import gov.nist.javax.sip.address.AddressImpl;
+import gov.nist.javax.sip.address.GenericURI;
 
 /** Parser for addresses.
  *

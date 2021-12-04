@@ -25,6 +25,19 @@
  */
 package gov.nist.javax.sip.stack;
 
+import java.io.IOException;
+import java.io.InputStream;
+import java.net.InetAddress;
+import java.net.Socket;
+import java.text.ParseException;
+import java.util.Iterator;
+import java.util.concurrent.Semaphore;
+
+import javax.sip.ListeningPoint;
+import javax.sip.SipListener;
+import javax.sip.address.Hop;
+import javax.sip.message.Response;
+
 import gov.nist.core.CommonLogger;
 import gov.nist.core.InternalErrorHandler;
 import gov.nist.core.LogWriter;
@@ -44,19 +57,6 @@ import gov.nist.javax.sip.message.SIPResponse;
 import gov.nist.javax.sip.parser.Pipeline;
 import gov.nist.javax.sip.parser.PipelinedMsgParser;
 import gov.nist.javax.sip.parser.SIPMessageListener;
-
-import java.io.IOException;
-import java.io.InputStream;
-import java.net.InetAddress;
-import java.net.Socket;
-import java.text.ParseException;
-import java.util.Iterator;
-import java.util.concurrent.Semaphore;
-
-import javax.sip.ListeningPoint;
-import javax.sip.SipListener;
-import javax.sip.address.Hop;
-import javax.sip.message.Response;
 
 /**
  * @author jean.deruelle@gmail.com

@@ -42,18 +42,26 @@
  ******************************************************************************/
 package gov.nist.javax.sip.stack;
 
-import gov.nist.core.CommonLogger;
-import gov.nist.core.LogWriter;
-import gov.nist.core.StackLogger;
-import gov.nist.javax.sip.header.*;
-import gov.nist.javax.sip.message.SIPMessage;
-
-import javax.net.ssl.HandshakeCompletedListener;
-import javax.net.ssl.SSLSocket;
 import java.io.IOException;
 import java.net.InetAddress;
 import java.net.Socket;
 import java.text.ParseException;
+
+import javax.net.ssl.HandshakeCompletedListener;
+import javax.net.ssl.SSLSocket;
+
+import gov.nist.core.CommonLogger;
+import gov.nist.core.LogWriter;
+import gov.nist.core.StackLogger;
+import gov.nist.javax.sip.header.CSeq;
+import gov.nist.javax.sip.header.CallID;
+import gov.nist.javax.sip.header.ContentLength;
+import gov.nist.javax.sip.header.From;
+import gov.nist.javax.sip.header.RequestLine;
+import gov.nist.javax.sip.header.StatusLine;
+import gov.nist.javax.sip.header.To;
+import gov.nist.javax.sip.header.Via;
+import gov.nist.javax.sip.message.SIPMessage;
 
 /**
  * This is sipStack for TLS connections. This abstracts a stream of parsed

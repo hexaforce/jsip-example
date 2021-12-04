@@ -26,10 +26,9 @@
 package gov.nist.javax.sip;
 
 import java.io.IOException;
-import java.net.InetAddress;
 import java.text.ParseException;
 
-import javax.sip.*;
+import javax.sip.SipStack;
 import javax.sip.address.SipURI;
 import javax.sip.header.ContactHeader;
 import javax.sip.header.ViaHeader;
@@ -44,7 +43,9 @@ import gov.nist.javax.sip.address.SipUri;
 import gov.nist.javax.sip.header.Contact;
 import gov.nist.javax.sip.header.Via;
 import gov.nist.javax.sip.message.SIPRequest;
-import gov.nist.javax.sip.stack.*;
+import gov.nist.javax.sip.stack.ConnectionOrientedMessageChannel;
+import gov.nist.javax.sip.stack.MessageChannel;
+import gov.nist.javax.sip.stack.MessageProcessor;
 
 /**
  * Implementation of the ListeningPoint interface

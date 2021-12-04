@@ -25,9 +25,11 @@
 */
 package gov.nist.javax.sip.address;
 
-import gov.nist.core.*;
-
 import java.util.Iterator;
+
+import gov.nist.core.GenericObject;
+import gov.nist.core.NameValue;
+import gov.nist.core.NameValueList;
 
 /**
  * Telephone number class.

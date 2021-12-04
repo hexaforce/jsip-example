@@ -24,10 +24,13 @@
 *
 */
 package gov.nist.javax.sdp.parser;
-import gov.nist.javax.sdp.fields.*;
-import gov.nist.core.*;
-import java.text.*;
-import java.util.*;
+import java.text.ParseException;
+import java.util.Vector;
+
+import gov.nist.core.Debug;
+import gov.nist.core.Token;
+import gov.nist.javax.sdp.fields.MediaField;
+import gov.nist.javax.sdp.fields.SDPField;
 
 /**
  * Parser for Media field.

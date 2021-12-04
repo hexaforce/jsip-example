@@ -28,6 +28,10 @@
  *******************************************************************************/
 package gov.nist.javax.sip.message;
 
+import java.io.UnsupportedEncodingException;
+import java.text.ParseException;
+import java.util.LinkedList;
+
 import gov.nist.core.InternalErrorHandler;
 import gov.nist.javax.sip.header.CSeq;
 import gov.nist.javax.sip.header.CallID;
@@ -35,10 +39,6 @@ import gov.nist.javax.sip.header.From;
 import gov.nist.javax.sip.header.StatusLine;
 import gov.nist.javax.sip.header.To;
 import gov.nist.javax.sip.header.Via;
-
-import java.io.UnsupportedEncodingException;
-import java.text.ParseException;
-import java.util.LinkedList;
 
 
 /**

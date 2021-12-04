@@ -29,14 +29,14 @@
 
 package gov.nist.javax.sip.parser.ims;
 
+import java.text.ParseException;
+
 import gov.nist.javax.sip.header.SIPHeader;
 import gov.nist.javax.sip.header.ims.Path;
 import gov.nist.javax.sip.header.ims.PathList;
 import gov.nist.javax.sip.parser.AddressParametersParser;
 import gov.nist.javax.sip.parser.Lexer;
 import gov.nist.javax.sip.parser.TokenTypes;
-
-import java.text.ParseException;
 
 /**
  * @author ALEXANDRE MIGUEL SILVA SANTOS

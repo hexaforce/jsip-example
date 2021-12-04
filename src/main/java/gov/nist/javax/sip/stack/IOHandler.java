@@ -28,21 +28,27 @@
  *******************************************************************************/
 package gov.nist.javax.sip.stack;
 
+import java.io.IOException;
+import java.io.OutputStream;
+import java.net.DatagramPacket;
+import java.net.DatagramSocket;
+import java.net.InetAddress;
+import java.net.Socket;
+import java.net.SocketAddress;
+import java.net.SocketException;
+import java.util.Enumeration;
+import java.util.concurrent.ConcurrentHashMap;
+import java.util.concurrent.Semaphore;
+import java.util.concurrent.TimeUnit;
+
+import javax.net.ssl.SSLHandshakeException;
+import javax.net.ssl.SSLSocket;
+
 import gov.nist.core.CommonLogger;
 import gov.nist.core.LogLevels;
 import gov.nist.core.LogWriter;
 import gov.nist.core.StackLogger;
 import gov.nist.javax.sip.SipStackImpl;
-
-import javax.net.ssl.SSLHandshakeException;
-import javax.net.ssl.SSLSocket;
-import java.io.IOException;
-import java.io.OutputStream;
-import java.net.*;
-import java.util.Enumeration;
-import java.util.concurrent.ConcurrentHashMap;
-import java.util.concurrent.Semaphore;
-import java.util.concurrent.TimeUnit;
 
 /*
  * TLS support Added by Daniel J.Martinez Manzano <dani@dif.um.es>

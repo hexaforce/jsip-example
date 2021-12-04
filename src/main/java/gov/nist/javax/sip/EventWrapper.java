@@ -25,8 +25,9 @@
 */
 package gov.nist.javax.sip;
 
-import  gov.nist.javax.sip.stack.*;
-import  java.util.*;
+import java.util.EventObject;
+
+import gov.nist.javax.sip.stack.SIPTransaction;
 
 /**
  * @version 1.2 $Revision: 1.6 $ $Date: 2009-07-17 18:57:19 $

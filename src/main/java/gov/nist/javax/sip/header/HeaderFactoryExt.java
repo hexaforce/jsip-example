@@ -2,6 +2,11 @@ package gov.nist.javax.sip.header;
 
 import java.text.ParseException;
 
+import javax.sip.InvalidArgumentException;
+import javax.sip.address.Address;
+import javax.sip.header.Header;
+import javax.sip.header.HeaderFactory;
+
 import gov.nist.javax.sip.header.extensions.JoinHeader;
 import gov.nist.javax.sip.header.extensions.ReferencesHeader;
 import gov.nist.javax.sip.header.extensions.ReferredByHeader;
@@ -27,11 +32,6 @@ import gov.nist.javax.sip.header.ims.SecurityClientHeader;
 import gov.nist.javax.sip.header.ims.SecurityServerHeader;
 import gov.nist.javax.sip.header.ims.SecurityVerifyHeader;
 import gov.nist.javax.sip.header.ims.ServiceRouteHeader;
-
-import javax.sip.InvalidArgumentException;
-import javax.sip.address.Address;
-import javax.sip.header.Header;
-import javax.sip.header.HeaderFactory;
 
 /**
  * Header factory extensions. These will be included in the next release of

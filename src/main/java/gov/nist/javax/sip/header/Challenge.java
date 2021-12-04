@@ -28,7 +28,8 @@
 *******************************************************************************/
 package gov.nist.javax.sip.header;
 
-import gov.nist.core.*;
+import gov.nist.core.NameValue;
+import gov.nist.core.NameValueList;
 
 /**
  * Challenge part of the Auth header. This is only used by the parser interface

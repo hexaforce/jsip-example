@@ -25,9 +25,11 @@
 */
 package gov.nist.javax.sip.parser;
 
-import gov.nist.javax.sip.header.*;
-import gov.nist.core.*;
 import java.text.ParseException;
+
+import gov.nist.core.NameValue;
+import gov.nist.core.Token;
+import gov.nist.javax.sip.header.AuthenticationHeader;
 
 /**
  * Parser for the challenge portion of the authentication header.

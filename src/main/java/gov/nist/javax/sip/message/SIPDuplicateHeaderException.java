@@ -28,8 +28,9 @@
 *******************************************************************************/
 package gov.nist.javax.sip.message;
 
-import gov.nist.javax.sip.header.*;
 import java.text.ParseException;
+
+import gov.nist.javax.sip.header.SIPHeader;
 
 /**
  * Duplicate header exception:  thrown when there is more

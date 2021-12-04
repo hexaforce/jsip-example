@@ -28,9 +28,7 @@
 *******************************************************************************/
 package gov.nist.javax.sip.header;
 
-import java.util.List;
-
-import javax.sip.header.*;
+import javax.sip.header.ReasonHeader;
 
 /**
  * List of Reason headers.

@@ -26,22 +26,18 @@
 package gov.nist.javax.sip.stack;
 
 
-import gov.nist.core.CommonLogger;
-import gov.nist.core.HostPort;
-import gov.nist.core.LogWriter;
-import gov.nist.core.StackLogger;
-
-import javax.net.ssl.SSLContext;
-import javax.net.ssl.SSLEngineResult.HandshakeStatus;
-import javax.net.ssl.TrustManager;
-import javax.net.ssl.X509TrustManager;
-
 import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.net.InetAddress;
 import java.nio.channels.SocketChannel;
 import java.security.cert.CertificateException;
-import java.security.cert.X509Certificate;
+
+import javax.net.ssl.SSLContext;
+
+import gov.nist.core.CommonLogger;
+import gov.nist.core.HostPort;
+import gov.nist.core.LogWriter;
+import gov.nist.core.StackLogger;
 
 public class NioTlsWebSocketMessageProcessor extends NioWebSocketMessageProcessor {
 

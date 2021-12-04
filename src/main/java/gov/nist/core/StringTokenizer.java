@@ -25,8 +25,8 @@
 */
 package gov.nist.core;
 
-import java.util.*;
 import java.text.ParseException;
+import java.util.Vector;
 
 /** Base string token splitter.
 *

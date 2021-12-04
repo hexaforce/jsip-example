@@ -25,9 +25,12 @@
 */
 package gov.nist.javax.sip.parser;
 
-import gov.nist.javax.sip.header.*;
-import gov.nist.core.*;
 import java.text.ParseException;
+
+import gov.nist.core.Token;
+import gov.nist.javax.sip.header.AllowEvents;
+import gov.nist.javax.sip.header.AllowEventsList;
+import gov.nist.javax.sip.header.SIPHeader;
 
 /**
  * Parser for AllowEvents header.

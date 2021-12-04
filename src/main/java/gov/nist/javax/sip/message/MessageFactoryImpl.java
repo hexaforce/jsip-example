@@ -29,15 +29,32 @@
 package gov.nist.javax.sip.message;
 
 import java.text.ParseException;
-import javax.sip.header.*;
-
-import java.util.LinkedList;
 import java.util.List;
-import gov.nist.javax.sip.header.*;
 
-import javax.sip.message.*;
-import javax.sip.address.*;
-import gov.nist.javax.sip.parser.*;
+import javax.sip.address.URI;
+import javax.sip.header.CSeqHeader;
+import javax.sip.header.CallIdHeader;
+import javax.sip.header.ContentTypeHeader;
+import javax.sip.header.FromHeader;
+import javax.sip.header.MaxForwardsHeader;
+import javax.sip.header.ServerHeader;
+import javax.sip.header.ToHeader;
+import javax.sip.header.UserAgentHeader;
+import javax.sip.message.MessageFactory;
+import javax.sip.message.Request;
+import javax.sip.message.Response;
+
+import gov.nist.javax.sip.header.CSeq;
+import gov.nist.javax.sip.header.CallID;
+import gov.nist.javax.sip.header.ContentType;
+import gov.nist.javax.sip.header.From;
+import gov.nist.javax.sip.header.MaxForwards;
+import gov.nist.javax.sip.header.RequestLine;
+import gov.nist.javax.sip.header.StatusLine;
+import gov.nist.javax.sip.header.To;
+import gov.nist.javax.sip.header.Via;
+import gov.nist.javax.sip.parser.ParseExceptionListener;
+import gov.nist.javax.sip.parser.StringMsgParser;
 
 /**
  * Message Factory implementation

@@ -29,6 +29,21 @@
 
 package gov.nist.javax.sip.stack;
 
+import java.io.IOException;
+import java.net.InetAddress;
+import java.text.ParseException;
+
+import javax.sip.address.Hop;
+import javax.sip.header.CSeqHeader;
+import javax.sip.header.CallIdHeader;
+import javax.sip.header.ContactHeader;
+import javax.sip.header.ContentLengthHeader;
+import javax.sip.header.ContentTypeHeader;
+import javax.sip.header.FromHeader;
+import javax.sip.header.ServerHeader;
+import javax.sip.header.ToHeader;
+import javax.sip.header.ViaHeader;
+
 import gov.nist.core.CommonLogger;
 import gov.nist.core.Host;
 import gov.nist.core.HostPort;
@@ -44,21 +59,6 @@ import gov.nist.javax.sip.message.MessageFactoryImpl;
 import gov.nist.javax.sip.message.SIPMessage;
 import gov.nist.javax.sip.message.SIPRequest;
 import gov.nist.javax.sip.message.SIPResponse;
-
-import java.io.IOException;
-import java.net.InetAddress;
-import java.text.ParseException;
-
-import javax.sip.address.Hop;
-import javax.sip.header.CSeqHeader;
-import javax.sip.header.CallIdHeader;
-import javax.sip.header.ContactHeader;
-import javax.sip.header.ContentLengthHeader;
-import javax.sip.header.ContentTypeHeader;
-import javax.sip.header.FromHeader;
-import javax.sip.header.ServerHeader;
-import javax.sip.header.ToHeader;
-import javax.sip.header.ViaHeader;
 
 /**
  * Message channel abstraction for the SIP stack.

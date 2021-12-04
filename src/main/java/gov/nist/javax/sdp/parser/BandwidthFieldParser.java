@@ -25,9 +25,11 @@
 */
 package gov.nist.javax.sdp.parser;
 
-import gov.nist.javax.sdp.fields.*;
-import gov.nist.core.*;
-import java.text.*;
+import java.text.ParseException;
+
+import gov.nist.core.NameValue;
+import gov.nist.javax.sdp.fields.BandwidthField;
+import gov.nist.javax.sdp.fields.SDPField;
 
 /**
  * @author  deruelle

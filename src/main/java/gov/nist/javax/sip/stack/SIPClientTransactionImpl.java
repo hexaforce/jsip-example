@@ -25,6 +25,28 @@
  */
 package gov.nist.javax.sip.stack;
 
+import java.io.IOException;
+import java.text.ParseException;
+import java.util.ListIterator;
+import java.util.Set;
+import java.util.concurrent.CopyOnWriteArraySet;
+import java.util.concurrent.atomic.AtomicBoolean;
+
+import javax.sip.Dialog;
+import javax.sip.DialogState;
+import javax.sip.InvalidArgumentException;
+import javax.sip.SipException;
+import javax.sip.Timeout;
+import javax.sip.TimeoutEvent;
+import javax.sip.TransactionState;
+import javax.sip.address.Hop;
+import javax.sip.address.SipURI;
+import javax.sip.header.EventHeader;
+import javax.sip.header.ExpiresHeader;
+import javax.sip.header.RouteHeader;
+import javax.sip.header.TimeStampHeader;
+import javax.sip.message.Request;
+
 import gov.nist.core.CommonLogger;
 import gov.nist.core.InternalErrorHandler;
 import gov.nist.core.LogWriter;
@@ -49,28 +71,6 @@ import gov.nist.javax.sip.message.SIPMessage;
 import gov.nist.javax.sip.message.SIPRequest;
 import gov.nist.javax.sip.message.SIPResponse;
 import gov.nist.javax.sip.stack.IllegalTransactionStateException.Reason;
-
-import java.io.IOException;
-import java.text.ParseException;
-import java.util.ListIterator;
-import java.util.Set;
-import java.util.concurrent.CopyOnWriteArraySet;
-import java.util.concurrent.atomic.AtomicBoolean;
-
-import javax.sip.Dialog;
-import javax.sip.DialogState;
-import javax.sip.InvalidArgumentException;
-import javax.sip.SipException;
-import javax.sip.Timeout;
-import javax.sip.TimeoutEvent;
-import javax.sip.TransactionState;
-import javax.sip.address.Hop;
-import javax.sip.address.SipURI;
-import javax.sip.header.EventHeader;
-import javax.sip.header.ExpiresHeader;
-import javax.sip.header.RouteHeader;
-import javax.sip.header.TimeStampHeader;
-import javax.sip.message.Request;
 
 /*
  * Jeff Keyser -- initial. Daniel J. Martinez Manzano --Added support for TLS message channel.

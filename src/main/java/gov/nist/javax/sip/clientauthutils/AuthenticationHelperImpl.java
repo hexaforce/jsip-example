@@ -1,5 +1,29 @@
 package gov.nist.javax.sip.clientauthutils;
 
+import java.text.ParseException;
+import java.util.Collection;
+import java.util.Iterator;
+import java.util.ListIterator;
+import java.util.Timer;
+
+import javax.sip.ClientTransaction;
+import javax.sip.DialogState;
+import javax.sip.InvalidArgumentException;
+import javax.sip.SipException;
+import javax.sip.SipProvider;
+import javax.sip.address.Hop;
+import javax.sip.address.SipURI;
+import javax.sip.address.URI;
+import javax.sip.header.AuthorizationHeader;
+import javax.sip.header.CSeqHeader;
+import javax.sip.header.HeaderFactory;
+import javax.sip.header.ProxyAuthenticateHeader;
+import javax.sip.header.ProxyAuthorizationHeader;
+import javax.sip.header.ViaHeader;
+import javax.sip.header.WWWAuthenticateHeader;
+import javax.sip.message.Request;
+import javax.sip.message.Response;
+
 /*
  *
  * This code has been contributed with permission from:
@@ -20,36 +44,10 @@ package gov.nist.javax.sip.clientauthutils;
 import gov.nist.core.CommonLogger;
 import gov.nist.core.LogWriter;
 import gov.nist.core.StackLogger;
-import gov.nist.javax.sip.address.SipUri;
 import gov.nist.javax.sip.header.SIPHeader;
 import gov.nist.javax.sip.message.SIPRequest;
 import gov.nist.javax.sip.stack.SIPClientTransaction;
 import gov.nist.javax.sip.stack.SIPTransactionStack;
-
-import java.text.ParseException;
-import java.util.Collection;
-import java.util.Iterator;
-import java.util.ListIterator;
-import java.util.Timer;
-
-import javax.sip.ClientTransaction;
-import javax.sip.DialogState;
-import javax.sip.InvalidArgumentException;
-import javax.sip.SipException;
-import javax.sip.SipProvider;
-import javax.sip.address.Hop;
-import javax.sip.address.SipURI;
-import javax.sip.address.URI;
-import javax.sip.header.AuthorizationHeader;
-import javax.sip.header.CSeqHeader;
-import javax.sip.header.Header;
-import javax.sip.header.HeaderFactory;
-import javax.sip.header.ProxyAuthenticateHeader;
-import javax.sip.header.ProxyAuthorizationHeader;
-import javax.sip.header.ViaHeader;
-import javax.sip.header.WWWAuthenticateHeader;
-import javax.sip.message.Request;
-import javax.sip.message.Response;
 
 /**
  * The class handles authentication challenges, caches user credentials and takes care (through

@@ -28,16 +28,17 @@
 *******************************************************************************/
 package gov.nist.javax.sip.header;
 
+import java.text.ParseException;
+
+import javax.sip.InvalidArgumentException;
+import javax.sip.address.Hop;
+import javax.sip.header.ViaHeader;
+
 import gov.nist.core.Host;
 import gov.nist.core.HostPort;
 import gov.nist.core.NameValue;
 import gov.nist.core.NameValueList;
 import gov.nist.javax.sip.stack.HopImpl;
-
-import javax.sip.InvalidArgumentException;
-import javax.sip.address.Hop;
-import javax.sip.header.ViaHeader;
-import java.text.ParseException;
 
 /**
  * Via SIPHeader (these are strung together in a ViaList).

@@ -40,12 +40,6 @@
  ******************************************************************************/
 package gov.nist.javax.sip.stack;
 
-import gov.nist.core.CommonLogger;
-import gov.nist.core.HostPort;
-import gov.nist.core.LogWriter;
-import gov.nist.core.StackLogger;
-import gov.nist.javax.sip.SipStackImpl;
-
 import java.io.IOException;
 import java.net.InetAddress;
 import java.net.Socket;
@@ -56,6 +50,12 @@ import java.util.Iterator;
 
 import javax.net.ssl.SSLException;
 import javax.net.ssl.SSLServerSocket;
+
+import gov.nist.core.CommonLogger;
+import gov.nist.core.HostPort;
+import gov.nist.core.LogWriter;
+import gov.nist.core.StackLogger;
+import gov.nist.javax.sip.SipStackImpl;
 
 /**
  * Sit in a loop waiting for incoming tls connections and start a new thread to handle each new

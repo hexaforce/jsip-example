@@ -28,7 +28,8 @@
  **************************************************************************/
 package gov.nist.core;
 
-import java.net.*;
+import java.net.InetAddress;
+import java.net.UnknownHostException;
 
 /*
  * IPv6 Support added by Emil Ivov (emil_ivov@yahoo.com)<br/>

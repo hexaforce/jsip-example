@@ -24,10 +24,14 @@
 *
 */
 package gov.nist.javax.sdp.parser;
-import gov.nist.javax.sdp.fields.*;
-import gov.nist.core.*;
+import java.text.ParseException;
 
-import java.text.*;
+import gov.nist.core.Host;
+import gov.nist.core.LexerCore;
+import gov.nist.core.Token;
+import gov.nist.javax.sdp.fields.ConnectionAddress;
+import gov.nist.javax.sdp.fields.ConnectionField;
+import gov.nist.javax.sdp.fields.SDPField;
 
 /**
  * Parser for Connection Field.

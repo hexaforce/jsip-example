@@ -27,11 +27,11 @@
 * Product of NIST/ITL Advanced Networking Technologies Division (ANTD).        *
 *******************************************************************************/
 package gov.nist.javax.sdp.fields;
-import gov.nist.core.Host;
-import gov.nist.core.Separators;
-
 import javax.sdp.SdpException;
 import javax.sdp.SdpParseException;
+
+import gov.nist.core.Host;
+import gov.nist.core.Separators;
 /**
 *   Origin Field SDP header
 *

@@ -28,6 +28,23 @@
  ******************************************************************************/
 package gov.nist.javax.sip;
 
+import java.io.IOException;
+
+import javax.sip.ClientTransaction;
+import javax.sip.DialogState;
+import javax.sip.ListeningPoint;
+import javax.sip.ObjectInUseException;
+import javax.sip.RequestEvent;
+import javax.sip.ServerTransaction;
+import javax.sip.SipException;
+import javax.sip.SipProvider;
+import javax.sip.TransactionState;
+import javax.sip.header.EventHeader;
+import javax.sip.header.ReferToHeader;
+import javax.sip.header.ServerHeader;
+import javax.sip.message.Request;
+import javax.sip.message.Response;
+
 import gov.nist.core.CommonLogger;
 import gov.nist.core.HostPort;
 import gov.nist.core.InternalErrorHandler;
@@ -52,23 +69,6 @@ import gov.nist.javax.sip.stack.SIPTransaction;
 import gov.nist.javax.sip.stack.SIPTransactionStack;
 import gov.nist.javax.sip.stack.ServerRequestInterface;
 import gov.nist.javax.sip.stack.ServerResponseInterface;
-
-import java.io.IOException;
-
-import javax.sip.ClientTransaction;
-import javax.sip.DialogState;
-import javax.sip.ListeningPoint;
-import javax.sip.ObjectInUseException;
-import javax.sip.RequestEvent;
-import javax.sip.ServerTransaction;
-import javax.sip.SipException;
-import javax.sip.SipProvider;
-import javax.sip.TransactionState;
-import javax.sip.header.EventHeader;
-import javax.sip.header.ReferToHeader;
-import javax.sip.header.ServerHeader;
-import javax.sip.message.Request;
-import javax.sip.message.Response;
 
 /*
  * Bug fixes and Contributions by Lamine Brahimi, Andreas Bystrom, Bill Roome, John Martin, Daniel

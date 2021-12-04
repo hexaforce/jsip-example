@@ -8,12 +8,12 @@ package gov.nist.javax.sip.header.extensions;
 import java.text.ParseException;
 
 import javax.sip.header.ExtensionHeader;
-import gov.nist.javax.sip.header.*;
 
-import gov.nist.javax.sip.address.*;
 /*
 * This code has been contributed by the author to the public domain.
 */
+import gov.nist.javax.sip.address.AddressImpl;
+import gov.nist.javax.sip.header.AddressParametersHeader;
 
 /**
  * ReferredBy SIP Header. RFC 3892

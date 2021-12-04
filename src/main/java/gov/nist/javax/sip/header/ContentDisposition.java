@@ -28,7 +28,7 @@
 *******************************************************************************/
 package gov.nist.javax.sip.header;
 
-import java.text.*;
+import java.text.ParseException;
 
 /**
  * Content Dispositon SIP Header.

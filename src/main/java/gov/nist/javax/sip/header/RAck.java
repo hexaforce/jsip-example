@@ -28,8 +28,9 @@
  *******************************************************************************/
 package gov.nist.javax.sip.header;
 
-import javax.sip.InvalidArgumentException;
 import java.text.ParseException;
+
+import javax.sip.InvalidArgumentException;
 
 /**
  * RAck SIP Header implementation

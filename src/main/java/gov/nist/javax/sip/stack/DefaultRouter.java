@@ -28,22 +28,31 @@
  ******************************************************************************/
 package gov.nist.javax.sip.stack;
 
-import gov.nist.javax.sip.message.*;
-import gov.nist.javax.sip.address.*;
-import gov.nist.javax.sip.header.*;
-import gov.nist.javax.sip.*;
-import gov.nist.core.*;
-import gov.nist.core.net.AddressResolver;
-
-import javax.sip.*;
-import java.util.Iterator;
 import java.util.LinkedList;
 import java.util.ListIterator;
 
-import javax.sip.header.RouteHeader;
+import javax.sip.ListeningPoint;
+import javax.sip.SipException;
+import javax.sip.SipStack;
+import javax.sip.address.Hop;
+import javax.sip.address.Router;
+import javax.sip.address.SipURI;
+import javax.sip.address.URI;
 import javax.sip.header.ViaHeader;
-import javax.sip.message.*;
-import javax.sip.address.*;
+import javax.sip.message.Request;
+
+import gov.nist.core.CommonLogger;
+import gov.nist.core.InternalErrorHandler;
+import gov.nist.core.LogWriter;
+import gov.nist.core.StackLogger;
+import gov.nist.core.net.AddressResolver;
+import gov.nist.javax.sip.SIPConstants;
+import gov.nist.javax.sip.address.AddressImpl;
+import gov.nist.javax.sip.address.SipUri;
+import gov.nist.javax.sip.header.RequestLine;
+import gov.nist.javax.sip.header.Route;
+import gov.nist.javax.sip.header.RouteList;
+import gov.nist.javax.sip.message.SIPRequest;
 
 /*
  * Bug reported by Will Scullin -- maddr was being ignored when routing

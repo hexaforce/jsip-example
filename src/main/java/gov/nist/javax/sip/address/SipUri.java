@@ -28,6 +28,15 @@
 *******************************************************************************/
 package gov.nist.javax.sip.address;
 
+import java.text.ParseException;
+import java.util.Iterator;
+
+import javax.sip.PeerUnavailableException;
+import javax.sip.SipFactory;
+import javax.sip.address.SipURI;
+import javax.sip.header.Header;
+import javax.sip.header.HeaderFactory;
+
 /*
  *Bug fix contributions
  *Daniel J. Martinez Manzano <dani@dif.um.es>
@@ -35,17 +44,12 @@ package gov.nist.javax.sip.address;
  *pmusgrave@newheights.com (Additions for gruu and outbound drafts)
  *Jeroen van Bemmel ( additions for SCTP transport )
  */
-import gov.nist.core.*;
-import gov.nist.javax.sip.ListeningPointExt;
-
-import java.util.*;
-import java.text.ParseException;
-
-import javax.sip.PeerUnavailableException;
-import javax.sip.SipFactory;
-import javax.sip.address.SipURI;
-import javax.sip.header.Header;
-import javax.sip.header.HeaderFactory;
+import gov.nist.core.Debug;
+import gov.nist.core.GenericObject;
+import gov.nist.core.Host;
+import gov.nist.core.HostPort;
+import gov.nist.core.NameValue;
+import gov.nist.core.NameValueList;
 
 
 /**

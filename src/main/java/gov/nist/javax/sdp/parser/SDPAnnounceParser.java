@@ -24,13 +24,14 @@
 *
 */
 package gov.nist.javax.sdp.parser;
-import java.util.*;
-import gov.nist.core.*;
-import gov.nist.javax.sdp.fields.*;
-import gov.nist.javax.sdp.*;
 import java.text.ParseException;
 // Acknowledgement: this includes a bug fix submitted by
 // Rafael Barriuso rbarriuso@dit.upm.es
+import java.util.Vector;
+
+import gov.nist.core.ParserCore;
+import gov.nist.javax.sdp.SessionDescriptionImpl;
+import gov.nist.javax.sdp.fields.SDPField;
 
 /** Parser for SDP Announce messages.
  */

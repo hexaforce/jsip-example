@@ -27,8 +27,10 @@
  * Product of NIST/ITL Advanced Networking Technologies Division (ANTD).        *
  *******************************************************************************/
 package gov.nist.javax.sip.address;
-import gov.nist.core.*;
-import javax.sip.address.*;
+import javax.sip.address.Address;
+import javax.sip.address.URI;
+
+import gov.nist.core.HostPort;
 
 /*
  * BUG Fix from Antonis Kadris.

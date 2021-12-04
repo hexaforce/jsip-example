@@ -25,6 +25,12 @@
 */
 package gov.nist.javax.sip.stack;
 
+import java.io.IOException;
+import java.net.InetAddress;
+import java.text.ParseException;
+
+import javax.sip.InvalidArgumentException;
+
 import gov.nist.core.CommonLogger;
 import gov.nist.core.Host;
 import gov.nist.core.HostPort;
@@ -33,12 +39,6 @@ import gov.nist.core.LogWriter;
 import gov.nist.core.StackLogger;
 import gov.nist.javax.sip.ListeningPointImpl;
 import gov.nist.javax.sip.header.Via;
-
-import java.io.IOException;
-import java.net.InetAddress;
-import java.text.ParseException;
-
-import javax.sip.InvalidArgumentException;
 
 /**
  * This is the Stack abstraction for the active object that waits for messages

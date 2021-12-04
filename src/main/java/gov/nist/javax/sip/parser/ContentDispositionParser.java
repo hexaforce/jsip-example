@@ -25,9 +25,12 @@
 */
 package gov.nist.javax.sip.parser;
 
-import gov.nist.javax.sip.header.*;
-import gov.nist.core.*;
 import java.text.ParseException;
+
+import gov.nist.core.Token;
+import gov.nist.javax.sip.header.ContentDisposition;
+import gov.nist.javax.sip.header.SIPHeader;
+import gov.nist.javax.sip.header.SIPHeaderNames;
 
 /**
  * Parser for ContentLanguage header.

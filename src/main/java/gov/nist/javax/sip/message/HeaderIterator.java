@@ -25,9 +25,10 @@
 */
 package gov.nist.javax.sip.message;
 
-import gov.nist.javax.sip.header.*;
 import java.util.ListIterator;
 import java.util.NoSuchElementException;
+
+import gov.nist.javax.sip.header.SIPHeader;
 
 /**
  * Iterator over lists of headers. Allows for uniform removal handling for singleton headers.

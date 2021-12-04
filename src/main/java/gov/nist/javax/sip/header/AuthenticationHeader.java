@@ -26,9 +26,6 @@
 ******************************************************************************/
 package gov.nist.javax.sip.header;
 
-import gov.nist.core.*;
-import gov.nist.javax.sip.header.ims.ParameterNamesIms;
-
 import java.text.ParseException;
  /*
  * 2005/06/12: geir.hedemark@telio.no: Changed behaviour of qop parameter in
@@ -36,6 +33,10 @@ import java.text.ParseException;
  *          RFC3261, BNF element "message-qop" (as opposed to "qop-options",
  *           which is quoted.
  */
+
+import gov.nist.core.NameValue;
+import gov.nist.core.Separators;
+import gov.nist.javax.sip.header.ims.ParameterNamesIms;
 
 /**
  * The generic AuthenticationHeader

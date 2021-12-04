@@ -29,7 +29,7 @@
 package gov.nist.javax.sip.header;
 
 import javax.sip.address.URI;
-import javax.sip.header.*;
+import javax.sip.header.ProxyAuthenticateHeader;
 /**
  * Proxy Authenticate SIP (HTTP ) header.
  *

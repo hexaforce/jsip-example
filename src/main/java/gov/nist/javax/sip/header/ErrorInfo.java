@@ -28,10 +28,12 @@
 *******************************************************************************/
 package gov.nist.javax.sip.header;
 
-import gov.nist.javax.sip.address.*;
-import javax.sip.header.*;
-import javax.sip.address.*;
 import java.text.ParseException;
+
+import javax.sip.address.URI;
+import javax.sip.header.ErrorInfoHeader;
+
+import gov.nist.javax.sip.address.GenericURI;
 
 /**
  * ErrorInfo SIP Header.

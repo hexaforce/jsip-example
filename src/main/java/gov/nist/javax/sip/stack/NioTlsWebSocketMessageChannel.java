@@ -25,6 +25,17 @@
  */
 package gov.nist.javax.sip.stack;
 
+import java.io.FileNotFoundException;
+import java.io.IOException;
+import java.net.InetAddress;
+import java.nio.ByteBuffer;
+import java.nio.channels.SocketChannel;
+import java.security.cert.CertificateException;
+
+import javax.net.ssl.SSLContext;
+import javax.net.ssl.SSLSession;
+import javax.sip.address.SipURI;
+
 import gov.nist.core.CommonLogger;
 import gov.nist.core.LogLevels;
 import gov.nist.core.LogWriter;
@@ -33,19 +44,6 @@ import gov.nist.javax.sip.SipStackImpl;
 import gov.nist.javax.sip.message.SIPMessage;
 import gov.nist.javax.sip.message.SIPRequest;
 import gov.nist.javax.sip.stack.SSLStateMachine.MessageSendCallback;
-
-import javax.net.ssl.SSLSession;
-import javax.net.ssl.SSLContext;
-import javax.sip.address.SipURI;
-
-import java.io.FileNotFoundException;
-import java.io.IOException;
-import java.net.InetAddress;
-import java.nio.ByteBuffer;
-import java.nio.channels.SocketChannel;
-import java.security.cert.CertificateException;
-import java.util.Timer;
-import java.util.TimerTask;
 
 public class NioTlsWebSocketMessageChannel extends NioWebSocketMessageChannel implements NioTlsChannelInterface {
 

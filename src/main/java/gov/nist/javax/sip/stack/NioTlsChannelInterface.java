@@ -25,11 +25,11 @@
  */
 package gov.nist.javax.sip.stack;
 
-import gov.nist.javax.sip.ClientTransactionExt;
-import gov.nist.javax.sip.SipStackImpl;
-
 import java.io.IOException;
 import java.nio.ByteBuffer;
+
+import gov.nist.javax.sip.ClientTransactionExt;
+import gov.nist.javax.sip.SipStackImpl;
 /**
  * Common interface for TLS channels. We should be able to invoke some methods in generic way.
  * @author vladimirralev

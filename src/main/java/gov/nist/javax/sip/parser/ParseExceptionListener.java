@@ -27,8 +27,9 @@
 * Product of NIST/ITL Advanced Networking Technologies Division (ANTD)         *
 *******************************************************************************/
 package gov.nist.javax.sip.parser;
-import gov.nist.javax.sip.message.*;
 import java.text.ParseException;
+
+import gov.nist.javax.sip.message.SIPMessage;
 
 /**
  * A listener interface that enables customization of parse error handling.

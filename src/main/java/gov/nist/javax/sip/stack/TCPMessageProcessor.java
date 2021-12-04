@@ -28,12 +28,6 @@
  ******************************************************************************/
 package gov.nist.javax.sip.stack;
 
-import gov.nist.core.CommonLogger;
-import gov.nist.core.HostPort;
-import gov.nist.core.InternalErrorHandler;
-import gov.nist.core.LogWriter;
-import gov.nist.core.StackLogger;
-
 import java.io.IOException;
 import java.net.InetAddress;
 import java.net.Socket;
@@ -41,6 +35,12 @@ import java.net.SocketException;
 import java.net.UnknownHostException;
 import java.util.Collection;
 import java.util.Iterator;
+
+import gov.nist.core.CommonLogger;
+import gov.nist.core.HostPort;
+import gov.nist.core.InternalErrorHandler;
+import gov.nist.core.LogWriter;
+import gov.nist.core.StackLogger;
 
 /*
  * Acknowledgement: Jeff Keyser suggested that a Stop mechanism be added to this. Niklas Uhrberg

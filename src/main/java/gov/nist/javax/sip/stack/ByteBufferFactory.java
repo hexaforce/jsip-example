@@ -25,11 +25,11 @@
  */
 package gov.nist.javax.sip.stack;
 
+import java.nio.ByteBuffer;
+
 import gov.nist.core.CommonLogger;
 import gov.nist.core.LogWriter;
 import gov.nist.core.StackLogger;
-
-import java.nio.ByteBuffer;
 
 /**
  * Contributed by Alexander Saveliev, Avistar Communications for Issue http://java.net/jira/browse/JSIP-430

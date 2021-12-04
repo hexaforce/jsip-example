@@ -28,8 +28,9 @@
 *******************************************************************************/
 package gov.nist.javax.sip.header;
 
-import javax.sip.header.*;
-import java.util.*;
+import java.util.ListIterator;
+
+import javax.sip.header.RouteHeader;
 
 /**
  * A list of Route Headers.

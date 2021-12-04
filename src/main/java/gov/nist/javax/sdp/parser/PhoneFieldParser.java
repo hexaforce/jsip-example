@@ -25,8 +25,10 @@
 */
 package gov.nist.javax.sdp.parser;
 
-import gov.nist.javax.sdp.fields.*;
 import java.text.ParseException;
+
+import gov.nist.javax.sdp.fields.PhoneField;
+import gov.nist.javax.sdp.fields.SDPField;
 
 /**
  * Parser for the Phone field.
