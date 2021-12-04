@@ -1,8 +1,8 @@
 /**
  * ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
  * Unpublished - rights reserved under the Copyright Laws of the United States.
- * Copyright © 2003 Sun Microsystems, Inc. All rights reserved.
- * Copyright © 2005 BEA Systems, Inc. All rights reserved.
+ * Copyright ï¿½ 2003 Sun Microsystems, Inc. All rights reserved.
+ * Copyright ï¿½ 2005 BEA Systems, Inc. All rights reserved.
  *
  * Use is subject to license terms.
  *
@@ -24,11 +24,18 @@
  */
 package javax.sip.message;
 
-import javax.sip.SipException;
-import javax.sip.header.*;
-import java.util.*;
 import java.io.Serializable;
 import java.text.ParseException;
+import java.util.ListIterator;
+
+import javax.sip.SipException;
+import javax.sip.header.ContentDispositionHeader;
+import javax.sip.header.ContentEncodingHeader;
+import javax.sip.header.ContentLanguageHeader;
+import javax.sip.header.ContentLengthHeader;
+import javax.sip.header.ContentTypeHeader;
+import javax.sip.header.ExpiresHeader;
+import javax.sip.header.Header;
 
 /**
 * A SIP message is either a request from a client to a server, or a

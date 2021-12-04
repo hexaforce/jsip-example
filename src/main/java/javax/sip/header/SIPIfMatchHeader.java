@@ -1,8 +1,8 @@
 /**
  * ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
  * Unpublished - rights reserved under the Copyright Laws of the United States.
- * Copyright © 2003 Sun Microsystems, Inc. All rights reserved.
- * Copyright © 2005 BEA Systems, Inc. All rights reserved.
+ * Copyright ï¿½ 2003 Sun Microsystems, Inc. All rights reserved.
+ * Copyright ï¿½ 2005 BEA Systems, Inc. All rights reserved.
  *
  * Use is subject to license terms.
  *
@@ -22,8 +22,6 @@
 package javax.sip.header;
 
 import java.text.ParseException;
-
-import javax.sip.header.Header;
 
 /**
  * This interface represents the SIP-If-Match header, as defined by

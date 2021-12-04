@@ -1,8 +1,8 @@
 /**
  * ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
  * Unpublished - rights reserved under the Copyright Laws of the United States.
- * Copyright © 2003 Sun Microsystems, Inc. All rights reserved.
- * Copyright © 2005 BEA Systems, Inc. All rights reserved.
+ * Copyright ï¿½ 2003 Sun Microsystems, Inc. All rights reserved.
+ * Copyright ï¿½ 2005 BEA Systems, Inc. All rights reserved.
  *
  * Use is subject to license terms.
  *
@@ -21,10 +21,11 @@
  */
 package javax.sip.address;
 
-import java.util.Iterator;
-import javax.sip.header.Parameters;
 import java.text.ParseException;
+import java.util.Iterator;
+
 import javax.sip.InvalidArgumentException;
+import javax.sip.header.Parameters;
 
 
 /**

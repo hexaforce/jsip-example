@@ -1,8 +1,8 @@
 /**
  * ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
  * Unpublished - rights reserved under the Copyright Laws of the United States.
- * Copyright © 2003 Sun Microsystems, Inc. All rights reserved.
- * Copyright © 2005 BEA Systems, Inc. All rights reserved.
+ * Copyright ï¿½ 2003 Sun Microsystems, Inc. All rights reserved.
+ * Copyright ï¿½ 2005 BEA Systems, Inc. All rights reserved.
  *
  * Use is subject to license terms.
  *
@@ -24,7 +24,8 @@ package javax.sip.header;
 
 
 import java.text.ParseException;
-import java.util.*;
+import java.util.List;
+import java.util.ListIterator;
 
 /**
  * The User-Agent header field contains information about the UAC originating

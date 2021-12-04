@@ -1,8 +1,8 @@
 /**
  * ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
  * Unpublished - rights reserved under the Copyright Laws of the United States.
- * Copyright © 2003 Sun Microsystems, Inc. All rights reserved.
- * Copyright © 2005 BEA Systems, Inc. All rights reserved.
+ * Copyright ï¿½ 2003 Sun Microsystems, Inc. All rights reserved.
+ * Copyright ï¿½ 2005 BEA Systems, Inc. All rights reserved.
  *
  * Use is subject to license terms.
  *
@@ -24,9 +24,15 @@
 package javax.sip.message;
 
 import java.text.ParseException;
-import javax.sip.header.*;
-import javax.sip.address.URI;
 import java.util.List;
+
+import javax.sip.address.URI;
+import javax.sip.header.CSeqHeader;
+import javax.sip.header.CallIdHeader;
+import javax.sip.header.ContentTypeHeader;
+import javax.sip.header.FromHeader;
+import javax.sip.header.MaxForwardsHeader;
+import javax.sip.header.ToHeader;
 
 /**
  * This interface provides factory methods that allow an application to create
