@@ -1,9 +1,12 @@
 package examples.tls;
-import javax.sip.*;
-import javax.sip.address.*;
-import javax.sip.message.*;
+import java.util.LinkedList;
+import java.util.ListIterator;
 
-import java.util.*;
+import javax.sip.SipException;
+import javax.sip.SipStack;
+import javax.sip.address.Hop;
+import javax.sip.address.Router;
+import javax.sip.message.Request;
 
 public class MyRouter implements Router {
     protected SipStack myStack;

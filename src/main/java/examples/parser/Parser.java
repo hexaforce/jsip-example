@@ -1,8 +1,5 @@
 package examples.parser;
 
-import gov.nist.javax.sip.header.ims.PAssertedIdentityHeader;
-import gov.nist.javax.sip.header.ims.PPreferredIdentityHeader;
-
 import javax.sdp.SdpFactory;
 import javax.sdp.SessionDescription;
 import javax.sip.SipFactory;
@@ -12,6 +9,9 @@ import javax.sip.header.HeaderFactory;
 import javax.sip.message.MessageFactory;
 import javax.sip.message.Request;
 import javax.sip.message.Response;
+
+import gov.nist.javax.sip.header.ims.PAssertedIdentityHeader;
+import gov.nist.javax.sip.header.ims.PPreferredIdentityHeader;
 
 /**
  * This example shows you how you can use the message factory to parse SIP

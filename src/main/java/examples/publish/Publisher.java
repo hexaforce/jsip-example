@@ -1,8 +1,18 @@
 package examples.publish;
-import javax.sip.*;
-import javax.sip.address.*;
-import javax.sip.header.*;
-import javax.sip.message.*;
+import javax.sip.ClientTransaction;
+import javax.sip.DialogTerminatedEvent;
+import javax.sip.IOExceptionEvent;
+import javax.sip.RequestEvent;
+import javax.sip.ResponseEvent;
+import javax.sip.SipListener;
+import javax.sip.SipProvider;
+import javax.sip.TimeoutEvent;
+import javax.sip.TransactionTerminatedEvent;
+import javax.sip.header.EventHeader;
+import javax.sip.header.HeaderFactory;
+import javax.sip.header.SubscriptionStateHeader;
+import javax.sip.message.MessageFactory;
+import javax.sip.message.Request;
 
 public class Publisher implements SipListener {
     SipProvider udpProvider;

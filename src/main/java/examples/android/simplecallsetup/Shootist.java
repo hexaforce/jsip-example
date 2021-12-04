@@ -1,12 +1,46 @@
 package examples.android.simplecallsetup;
 
-import android.javax.sip.*;
-import android.javax.sip.address.*;
-import android.javax.sip.header.*;
-import android.javax.sip.message.*;
-
 import java.text.ParseException;
-import java.util.*;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Properties;
+import java.util.Timer;
+import java.util.TimerTask;
+
+import android.javax.sip.ClientTransaction;
+import android.javax.sip.Dialog;
+import android.javax.sip.DialogState;
+import android.javax.sip.DialogTerminatedEvent;
+import android.javax.sip.IOExceptionEvent;
+import android.javax.sip.InvalidArgumentException;
+import android.javax.sip.ListeningPoint;
+import android.javax.sip.PeerUnavailableException;
+import android.javax.sip.RequestEvent;
+import android.javax.sip.ResponseEvent;
+import android.javax.sip.ServerTransaction;
+import android.javax.sip.SipException;
+import android.javax.sip.SipFactory;
+import android.javax.sip.SipListener;
+import android.javax.sip.SipProvider;
+import android.javax.sip.SipStack;
+import android.javax.sip.TimeoutEvent;
+import android.javax.sip.TransactionTerminatedEvent;
+import android.javax.sip.address.Address;
+import android.javax.sip.address.AddressFactory;
+import android.javax.sip.address.SipURI;
+import android.javax.sip.header.CSeqHeader;
+import android.javax.sip.header.CallIdHeader;
+import android.javax.sip.header.ContactHeader;
+import android.javax.sip.header.ContentTypeHeader;
+import android.javax.sip.header.FromHeader;
+import android.javax.sip.header.Header;
+import android.javax.sip.header.HeaderFactory;
+import android.javax.sip.header.MaxForwardsHeader;
+import android.javax.sip.header.ToHeader;
+import android.javax.sip.header.ViaHeader;
+import android.javax.sip.message.MessageFactory;
+import android.javax.sip.message.Request;
+import android.javax.sip.message.Response;
 
 /**
  * This class is a UAC template for android JSIP stack

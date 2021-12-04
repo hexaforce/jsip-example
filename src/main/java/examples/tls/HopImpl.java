@@ -1,6 +1,8 @@
 package examples.tls;
-import javax.sip.address.*;
-import java.util.*;
+import java.util.NoSuchElementException;
+import java.util.StringTokenizer;
+
+import javax.sip.address.Hop;
 
 
 public class HopImpl implements Hop {

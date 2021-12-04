@@ -1,8 +1,5 @@
 package examples.authorization;
 
-import gov.nist.javax.sip.SipStackExt;
-import gov.nist.javax.sip.clientauthutils.AuthenticationHelper;
-
 import java.text.ParseException;
 import java.util.ArrayList;
 import java.util.Properties;
@@ -39,6 +36,9 @@ import javax.sip.header.ViaHeader;
 import javax.sip.message.MessageFactory;
 import javax.sip.message.Request;
 import javax.sip.message.Response;
+
+import gov.nist.javax.sip.SipStackExt;
+import gov.nist.javax.sip.clientauthutils.AuthenticationHelper;
 
 /**
  * This class is a UAC template. Shootist is the guy that shoots and shootme is

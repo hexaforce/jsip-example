@@ -1,19 +1,41 @@
 package examples.nistgoodies.leakaudit;
 
-import gov.nist.javax.sip.stack.SIPDialog;
-import gov.nist.javax.sip.stack.SIPClientTransaction;
-import gov.nist.javax.sip.stack.SIPTransactionStack;
+import java.text.ParseException;
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.Map;
+import java.util.Set;
 
-import javax.sip.*;
+import javax.sip.ClientTransaction;
+import javax.sip.DialogTerminatedEvent;
+import javax.sip.IOExceptionEvent;
+import javax.sip.InvalidArgumentException;
+import javax.sip.ListeningPoint;
+import javax.sip.RequestEvent;
+import javax.sip.ResponseEvent;
+import javax.sip.SipFactory;
+import javax.sip.SipListener;
+import javax.sip.TimeoutEvent;
+import javax.sip.TransactionTerminatedEvent;
 import javax.sip.address.Address;
-import javax.sip.address.SipURI;
 import javax.sip.address.AddressFactory;
-import javax.sip.header.*;
+import javax.sip.address.SipURI;
+import javax.sip.header.AllowHeader;
+import javax.sip.header.CSeqHeader;
+import javax.sip.header.CallIdHeader;
+import javax.sip.header.ContactHeader;
+import javax.sip.header.FromHeader;
+import javax.sip.header.HeaderFactory;
+import javax.sip.header.MaxForwardsHeader;
+import javax.sip.header.ToHeader;
+import javax.sip.header.ViaHeader;
+import javax.sip.message.MessageFactory;
 import javax.sip.message.Request;
 import javax.sip.message.Response;
-import javax.sip.message.MessageFactory;
-import java.util.*;
-import java.text.ParseException;
+
+import gov.nist.javax.sip.stack.SIPClientTransaction;
+import gov.nist.javax.sip.stack.SIPDialog;
+import gov.nist.javax.sip.stack.SIPTransactionStack;
 
 /**
  * This example demonstrates how an application can monitor the SIP Stack

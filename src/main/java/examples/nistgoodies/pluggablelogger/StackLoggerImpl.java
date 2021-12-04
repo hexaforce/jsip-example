@@ -1,7 +1,5 @@
 package examples.nistgoodies.pluggablelogger;
 
-import gov.nist.core.StackLogger;
-
 import java.io.PrintWriter;
 import java.io.StringWriter;
 import java.util.HashMap;
@@ -11,6 +9,8 @@ import org.apache.log4j.ConsoleAppender;
 import org.apache.log4j.Level;
 import org.apache.log4j.Logger;
 import org.apache.log4j.SimpleLayout;
+
+import gov.nist.core.StackLogger;
 
 public class StackLoggerImpl implements StackLogger {
     

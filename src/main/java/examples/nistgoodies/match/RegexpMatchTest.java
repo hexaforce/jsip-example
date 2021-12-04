@@ -8,6 +8,12 @@
 * You might find this useful for bulding test frameworks.
 */
 package examples.nistgoodies.match;
+import java.util.regex.Pattern;
+
+import javax.sip.SipFactory;
+import javax.sip.message.MessageFactory;
+import javax.sip.message.Request;
+
 import gov.nist.core.Match;
 import gov.nist.javax.sip.address.SipUri;
 import gov.nist.javax.sip.header.RequestLine;
@@ -15,12 +21,6 @@ import gov.nist.javax.sip.header.StatusLine;
 import gov.nist.javax.sip.message.MessageFactoryImpl;
 import gov.nist.javax.sip.message.SIPRequest;
 import gov.nist.javax.sip.message.SIPResponse;
-
-import java.util.regex.Pattern;
-
-import javax.sip.SipFactory;
-import javax.sip.message.MessageFactory;
-import javax.sip.message.Request;
 
 
 class Matcher implements Match {

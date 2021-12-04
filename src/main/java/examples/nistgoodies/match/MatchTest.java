@@ -10,12 +10,15 @@
 
 package examples.nistgoodies.match;
 
-import javax.sip.*;
-import javax.sip.header.*;
-import javax.sip.message.*;
+import javax.sip.SipFactory;
+import javax.sip.header.CSeqHeader;
+import javax.sip.header.HeaderFactory;
+import javax.sip.message.Message;
+import javax.sip.message.MessageFactory;
+import javax.sip.message.Request;
 
 import gov.nist.javax.sip.header.CSeq;
-import gov.nist.javax.sip.message.*;
+import gov.nist.javax.sip.message.SIPRequest;
 
 
 public class MatchTest {
