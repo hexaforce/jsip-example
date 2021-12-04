@@ -6,7 +6,8 @@
 
 package javax.sdp;
 
-/** A Phone represents a p= field contained within a SessionDescription.
+/**
+ * A Phone represents a p= field contained within a SessionDescription.
  *
  * Please refer to IETF RFC 2327 for a description of SDP.
  *
@@ -15,19 +16,20 @@ package javax.sdp;
  */
 public interface Phone extends Field {
 
-    /** Returns the value.
-     * @throws SdpParseException
-     * @return the value.
-     */    
-    public String getValue()
-                throws SdpParseException;
-    
-    /** Sets the value.
-     * @param value the - new information.
-     * @throws SdpException if the value is null
-     */    
-    public void setValue(String value)
-              throws SdpException;
-    
-}
+	/**
+	 * Returns the value.
+	 * 
+	 * @throws SdpParseException
+	 * @return the value.
+	 */
+	public String getValue() throws SdpParseException;
 
+	/**
+	 * Sets the value.
+	 * 
+	 * @param value the - new information.
+	 * @throws SdpException if the value is null
+	 */
+	public void setValue(String value) throws SdpException;
+
+}
