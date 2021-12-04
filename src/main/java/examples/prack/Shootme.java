@@ -34,6 +34,7 @@ import javax.sip.message.Response;
  * @author M. Ranganathan
  */
 
+@SuppressWarnings("unused")
 public class Shootme implements SipListener {
 
     private static AddressFactory addressFactory;
@@ -214,7 +215,7 @@ public class Shootme implements SipListener {
 
     public void processCancel(RequestEvent requestEvent,
             ServerTransaction serverTransactionId) {
-        SipProvider sipProvider = (SipProvider) requestEvent.getSource();
+		SipProvider sipProvider = (SipProvider) requestEvent.getSource();
         Request request = requestEvent.getRequest();
         try {
             System.out.println("shootme:  got a cancel.");

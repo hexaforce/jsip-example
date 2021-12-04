@@ -247,7 +247,7 @@ public class Subscriber implements SipListener {
             fromNameAddress.setDisplayName(fromDisplayName);
 
             FromHeader fromHeader = headerFactory.createFromHeader(
-                    fromNameAddress, new Long(new Random().nextLong())
+                    fromNameAddress, Long.valueOf(new Random().nextLong())
                             .toString());
 
             // create To Header

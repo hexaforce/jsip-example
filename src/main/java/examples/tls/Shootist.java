@@ -63,7 +63,7 @@ public class Shootist implements SipListener, TlsSecurityPolicy {
     private int reInviteCount;
     private ContactHeader contactHeader;
     private ListeningPoint tlsListeningPoint;
-    private int counter;
+    //private int counter;
 
     protected ClientTransaction inviteTid;
 

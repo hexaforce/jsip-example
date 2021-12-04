@@ -47,6 +47,7 @@ import junit.framework.TestCase;
  * @author M. Ranganathan
  */
 
+@SuppressWarnings("unused")
 public class Shootist  implements SipListener {
 
     private boolean reInviteFlag;
@@ -367,7 +368,7 @@ public class Shootist  implements SipListener {
                     .createAddress(fromAddress);
             fromNameAddress.setDisplayName(fromDisplayName);
             FromHeader fromHeader = ProtocolObjects.headerFactory
-                    .createFromHeader(fromNameAddress, new Integer((int) (Math
+                    .createFromHeader(fromNameAddress,  Integer.valueOf((int) (Math
                             .random() * Integer.MAX_VALUE)).toString());
 
             // create To Header

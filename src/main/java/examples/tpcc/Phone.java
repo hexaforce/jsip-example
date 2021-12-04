@@ -44,6 +44,7 @@ import javax.sip.message.Response;
  * KMC - SHOOTMEA IS EXACTLY THE SAME TO THE CLASIC SHOOTME , ONLY LISTENING ON
  * PORT 5070
  */
+@SuppressWarnings("unused")
 public class Phone implements SipListener {
 
     private static AddressFactory addressFactory;
@@ -167,7 +168,7 @@ public class Phone implements SipListener {
             response.addHeader(contactHeader);
             ToHeader toHeader = (ToHeader) okResponse.getHeader(ToHeader.NAME);
             if (toHeader.getTag() == null ) {
-                toHeader.setTag(new Integer((int) ( Math.random()  * 10000) ).toString()); // Application is supposed to set.
+                toHeader.setTag(Integer.valueOf((int) Math.random() * 10000).toString()); // Application is supposed to set.
             } else {
                  System.out.println("Re-INVITE processing");
             }
@@ -234,7 +235,7 @@ public class Phone implements SipListener {
      */
     public void processBye(RequestEvent requestEvent,
             ServerTransaction serverTransactionId) {
-        SipProvider sipProvider = (SipProvider) requestEvent.getSource();
+		SipProvider sipProvider = (SipProvider) requestEvent.getSource();
         Request request = requestEvent.getRequest();
         try {
             System.out.println(myPort + "  got a bye sending OK.");

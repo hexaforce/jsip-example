@@ -115,7 +115,7 @@ public class B2BUA implements SipListener {
 						.createContactHeader(address);
 				response.addHeader(contactHeader);
 				ToHeader toHeader = (ToHeader) otherResponse.getHeader(ToHeader.NAME);
-				if(toHeader.getTag() == null) toHeader.setTag(new Long(counter.getAndIncrement()).toString());
+				if(toHeader.getTag() == null) toHeader.setTag(Long.valueOf(counter.getAndIncrement()).toString());
 				otherResponse.addHeader(contactHeader);
 			}
 			st.sendResponse(otherResponse);
@@ -218,7 +218,7 @@ public class B2BUA implements SipListener {
 		SipURI fromUri = (SipURI) from.getAddress().getURI();
 		registrar.put(fromUri.getUser(), contactUri);
 		try {
-			Response response = this.messageFactory.createResponse(200, request);
+			Response response = B2BUA.messageFactory.createResponse(200, request);
 			ServerTransaction serverTransaction = sipProvider.getNewServerTransaction(request);
 			serverTransaction.sendResponse(response);
 		} catch (Exception e) {
@@ -348,7 +348,7 @@ public class B2BUA implements SipListener {
 			Address fromNameAddress = addressFactory.createAddress(fromAddress);
 			fromNameAddress.setDisplayName(fromDisplayName);
 			FromHeader fromHeader = headerFactory.createFromHeader(
-					fromNameAddress, new Long(counter.getAndIncrement()).toString());
+					fromNameAddress, Long.valueOf(counter.getAndIncrement()).toString());
 
 			// create To Header
 			SipURI toAddress = addressFactory

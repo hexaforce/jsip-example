@@ -94,7 +94,7 @@ public class Proxy extends TestHarness implements SipListener {
                             .createRecordRouteHeader(address);
                     newRequest.addHeader(recordRoute);
                     ct1.setApplicationData(st);
-                    this.clientTxTable.put(new Integer(5080), ct1);
+                    this.clientTxTable.put(Integer.valueOf(5080), ct1);
 
                     newRequest = (Request) request.clone();
                     ((SipURI)newRequest.getRequestURI()).removePort();
@@ -118,7 +118,7 @@ public class Proxy extends TestHarness implements SipListener {
                     newRequest.addHeader(recordRoute);
                     ClientTransaction ct2 = sipProvider.getNewClientTransaction(newRequest);
                     ct2.setApplicationData(st);
-                    this.clientTxTable.put(new Integer(5090), ct2);
+                    this.clientTxTable.put(Integer.valueOf(5090), ct2);
 
                     // Send the requests out to the two listening points of the
                     // client.

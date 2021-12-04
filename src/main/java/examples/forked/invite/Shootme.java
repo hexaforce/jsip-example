@@ -46,7 +46,7 @@ public class Shootme  extends TestCase implements SipListener {
 
     private static final String myAddress = "127.0.0.1";
 
-    private Hashtable serverTxTable = new Hashtable();
+    private Hashtable<String, ServerTransaction> serverTxTable = new Hashtable<String, ServerTransaction>();
 
     private SipProvider sipProvider;
 
@@ -166,7 +166,7 @@ public class Shootme  extends TestCase implements SipListener {
             ContactHeader contactHeader = ProtocolObjects.headerFactory.createContactHeader(address);
             response.addHeader(contactHeader);
             ToHeader toHeader = (ToHeader) ringingResponse.getHeader(ToHeader.NAME);
-            String toTag = new Integer((int) (Math.random() * 10000)).toString();
+            String toTag = Integer.valueOf((int) Math.random() * 10000).toString();
             toHeader.setTag(toTag); // Application is supposed to set.
             ringingResponse.addHeader(contactHeader);
             st.sendResponse(ringingResponse);
@@ -250,7 +250,7 @@ public class Shootme  extends TestCase implements SipListener {
             serverTransactionId.sendResponse(response);
 
             String serverTxId = ((ViaHeader)response.getHeader(ViaHeader.NAME)).getBranch();
-            ServerTransaction serverTx = (ServerTransaction) this.serverTxTable.get(serverTxId);
+            ServerTransaction serverTx = this.serverTxTable.get(serverTxId);
             if ( serverTx != null && (serverTx.getState().equals(TransactionState.TRYING) ||
                     serverTx.getState().equals(TransactionState.PROCEEDING))) {
                 Request originalRequest = serverTx.getRequest();
@@ -302,7 +302,7 @@ public class Shootme  extends TestCase implements SipListener {
     }
 
     public static void main(String args[]) throws Exception {
-        int myPort = new Integer(args[0]).intValue();
+        int myPort = Integer.valueOf(args[0]).intValue();
 
         logger.addAppender(new ConsoleAppender(new SimpleLayout()));
         ProtocolObjects.init("shootme_"+myPort,true);

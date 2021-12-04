@@ -165,7 +165,7 @@ public class Notifier implements SipListener {
             response.addHeader(request.getHeader(EventHeader.NAME));
             ToHeader toHeader = (ToHeader) response.getHeader(ToHeader.NAME);
             if (toHeader.getTag() == null) {
-                String tag = new Long(new java.util.Random().nextLong())
+                String tag = Long.valueOf(new java.util.Random().nextLong())
                         .toString();
                 toHeader.setTag(tag);
             }

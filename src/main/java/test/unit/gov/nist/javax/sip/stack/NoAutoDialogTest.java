@@ -81,7 +81,7 @@ public class NoAutoDialogTest extends TestCase {
     }
 
     public String generateFromTag() {
-        return new Integer(Math.abs(new Random().nextInt())).toString();
+        return Integer.valueOf(Math.abs(new Random().nextInt())).toString();
     }
 
     @Override

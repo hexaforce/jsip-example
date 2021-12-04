@@ -60,6 +60,7 @@ import javax.sip.message.Response;
  *
  */
 
+@SuppressWarnings("unused")
 public class Controller implements SipListener {
 
     private static SipProvider sipProvider;
@@ -108,7 +109,7 @@ public class Controller implements SipListener {
 
     int first = 0, second = 0;
 
-    private static void usage() {
+	private static void usage() {
         System.out.println(usageString);
         System.exit(0);
     }

@@ -25,16 +25,16 @@ public class StackLoggerImpl implements StackLogger {
  
     private static void putMap(String level, int jsipLevel) {
         levelMap.put(level, jsipLevel);
-        inverseLevelMap.put(new Integer(jsipLevel), level);
+        inverseLevelMap.put(Integer.valueOf(jsipLevel), level);
     }
     static {
-        putMap(Level.DEBUG.toString(), new Integer(TRACE_DEBUG));
-        putMap(Level.INFO.toString(), new Integer(TRACE_INFO));
-        putMap(Level.TRACE.toString(), new Integer(TRACE_TRACE));
-        putMap(Level.ERROR.toString(), new Integer(TRACE_ERROR));
-        putMap(Level.WARN.toString(), new Integer(TRACE_WARN));
-        putMap(Level.FATAL.toString(), new Integer(TRACE_FATAL));
-        putMap(Level.OFF.toString(), new Integer(TRACE_NONE));
+        putMap(Level.DEBUG.toString(), Integer.valueOf(TRACE_DEBUG));
+        putMap(Level.INFO.toString(), Integer.valueOf(TRACE_INFO));
+        putMap(Level.TRACE.toString(), Integer.valueOf(TRACE_TRACE));
+        putMap(Level.ERROR.toString(), Integer.valueOf(TRACE_ERROR));
+        putMap(Level.WARN.toString(), Integer.valueOf(TRACE_WARN));
+        putMap(Level.FATAL.toString(), Integer.valueOf(TRACE_FATAL));
+        putMap(Level.OFF.toString(), Integer.valueOf(TRACE_NONE));
         logger.addAppender(new ConsoleAppender(new SimpleLayout()));
     }
     

@@ -184,7 +184,7 @@ public class Forker implements SipListener {
      * Mapping of Via branch IDs to the corresponding ServerTransaction, used
      * for forwarding responses
      */
-    private final Map CTtoST = new HashMap();
+    private final Map<ClientTransaction, ServerTransaction> CTtoST = new HashMap<ClientTransaction, ServerTransaction>();
 
     private void doFork( Request orig, ServerTransaction st, int port ) throws Exception {
         ViaHeader myVia = headerFactory.createViaHeader( "127.0.0.1",
@@ -275,7 +275,7 @@ public class Forker implements SipListener {
                 e.printStackTrace();
             }
         } else {
-            ServerTransaction st = (ServerTransaction) CTtoST.get(ct);
+            ServerTransaction st = CTtoST.get(ct);
             if (st!=null) {
                 // only forward the first response
                 synchronized (st) {

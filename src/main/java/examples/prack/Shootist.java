@@ -43,6 +43,7 @@ import javax.sip.message.Response;
  * @author M. Ranganathan
  */
 
+@SuppressWarnings("unused")
 public class Shootist implements SipListener {
 
     private static SipProvider sipProvider;

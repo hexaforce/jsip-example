@@ -41,6 +41,7 @@ import gov.nist.javax.sip.clientauthutils.DigestServerAuthenticationHelper;
  * @author Kathleen McCallum
  */
 
+@SuppressWarnings("unused")
 public class ShootmeAuth implements SipListener {
 
     private static AddressFactory addressFactory;

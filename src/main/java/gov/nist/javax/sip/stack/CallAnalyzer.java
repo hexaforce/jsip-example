@@ -74,10 +74,10 @@ public  class CallAnalyzer {
 	}
 	
 	public static class TImeMetricInfo {
-		public Long totalTime = new Long(0);
-		public Long numberOfEvents = new Long(0);
-		public Long averageTime = new Long(1);
-		public Long lastLoggedEventTime = new Long(0);
+		public Long totalTime = Long.valueOf(0);
+		public Long numberOfEvents = Long.valueOf(0);
+		public Long averageTime = Long.valueOf(1);
+		public Long lastLoggedEventTime = Long.valueOf(0);
 		protected TimerTask task;
 		protected MetricAnalysisConfiguration config = new MetricAnalysisConfiguration(5000, 5000, 5000); // default config
 	}
@@ -129,9 +129,9 @@ public  class CallAnalyzer {
 			this.stuckTimeBeforeDump = stuckTimerBeforeDump;
 		}
 		public MetricAnalysisConfiguration(int checkingInterval, int minDumpInterval, int stuckTimerBeforeDump) {
-			this.checkingInterval = new Long(checkingInterval);
-			this.minimumDumpInterval = new Long(minDumpInterval);
-			this.stuckTimeBeforeDump = new Long(stuckTimerBeforeDump);
+			this.checkingInterval = Long.valueOf(checkingInterval);
+			this.minimumDumpInterval = Long.valueOf(minDumpInterval);
+			this.stuckTimeBeforeDump = Long.valueOf(stuckTimerBeforeDump);
 		}
 		protected Long checkingInterval;
 		protected Long minimumDumpInterval;
@@ -194,10 +194,10 @@ public  class CallAnalyzer {
 	 */
 	public void resetStats(MetricReference metricReference) {
 		TImeMetricInfo info = metricStatisticsMap.get(metricReference);
-		info.totalTime = new Long(0);
-		info.numberOfEvents = new Long(0);
-		info.averageTime = new Long(1);
-		info.lastLoggedEventTime = new Long(0);
+		info.totalTime = Long.valueOf(0);
+		info.numberOfEvents = Long.valueOf(0);
+		info.averageTime = Long.valueOf(1);
+		info.lastLoggedEventTime = Long.valueOf(0);
 	}
 
 	public CallAnalyzer() {

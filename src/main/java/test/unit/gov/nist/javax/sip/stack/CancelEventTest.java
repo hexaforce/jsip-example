@@ -124,7 +124,7 @@ public class CancelEventTest extends  ScenarioHarness {
             // You need 16 for logging traces. 32 for debug + traces.
             // Your code will limp at 32 but it is best for debugging.
             properties.setProperty("gov.nist.javax.sip.TRACE_LEVEL",
-                    new Integer(logLevel).toString());
+                    Integer.valueOf(logLevel).toString());
 
             if(System.getProperty("enableNIO") != null && System.getProperty("enableNIO").equalsIgnoreCase("true")) {
             	logger.info("\nNIO Enabled\n");
@@ -462,7 +462,7 @@ public class CancelEventTest extends  ScenarioHarness {
             // You need 16 for logging traces. 32 for debug + traces.
             // Your code will limp at 32 but it is best for debugging.
             properties.setProperty("gov.nist.javax.sip.TRACE_LEVEL",
-                    new Integer(logLevel).toString());
+                    Integer.valueOf(logLevel).toString());
 
             if(System.getProperty("enableNIO") != null && System.getProperty("enableNIO").equalsIgnoreCase("true")) {
             	logger.info("\nNIO Enabled\n");

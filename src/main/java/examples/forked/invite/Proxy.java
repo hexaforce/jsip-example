@@ -45,7 +45,7 @@ public class Proxy extends TestCase implements SipListener {
 
     private SipProvider inviteServerTxProvider;
 
-    private Hashtable clientTxTable = new Hashtable();
+    private Hashtable<Integer, ClientTransaction> clientTxTable = new Hashtable<Integer, ClientTransaction>();
 
     private static String transport = "udp";
 
@@ -105,7 +105,7 @@ public class Proxy extends TestCase implements SipListener {
                 RecordRouteHeader recordRoute = ProtocolObjects.headerFactory.createRecordRouteHeader(address);
                 newRequest.addHeader(recordRoute);
                 ct1.setApplicationData(st);
-                this.clientTxTable.put(new Integer(5080), ct1);
+                this.clientTxTable.put(Integer.valueOf(5080), ct1);
 
                 newRequest = (Request) request.clone();
                 sipUri = ProtocolObjects.addressFactory.createSipURI("UA2", "127.0.0.1");
@@ -129,7 +129,7 @@ public class Proxy extends TestCase implements SipListener {
                 ClientTransaction ct2 = sipProvider
                         .getNewClientTransaction(newRequest);
                 ct2.setApplicationData(st);
-                this.clientTxTable.put(new Integer(5090), ct2);
+                this.clientTxTable.put(Integer.valueOf(5090), ct2);
 
                 // Send the requests out to the two listening points of the client.
 
@@ -230,7 +230,7 @@ public class Proxy extends TestCase implements SipListener {
         if (!transactionTerminatedEvent.isServerTransaction()) {
             ClientTransaction ct = transactionTerminatedEvent
                     .getClientTransaction();
-            for (Iterator it = this.clientTxTable.values().iterator(); it
+            for (Iterator<ClientTransaction> it = this.clientTxTable.values().iterator(); it
                     .hasNext();) {
                 if (it.next().equals(ct)) {
                     it.remove();

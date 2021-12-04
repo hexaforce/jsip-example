@@ -43,6 +43,7 @@ import org.apache.log4j.PatternLayout;
  *
  * @author M. Ranganathan
  */
+@SuppressWarnings("unused")
 public class Shootme implements SipListener {
 
     private static AddressFactory addressFactory;
@@ -219,7 +220,7 @@ public class Shootme implements SipListener {
      */
     public void processBye(RequestEvent requestEvent,
             ServerTransaction serverTransactionId) {
-        SipProvider sipProvider = (SipProvider) requestEvent.getSource();
+		SipProvider sipProvider = (SipProvider) requestEvent.getSource();
         Request request = requestEvent.getRequest();
         Dialog dialog = requestEvent.getDialog();
         System.out.println("local party = " + dialog.getLocalParty());

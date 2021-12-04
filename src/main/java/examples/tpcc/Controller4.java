@@ -298,7 +298,7 @@ public class Controller4 implements SipListener {
         Address fromNameAddress = addressFactory.createAddress(fromAddress);
         fromNameAddress.setDisplayName(fromDisplayName);
         FromHeader fromHeader = headerFactory.createFromHeader(fromNameAddress,
-                new Integer((int) (Math.random() * 10000)).toString());
+                Integer.valueOf((int) Math.random() * 10000).toString());
 
         // create To Header
         SipURI toAddress = addressFactory.createSipURI(toVal,

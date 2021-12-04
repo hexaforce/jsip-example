@@ -50,7 +50,8 @@ public class ForkedInviteTest extends TestCase implements SipListener {
         return listener;
     }
 
-    public ForkedInviteTest() {
+    @SuppressWarnings("unchecked")
+	public ForkedInviteTest() {
 
         try {
             ProtocolObjects.logFileDirectory = "logs/";

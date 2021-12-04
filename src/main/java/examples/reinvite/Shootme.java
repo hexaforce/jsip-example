@@ -37,6 +37,7 @@ import junit.framework.TestCase;
  * @author M. Ranganathan
  */
 
+@SuppressWarnings("unused")
 public class Shootme  implements SipListener {
 
 

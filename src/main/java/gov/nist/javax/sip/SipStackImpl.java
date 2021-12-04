@@ -1066,7 +1066,7 @@ public class SipStackImpl extends SIPTransactionStack implements
 				.getProperty("gov.nist.javax.sip.MAX_CONNECTIONS");
 		if (maxConnections != null) {
 			try {
-				this.maxConnections = new Integer(maxConnections).intValue();
+				this.maxConnections = Integer.valueOf(maxConnections).intValue();
 			} catch (NumberFormatException ex) {
 				if (logger.isLoggingEnabled())
 					logger.logError(
@@ -1078,7 +1078,7 @@ public class SipStackImpl extends SIPTransactionStack implements
 				.getProperty("gov.nist.javax.sip.THREAD_POOL_SIZE");
 		if (threadPoolSize != null) {
 			try {
-				this.threadPoolSize = new Integer(threadPoolSize).intValue();
+				this.threadPoolSize = Integer.valueOf(threadPoolSize).intValue();
 			} catch (NumberFormatException ex) {
 				if (logger.isLoggingEnabled())
 					this.logger.logError(
@@ -1096,7 +1096,7 @@ public class SipStackImpl extends SIPTransactionStack implements
 		.getProperty("gov.nist.javax.sip.TCP_POST_PARSING_THREAD_POOL_SIZE");
 		if (tcpTreadPoolSize != null) {
 			try {
-				int threads = new Integer(tcpTreadPoolSize).intValue();
+				int threads = Integer.valueOf(tcpTreadPoolSize).intValue();
 				super.setTcpPostParsingThreadPoolSize(threads);
 				PostParseExecutorServices.setPostParseExcutorSize(threads, congetstionControlTimeout);
 			} catch (NumberFormatException ex) {
@@ -1116,7 +1116,7 @@ public class SipStackImpl extends SIPTransactionStack implements
 				.getProperty("gov.nist.javax.sip.MAX_SERVER_TRANSACTIONS");
 		if (serverTransactionTableSize != null) {
 			try {
-				this.serverTransactionTableHighwaterMark = new Integer(
+				this.serverTransactionTableHighwaterMark = Integer.valueOf(
 						serverTransactionTableSize).intValue();
 				this.serverTransactionTableLowaterMark = this.serverTransactionTableHighwaterMark * 80 / 100;
 				// Lowater is 80% of highwater
@@ -1137,7 +1137,7 @@ public class SipStackImpl extends SIPTransactionStack implements
 				.getProperty("gov.nist.javax.sip.MAX_CLIENT_TRANSACTIONS");
 		if (clientTransactionTableSize != null) {
 			try {
-				this.clientTransactionTableHiwaterMark = new Integer(
+				this.clientTransactionTableHiwaterMark = Integer.valueOf(
 						clientTransactionTableSize).intValue();
 				this.clientTransactionTableLowaterMark = this.clientTransactionTableLowaterMark * 80 / 100;
 				// Lowater is 80% of highwater
@@ -1230,7 +1230,7 @@ public class SipStackImpl extends SIPTransactionStack implements
 
 		try {
 			if (maxMsgSize != null) {
-				super.maxMessageSize = new Integer(maxMsgSize).intValue();
+				super.maxMessageSize = Integer.valueOf(maxMsgSize).intValue();
 				if (super.maxMessageSize < 4096)
 					super.maxMessageSize = 4096;
 			} else {
@@ -1361,13 +1361,13 @@ public class SipStackImpl extends SIPTransactionStack implements
 		String bufferSize = configurationProperties.getProperty(
 				"gov.nist.javax.sip.RECEIVE_UDP_BUFFER_SIZE", MAX_DATAGRAM_SIZE
 						.toString());
-		int bufferSizeInteger = new Integer(bufferSize).intValue();
+		int bufferSizeInteger = Integer.valueOf(bufferSize).intValue();
 		super.setReceiveUdpBufferSize(bufferSizeInteger);
 
 		bufferSize = configurationProperties.getProperty(
 				"gov.nist.javax.sip.SEND_UDP_BUFFER_SIZE", MAX_DATAGRAM_SIZE
 						.toString());
-		bufferSizeInteger = new Integer(bufferSize).intValue();
+		bufferSizeInteger = Integer.valueOf(bufferSize).intValue();
 		super.setSendUdpBufferSize(bufferSizeInteger);
 
 		super.isBackToBackUserAgent = Boolean
