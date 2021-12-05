@@ -1,8 +1,16 @@
 package tools.tracesviewer;
 
-import javax.swing.*;
-import java.awt.*;
-import java.awt.event.*;
+import java.awt.Color;
+import java.awt.Container;
+import java.awt.Font;
+import java.awt.ScrollPane;
+import java.awt.event.WindowAdapter;
+import java.awt.event.WindowEvent;
+
+import javax.swing.BoxLayout;
+import javax.swing.JButton;
+import javax.swing.JPanel;
+import javax.swing.JTextArea;
 
 public class DebugWindow extends javax.swing.JFrame {
 

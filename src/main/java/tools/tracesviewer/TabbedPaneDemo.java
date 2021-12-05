@@ -1,13 +1,16 @@
 package tools.tracesviewer;
 
-import javax.swing.JTabbedPane;
+import java.awt.BorderLayout;
+import java.awt.Component;
+import java.awt.GridLayout;
+import java.awt.event.WindowAdapter;
+import java.awt.event.WindowEvent;
+
 import javax.swing.ImageIcon;
+import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
-import javax.swing.JFrame;
-
-import java.awt.*;
-import java.awt.event.*;
+import javax.swing.JTabbedPane;
 
 public class TabbedPaneDemo extends JPanel {
 	public TabbedPaneDemo() {

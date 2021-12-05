@@ -1,7 +1,8 @@
 package tools.tracesviewer;
 
-import java.util.*;
-import java.io.*;
+import java.io.Serializable;
+import java.util.Iterator;
+import java.util.Vector;
 
 public class TracesSession extends Vector implements Serializable {
 

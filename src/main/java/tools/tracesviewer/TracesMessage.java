@@ -1,6 +1,6 @@
 package tools.tracesviewer;
 
-import java.io.*;
+import java.io.Serializable;
 
 public class TracesMessage implements Serializable {
 

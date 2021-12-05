@@ -1,6 +1,7 @@
 package tools.tracesviewer;
 
-import java.awt.*;
+import java.awt.Color;
+import java.awt.Graphics;
 
 /**
  * @version 1.2

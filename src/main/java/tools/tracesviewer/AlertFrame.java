@@ -5,7 +5,7 @@
  */
 package tools.tracesviewer;
 
-import javax.swing.*;
+import javax.swing.JOptionPane;
 
 /**
  *

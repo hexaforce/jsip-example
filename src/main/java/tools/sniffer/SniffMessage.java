@@ -1,9 +1,18 @@
 package tools.sniffer;
 
-import java.util.*;
-import java.text.*;
-import gov.nist.javax.sip.parser.*;
-import gov.nist.javax.sip.message.*;
+import java.text.ParseException;
+import java.text.ParsePosition;
+import java.text.SimpleDateFormat;
+import java.util.ArrayList;
+import java.util.Date;
+import java.util.Iterator;
+import java.util.StringTokenizer;
+
+import gov.nist.javax.sip.message.SIPMessage;
+import gov.nist.javax.sip.message.SIPRequest;
+import gov.nist.javax.sip.message.SIPResponse;
+import gov.nist.javax.sip.parser.ParseExceptionListener;
+import gov.nist.javax.sip.parser.StringMsgParser;
 
 /**
  * A parser for Sniff files. This is the main workhorse that reads a Ethereal Sniff file and converts it to a fromat that can be used by the trace viewer application Acknowledgement: This code was contributed by Tim Bardzil <bardzil@colorado.edu>. This code was completed as part of a class project in TLEN 5843 Singaling Protocols, taught by Professor Douglas C. Sicker, Ph.D. at the University of Colorado, Boulder.

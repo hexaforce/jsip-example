@@ -23,7 +23,7 @@ public abstract class ScenarioHarness extends TestHarness {
 
 	protected String transport;
 
-	protected Hashtable providerTable;
+	protected Hashtable<SipProvider, SipListener> providerTable;
 
 	// this flag determines whether the tested SIP Stack is shootist or shootme
 	protected boolean testedImplFlag;

@@ -1,7 +1,11 @@
 package tools.tracesviewer;
 
-import java.awt.*;
-import java.util.*;
+import java.awt.Component;
+import java.awt.Container;
+import java.awt.Dimension;
+import java.awt.LayoutManager2;
+import java.util.Enumeration;
+import java.util.Hashtable;
 
 /**
  * Lays out components within a Container such that each component takes a fixed percentage of the size.

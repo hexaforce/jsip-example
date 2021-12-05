@@ -1,8 +1,12 @@
 package tools.sniffer;
 
-import java.io.*;
-import java.util.*;
-import tools.tracesviewer.*;
+import java.io.BufferedReader;
+import java.io.FileReader;
+import java.util.ArrayList;
+import java.util.Hashtable;
+
+import tools.tracesviewer.LogFileParser;
+import tools.tracesviewer.TracesViewer;
 
 /**
  * Code to convert Ethereal frames to the XML format that the trace viewer application likes.

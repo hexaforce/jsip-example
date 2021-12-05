@@ -1,7 +1,7 @@
 package tools.tracesviewer;
 
-import java.awt.*;
-import java.awt.event.*;
+import java.awt.List;
+import java.awt.event.ItemEvent;
 
 public class TracesSessionsList extends List {
 

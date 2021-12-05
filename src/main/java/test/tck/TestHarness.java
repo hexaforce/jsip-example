@@ -1,9 +1,5 @@
 package test.tck;
 
-import gov.nist.javax.sip.address.AddressFactoryImpl;
-import gov.nist.javax.sip.stack.NioMessageProcessorFactory;
-
-import java.io.File;
 import java.io.FileInputStream;
 import java.io.PrintWriter;
 import java.io.StringWriter;
@@ -15,15 +11,17 @@ import javax.sip.address.AddressFactory;
 import javax.sip.header.HeaderFactory;
 import javax.sip.message.MessageFactory;
 
-import junit.framework.TestCase;
-import junit.framework.TestResult;
-
 import org.apache.log4j.Appender;
 import org.apache.log4j.BasicConfigurator;
 import org.apache.log4j.ConsoleAppender;
 import org.apache.log4j.FileAppender;
 import org.apache.log4j.Logger;
 import org.apache.log4j.SimpleLayout;
+
+import gov.nist.javax.sip.address.AddressFactoryImpl;
+import gov.nist.javax.sip.stack.NioMessageProcessorFactory;
+import junit.framework.TestCase;
+import junit.framework.TestResult;
 
 public class TestHarness extends TestCase {
 

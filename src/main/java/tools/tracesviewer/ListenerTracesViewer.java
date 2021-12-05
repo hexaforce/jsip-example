@@ -1,8 +1,11 @@
 package tools.tracesviewer;
 
-import javax.swing.*;
-import java.awt.*;
-import java.awt.event.*;
+import java.awt.Color;
+import java.awt.event.ActionEvent;
+import java.awt.event.ItemEvent;
+import java.awt.event.MouseEvent;
+
+import javax.swing.JOptionPane;
 
 /**
  *

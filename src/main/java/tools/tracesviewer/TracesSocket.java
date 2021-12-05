@@ -5,8 +5,10 @@
  */
 package tools.tracesviewer;
 
-import java.net.*;
-import java.io.*;
+import java.io.FileWriter;
+import java.io.InputStream;
+import java.net.ServerSocket;
+import java.net.Socket;
 
 /**
  *

@@ -1,16 +1,22 @@
 package tools.tracesviewer;
 
+import java.io.ByteArrayInputStream;
+import java.io.File;
+import java.io.FileReader;
+import java.io.IOException;
+import java.util.Hashtable;
+
 //ifdef J2SDK1.4
 import javax.xml.parsers.SAXParser;
 import javax.xml.parsers.SAXParserFactory;
 //endif
 
-import org.xml.sax.*;
-import org.xml.sax.helpers.DefaultHandler;
+import org.xml.sax.Attributes;
+import org.xml.sax.InputSource;
 import org.xml.sax.SAXException;
-
-import java.io.*;
-import java.util.*;
+import org.xml.sax.SAXParseException;
+import org.xml.sax.XMLReader;
+import org.xml.sax.helpers.DefaultHandler;
 
 /**
  * Parse the log files - sort them and organize by call id.

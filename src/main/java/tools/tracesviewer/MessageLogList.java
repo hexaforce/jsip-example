@@ -4,7 +4,8 @@
 
 package tools.tracesviewer;
 
-import java.util.*;
+import java.util.Comparator;
+import java.util.TreeSet;
 
 /**
  * This class stores a sorted list messages for logging.

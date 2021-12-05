@@ -1,9 +1,22 @@
 package tools.tracesviewer;
 
-import javax.swing.*;
-import javax.swing.border.*;
-import java.awt.*;
-import java.awt.event.*;
+import java.awt.BorderLayout;
+import java.awt.Color;
+import java.awt.Container;
+import java.awt.Font;
+import java.awt.List;
+import java.awt.TextArea;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+import java.awt.event.ItemEvent;
+import java.awt.event.ItemListener;
+import java.awt.event.WindowAdapter;
+import java.awt.event.WindowEvent;
+
+import javax.swing.AbstractButton;
+import javax.swing.JButton;
+import javax.swing.JPanel;
+import javax.swing.border.BevelBorder;
 
 public class TracesSessionsDisplayer extends javax.swing.JFrame {
 

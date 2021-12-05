@@ -1,6 +1,6 @@
 package tools.tracesviewer;
 
-import java.util.*;
+import java.util.Hashtable;
 
 public class TracesAnimationThread implements Runnable {
 
