@@ -1,0 +1,2 @@
+INFO - createSipStack gov.nist.javax.sip.SipStackImpl@59906517
+INFO - Refer Dialog = gov.nist.javax.sip.stack.SIPDialog@354851d0

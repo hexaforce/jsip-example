@@ -38,223 +38,203 @@ import junit.framework.TestCase;
  */
 public class Proxy extends TestCase implements SipListener {
 
+	// private ServerTransaction st;
 
+	private SipProvider inviteServerTxProvider;
 
+	private Hashtable<Integer, ClientTransaction> clientTxTable = new Hashtable<Integer, ClientTransaction>();
 
-    //private ServerTransaction st;
+	private static String transport = "udp";
 
-    private SipProvider inviteServerTxProvider;
+	private static String host = "127.0.0.1";
 
-    private Hashtable<Integer, ClientTransaction> clientTxTable = new Hashtable<Integer, ClientTransaction>();
+	private int port = 5070;
 
-    private static String transport = "udp";
+	private SipProvider sipProvider;
 
-    private static String host = "127.0.0.1";
+	private static String unexpectedException = "Unexpected exception";
 
-    private int port = 5070;
+	private static Logger logger = Logger.getLogger(Proxy.class);
 
-    private SipProvider sipProvider;
+	static {
+		try {
+			logger.addAppender(new FileAppender(new SimpleLayout(), ProtocolObjects.logFileDirectory + "proxlog.txt"));
+		} catch (Exception ex) {
+			throw new RuntimeException("could not open shootistconsolelog.txt");
+		}
+	}
 
-    private static String unexpectedException = "Unexpected exception";
+	public void processRequest(RequestEvent requestEvent) {
+		try {
+			Request request = requestEvent.getRequest();
+			SipProvider sipProvider = (SipProvider) requestEvent.getSource();
+			this.inviteServerTxProvider = sipProvider;
+			if (request.getMethod().equals(Request.INVITE)) {
 
-    private static Logger logger = Logger.getLogger(Proxy.class);
+				ListeningPoint lp = sipProvider.getListeningPoint(transport);
+				String host = lp.getIPAddress();
+				int port = lp.getPort();
 
-    static {
-        try {
-            logger.addAppender(new FileAppender(new SimpleLayout(),
-                    ProtocolObjects.logFileDirectory + "proxlog.txt"));
-        } catch (Exception ex) {
-            throw new RuntimeException("could not open shootistconsolelog.txt");
-        }
-    }
+				ServerTransaction st = null;
+				if (requestEvent.getServerTransaction() == null) {
+					st = sipProvider.getNewServerTransaction(request);
 
-    public void processRequest(RequestEvent requestEvent) {
-        try {
-            Request request = requestEvent.getRequest();
-            SipProvider sipProvider = (SipProvider) requestEvent.getSource();
-            this.inviteServerTxProvider = sipProvider;
-            if (request.getMethod().equals(Request.INVITE)) {
+				}
+				Request newRequest = (Request) request.clone();
+				SipURI sipUri = ProtocolObjects.addressFactory.createSipURI("UA1", "127.0.0.1");
+				sipUri.setPort(5080);
+				sipUri.setLrParam();
+				Address address = ProtocolObjects.addressFactory.createAddress("client1", sipUri);
+				RouteHeader rheader = ProtocolObjects.headerFactory.createRouteHeader(address);
 
-                ListeningPoint lp = sipProvider.getListeningPoint(transport);
-                String host = lp.getIPAddress();
-                int port = lp.getPort();
+				newRequest.addFirst(rheader);
+				ViaHeader viaHeader = ProtocolObjects.headerFactory.createViaHeader(host, port, transport, null);
+				newRequest.addFirst(viaHeader);
+				ClientTransaction ct1 = sipProvider.getNewClientTransaction(newRequest);
+				sipUri = ProtocolObjects.addressFactory.createSipURI("proxy", "127.0.0.1");
+				address = ProtocolObjects.addressFactory.createAddress("proxy", sipUri);
+				sipUri.setPort(5070);
+				sipUri.setLrParam();
+				RecordRouteHeader recordRoute = ProtocolObjects.headerFactory.createRecordRouteHeader(address);
+				newRequest.addHeader(recordRoute);
+				ct1.setApplicationData(st);
+				this.clientTxTable.put(Integer.valueOf(5080), ct1);
 
-                ServerTransaction st = null;
-                if (requestEvent.getServerTransaction() == null) {
-                    st = sipProvider.getNewServerTransaction(request);
+				newRequest = (Request) request.clone();
+				sipUri = ProtocolObjects.addressFactory.createSipURI("UA2", "127.0.0.1");
+				sipUri.setLrParam();
+				sipUri.setPort(5090);
+				address = ProtocolObjects.addressFactory.createAddress("client2", sipUri);
+				rheader = ProtocolObjects.headerFactory.createRouteHeader(address);
+				newRequest.addFirst(rheader);
+				viaHeader = ProtocolObjects.headerFactory.createViaHeader(host, port, transport, null);
+				newRequest.addFirst(viaHeader);
+				sipUri = ProtocolObjects.addressFactory.createSipURI("proxy", "127.0.0.1");
+				sipUri.setPort(5070);
+				sipUri.setLrParam();
+				sipUri.setTransportParam(transport);
+				address = ProtocolObjects.addressFactory.createAddress("proxy", sipUri);
 
-                }
-                Request newRequest = (Request) request.clone();
-                SipURI sipUri = ProtocolObjects.addressFactory.createSipURI("UA1", "127.0.0.1");
-                sipUri.setPort(5080);
-                sipUri.setLrParam();
-                Address address = ProtocolObjects.addressFactory.createAddress("client1",
-                        sipUri);
-                RouteHeader rheader = ProtocolObjects.headerFactory.createRouteHeader(address);
+				recordRoute = ProtocolObjects.headerFactory.createRecordRouteHeader(address);
 
-                newRequest.addFirst(rheader);
-                ViaHeader viaHeader = ProtocolObjects.headerFactory.createViaHeader(host, port,
-                        transport, null);
-                newRequest.addFirst(viaHeader);
-                ClientTransaction ct1 = sipProvider
-                        .getNewClientTransaction(newRequest);
-                sipUri = ProtocolObjects.addressFactory.createSipURI("proxy", "127.0.0.1");
-                address = ProtocolObjects.addressFactory.createAddress("proxy",sipUri);
-                sipUri.setPort(5070);
-                sipUri.setLrParam();
-                RecordRouteHeader recordRoute = ProtocolObjects.headerFactory.createRecordRouteHeader(address);
-                newRequest.addHeader(recordRoute);
-                ct1.setApplicationData(st);
-                this.clientTxTable.put(Integer.valueOf(5080), ct1);
+				newRequest.addHeader(recordRoute);
+				ClientTransaction ct2 = sipProvider.getNewClientTransaction(newRequest);
+				ct2.setApplicationData(st);
+				this.clientTxTable.put(Integer.valueOf(5090), ct2);
 
-                newRequest = (Request) request.clone();
-                sipUri = ProtocolObjects.addressFactory.createSipURI("UA2", "127.0.0.1");
-                sipUri.setLrParam();
-                sipUri.setPort(5090);
-                address = ProtocolObjects.addressFactory.createAddress("client2", sipUri);
-                rheader = ProtocolObjects.headerFactory.createRouteHeader(address);
-                newRequest.addFirst(rheader);
-                viaHeader = ProtocolObjects.headerFactory.createViaHeader(host, port,
-                        transport, null);
-                newRequest.addFirst(viaHeader);
-                sipUri = ProtocolObjects.addressFactory.createSipURI("proxy", "127.0.0.1");
-                sipUri.setPort(5070);
-                sipUri.setLrParam();
-                sipUri.setTransportParam(transport);
-                address = ProtocolObjects.addressFactory.createAddress("proxy",sipUri);
+				// Send the requests out to the two listening points of the client.
 
-                recordRoute = ProtocolObjects.headerFactory.createRecordRouteHeader(address);
+				ct2.sendRequest();
+				ct1.sendRequest();
 
-                newRequest.addHeader(recordRoute);
-                ClientTransaction ct2 = sipProvider
-                        .getNewClientTransaction(newRequest);
-                ct2.setApplicationData(st);
-                this.clientTxTable.put(Integer.valueOf(5090), ct2);
+			} else {
+				// Remove the topmost route header
+				// The route header will make sure it gets to the right place.
+				logger.info("proxy: Got a request " + request.getMethod());
+				Request newRequest = (Request) request.clone();
+				newRequest.removeFirst(RouteHeader.NAME);
+				sipProvider.sendRequest(newRequest);
 
-                // Send the requests out to the two listening points of the client.
+			}
 
-                ct2.sendRequest();
-                ct1.sendRequest();
+		} catch (Exception ex) {
+			ex.printStackTrace();
+			System.exit(0);
+		}
 
-            } else {
-                // Remove the topmost route header
-                // The route header will make sure it gets to the right place.
-                logger.info("proxy: Got a request " + request.getMethod());
-                Request newRequest = (Request) request.clone();
-                newRequest.removeFirst(RouteHeader.NAME);
-                sipProvider.sendRequest(newRequest);
+	}
 
-            }
+	public void processResponse(ResponseEvent responseEvent) {
+		try {
+			Response response = responseEvent.getResponse();
+			CSeqHeader cseq = (CSeqHeader) response.getHeader(CSeqHeader.NAME);
+			logger.info("ClientTxID = " + responseEvent.getClientTransaction() + " client tx id " + ((ViaHeader) response.getHeader(ViaHeader.NAME)).getBranch() + " CSeq header = " + response.getHeader(CSeqHeader.NAME) + " status code = " + response.getStatusCode());
 
-        } catch (Exception ex) {
-            ex.printStackTrace();
-            System.exit(0);
-        }
+			// JvB: stateful proxy MUST NOT forward 100 Trying
+			if (response.getStatusCode() == 100)
+				return;
 
-    }
+			if (cseq.getMethod().equals(Request.INVITE)) {
+				ClientTransaction ct = responseEvent.getClientTransaction();
+				if (ct != null) {
+					ServerTransaction st = (ServerTransaction) ct.getApplicationData();
 
-    public void processResponse(ResponseEvent responseEvent) {
-        try {
-            Response response = responseEvent.getResponse();
-            CSeqHeader cseq = (CSeqHeader) response.getHeader(CSeqHeader.NAME);
-            logger.info("ClientTxID = " + responseEvent.getClientTransaction()
-                    + " client tx id " + ((ViaHeader) response.getHeader(ViaHeader.NAME)).getBranch()
-                    + " CSeq header = " + response.getHeader(CSeqHeader.NAME)
-                    + " status code = " + response.getStatusCode());
+					// Strip the topmost via header
+					Response newResponse = (Response) response.clone();
+					newResponse.removeFirst(ViaHeader.NAME);
+					// The server tx goes to the terminated state.
 
-            // JvB: stateful proxy MUST NOT forward 100 Trying
-            if ( response.getStatusCode() == 100 ) return;
+					st.sendResponse(newResponse);
+				} else {
+					// Client tx has already terminated but the UA is retransmitting
+					// just forward the response statelessly.
+					// Strip the topmost via header
 
+					Response newResponse = (Response) response.clone();
+					newResponse.removeFirst(ViaHeader.NAME);
+					// Send the retransmission statelessly
+					this.inviteServerTxProvider.sendResponse(newResponse);
+				}
+			} else {
+				// Can be BYE due to Record-Route
+				logger.info("Got a non-invite response " + response);
+				SipProvider p = (SipProvider) responseEvent.getSource();
+				response.removeFirst(ViaHeader.NAME);
+				p.sendResponse(response);
+			}
+		} catch (Exception ex) {
+			ex.printStackTrace();
+			System.exit(0);
+		}
+	}
 
-            if (cseq.getMethod().equals(Request.INVITE)) {
-                ClientTransaction ct = responseEvent.getClientTransaction();
-                if (ct != null) {
-                    ServerTransaction st = (ServerTransaction) ct
-                            .getApplicationData();
+	public void processTimeout(TimeoutEvent timeoutEvent) {
+		logger.info("Timeout occured");
+	}
 
-                    // Strip the topmost via header
-                    Response newResponse = (Response) response.clone();
-                    newResponse.removeFirst(ViaHeader.NAME);
-                    // The server tx goes to the terminated state.
+	public void processIOException(IOExceptionEvent exceptionEvent) {
+		logger.info("IOException occured");
+	}
 
-                    st.sendResponse(newResponse);
-                } else {
-                    // Client tx has already terminated but the UA is retransmitting
-                    // just forward the response statelessly.
-                    // Strip the topmost via header
+	public SipProvider createSipProvider() {
+		try {
+			ListeningPoint listeningPoint = ProtocolObjects.sipStack.createListeningPoint(host, port, transport);
 
-                    Response newResponse = (Response) response.clone();
-                    newResponse.removeFirst(ViaHeader.NAME);
-                    // Send the retransmission statelessly
-                    this.inviteServerTxProvider.sendResponse(newResponse);
-                }
-            } else {
-                // Can be BYE due to Record-Route
-                logger.info("Got a non-invite response " + response);
-                SipProvider p = (SipProvider) responseEvent.getSource();
-                response.removeFirst( ViaHeader.NAME );
-                p.sendResponse( response );
-            }
-        } catch (Exception ex) {
-            ex.printStackTrace();
-            System.exit(0);
-        }
-    }
+			sipProvider = ProtocolObjects.sipStack.createSipProvider(listeningPoint);
+			return sipProvider;
+		} catch (Exception ex) {
+			logger.error(unexpectedException, ex);
+			fail(unexpectedException);
+			return null;
+		}
 
-    public void processTimeout(TimeoutEvent timeoutEvent) {
-        logger.info("Timeout occured");
-    }
+	}
 
-    public void processIOException(IOExceptionEvent exceptionEvent) {
-        logger.info("IOException occured");
-    }
-    public SipProvider createSipProvider() {
-        try {
-            ListeningPoint listeningPoint = ProtocolObjects.sipStack.createListeningPoint(
-                    host, port, transport);
+	public void processTransactionTerminated(TransactionTerminatedEvent transactionTerminatedEvent) {
+		logger.info("Transaction terminated event occured -- cleaning up");
+		if (!transactionTerminatedEvent.isServerTransaction()) {
+			ClientTransaction ct = transactionTerminatedEvent.getClientTransaction();
+			for (Iterator<ClientTransaction> it = this.clientTxTable.values().iterator(); it.hasNext();) {
+				if (it.next().equals(ct)) {
+					it.remove();
+				}
+			}
+		} else {
+			logger.info("Server tx terminated! ");
+		}
+	}
 
-            sipProvider = ProtocolObjects.sipStack
-                    .createSipProvider(listeningPoint);
-            return sipProvider;
-        } catch (Exception ex) {
-            logger.error(unexpectedException, ex);
-            fail(unexpectedException);
-            return null;
-        }
+	public void processDialogTerminated(DialogTerminatedEvent dialogTerminatedEvent) {
+		logger.info("HUH!! why do i see this event??");
+	}
 
-    }
+	public static void main(String[] args) throws Exception {
+		logger.addAppender(new ConsoleAppender(new SimpleLayout()));
+		ProtocolObjects.init("proxy", false);
+		Proxy proxy = new Proxy();
+		proxy.createSipProvider();
+		proxy.sipProvider.addSipListener(proxy);
 
-    public void processTransactionTerminated(
-            TransactionTerminatedEvent transactionTerminatedEvent) {
-        logger.info("Transaction terminated event occured -- cleaning up");
-        if (!transactionTerminatedEvent.isServerTransaction()) {
-            ClientTransaction ct = transactionTerminatedEvent
-                    .getClientTransaction();
-            for (Iterator<ClientTransaction> it = this.clientTxTable.values().iterator(); it
-                    .hasNext();) {
-                if (it.next().equals(ct)) {
-                    it.remove();
-                }
-            }
-        } else {
-            logger.info("Server tx terminated! ");
-        }
-    }
-
-    public void processDialogTerminated(
-            DialogTerminatedEvent dialogTerminatedEvent) {
-        logger.info("HUH!! why do i see this event??");
-    }
-
-
-    public static void main(String[] args) throws Exception {
-        logger.addAppender(new ConsoleAppender(new SimpleLayout()));
-        ProtocolObjects.init("proxy",false);
-        Proxy proxy = new Proxy();
-        proxy.createSipProvider();
-        proxy.sipProvider.addSipListener(proxy);
-
-
-    }
+	}
 
 }

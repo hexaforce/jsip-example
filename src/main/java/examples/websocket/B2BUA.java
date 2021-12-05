@@ -46,13 +46,9 @@ import org.apache.log4j.PatternLayout;
 import gov.nist.javax.sip.stack.NioMessageProcessorFactory;
 
 /**
- * This class is a B2BUA using Websocket transport. You can use any two Websocket SIP phones
- * to register into the server and call each other by the username the advertised in the REGISTER
- * request. The registrar is just storing the contacts of the users in a HashMap locally.
+ * This class is a B2BUA using Websocket transport. You can use any two Websocket SIP phones to register into the server and call each other by the username the advertised in the REGISTER request. The registrar is just storing the contacts of the users in a HashMap locally.
  * 
- * Requiring registration is the only significant difference from the usual JAIN-SIP call flow. The
- * registrations are required because a phone must be able to receive calls on the websocket while
- * being idle otherwise.
+ * Requiring registration is the only significant difference from the usual JAIN-SIP call flow. The registrations are required because a phone must be able to receive calls on the websocket while being idle otherwise.
  *
  * @author Vladimir Ralev
  */
@@ -73,7 +69,7 @@ public class B2BUA implements SipListener {
 	private AtomicLong counter = new AtomicLong();
 
 	private ListeningPoint listeningPoint;
-	
+
 	private SipProvider sipProvider;
 
 	private String transport = "ws";
@@ -82,12 +78,9 @@ public class B2BUA implements SipListener {
 
 	public void processRequest(RequestEvent requestEvent) {
 		Request request = requestEvent.getRequest();
-		ServerTransaction serverTransactionId = requestEvent
-				.getServerTransaction();
+		ServerTransaction serverTransactionId = requestEvent.getServerTransaction();
 
-		System.out.println("\n\nRequest " + request.getMethod()
-				+ " received at " + sipStack.getStackName()
-				+ " with server transaction id " + serverTransactionId);
+		System.out.println("\n\nRequest " + request.getMethod() + " received at " + sipStack.getStackName() + " with server transaction id " + serverTransactionId);
 
 		if (request.getMethod().equals(Request.INVITE)) {
 			processInvite(requestEvent, serverTransactionId);
@@ -108,14 +101,13 @@ public class B2BUA implements SipListener {
 		ServerTransaction st = (ServerTransaction) ct.getApplicationData();
 		try {
 			Response otherResponse = messageFactory.createResponse(response.getStatusCode(), st.getRequest());
-			if(response.getStatusCode() == 200 && ct.getRequest().getMethod().equals("INVITE")) {
-				Address address = addressFactory.createAddress("B2BUA <sip:"
-						+ myAddress + ":" + myPort + ">");
-				ContactHeader contactHeader = headerFactory
-						.createContactHeader(address);
+			if (response.getStatusCode() == 200 && ct.getRequest().getMethod().equals("INVITE")) {
+				Address address = addressFactory.createAddress("B2BUA <sip:" + myAddress + ":" + myPort + ">");
+				ContactHeader contactHeader = headerFactory.createContactHeader(address);
 				response.addHeader(contactHeader);
 				ToHeader toHeader = (ToHeader) otherResponse.getHeader(ToHeader.NAME);
-				if(toHeader.getTag() == null) toHeader.setTag(Long.valueOf(counter.getAndIncrement()).toString());
+				if (toHeader.getTag() == null)
+					toHeader.setTag(Long.valueOf(counter.getAndIncrement()).toString());
 				otherResponse.addHeader(contactHeader);
 			}
 			st.sendResponse(otherResponse);
@@ -128,8 +120,7 @@ public class B2BUA implements SipListener {
 	/**
 	 * Process the ACK request, forward it to the other leg.
 	 */
-	public void processAck(RequestEvent requestEvent,
-			ServerTransaction serverTransaction) {
+	public void processAck(RequestEvent requestEvent, ServerTransaction serverTransaction) {
 		try {
 			Dialog dialog = serverTransaction.getDialog();
 			System.out.println("b2bua: got an ACK! ");
@@ -146,14 +137,13 @@ public class B2BUA implements SipListener {
 	/**
 	 * Process the invite request.
 	 */
-	public void processInvite(RequestEvent requestEvent,
-			ServerTransaction serverTransaction) {
+	public void processInvite(RequestEvent requestEvent, ServerTransaction serverTransaction) {
 		SipProvider sipProvider = (SipProvider) requestEvent.getSource();
 		Request request = requestEvent.getRequest();
 		try {
 			System.out.println("b2bua: got an Invite sending Trying");
 			ServerTransaction st = requestEvent.getServerTransaction();
-			if(st == null) {
+			if (st == null) {
 				st = sipProvider.getNewServerTransaction(request);
 			}
 			Dialog dialog = st.getDialog();
@@ -162,8 +152,8 @@ public class B2BUA implements SipListener {
 			SipURI toUri = (SipURI) to.getAddress().getURI();
 
 			SipURI target = registrar.get(toUri.getUser());
-			
-			if(target == null) {
+
+			if (target == null) {
 				System.out.println("User " + toUri + " is not registered.");
 				throw new RuntimeException("User not registered " + toUri);
 			} else {
@@ -183,8 +173,7 @@ public class B2BUA implements SipListener {
 	/**
 	 * Process the any in dialog request - MESSAGE, BYE, INFO, UPDATE.
 	 */
-	public void processInDialogRequest(RequestEvent requestEvent,
-			ServerTransaction serverTransactionId) {
+	public void processInDialogRequest(RequestEvent requestEvent, ServerTransaction serverTransactionId) {
 		SipProvider sipProvider = (SipProvider) requestEvent.getSource();
 		Request request = requestEvent.getRequest();
 		Dialog dialog = requestEvent.getDialog();
@@ -193,9 +182,8 @@ public class B2BUA implements SipListener {
 			System.out.println("b2bua:  got a bye sending OK.");
 			Response response = messageFactory.createResponse(200, request);
 			serverTransactionId.sendResponse(response);
-			System.out.println("Dialog State is "
-					+ serverTransactionId.getDialog().getState());
-			
+			System.out.println("Dialog State is " + serverTransactionId.getDialog().getState());
+
 			Dialog otherLeg = (Dialog) dialog.getApplicationData();
 			Request otherBye = otherLeg.createRequest(request.getMethod());
 			ClientTransaction clientTransaction = sipProvider.getNewClientTransaction(otherBye);
@@ -209,8 +197,8 @@ public class B2BUA implements SipListener {
 
 		}
 	}
-	public void processRegister(RequestEvent requestEvent,
-			ServerTransaction serverTransactionId) {
+
+	public void processRegister(RequestEvent requestEvent, ServerTransaction serverTransactionId) {
 		Request request = requestEvent.getRequest();
 		ContactHeader contact = (ContactHeader) request.getHeader(ContactHeader.NAME);
 		SipURI contactUri = (SipURI) contact.getAddress().getURI();
@@ -226,8 +214,8 @@ public class B2BUA implements SipListener {
 		}
 	}
 
-	public void processCancel(RequestEvent requestEvent,
-			ServerTransaction serverTransactionId) {}
+	public void processCancel(RequestEvent requestEvent, ServerTransaction serverTransactionId) {
+	}
 
 	public void processTimeout(javax.sip.TimeoutEvent timeoutEvent) {
 		Transaction transaction;
@@ -238,20 +226,19 @@ public class B2BUA implements SipListener {
 		}
 		System.out.println("state = " + transaction.getState());
 		System.out.println("dialog = " + transaction.getDialog());
-		System.out.println("dialogState = "
-				+ transaction.getDialog().getState());
+		System.out.println("dialogState = " + transaction.getDialog().getState());
 		System.out.println("Transaction Time out");
 	}
 
 	public void init() {
 
-		ConsoleAppender console = new ConsoleAppender(); //create appender
-		//configure the appender
+		ConsoleAppender console = new ConsoleAppender(); // create appender
+		// configure the appender
 		String PATTERN = "%d [%p|%c|%C{1}] %m%n";
-		console.setLayout(new PatternLayout(PATTERN)); 
+		console.setLayout(new PatternLayout(PATTERN));
 		console.setThreshold(Level.DEBUG);
 		console.activateOptions();
-		//add appender to any Logger (here is root)
+		// add appender to any Logger (here is root)
 		Logger.getRootLogger().addAppender(console);
 		SipFactory sipFactory = null;
 		sipStack = null;
@@ -262,10 +249,8 @@ public class B2BUA implements SipListener {
 		// You need 16 for logging traces. 32 for debug + traces.
 		// Your code will limp at 32 but it is best for debugging.
 		properties.setProperty("gov.nist.javax.sip.TRACE_LEVEL", "LOG4J");
-		properties.setProperty("gov.nist.javax.sip.DEBUG_LOG",
-				"shootmedebug.txt");
-		properties.setProperty("gov.nist.javax.sip.SERVER_LOG",
-				"shootmelog.txt");
+		properties.setProperty("gov.nist.javax.sip.DEBUG_LOG", "shootmedebug.txt");
+		properties.setProperty("gov.nist.javax.sip.SERVER_LOG", "shootmelog.txt");
 		properties.setProperty("gov.nist.javax.sip.MESSAGE_PROCESSOR_FACTORY", NioMessageProcessorFactory.class.getName());
 
 		try {
@@ -287,8 +272,7 @@ public class B2BUA implements SipListener {
 			headerFactory = sipFactory.createHeaderFactory();
 			addressFactory = sipFactory.createAddressFactory();
 			messageFactory = sipFactory.createMessageFactory();
-			this.listeningPoint = sipStack.createListeningPoint("127.0.0.1",
-					myPort, transport);
+			this.listeningPoint = sipStack.createListeningPoint("127.0.0.1", myPort, transport);
 
 			B2BUA listener = this;
 
@@ -311,19 +295,15 @@ public class B2BUA implements SipListener {
 
 	}
 
-	public void processTransactionTerminated(
-			TransactionTerminatedEvent transactionTerminatedEvent) {
+	public void processTransactionTerminated(TransactionTerminatedEvent transactionTerminatedEvent) {
 		if (transactionTerminatedEvent.isServerTransaction())
-			System.out.println("Transaction terminated event recieved"
-					+ transactionTerminatedEvent.getServerTransaction());
+			System.out.println("Transaction terminated event recieved" + transactionTerminatedEvent.getServerTransaction());
 		else
-			System.out.println("Transaction terminated "
-					+ transactionTerminatedEvent.getClientTransaction());
+			System.out.println("Transaction terminated " + transactionTerminatedEvent.getClientTransaction());
 
 	}
 
-	public void processDialogTerminated(
-			DialogTerminatedEvent dialogTerminatedEvent) {
+	public void processDialogTerminated(DialogTerminatedEvent dialogTerminatedEvent) {
 		System.out.println("Dialog terminated event recieved");
 		Dialog d = dialogTerminatedEvent.getDialog();
 		System.out.println("Local Party = " + d.getLocalParty());
@@ -342,21 +322,17 @@ public class B2BUA implements SipListener {
 			String toDisplayName = "Target";
 
 			// create >From Header
-			SipURI fromAddress = addressFactory.createSipURI(fromName,
-					fromSipAddress);
+			SipURI fromAddress = addressFactory.createSipURI(fromName, fromSipAddress);
 
 			Address fromNameAddress = addressFactory.createAddress(fromAddress);
 			fromNameAddress.setDisplayName(fromDisplayName);
-			FromHeader fromHeader = headerFactory.createFromHeader(
-					fromNameAddress, Long.valueOf(counter.getAndIncrement()).toString());
+			FromHeader fromHeader = headerFactory.createFromHeader(fromNameAddress, Long.valueOf(counter.getAndIncrement()).toString());
 
 			// create To Header
-			SipURI toAddress = addressFactory
-					.createSipURI(toUser, toSipAddress);
+			SipURI toAddress = addressFactory.createSipURI(toUser, toSipAddress);
 			Address toNameAddress = addressFactory.createAddress(toAddress);
 			toNameAddress.setDisplayName(toDisplayName);
-			ToHeader toHeader = headerFactory.createToHeader(toNameAddress,
-					null);
+			ToHeader toHeader = headerFactory.createToHeader(toNameAddress, null);
 
 			// create Request URI
 			SipURI requestURI = destination;
@@ -365,32 +341,25 @@ public class B2BUA implements SipListener {
 
 			List<ViaHeader> viaHeaders = new ArrayList<>();
 			String ipAddress = listeningPoint.getIPAddress();
-			ViaHeader viaHeader = headerFactory.createViaHeader(ipAddress,
-					sipProvider.getListeningPoint(transport).getPort(),
-					transport, null);
+			ViaHeader viaHeader = headerFactory.createViaHeader(ipAddress, sipProvider.getListeningPoint(transport).getPort(), transport, null);
 
 			// add via headers
 			viaHeaders.add(viaHeader);
 
 			// Create ContentTypeHeader
-			ContentTypeHeader contentTypeHeader = headerFactory
-					.createContentTypeHeader("application", "sdp");
+			ContentTypeHeader contentTypeHeader = headerFactory.createContentTypeHeader("application", "sdp");
 
 			// Create a new CallId header
 			CallIdHeader callIdHeader = sipProvider.getNewCallId();
 
 			// Create a new Cseq header
-			CSeqHeader cSeqHeader = headerFactory.createCSeqHeader(1L,
-					Request.INVITE);
+			CSeqHeader cSeqHeader = headerFactory.createCSeqHeader(1L, Request.INVITE);
 
 			// Create a new MaxForwardsHeader
-			MaxForwardsHeader maxForwards = headerFactory
-					.createMaxForwardsHeader(70);
+			MaxForwardsHeader maxForwards = headerFactory.createMaxForwardsHeader(70);
 
 			// Create the request.
-			Request request = messageFactory.createRequest(requestURI,
-					Request.INVITE, callIdHeader, cSeqHeader, fromHeader,
-					toHeader, viaHeaders, maxForwards);
+			Request request = messageFactory.createRequest(requestURI, Request.INVITE, callIdHeader, cSeqHeader, fromHeader, toHeader, viaHeaders, maxForwards);
 			// Create contact headers
 			String host = "127.0.0.1";
 
@@ -400,8 +369,7 @@ public class B2BUA implements SipListener {
 
 			// Create the contact name address.
 			SipURI contactURI = addressFactory.createSipURI(fromName, host);
-			contactURI.setPort(sipProvider.getListeningPoint(transport)
-					.getPort());
+			contactURI.setPort(sipProvider.getListeningPoint(transport).getPort());
 
 			Address contactAddress = addressFactory.createAddress(contactURI);
 
@@ -414,29 +382,20 @@ public class B2BUA implements SipListener {
 			// You can add extension headers of your own making
 			// to the outgoing SIP request.
 			// Add the extension header.
-			Header extensionHeader = headerFactory.createHeader("My-Header",
-					"my header value");
+			Header extensionHeader = headerFactory.createHeader("My-Header", "my header value");
 			request.addHeader(extensionHeader);
 
-			String sdpData = "v=0\r\n"
-					+ "o=4855 13760799956958020 13760799956958020"
-					+ " IN IP4  129.6.55.78\r\n" + "s=mysession session\r\n"
-					+ "p=+46 8 52018010\r\n" + "c=IN IP4  129.6.55.78\r\n"
-					+ "t=0 0\r\n" + "m=audio 6022 RTP/AVP 0 4 18\r\n"
-					+ "a=rtpmap:0 PCMU/8000\r\n" + "a=rtpmap:4 G723/8000\r\n"
-					+ "a=rtpmap:18 G729A/8000\r\n" + "a=ptime:20\r\n";
+			String sdpData = "v=0\r\n" + "o=4855 13760799956958020 13760799956958020" + " IN IP4  129.6.55.78\r\n" + "s=mysession session\r\n" + "p=+46 8 52018010\r\n" + "c=IN IP4  129.6.55.78\r\n" + "t=0 0\r\n" + "m=audio 6022 RTP/AVP 0 4 18\r\n" + "a=rtpmap:0 PCMU/8000\r\n" + "a=rtpmap:4 G723/8000\r\n" + "a=rtpmap:18 G729A/8000\r\n" + "a=ptime:20\r\n";
 			byte[] contents = sdpData.getBytes();
 
 			request.setContent(contents, contentTypeHeader);
 			// You can add as many extension headers as you
 			// want.
 
-			extensionHeader = headerFactory.createHeader("My-Other-Header",
-					"my new header value ");
+			extensionHeader = headerFactory.createHeader("My-Other-Header", "my new header value ");
 			request.addHeader(extensionHeader);
 
-			Header callInfoHeader = headerFactory.createHeader("Call-Info",
-					"<http://www.antd.nist.gov>");
+			Header callInfoHeader = headerFactory.createHeader("Call-Info", "<http://www.antd.nist.gov>");
 			request.addHeader(callInfoHeader);
 
 			// Create the client transaction.
@@ -447,7 +406,7 @@ public class B2BUA implements SipListener {
 			// send the request out.
 
 			inviteTid.sendRequest();
-			
+
 			return inviteTid;
 
 		} catch (Exception ex) {

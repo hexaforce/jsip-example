@@ -1,0 +1,2 @@
+INFO - sipStack = gov.nist.javax.sip.SipStackImpl@e874448
+INFO - udp provider gov.nist.javax.sip.SipProviderImpl@4206a205

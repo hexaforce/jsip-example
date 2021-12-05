@@ -1,0 +1,173 @@
+<!-- Use the  Trace Viewer in src/tools/tracesviewer to view this  trace  
+Here are the stack configuration properties 
+javax.sip.IP_ADDRESS= null
+javax.sip.STACK_NAME= referer
+javax.sip.ROUTER_PATH= null
+javax.sip.OUTBOUND_PROXY= null
+-->
+<description
+ logDescription="referer"
+ name="referer"
+ auxInfo="null"/>
+ 
+<message
+from="127.0.0.1:5060" 
+to="127.0.0.1:5065" 
+time="1638609739500"
+isSender="true" 
+transactionId="z9hg4bk-373138-499567c357a012d54380f1ca50326f38" 
+callId="b76f826c61569acd9add8ec142d6e565@127.0.0.1" 
+firstLine="REFER sip:referee@127.0.0.1:5065 SIP/2.0" 
+>
+<![CDATA[REFER sip:referee@127.0.0.1:5065 SIP/2.0
+Call-ID: b76f826c61569acd9add8ec142d6e565@127.0.0.1
+CSeq: 1 REFER
+From: "The Master Blaster" <sip:BigGuy@here.com>;tag=12345
+To: "Referee" <sip:referee@127.0.0.1>
+Via: SIP/2.0/UDP 127.0.0.1:5060;branch=z9hG4bK-373138-499567c357a012d54380f1ca50326f38
+Max-Forwards: 70
+Contact: "BigGuy" <sip:BigGuy@127.0.0.1:5060;transport=udp>
+Refer-To: <sip:127.0.0.1:5070>
+Content-Length: 0
+
+]]>
+</message>
+
+<message
+from="127.0.0.1:5060" 
+to="127.0.0.1:5065" 
+time="1638609740006"
+isSender="true" 
+transactionId="z9hg4bk-373138-499567c357a012d54380f1ca50326f38" 
+callId="b76f826c61569acd9add8ec142d6e565@127.0.0.1" 
+firstLine="REFER sip:referee@127.0.0.1:5065 SIP/2.0" 
+>
+<![CDATA[REFER sip:referee@127.0.0.1:5065 SIP/2.0
+Call-ID: b76f826c61569acd9add8ec142d6e565@127.0.0.1
+CSeq: 1 REFER
+From: "The Master Blaster" <sip:BigGuy@here.com>;tag=12345
+To: "Referee" <sip:referee@127.0.0.1>
+Via: SIP/2.0/UDP 127.0.0.1:5060;branch=z9hG4bK-373138-499567c357a012d54380f1ca50326f38
+Max-Forwards: 70
+Contact: "BigGuy" <sip:BigGuy@127.0.0.1:5060;transport=udp>
+Refer-To: <sip:127.0.0.1:5070>
+Content-Length: 0
+
+]]>
+</message>
+
+<message
+from="127.0.0.1:5060" 
+to="127.0.0.1:5065" 
+time="1638609741007"
+isSender="true" 
+transactionId="z9hg4bk-373138-499567c357a012d54380f1ca50326f38" 
+callId="b76f826c61569acd9add8ec142d6e565@127.0.0.1" 
+firstLine="REFER sip:referee@127.0.0.1:5065 SIP/2.0" 
+>
+<![CDATA[REFER sip:referee@127.0.0.1:5065 SIP/2.0
+Call-ID: b76f826c61569acd9add8ec142d6e565@127.0.0.1
+CSeq: 1 REFER
+From: "The Master Blaster" <sip:BigGuy@here.com>;tag=12345
+To: "Referee" <sip:referee@127.0.0.1>
+Via: SIP/2.0/UDP 127.0.0.1:5060;branch=z9hG4bK-373138-499567c357a012d54380f1ca50326f38
+Max-Forwards: 70
+Contact: "BigGuy" <sip:BigGuy@127.0.0.1:5060;transport=udp>
+Refer-To: <sip:127.0.0.1:5070>
+Content-Length: 0
+
+]]>
+</message>
+
+<message
+from="127.0.0.1:5060" 
+to="127.0.0.1:5065" 
+time="1638609743019"
+isSender="true" 
+transactionId="z9hg4bk-373138-499567c357a012d54380f1ca50326f38" 
+callId="b76f826c61569acd9add8ec142d6e565@127.0.0.1" 
+firstLine="REFER sip:referee@127.0.0.1:5065 SIP/2.0" 
+>
+<![CDATA[REFER sip:referee@127.0.0.1:5065 SIP/2.0
+Call-ID: b76f826c61569acd9add8ec142d6e565@127.0.0.1
+CSeq: 1 REFER
+From: "The Master Blaster" <sip:BigGuy@here.com>;tag=12345
+To: "Referee" <sip:referee@127.0.0.1>
+Via: SIP/2.0/UDP 127.0.0.1:5060;branch=z9hG4bK-373138-499567c357a012d54380f1ca50326f38
+Max-Forwards: 70
+Contact: "BigGuy" <sip:BigGuy@127.0.0.1:5060;transport=udp>
+Refer-To: <sip:127.0.0.1:5070>
+Content-Length: 0
+
+]]>
+</message>
+
+<message
+from="127.0.0.1:5060" 
+to="127.0.0.1:5065" 
+time="1638609747050"
+isSender="true" 
+transactionId="z9hg4bk-373138-499567c357a012d54380f1ca50326f38" 
+callId="b76f826c61569acd9add8ec142d6e565@127.0.0.1" 
+firstLine="REFER sip:referee@127.0.0.1:5065 SIP/2.0" 
+>
+<![CDATA[REFER sip:referee@127.0.0.1:5065 SIP/2.0
+Call-ID: b76f826c61569acd9add8ec142d6e565@127.0.0.1
+CSeq: 1 REFER
+From: "The Master Blaster" <sip:BigGuy@here.com>;tag=12345
+To: "Referee" <sip:referee@127.0.0.1>
+Via: SIP/2.0/UDP 127.0.0.1:5060;branch=z9hG4bK-373138-499567c357a012d54380f1ca50326f38
+Max-Forwards: 70
+Contact: "BigGuy" <sip:BigGuy@127.0.0.1:5060;transport=udp>
+Refer-To: <sip:127.0.0.1:5070>
+Content-Length: 0
+
+]]>
+</message>
+
+<message
+from="127.0.0.1:5060" 
+to="127.0.0.1:5065" 
+time="1638609751066"
+isSender="true" 
+transactionId="z9hg4bk-373138-499567c357a012d54380f1ca50326f38" 
+callId="b76f826c61569acd9add8ec142d6e565@127.0.0.1" 
+firstLine="REFER sip:referee@127.0.0.1:5065 SIP/2.0" 
+>
+<![CDATA[REFER sip:referee@127.0.0.1:5065 SIP/2.0
+Call-ID: b76f826c61569acd9add8ec142d6e565@127.0.0.1
+CSeq: 1 REFER
+From: "The Master Blaster" <sip:BigGuy@here.com>;tag=12345
+To: "Referee" <sip:referee@127.0.0.1>
+Via: SIP/2.0/UDP 127.0.0.1:5060;branch=z9hG4bK-373138-499567c357a012d54380f1ca50326f38
+Max-Forwards: 70
+Contact: "BigGuy" <sip:BigGuy@127.0.0.1:5060;transport=udp>
+Refer-To: <sip:127.0.0.1:5070>
+Content-Length: 0
+
+]]>
+</message>
+
+<message
+from="127.0.0.1:5060" 
+to="127.0.0.1:5065" 
+time="1638609755093"
+isSender="true" 
+transactionId="z9hg4bk-373138-499567c357a012d54380f1ca50326f38" 
+callId="b76f826c61569acd9add8ec142d6e565@127.0.0.1" 
+firstLine="REFER sip:referee@127.0.0.1:5065 SIP/2.0" 
+>
+<![CDATA[REFER sip:referee@127.0.0.1:5065 SIP/2.0
+Call-ID: b76f826c61569acd9add8ec142d6e565@127.0.0.1
+CSeq: 1 REFER
+From: "The Master Blaster" <sip:BigGuy@here.com>;tag=12345
+To: "Referee" <sip:referee@127.0.0.1>
+Via: SIP/2.0/UDP 127.0.0.1:5060;branch=z9hG4bK-373138-499567c357a012d54380f1ca50326f38
+Max-Forwards: 70
+Contact: "BigGuy" <sip:BigGuy@127.0.0.1:5060;transport=udp>
+Refer-To: <sip:127.0.0.1:5070>
+Content-Length: 0
+
+]]>
+</message>
+

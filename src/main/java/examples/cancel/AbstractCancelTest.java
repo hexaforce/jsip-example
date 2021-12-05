@@ -27,105 +27,93 @@ import junit.framework.TestCase;
  */
 public abstract class AbstractCancelTest extends TestCase implements SipListener {
 
-    private Hashtable<SipProvider, TestCase> providerTable;
+	private Hashtable<SipProvider, TestCase> providerTable;
 
-    protected Shootist shootist;
+	protected Shootist shootist;
 
-    private static Logger logger = Logger.getLogger(AbstractCancelTest.class);
+	private static Logger logger = Logger.getLogger(AbstractCancelTest.class);
 
-    static {
-        if (logger.getAllAppenders() instanceof NullEnumeration )
-            PropertyConfigurator.configure("log4j.properties");
+	static {
+		if (logger.getAllAppenders() instanceof NullEnumeration)
+			PropertyConfigurator.configure("log4j.properties");
 
+	}
 
+	// private Appender appender;
 
-    }
+	private SipListener getSipListener(EventObject sipEvent) {
+		SipProvider source = (SipProvider) sipEvent.getSource();
+		SipListener listener = (SipListener) providerTable.get(source);
+		assertTrue(listener != null);
+		return listener;
+	}
 
-    //private Appender appender;
+	public AbstractCancelTest() {
 
-    private SipListener getSipListener(EventObject sipEvent) {
-        SipProvider source = (SipProvider) sipEvent.getSource();
-        SipListener listener = (SipListener) providerTable.get(source);
-        assertTrue(listener != null);
-        return listener;
-    }
+		try {
+			ProtocolObjects.logFileDirectory = "logs/";
+			ProtocolObjects.init("canceltest");
+			providerTable = new Hashtable<SipProvider, TestCase>();
+			shootist = new Shootist();
+			SipProvider shootistProvider = shootist.createSipProvider();
+			providerTable.put(shootistProvider, shootist);
+			Shootme shootme = new Shootme();
+			SipProvider shootmeProvider = shootme.createProvider();
+			providerTable.put(shootmeProvider, shootme);
+			shootistProvider.addSipListener(this);
+			shootmeProvider.addSipListener(this);
+			ProtocolObjects.start();
+		} catch (Exception ex) {
+			fail("unexpected exception ");
+		}
+	}
 
-    public AbstractCancelTest() {
+	public void setUp() {
 
-        try {
-            ProtocolObjects.logFileDirectory = "logs/";
-            ProtocolObjects.init("canceltest");
-            providerTable = new Hashtable<SipProvider, TestCase>();
-            shootist = new Shootist();
-            SipProvider shootistProvider = shootist.createSipProvider();
-            providerTable.put(shootistProvider, shootist);
-            Shootme shootme = new Shootme();
-            SipProvider shootmeProvider = shootme.createProvider();
-            providerTable.put(shootmeProvider, shootme);
-            shootistProvider.addSipListener(this);
-            shootmeProvider.addSipListener(this);
-            ProtocolObjects.start();
-        } catch (Exception ex) {
-            fail("unexpected exception ");
-        }
-    }
+		try {
+			// appender = new ConsoleAppender(new SimpleLayout());
+			// logger.addAppender(appender);
 
-    public void setUp() {
+		} catch (Exception ex) {
+			throw new RuntimeException("Unexpected error initializing logging", ex);
+		}
 
-            try {
-                //appender = new ConsoleAppender(new SimpleLayout());
-                //logger.addAppender(appender);
+	}
 
-            } catch (Exception ex) {
-                throw new RuntimeException("Unexpected error initializing logging",
-                        ex);
-            }
+	public void tearDown() {
 
+		ProtocolObjects.destroy();
+		// logger.removeAppender(appender);
 
-    }
+	}
 
-    public void tearDown() {
+	public void processRequest(RequestEvent requestEvent) {
+		getSipListener(requestEvent).processRequest(requestEvent);
 
-        ProtocolObjects.destroy();
-        //logger.removeAppender(appender);
+	}
 
-    }
+	public void processResponse(ResponseEvent responseEvent) {
+		getSipListener(responseEvent).processResponse(responseEvent);
 
+	}
 
+	public void processTimeout(TimeoutEvent timeoutEvent) {
+		getSipListener(timeoutEvent).processTimeout(timeoutEvent);
+	}
 
+	public void processIOException(IOExceptionEvent exceptionEvent) {
+		fail("unexpected exception");
 
+	}
 
-    public void processRequest(RequestEvent requestEvent) {
-        getSipListener(requestEvent).processRequest(requestEvent);
+	public void processTransactionTerminated(TransactionTerminatedEvent transactionTerminatedEvent) {
+		getSipListener(transactionTerminatedEvent).processTransactionTerminated(transactionTerminatedEvent);
 
-    }
+	}
 
-    public void processResponse(ResponseEvent responseEvent) {
-        getSipListener(responseEvent).processResponse(responseEvent);
+	public void processDialogTerminated(DialogTerminatedEvent dialogTerminatedEvent) {
+		getSipListener(dialogTerminatedEvent).processDialogTerminated(dialogTerminatedEvent);
 
-    }
-
-    public void processTimeout(TimeoutEvent timeoutEvent) {
-        getSipListener(timeoutEvent).processTimeout(timeoutEvent);
-    }
-
-    public void processIOException(IOExceptionEvent exceptionEvent) {
-        fail("unexpected exception");
-
-    }
-
-    public void processTransactionTerminated(
-            TransactionTerminatedEvent transactionTerminatedEvent) {
-        getSipListener(transactionTerminatedEvent)
-                .processTransactionTerminated(transactionTerminatedEvent);
-
-    }
-
-    public void processDialogTerminated(
-            DialogTerminatedEvent dialogTerminatedEvent) {
-        getSipListener(dialogTerminatedEvent).processDialogTerminated(
-                dialogTerminatedEvent);
-
-    }
+	}
 
 }
