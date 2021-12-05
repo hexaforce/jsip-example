@@ -31,21 +31,19 @@ import test.unit.gov.nist.javax.sip.parser.ParserTestCase;
  * @author Miguel Freitas
  */
 
-public class PAssociatedURIParserTest extends ParserTestCase
-{
-    public void testParser() {
-        // TODO Auto-generated method stub
+public class PAssociatedURIParserTest extends ParserTestCase {
+	public void testParser() {
+		// TODO Auto-generated method stub
 
-        String[] associatedURI =  {
+		String[] associatedURI = {
 
-            "P-Associated-URI: <sip:bob@atlanta.com>\n",
+				"P-Associated-URI: <sip:bob@atlanta.com>\n",
 
-            "P-Associated-URI: <sip:alice@atlanta.com>, <sip:alice_public2@atlanta.com>\n"
+				"P-Associated-URI: <sip:alice@atlanta.com>, <sip:alice_public2@atlanta.com>\n"
 
-        };
+		};
 
-
-        super.testParser(PAssociatedURIParser.class,associatedURI);
-    }
+		super.testParser(PAssociatedURIParser.class, associatedURI);
+	}
 
 }

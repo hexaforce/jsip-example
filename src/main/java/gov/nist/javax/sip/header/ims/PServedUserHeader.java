@@ -27,35 +27,26 @@ package gov.nist.javax.sip.header.ims;
 
 /**
  *
- * @author aayush.bhatnagar
- * Rancore Technologies Pvt Ltd, Mumbai India.
+ * @author aayush.bhatnagar Rancore Technologies Pvt Ltd, Mumbai India.
  *
- * The ABNF of the P-Served-User Header is as follows:
+ *         The ABNF of the P-Served-User Header is as follows:
  *
- * P-Served-User              = "P-Served-User" HCOLON PServedUser-value
- *                              *(SEMI served-user-param)
- * served-user-param          = sessioncase-param
- *                              / registration-state-param
- *                              / generic-param
- * PServedUser-value          = name-addr / addr-spec
- * sessioncase-param          = "sescase" EQUAL "orig" / "term"
- * registration-state-param   = "regstate" EQUAL "unreg" / "reg"
+ *         P-Served-User = "P-Served-User" HCOLON PServedUser-value *(SEMI served-user-param) served-user-param = sessioncase-param / registration-state-param / generic-param PServedUser-value = name-addr / addr-spec sessioncase-param = "sescase" EQUAL "orig" / "term" registration-state-param = "regstate" EQUAL "unreg" / "reg"
  *
- * Eg: P-Served-User: <sip:aayush@rancore.com>; sescase=orig; regstate=reg
+ *         Eg: P-Served-User: <sip:aayush@rancore.com>; sescase=orig; regstate=reg
  *
  *
  */
 public interface PServedUserHeader {
 
-    public static final String NAME = "P-Served-User";
+	public static final String NAME = "P-Served-User";
 
-    public void setSessionCase(String sessionCase);
+	public void setSessionCase(String sessionCase);
 
-    public String getSessionCase();
+	public String getSessionCase();
 
-    public void setRegistrationState(String registrationState);
+	public void setRegistrationState(String registrationState);
 
-    public String getRegistrationState();
-
+	public String getRegistrationState();
 
 }

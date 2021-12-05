@@ -31,18 +31,17 @@ import gov.nist.javax.sip.parser.MinExpiresParser;
  */
 public class MinExpiresParserTest extends ParserTestCase {
 
-    /* (non-Javadoc)
-     * @see test.unit.gov.nist.javax.sip.parser.ParserTestCase#testParser()
-     */
-    public void testParser() {
+	/*
+	 * (non-Javadoc)
+	 * 
+	 * @see test.unit.gov.nist.javax.sip.parser.ParserTestCase#testParser()
+	 */
+	public void testParser() {
 
-        String r[] = {
-                "Min-Expires: 60 \n",
-                "MIN-EXpIrEs:     90   \n"
-                };
+		String r[] = { "Min-Expires: 60 \n", "MIN-EXpIrEs:     90   \n" };
 
-        super.testParser(MinExpiresParser.class,r);
+		super.testParser(MinExpiresParser.class, r);
 
-    }
+	}
 
 }

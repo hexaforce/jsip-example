@@ -33,33 +33,30 @@ import gov.nist.javax.sip.parser.SupportedParser;
  */
 public class SupportedParserTest extends ParserTestCase {
 
-    /* (non-Javadoc)
-     * @see test.unit.gov.nist.javax.sip.parser.ParserTestCase#testParser()
-     */
-    public void testParser() {
+	/*
+	 * (non-Javadoc)
+	 * 
+	 * @see test.unit.gov.nist.javax.sip.parser.ParserTestCase#testParser()
+	 */
+	public void testParser() {
 
-        String content[] = {
-            "Supported: 100rel\n",
-            "Supported:\n",
-            "k:sessiontimer \n"
-        };
+		String content[] = { "Supported: 100rel\n", "Supported:\n", "k:sessiontimer \n" };
 
-        super.testParser(SupportedParser.class,content);
+		super.testParser(SupportedParser.class, content);
 
-    }
-    
-    /*
-     * Test for https://github.com/usnistgov/jsip/issues/53
-     * Adding two Supported headers, first one "" causes malformed encoding output:
-     * 
-     * "Support: ,timer"
-     */
-    public void testMalformedConstruction() {
-    	SupportedList supportedList = new SupportedList();
-    	supportedList.add(new Supported(""));
-    	supportedList.add(new Supported("timer"));
-    	String encoded = supportedList.encode();
-    	assertEquals("Supported: timer\r\n", encoded);
-    }
+	}
+
+	/*
+	 * Test for https://github.com/usnistgov/jsip/issues/53 Adding two Supported headers, first one "" causes malformed encoding output:
+	 * 
+	 * "Support: ,timer"
+	 */
+	public void testMalformedConstruction() {
+		SupportedList supportedList = new SupportedList();
+		supportedList.add(new Supported(""));
+		supportedList.add(new Supported("timer"));
+		String encoded = supportedList.encode();
+		assertEquals("Supported: timer\r\n", encoded);
+	}
 
 }

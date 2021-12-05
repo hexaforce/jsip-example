@@ -36,61 +36,62 @@ import gov.nist.javax.sip.header.SIPHeader;
  *
  * @version 1.2 $Revision: 1.9 $ $Date: 2009-07-17 18:58:03 $
  *
- * @author Olivier Deruelle   <br/>
- * @author M. Ranganathan   <br/>
+ * @author Olivier Deruelle <br/>
+ * @author M. Ranganathan <br/>
  *
  */
 public class RecordRouteParser extends AddressParametersParser {
 
-    /**
-     * Constructor
-     * @param recordRoute message to parse to set
-     */
-    public RecordRouteParser(String recordRoute) {
-        super(recordRoute);
-    }
+	/**
+	 * Constructor
+	 * 
+	 * @param recordRoute message to parse to set
+	 */
+	public RecordRouteParser(String recordRoute) {
+		super(recordRoute);
+	}
 
-    protected RecordRouteParser(Lexer lexer) {
-        super(lexer);
-    }
+	protected RecordRouteParser(Lexer lexer) {
+		super(lexer);
+	}
 
-    /**
-     * parse the String message and generate the RecordRoute List Object
-     * @return SIPHeader the RecordRoute List object
-     * @throws ParseException if errors occur during the parsing
-     */
-    public SIPHeader parse() throws ParseException {
-        RecordRouteList recordRouteList = new RecordRouteList();
+	/**
+	 * parse the String message and generate the RecordRoute List Object
+	 * 
+	 * @return SIPHeader the RecordRoute List object
+	 * @throws ParseException if errors occur during the parsing
+	 */
+	public SIPHeader parse() throws ParseException {
+		RecordRouteList recordRouteList = new RecordRouteList();
 
-        if (debug)
-            dbg_enter("RecordRouteParser.parse");
+		if (debug)
+			dbg_enter("RecordRouteParser.parse");
 
-        try {
-            this.lexer.match(TokenTypes.RECORD_ROUTE);
-            this.lexer.SPorHT();
-            this.lexer.match(':');
-            this.lexer.SPorHT();
-            while (true) {
-                RecordRoute recordRoute = new RecordRoute();
-                super.parse(recordRoute);
-                recordRouteList.add(recordRoute);
-                this.lexer.SPorHT();
-                char la = lexer.lookAhead(0);
-                if (la == ',') {
-                    this.lexer.match(',');
-                    this.lexer.SPorHT();
-                } else if (la == '\n')
-                    break;
-                else
-                    throw createParseException("unexpected char");
-            }
-            return recordRouteList;
-        } finally {
-            if (debug)
-                dbg_leave("RecordRouteParser.parse");
-        }
+		try {
+			this.lexer.match(TokenTypes.RECORD_ROUTE);
+			this.lexer.SPorHT();
+			this.lexer.match(':');
+			this.lexer.SPorHT();
+			while (true) {
+				RecordRoute recordRoute = new RecordRoute();
+				super.parse(recordRoute);
+				recordRouteList.add(recordRoute);
+				this.lexer.SPorHT();
+				char la = lexer.lookAhead(0);
+				if (la == ',') {
+					this.lexer.match(',');
+					this.lexer.SPorHT();
+				} else if (la == '\n')
+					break;
+				else
+					throw createParseException("unexpected char");
+			}
+			return recordRouteList;
+		} finally {
+			if (debug)
+				dbg_leave("RecordRouteParser.parse");
+		}
 
-    }
-
+	}
 
 }

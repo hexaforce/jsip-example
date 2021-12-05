@@ -1,8 +1,8 @@
 /**
  * ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
  * Unpublished - rights reserved under the Copyright Laws of the United States.
- * Copyright © 2003 Sun Microsystems, Inc. All rights reserved.
- * Copyright © 2005 BEA Systems, Inc. All rights reserved.
+ * Copyright ï¿½ 2003 Sun Microsystems, Inc. All rights reserved.
+ * Copyright ï¿½ 2005 BEA Systems, Inc. All rights reserved.
  *
  * Use is subject to license terms.
  *
@@ -22,10 +22,7 @@
 package javax.sip.header;
 
 /**
- * The Unsupported header field lists the features not supported by the UAS.
- * If a server does not understand the option, it must respond by returning a
- * 420 (Bad Extension) Response and list those options it does not understand in
- * the UnsupportedHeader.
+ * The Unsupported header field lists the features not supported by the UAS. If a server does not understand the option, it must respond by returning a 420 (Bad Extension) Response and list those options it does not understand in the UnsupportedHeader.
  *
  * @see SupportedHeader
  * @see RequireHeader
@@ -35,10 +32,9 @@ package javax.sip.header;
 
 public interface UnsupportedHeader extends OptionTag, Header {
 
-    /**
-     * Name of UnsupportedHeader
-     */
-    public final static String NAME = "Unsupported";
+	/**
+	 * Name of UnsupportedHeader
+	 */
+	public final static String NAME = "Unsupported";
 
 }
-

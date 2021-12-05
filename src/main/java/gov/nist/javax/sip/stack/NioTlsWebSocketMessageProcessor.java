@@ -25,7 +25,6 @@
  */
 package gov.nist.javax.sip.stack;
 
-
 import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.net.InetAddress;
@@ -41,15 +40,14 @@ import gov.nist.core.StackLogger;
 
 public class NioTlsWebSocketMessageProcessor extends NioWebSocketMessageProcessor {
 
-    private static StackLogger logger = CommonLogger.getLogger(NioTlsWebSocketMessageProcessor.class);
+	private static StackLogger logger = CommonLogger.getLogger(NioTlsWebSocketMessageProcessor.class);
 
-    SSLContext sslServerCtx;
-    SSLContext sslClientCtx;
-    
-    private static int MAX_WAIT_ATTEMPTS = 100;
+	SSLContext sslServerCtx;
+	SSLContext sslClientCtx;
 
-	public NioTlsWebSocketMessageProcessor(InetAddress ipAddress,
-			SIPTransactionStack sipStack, int port) {
+	private static int MAX_WAIT_ATTEMPTS = 100;
+
+	public NioTlsWebSocketMessageProcessor(InetAddress ipAddress, SIPTransactionStack sipStack, int port) {
 		super(ipAddress, sipStack, port);
 		transport = "WSS"; // by default it's WSS, can be overriden by TLS accelerator
 		try {
@@ -58,122 +56,115 @@ public class NioTlsWebSocketMessageProcessor extends NioWebSocketMessageProcesso
 			throw new RuntimeException(e);
 		}
 	}
-	
+
 	@Override
 	public NioTcpMessageChannel createMessageChannel(NioTcpMessageProcessor nioTcpMessageProcessor, SocketChannel client) throws IOException {
 		if (logger.isLoggingEnabled(LogWriter.TRACE_DEBUG)) {
-    		logger.logDebug("NioTlsWebSocketMessageProcessor::createMessageChannel: " + nioTcpMessageProcessor + " client " + client);
-    	}
-		return NioTlsWebSocketMessageChannel.create(NioTlsWebSocketMessageProcessor.this, client);		
-    }
-	
-    @Override
-    public synchronized MessageChannel createMessageChannel(HostPort targetHostPort) throws IOException {
-    	if (logger.isLoggingEnabled(LogWriter.TRACE_DEBUG)) {
-    		logger.logDebug("NioTlsWebSocketMessageProcessor::createMessageChannel: " + targetHostPort);
-    	}
-    	NioTlsWebSocketMessageChannel retval = null;
-    	try {
-    		String key = MessageChannel.getKey(targetHostPort, transport);
-			
-    		if (messageChannels.get(key) != null) {
-    			retval = (NioTlsWebSocketMessageChannel) this.messageChannels.get(key);
-    			int wait;
-    			for(wait=0; wait<=MAX_WAIT_ATTEMPTS; wait++) {
-    				if(retval.readingHttp == true) {
-    					try {
-    						if (logger.isLoggingEnabled(LogWriter.TRACE_DEBUG)) {
-    				    		logger.logDebug("NioTlsWebSocketMessageProcessor::createMessageChannel: waiting for TLS/HTTP handshake");
-    				    	}
-							Thread.sleep(100);
-						} catch (InterruptedException e) {}
-    				} else {
-    					if (logger.isLoggingEnabled(LogWriter.TRACE_DEBUG)) {
-				    		logger.logDebug("NioTlsWebSocketMessageProcessor::createMessageChannel: after handshake wait=" + wait);
-				    	}
-    					break;
-    				}
-    			}
-    			if(wait == MAX_WAIT_ATTEMPTS) throw new IOException("Timed out waiting for TLS handshake");
-    			return retval;
-    		} else {
-    			retval = new NioTlsWebSocketMessageChannel(targetHostPort.getInetAddress(),
-    					targetHostPort.getPort(), sipStack, this);
-    			
-    		//	retval.getSocketChannel().register(selector, SelectionKey.OP_READ);
-    			synchronized(messageChannels) {
-    				this.messageChannels.put(key, retval);
-    			}
-    			retval.isCached = true;
-    			if (logger.isLoggingEnabled(LogWriter.TRACE_DEBUG)) {
-    				logger.logDebug("key " + key);
-    				logger.logDebug("Creating " + retval);
-    			}
-    			selector.wakeup();
-    			return retval;
-
-    		}
-    	} finally {
-    		if(logger.isLoggingEnabled(LogWriter.TRACE_DEBUG)) {
-    			logger.logDebug("MessageChannel::createMessageChannel - exit " + retval);
-    		}
-    	}
-    }
-
-    @Override
-    public synchronized MessageChannel createMessageChannel(InetAddress targetHost, int port) throws IOException {
-        String key = MessageChannel.getKey(targetHost, port, transport);
-        if (messageChannels.get(key) != null) {
-            return this.messageChannels.get(key);
-        } else {
-        	NioTlsWebSocketMessageChannel retval = new NioTlsWebSocketMessageChannel(targetHost, port, sipStack, this);
-            
-            selector.wakeup();
- //           retval.getSocketChannel().register(selector, SelectionKey.OP_READ);
-            this.messageChannels.put(key, retval);
-            retval.isCached = true;
-            if (logger.isLoggingEnabled(LogWriter.TRACE_DEBUG)) {
-                logger.logDebug("key " + key);
-                logger.logDebug("Creating " + retval);
-            }
-            return retval;
-        }
-
-    }
-    
-	public void init() throws Exception, CertificateException, FileNotFoundException, IOException {
-		if(sipStack.securityManagerProvider.getKeyManagers(false) == null ||
-				sipStack.securityManagerProvider.getTrustManagers(false) == null ||
-                sipStack.securityManagerProvider.getTrustManagers(true) == null) {
-			if (logger.isLoggingEnabled(LogWriter.TRACE_DEBUG)) {
-                logger.logDebug("TLS initialization failed due to NULL security config");
-            }
-			return; // The settings 
+			logger.logDebug("NioTlsWebSocketMessageProcessor::createMessageChannel: " + nioTcpMessageProcessor + " client " + client);
 		}
-			
-        sslServerCtx = SSLContext.getInstance("TLS");
-        sslClientCtx = SSLContext.getInstance("TLS");
-        
-        if(sipStack.getClientAuth() == ClientAuthType.DisabledAll) {
-        	if (logger.isLoggingEnabled(LogWriter.TRACE_DEBUG)) {
-                logger.logDebug(
-                        "ClientAuth " + sipStack.getClientAuth()  +  " bypassing all cert validations");
-            }
-        	sslServerCtx.init(sipStack.securityManagerProvider.getKeyManagers(false), NioTlsMessageProcessor.trustAllCerts, null);
-        	sslClientCtx.init(sipStack.securityManagerProvider.getKeyManagers(true), NioTlsMessageProcessor.trustAllCerts, null);
-        } else {
-        	if (logger.isLoggingEnabled(LogWriter.TRACE_DEBUG)) {
-                logger.logDebug(
-                        "ClientAuth " + sipStack.getClientAuth());
-            }
-        	 sslServerCtx.init(sipStack.securityManagerProvider.getKeyManagers(false), 
-                     sipStack.securityManagerProvider.getTrustManagers(false),
-                     null);
-        	 sslClientCtx.init(sipStack.securityManagerProvider.getKeyManagers(true),
-                     sipStack.securityManagerProvider.getTrustManagers(true),
-                     null);
+		return NioTlsWebSocketMessageChannel.create(NioTlsWebSocketMessageProcessor.this, client);
+	}
 
-        }
-    }
+	@Override
+	public synchronized MessageChannel createMessageChannel(HostPort targetHostPort) throws IOException {
+		if (logger.isLoggingEnabled(LogWriter.TRACE_DEBUG)) {
+			logger.logDebug("NioTlsWebSocketMessageProcessor::createMessageChannel: " + targetHostPort);
+		}
+		NioTlsWebSocketMessageChannel retval = null;
+		try {
+			String key = MessageChannel.getKey(targetHostPort, transport);
+
+			if (messageChannels.get(key) != null) {
+				retval = (NioTlsWebSocketMessageChannel) this.messageChannels.get(key);
+				int wait;
+				for (wait = 0; wait <= MAX_WAIT_ATTEMPTS; wait++) {
+					if (retval.readingHttp == true) {
+						try {
+							if (logger.isLoggingEnabled(LogWriter.TRACE_DEBUG)) {
+								logger.logDebug("NioTlsWebSocketMessageProcessor::createMessageChannel: waiting for TLS/HTTP handshake");
+							}
+							Thread.sleep(100);
+						} catch (InterruptedException e) {
+						}
+					} else {
+						if (logger.isLoggingEnabled(LogWriter.TRACE_DEBUG)) {
+							logger.logDebug("NioTlsWebSocketMessageProcessor::createMessageChannel: after handshake wait=" + wait);
+						}
+						break;
+					}
+				}
+				if (wait == MAX_WAIT_ATTEMPTS)
+					throw new IOException("Timed out waiting for TLS handshake");
+				return retval;
+			} else {
+				retval = new NioTlsWebSocketMessageChannel(targetHostPort.getInetAddress(), targetHostPort.getPort(), sipStack, this);
+
+				// retval.getSocketChannel().register(selector, SelectionKey.OP_READ);
+				synchronized (messageChannels) {
+					this.messageChannels.put(key, retval);
+				}
+				retval.isCached = true;
+				if (logger.isLoggingEnabled(LogWriter.TRACE_DEBUG)) {
+					logger.logDebug("key " + key);
+					logger.logDebug("Creating " + retval);
+				}
+				selector.wakeup();
+				return retval;
+
+			}
+		} finally {
+			if (logger.isLoggingEnabled(LogWriter.TRACE_DEBUG)) {
+				logger.logDebug("MessageChannel::createMessageChannel - exit " + retval);
+			}
+		}
+	}
+
+	@Override
+	public synchronized MessageChannel createMessageChannel(InetAddress targetHost, int port) throws IOException {
+		String key = MessageChannel.getKey(targetHost, port, transport);
+		if (messageChannels.get(key) != null) {
+			return this.messageChannels.get(key);
+		} else {
+			NioTlsWebSocketMessageChannel retval = new NioTlsWebSocketMessageChannel(targetHost, port, sipStack, this);
+
+			selector.wakeup();
+			// retval.getSocketChannel().register(selector, SelectionKey.OP_READ);
+			this.messageChannels.put(key, retval);
+			retval.isCached = true;
+			if (logger.isLoggingEnabled(LogWriter.TRACE_DEBUG)) {
+				logger.logDebug("key " + key);
+				logger.logDebug("Creating " + retval);
+			}
+			return retval;
+		}
+
+	}
+
+	public void init() throws Exception, CertificateException, FileNotFoundException, IOException {
+		if (sipStack.securityManagerProvider.getKeyManagers(false) == null || sipStack.securityManagerProvider.getTrustManagers(false) == null || sipStack.securityManagerProvider.getTrustManagers(true) == null) {
+			if (logger.isLoggingEnabled(LogWriter.TRACE_DEBUG)) {
+				logger.logDebug("TLS initialization failed due to NULL security config");
+			}
+			return; // The settings
+		}
+
+		sslServerCtx = SSLContext.getInstance("TLS");
+		sslClientCtx = SSLContext.getInstance("TLS");
+
+		if (sipStack.getClientAuth() == ClientAuthType.DisabledAll) {
+			if (logger.isLoggingEnabled(LogWriter.TRACE_DEBUG)) {
+				logger.logDebug("ClientAuth " + sipStack.getClientAuth() + " bypassing all cert validations");
+			}
+			sslServerCtx.init(sipStack.securityManagerProvider.getKeyManagers(false), NioTlsMessageProcessor.trustAllCerts, null);
+			sslClientCtx.init(sipStack.securityManagerProvider.getKeyManagers(true), NioTlsMessageProcessor.trustAllCerts, null);
+		} else {
+			if (logger.isLoggingEnabled(LogWriter.TRACE_DEBUG)) {
+				logger.logDebug("ClientAuth " + sipStack.getClientAuth());
+			}
+			sslServerCtx.init(sipStack.securityManagerProvider.getKeyManagers(false), sipStack.securityManagerProvider.getTrustManagers(false), null);
+			sslClientCtx.init(sipStack.securityManagerProvider.getKeyManagers(true), sipStack.securityManagerProvider.getTrustManagers(true), null);
+
+		}
+	}
 
 }

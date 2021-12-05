@@ -30,17 +30,17 @@ import gov.nist.javax.sip.parser.OrganizationParser;
  *
  */
 public class OrganizationParserTest extends ParserTestCase {
-    String o[] = {
-            "Organization: Boxes by Bob\n"
-            };
-    /* (non-Javadoc)
-     * @see test.unit.gov.nist.javax.sip.parser.ParserTestCase#testParser()
-     */
-    public void testParser() {
+	String o[] = { "Organization: Boxes by Bob\n" };
 
-        super.testParser(OrganizationParser.class,o);
+	/*
+	 * (non-Javadoc)
+	 * 
+	 * @see test.unit.gov.nist.javax.sip.parser.ParserTestCase#testParser()
+	 */
+	public void testParser() {
 
+		super.testParser(OrganizationParser.class, o);
 
-    }
+	}
 
 }

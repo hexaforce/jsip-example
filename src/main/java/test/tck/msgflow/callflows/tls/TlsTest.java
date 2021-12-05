@@ -43,118 +43,113 @@ import test.tck.msgflow.callflows.ScenarioHarness;
  */
 public class TlsTest extends ScenarioHarness implements SipListener {
 
+	protected Shootist shootist;
 
-    protected Shootist shootist;
+	private Shootme shootme;
 
-    private Shootme shootme;
+	private static Logger logger = Logger.getLogger("test.tck");
 
-    private static Logger logger = Logger.getLogger("test.tck");
+	static {
+		if (!logger.isAttached(console))
+			logger.addAppender(console);
+	}
 
-    static {
-        if (!logger.isAttached(console))
-            logger.addAppender(console);
-    }
+	private SipListener getSipListener(EventObject sipEvent) {
+		SipProvider source = (SipProvider) sipEvent.getSource();
+		SipListener listener = (SipListener) providerTable.get(source);
+		assertTrue(listener != null);
+		return listener;
+	}
 
-    private SipListener getSipListener(EventObject sipEvent) {
-        SipProvider source = (SipProvider) sipEvent.getSource();
-        SipListener listener = (SipListener) providerTable.get(source);
-        assertTrue(listener != null);
-        return listener;
-    }
+	public TlsTest() {
+		super("tlstest", true);
+	}
 
-    public TlsTest() {
-        super("tlstest", true);
-    }
+	public void setUp() {
 
-    public void setUp() {
+		try {
+			// setup TLS properties
+			System.setProperty("javax.net.ssl.keyStore", TlsTest.class.getResource("testkeys").getPath());
+			System.setProperty("javax.net.ssl.trustStore", TlsTest.class.getResource("testkeys").getPath());
+			System.setProperty("javax.net.ssl.keyStorePassword", "passphrase");
+			System.setProperty("javax.net.ssl.keyStoreType", "jks");
 
-        try {
-            // setup TLS properties
-            System.setProperty( "javax.net.ssl.keyStore",  TlsTest.class.getResource("testkeys").getPath() );
-            System.setProperty( "javax.net.ssl.trustStore", TlsTest.class.getResource("testkeys").getPath() );
-            System.setProperty( "javax.net.ssl.keyStorePassword", "passphrase" );
-            System.setProperty( "javax.net.ssl.keyStoreType", "jks" );
+			this.transport = "tls";
 
-            this.transport = "tls";
+			super.setUp();
 
-            super.setUp();
-        
-            shootme = new Shootme(getTiProtocolObjects());
-            SipProvider shootmeProvider = shootme.createSipProvider();
-            providerTable.put(shootmeProvider, shootme);
-            shootist = new Shootist(getRiProtocolObjects());
-            SipProvider shootistProvider = shootist.createSipProvider();
-            providerTable.put(shootistProvider, shootist);
-            shootmeProvider.addSipListener(this);
-            shootistProvider.addSipListener(this);
-             
-            getRiProtocolObjects().start();
-            if (getTiProtocolObjects() != getRiProtocolObjects())
-                getTiProtocolObjects().start();
-        } catch (Exception ex) {
-            ex.printStackTrace();
-            fail("unexpected exception ");
-        }
-    }
+			shootme = new Shootme(getTiProtocolObjects());
+			SipProvider shootmeProvider = shootme.createSipProvider();
+			providerTable.put(shootmeProvider, shootme);
+			shootist = new Shootist(getRiProtocolObjects());
+			SipProvider shootistProvider = shootist.createSipProvider();
+			providerTable.put(shootistProvider, shootist);
+			shootmeProvider.addSipListener(this);
+			shootistProvider.addSipListener(this);
 
-    public void testSendInvite() {
-        this.shootist.sendInvite();
-    }
+			getRiProtocolObjects().start();
+			if (getTiProtocolObjects() != getRiProtocolObjects())
+				getTiProtocolObjects().start();
+		} catch (Exception ex) {
+			ex.printStackTrace();
+			fail("unexpected exception ");
+		}
+	}
 
-    public void tearDown() {
-        try {
-            Thread.sleep(8000);
-            this.shootist.checkState();
-            this.shootme.checkState();
-            getTiProtocolObjects().destroy();
-            if (getTiProtocolObjects() != getRiProtocolObjects())
-                getRiProtocolObjects().destroy();
-            Thread.sleep(1000);
-            this.providerTable.clear();
+	public void testSendInvite() {
+		this.shootist.sendInvite();
+	}
 
-            System.clearProperty( "javax.net.ssl.keyStore" );
-            System.clearProperty( "javax.net.ssl.trustStore" );
-            System.clearProperty( "javax.net.ssl.keyStorePassword" );
-            System.clearProperty( "javax.net.ssl.keyStoreType" );
+	public void tearDown() {
+		try {
+			Thread.sleep(8000);
+			this.shootist.checkState();
+			this.shootme.checkState();
+			getTiProtocolObjects().destroy();
+			if (getTiProtocolObjects() != getRiProtocolObjects())
+				getRiProtocolObjects().destroy();
+			Thread.sleep(1000);
+			this.providerTable.clear();
 
-            logTestCompleted();
-        } catch (Exception ex) {
-            ex.printStackTrace();
-        }
+			System.clearProperty("javax.net.ssl.keyStore");
+			System.clearProperty("javax.net.ssl.trustStore");
+			System.clearProperty("javax.net.ssl.keyStorePassword");
+			System.clearProperty("javax.net.ssl.keyStoreType");
 
-    }
+			logTestCompleted();
+		} catch (Exception ex) {
+			ex.printStackTrace();
+		}
 
-    public void processRequest(RequestEvent requestEvent) {
-        getSipListener(requestEvent).processRequest(requestEvent);
+	}
 
-    }
+	public void processRequest(RequestEvent requestEvent) {
+		getSipListener(requestEvent).processRequest(requestEvent);
 
-    public void processResponse(ResponseEvent responseEvent) {
-        getSipListener(responseEvent).processResponse(responseEvent);
+	}
 
-    }
+	public void processResponse(ResponseEvent responseEvent) {
+		getSipListener(responseEvent).processResponse(responseEvent);
 
-    public void processTimeout(TimeoutEvent timeoutEvent) {
-        getSipListener(timeoutEvent).processTimeout(timeoutEvent);
-    }
+	}
 
-    public void processIOException(IOExceptionEvent exceptionEvent) {
-        fail("unexpected exception");
+	public void processTimeout(TimeoutEvent timeoutEvent) {
+		getSipListener(timeoutEvent).processTimeout(timeoutEvent);
+	}
 
-    }
+	public void processIOException(IOExceptionEvent exceptionEvent) {
+		fail("unexpected exception");
 
-    public void processTransactionTerminated(
-            TransactionTerminatedEvent transactionTerminatedEvent) {
-        getSipListener(transactionTerminatedEvent)
-                .processTransactionTerminated(transactionTerminatedEvent);
+	}
 
-    }
+	public void processTransactionTerminated(TransactionTerminatedEvent transactionTerminatedEvent) {
+		getSipListener(transactionTerminatedEvent).processTransactionTerminated(transactionTerminatedEvent);
 
-    public void processDialogTerminated(
-            DialogTerminatedEvent dialogTerminatedEvent) {
-        getSipListener(dialogTerminatedEvent).processDialogTerminated(
-                dialogTerminatedEvent);
+	}
 
-    }
+	public void processDialogTerminated(DialogTerminatedEvent dialogTerminatedEvent) {
+		getSipListener(dialogTerminatedEvent).processDialogTerminated(dialogTerminatedEvent);
+
+	}
 
 }

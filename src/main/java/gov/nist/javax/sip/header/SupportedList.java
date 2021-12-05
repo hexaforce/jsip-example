@@ -27,30 +27,32 @@
 * Product of NIST/ITL Advanced Networking Technologies Division (ANTD).        *
 *******************************************************************************/
 package gov.nist.javax.sip.header;
+
 import javax.sip.header.SupportedHeader;
 
 /**
  * A list of supported headers.
+ * 
  * @version 1.2 $Revision: 1.6 $ $Date: 2009-07-17 18:57:39 $
  * @see Supported
  */
-public class SupportedList extends SIPHeaderList<Supported>{
+public class SupportedList extends SIPHeaderList<Supported> {
 
-    /**
-     *
-     */
-    private static final long serialVersionUID = -4539299544895602367L;
+	/**
+	 *
+	 */
+	private static final long serialVersionUID = -4539299544895602367L;
 
-    public Object clone() {
-        SupportedList retval = new SupportedList();
-        retval.clonehlist(this.hlist);
-        return retval;
-    }
+	public Object clone() {
+		SupportedList retval = new SupportedList();
+		retval.clonehlist(this.hlist);
+		return retval;
+	}
 
-    /** Default Constructor
-     */
-    public SupportedList() {
-        super(Supported.class, SupportedHeader.NAME);
-    }
+	/**
+	 * Default Constructor
+	 */
+	public SupportedList() {
+		super(Supported.class, SupportedHeader.NAME);
+	}
 }
-

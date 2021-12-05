@@ -23,12 +23,9 @@ import gov.nist.javax.sip.parser.AcceptParser;
 
 public class AcceptParserTest extends ParserTestCase {
 
-    public void testParser() {
-        String data[] = { "Accept: application/sdp  \n",
-                "Accept: application/sdp;level=1 \n" 
-                };
-        super.testParser(AcceptParser.class,data);
-    }
+	public void testParser() {
+		String data[] = { "Accept: application/sdp  \n", "Accept: application/sdp;level=1 \n" };
+		super.testParser(AcceptParser.class, data);
+	}
 
 }
-

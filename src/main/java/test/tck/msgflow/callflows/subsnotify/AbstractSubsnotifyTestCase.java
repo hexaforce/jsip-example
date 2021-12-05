@@ -35,86 +35,79 @@ import test.tck.msgflow.callflows.ScenarioHarness;
  * @author Ivelin Ivanov
  *
  */
-public abstract class AbstractSubsnotifyTestCase extends ScenarioHarness implements
-        SipListener {
+public abstract class AbstractSubsnotifyTestCase extends ScenarioHarness implements SipListener {
 
+	protected Notifier notifier1;
 
-    protected Notifier notifier1;
+	protected Subscriber subscriber;
 
-    protected Subscriber subscriber;
+	private Notifier notifier2;
 
-    private Notifier notifier2;
+	protected Forker forker;
 
-    protected Forker forker;
+	private static Logger logger = Logger.getLogger("test.tck");
 
-    private static Logger logger = Logger.getLogger("test.tck");
+	static {
+		if (!logger.isAttached(console)) {
 
-    static {
-        if (!logger.isAttached(console)) {
+			logger.addAppender(console);
 
-            logger.addAppender(console);
+		}
+	}
 
-        }
-    }
+	public AbstractSubsnotifyTestCase() {
+		super("subsnotify", true);
+	}
 
-    public AbstractSubsnotifyTestCase() {
-        super("subsnotify", true);
-    }
+	public void setUp() throws Exception {
+		try {
+			super.setUp(1, 3);
 
-    public void setUp() throws Exception {
-        try {
-            super.setUp(1,3);
+			logger.info("SubsNotifyTest: setup()");
 
-            logger.info("SubsNotifyTest: setup()");
+			notifier1 = new Notifier(getTiProtocolObjects(0));
+			SipProvider notifier1Provider = notifier1.createProvider(5070);
+			providerTable.put(notifier1Provider, notifier1);
 
-            notifier1 = new Notifier(getTiProtocolObjects(0));
-            SipProvider notifier1Provider = notifier1.createProvider(5070);
-            providerTable.put(notifier1Provider, notifier1);
+			notifier2 = new Notifier(getTiProtocolObjects(1));
+			SipProvider notifier2Provider = notifier2.createProvider(5071);
+			providerTable.put(notifier2Provider, notifier2);
 
-            notifier2 = new Notifier(getTiProtocolObjects(1));
-            SipProvider notifier2Provider = notifier2.createProvider(5071);
-            providerTable.put(notifier2Provider, notifier2);
+			forker = new Forker(getRiProtocolObjects(0));
+			SipProvider forkerProvider = forker.createProvider(5065);
+			providerTable.put(forkerProvider, forker);
 
-            forker = new Forker(getRiProtocolObjects(0));
-            SipProvider forkerProvider = forker.createProvider(5065);
-            providerTable.put(forkerProvider, forker);
+			subscriber = new Subscriber(getTiProtocolObjects(2));
+			SipProvider subscriberProvider = subscriber.createProvider(5080);
+			providerTable.put(subscriberProvider, subscriber);
 
-            subscriber = new Subscriber(getTiProtocolObjects(2));
-            SipProvider subscriberProvider = subscriber.createProvider(5080);
-            providerTable.put(subscriberProvider, subscriber);
+			notifier1Provider.addSipListener(this);
+			notifier2Provider.addSipListener(this);
+			forkerProvider.addSipListener(this);
+			subscriberProvider.addSipListener(this);
 
-            notifier1Provider.addSipListener(this);
-            notifier2Provider.addSipListener(this);
-            forkerProvider.addSipListener(this);
-            subscriberProvider.addSipListener(this);
+			super.start();
+		} catch (Exception ex) {
+			logger.error("unexpected excecption ", ex);
+			fail("unexpected exception");
+		}
+	}
 
-            super.start();
-        } catch (Exception ex) {
-            logger.error("unexpected excecption ", ex);
-            fail("unexpected exception");
-        }
-    }
-
-    public void tearDown() throws Exception {
-        try {
-            Thread.sleep(5000);
-            super.tearDown();
-            this.providerTable.clear();
-            Thread.sleep(100);
-            subscriber.checkState();
-            notifier1.checkState();
-            notifier2.checkState();
-            logTestCompleted();
-        } catch (Exception ex) {
-            logger.error("unexpected exception", ex);
-            fail("unexpected exception ");
-        }
-        super.tearDown();
-    }
-
-
-
-
-
+	public void tearDown() throws Exception {
+		try {
+			Thread.sleep(5000);
+			super.tearDown();
+			this.providerTable.clear();
+			Thread.sleep(100);
+			subscriber.checkState();
+			notifier1.checkState();
+			notifier2.checkState();
+			logTestCompleted();
+		} catch (Exception ex) {
+			logger.error("unexpected exception", ex);
+			fail("unexpected exception ");
+		}
+		super.tearDown();
+	}
 
 }

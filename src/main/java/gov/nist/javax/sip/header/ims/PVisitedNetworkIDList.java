@@ -39,17 +39,18 @@ import gov.nist.javax.sip.header.SIPHeaderList;
 
 public class PVisitedNetworkIDList extends SIPHeaderList<PVisitedNetworkID> {
 
-    private static final long serialVersionUID = -4346667490341752478L;
+	private static final long serialVersionUID = -4346667490341752478L;
 
-    /** Default constructor
-     */
-    public PVisitedNetworkIDList() {
-        super(PVisitedNetworkID.class, PVisitedNetworkIDHeader.NAME);
-    }
+	/**
+	 * Default constructor
+	 */
+	public PVisitedNetworkIDList() {
+		super(PVisitedNetworkID.class, PVisitedNetworkIDHeader.NAME);
+	}
 
-    public Object clone() {
-        PVisitedNetworkIDList retval = new PVisitedNetworkIDList();
-        return retval.clonehlist(this.hlist);
-    }
+	public Object clone() {
+		PVisitedNetworkIDList retval = new PVisitedNetworkIDList();
+		return retval.clonehlist(this.hlist);
+	}
 
 }

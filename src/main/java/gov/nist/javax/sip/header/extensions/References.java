@@ -8,83 +8,66 @@ import javax.sip.header.ExtensionHeader;
 import gov.nist.core.Separators;
 import gov.nist.javax.sip.header.ParametersHeader;
 
-public class References extends ParametersHeader  implements ReferencesHeader,ExtensionHeader  {
+public class References extends ParametersHeader implements ReferencesHeader, ExtensionHeader {
 
-    private static final long serialVersionUID = 8536961681006637622L;
-    
-    
-    private String callId;
-    
-    public References() {
-        super(ReferencesHeader.NAME);
-    }
-  
-   
+	private static final long serialVersionUID = 8536961681006637622L;
 
-  
-    public String getCallId() {
-       return callId;
-    }
+	private String callId;
 
-  
-   
-    public String getRel() {
-        return this.getParameter(REL);
-    }
+	public References() {
+		super(ReferencesHeader.NAME);
+	}
 
-   
+	public String getCallId() {
+		return callId;
+	}
 
+	public String getRel() {
+		return this.getParameter(REL);
+	}
 
-    public void setCallId(String callId) {
-        this.callId = callId;
-    }
+	public void setCallId(String callId) {
+		this.callId = callId;
+	}
 
-       
-    public void setRel(String rel) throws ParseException{
-      if ( rel != null ) {
-          this.setParameter(REL,rel);
-      }
-    }
+	public void setRel(String rel) throws ParseException {
+		if (rel != null) {
+			this.setParameter(REL, rel);
+		}
+	}
 
-  
-    public String getParameter(String name) {
-        return super.getParameter(name);
-    }
+	public String getParameter(String name) {
+		return super.getParameter(name);
+	}
 
-    
-    public Iterator getParameterNames() {
-        return super.getParameterNames();
-    }
+	public Iterator getParameterNames() {
+		return super.getParameterNames();
+	}
 
-   
-    public void removeParameter(String name) {
-       super.removeParameter(name);
-    }
+	public void removeParameter(String name) {
+		super.removeParameter(name);
+	}
 
-    
-    public void setParameter(String name, String value) throws ParseException {
-       super.setParameter(name,value); 
-    }
+	public void setParameter(String name, String value) throws ParseException {
+		super.setParameter(name, value);
+	}
 
- 
-    public String getName() {
-        return ReferencesHeader.NAME;
-    }
+	public String getName() {
+		return ReferencesHeader.NAME;
+	}
 
-   
-    public StringBuilder encodeBody(StringBuilder buffer) {
-        if ( super.parameters.isEmpty()) {
-            return buffer.append(callId);
-        } else {
-        	buffer = buffer.append(callId).append(Separators.SEMICOLON);
-        	buffer = super.parameters.encode(buffer);
-            return buffer;
-        }
-    }
+	public StringBuilder encodeBody(StringBuilder buffer) {
+		if (super.parameters.isEmpty()) {
+			return buffer.append(callId);
+		} else {
+			buffer = buffer.append(callId).append(Separators.SEMICOLON);
+			buffer = super.parameters.encode(buffer);
+			return buffer;
+		}
+	}
 
-   
-    public void setValue(String value) throws ParseException {
-        throw new UnsupportedOperationException("operation not supported");
-    }
+	public void setValue(String value) throws ParseException {
+		throw new UnsupportedOperationException("operation not supported");
+	}
 
 }

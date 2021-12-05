@@ -34,61 +34,56 @@ import javax.sip.header.ExtensionHeader;
 
 import gov.nist.javax.sip.address.AddressImpl;
 
-
-
 /**
  * SERVICE-ROUTE header SIP param: RFC 3608.
  *
  * @author ALEXANDRE MIGUEL SILVA SANTOS - Nú 10045401
  */
 
+public class ServiceRoute extends gov.nist.javax.sip.header.AddressParametersHeader implements ServiceRouteHeader, SIPHeaderNamesIms, ExtensionHeader {
 
+	/**
+	 * constructor
+	 * 
+	 * @param address address to set
+	 */
+	public ServiceRoute(AddressImpl address) {
+		super(NAME);
+		this.address = address;
+	}
 
-public class ServiceRoute
-    extends gov.nist.javax.sip.header.AddressParametersHeader
-    implements ServiceRouteHeader, SIPHeaderNamesIms, ExtensionHeader {
+	/**
+	 * default constructor
+	 */
+	public ServiceRoute() {
+		super(SERVICE_ROUTE);
+	}
 
-    /**
-     * constructor
-     * @param address address to set
-     */
-    public ServiceRoute(AddressImpl address) {
-        super(NAME);
-        this.address = address;
-    }
-
-    /**
-     * default constructor
-     */
-    public ServiceRoute() {
-        super(SERVICE_ROUTE);
-    }
-
-    /** Encode into canonical form.
-     *@return String containing the canonicaly encoded header.
-     */
-    public StringBuilder encodeBody(StringBuilder retval) {
+	/**
+	 * Encode into canonical form.
+	 * 
+	 * @return String containing the canonicaly encoded header.
+	 */
+	public StringBuilder encodeBody(StringBuilder retval) {
 //      String retval = "";
-    	if (address.getAddressType() == AddressImpl.ADDRESS_SPEC) {
-    		retval.append(LESS_THAN);
-    	}
-    	address.encode(retval);
-    	if (address.getAddressType() == AddressImpl.ADDRESS_SPEC) {
-    		retval.append(GREATER_THAN);
-    	}
+		if (address.getAddressType() == AddressImpl.ADDRESS_SPEC) {
+			retval.append(LESS_THAN);
+		}
+		address.encode(retval);
+		if (address.getAddressType() == AddressImpl.ADDRESS_SPEC) {
+			retval.append(GREATER_THAN);
+		}
 
-    	if (!parameters.isEmpty()) {
-    		retval.append(SEMICOLON); 
-    		parameters.encode(retval);
-    	}
-    	return retval;        
-    }
+		if (!parameters.isEmpty()) {
+			retval.append(SEMICOLON);
+			parameters.encode(retval);
+		}
+		return retval;
+	}
 
+	public void setValue(String value) throws ParseException {
+		throw new ParseException(value, 0);
 
-    public void setValue(String value) throws ParseException {
-        throw new ParseException (value,0);
-
-    }
-
+	}
 
 }

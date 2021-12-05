@@ -44,159 +44,153 @@ import gov.nist.javax.sip.header.HeaderFactoryExt;
 import gov.nist.javax.sip.header.HeaderFactoryImpl;
 
 /**
- * Content list for multipart mime content type.
- * <b>
- * WARNING -- do not directly cast to this this class.
- * Use the methods of the interface that it implements.
- * </b>
+ * Content list for multipart mime content type. <b> WARNING -- do not directly cast to this this class. Use the methods of the interface that it implements. </b>
  * 
  * @author M. Ranganathan
  * 
  */
 public class MultipartMimeContentImpl implements MultipartMimeContent {
-  public static final String BOUNDARY = "boundary";
-  private List<Content> contentList = new LinkedList<Content>();
-  private HeaderFactoryExt headerFactory = new HeaderFactoryImpl();
-  private ContentTypeHeader multipartMimeContentTypeHeader;
-  private String boundary;
+	public static final String BOUNDARY = "boundary";
+	private List<Content> contentList = new LinkedList<Content>();
+	private HeaderFactoryExt headerFactory = new HeaderFactoryImpl();
+	private ContentTypeHeader multipartMimeContentTypeHeader;
+	private String boundary;
 
-  
-  /**
-   * Creates a default content list.
-   */
-  public MultipartMimeContentImpl(ContentTypeHeader contentTypeHeader) {
-    this.multipartMimeContentTypeHeader = contentTypeHeader;
-    this.boundary = contentTypeHeader.getParameter(BOUNDARY);
+	/**
+	 * Creates a default content list.
+	 */
+	public MultipartMimeContentImpl(ContentTypeHeader contentTypeHeader) {
+		this.multipartMimeContentTypeHeader = contentTypeHeader;
+		this.boundary = contentTypeHeader.getParameter(BOUNDARY);
 
-  }
+	}
 
-  /*
-   * (non-Javadoc)
-   * 
-   * @see gov.nist.javax.sip.message.MultipartMimeContentExt#add(gov.nist.javax.sip.message.Content)
-   */
-  public boolean add(Content content) {
-    return contentList.add((ContentImpl) content);
-  }
+	/*
+	 * (non-Javadoc)
+	 * 
+	 * @see gov.nist.javax.sip.message.MultipartMimeContentExt#add(gov.nist.javax.sip.message.Content)
+	 */
+	public boolean add(Content content) {
+		return contentList.add((ContentImpl) content);
+	}
 
-  /*
-   * (non-Javadoc)
-   * 
-   * @see gov.nist.javax.sip.message.MultipartMimeContentExt#getContentTypeHeader()
-   */
-  public ContentTypeHeader getContentTypeHeader() {
-    return multipartMimeContentTypeHeader;
-  }
+	/*
+	 * (non-Javadoc)
+	 * 
+	 * @see gov.nist.javax.sip.message.MultipartMimeContentExt#getContentTypeHeader()
+	 */
+	public ContentTypeHeader getContentTypeHeader() {
+		return multipartMimeContentTypeHeader;
+	}
 
-  /*
-   * (non-Javadoc)
-   * 
-   * @see gov.nist.javax.sip.message.MultipartMimeContentExt#toString()
-   */
-  @Override
-  public String toString() {
-    StringBuilder result = new StringBuilder();
+	/*
+	 * (non-Javadoc)
+	 * 
+	 * @see gov.nist.javax.sip.message.MultipartMimeContentExt#toString()
+	 */
+	@Override
+	public String toString() {
+		StringBuilder result = new StringBuilder();
 
-    for (Content content : this.contentList) {
-      result.append("--" + boundary + Separators.NEWLINE);
-      result.append(content.toString());
-      result.append(Separators.NEWLINE);
-    }
+		for (Content content : this.contentList) {
+			result.append("--" + boundary + Separators.NEWLINE);
+			result.append(content.toString());
+			result.append(Separators.NEWLINE);
+		}
 
-    if (!contentList.isEmpty()) {
-      result.append("--" + boundary + "--");
-    }
+		if (!contentList.isEmpty()) {
+			result.append("--" + boundary + "--");
+		}
 
-    return result.toString();
+		return result.toString();
 
-  }
+	}
 
-  /**
-   * unpack a multipart mime packet and set a list of content packets.
-   * 
-   * @return -- an iterator of Content blocks.
-   * 
-   */
-  public void createContentList(String body) throws ParseException {
-    if (boundary != null) {
-      Scanner scanner = new Scanner(body);
-      // scanner.useDelimiter("--" + boundary + "(--)?\r?\n?");
-      scanner.useDelimiter("\r?\n?--" + boundary + "(--)?\r?\n?");
-      while (scanner.hasNext()) {
-    	  try {
-    		  String bodyPart = scanner.next();
-    		  Content partContent = parseBodyPart(bodyPart);
-    		  contentList.add(partContent);
-    	  } catch (NoSuchElementException e) {
-    		  // ignore
-    	    // this is needed for a jain sip bug #16: the scanner which detects an extra
-    	    // delimiter when the body is a multiple of the buffer size
-    	  }
-      }
-    } else {
-      // No boundary had been set, we will consider the body as a single part
-      ContentImpl content = parseBodyPart(body);
-      content.setContentTypeHeader(this.getContentTypeHeader());
-      this.contentList.add(content);
-    }
-  }
+	/**
+	 * unpack a multipart mime packet and set a list of content packets.
+	 * 
+	 * @return -- an iterator of Content blocks.
+	 * 
+	 */
+	public void createContentList(String body) throws ParseException {
+		if (boundary != null) {
+			Scanner scanner = new Scanner(body);
+			// scanner.useDelimiter("--" + boundary + "(--)?\r?\n?");
+			scanner.useDelimiter("\r?\n?--" + boundary + "(--)?\r?\n?");
+			while (scanner.hasNext()) {
+				try {
+					String bodyPart = scanner.next();
+					Content partContent = parseBodyPart(bodyPart);
+					contentList.add(partContent);
+				} catch (NoSuchElementException e) {
+					// ignore
+					// this is needed for a jain sip bug #16: the scanner which detects an extra
+					// delimiter when the body is a multiple of the buffer size
+				}
+			}
+		} else {
+			// No boundary had been set, we will consider the body as a single part
+			ContentImpl content = parseBodyPart(body);
+			content.setContentTypeHeader(this.getContentTypeHeader());
+			this.contentList.add(content);
+		}
+	}
 
-  private ContentImpl parseBodyPart(String bodyPart) throws ParseException {
-    String headers[] = null;
-    String bodyContent;
-    
-    // if a empty line starts the body it means no headers are present
-    if (bodyPart.startsWith("\n") || bodyPart.startsWith("\r\n")) {
-      bodyContent = bodyPart;
-    } else {
-      // limit the number of crlf (new lines) we split on, only split the header from
-      // the body and don't split on any crlf in the body  
-      String[] nextPartSplit = bodyPart.split("\r?\n\r?\n", 2);
+	private ContentImpl parseBodyPart(String bodyPart) throws ParseException {
+		String headers[] = null;
+		String bodyContent;
 
-      bodyContent = bodyPart;
-      
-      if (nextPartSplit.length == 2) {
-        // since we aren't completely sure the data is a header let's test the first one
-        String potentialHeaders[] = nextPartSplit[0].split("\r?\n");
-        if (potentialHeaders[0].indexOf(":") > 0) {
-          headers = potentialHeaders;
-          bodyContent = nextPartSplit[1];
-        }
-      }
-    }
-    
-    ContentImpl content = new ContentImpl(bodyContent);
-    if (headers != null) {
-      for (String partHeader : headers) {
-        Header header = headerFactory.createHeader(partHeader);
-        if (header instanceof ContentTypeHeader) {
-          content.setContentTypeHeader((ContentTypeHeader) header);
-        } else if (header instanceof ContentDispositionHeader) {
-          content.setContentDispositionHeader((ContentDispositionHeader) header);
-        } else {
-          content.addExtensionHeader(header);
-        }
-      }
-    }
-    return content;
-  }
+		// if a empty line starts the body it means no headers are present
+		if (bodyPart.startsWith("\n") || bodyPart.startsWith("\r\n")) {
+			bodyContent = bodyPart;
+		} else {
+			// limit the number of crlf (new lines) we split on, only split the header from
+			// the body and don't split on any crlf in the body
+			String[] nextPartSplit = bodyPart.split("\r?\n\r?\n", 2);
 
-  /*
-   * (non-Javadoc)
-   * 
-   * @see gov.nist.javax.sip.message.MultipartMimeContentExt#setContent(java.lang.String,
-   * java.lang.String, gov.nist.javax.sip.message.Content)
-   */
-  public void addContent(Content content) {
-    this.add(content);
-  }
+			bodyContent = bodyPart;
 
-  public Iterator<Content> getContents() {
-    return this.contentList.iterator();
-  }
+			if (nextPartSplit.length == 2) {
+				// since we aren't completely sure the data is a header let's test the first one
+				String potentialHeaders[] = nextPartSplit[0].split("\r?\n");
+				if (potentialHeaders[0].indexOf(":") > 0) {
+					headers = potentialHeaders;
+					bodyContent = nextPartSplit[1];
+				}
+			}
+		}
 
-  public int getContentCount() {
-    return this.contentList.size();
-  }
+		ContentImpl content = new ContentImpl(bodyContent);
+		if (headers != null) {
+			for (String partHeader : headers) {
+				Header header = headerFactory.createHeader(partHeader);
+				if (header instanceof ContentTypeHeader) {
+					content.setContentTypeHeader((ContentTypeHeader) header);
+				} else if (header instanceof ContentDispositionHeader) {
+					content.setContentDispositionHeader((ContentDispositionHeader) header);
+				} else {
+					content.addExtensionHeader(header);
+				}
+			}
+		}
+		return content;
+	}
+
+	/*
+	 * (non-Javadoc)
+	 * 
+	 * @see gov.nist.javax.sip.message.MultipartMimeContentExt#setContent(java.lang.String, java.lang.String, gov.nist.javax.sip.message.Content)
+	 */
+	public void addContent(Content content) {
+		this.add(content);
+	}
+
+	public Iterator<Content> getContents() {
+		return this.contentList.iterator();
+	}
+
+	public int getContentCount() {
+		return this.contentList.size();
+	}
 
 }

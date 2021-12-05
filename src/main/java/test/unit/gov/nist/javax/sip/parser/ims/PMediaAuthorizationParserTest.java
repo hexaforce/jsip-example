@@ -27,19 +27,17 @@ package test.unit.gov.nist.javax.sip.parser.ims;
 import gov.nist.javax.sip.parser.ims.PMediaAuthorizationParser;
 import test.unit.gov.nist.javax.sip.parser.ParserTestCase;
 
-public class PMediaAuthorizationParserTest extends ParserTestCase
-{
-    public void testParser() {
-        // TODO Auto-generated method stub
+public class PMediaAuthorizationParserTest extends ParserTestCase {
+	public void testParser() {
+		// TODO Auto-generated method stub
 
-        String[] mediaAuth =  {
-         "P-Media-Authorization: 13579bdf\n",
+		String[] mediaAuth = { "P-Media-Authorization: 13579bdf\n",
 
-         "P-Media-Authorization: 02468ace, 13579bdf\n",
+				"P-Media-Authorization: 02468ace, 13579bdf\n",
 
-        };
+		};
 
-        super.testParser(PMediaAuthorizationParser.class,mediaAuth);
-    }
+		super.testParser(PMediaAuthorizationParser.class, mediaAuth);
+	}
 
 }

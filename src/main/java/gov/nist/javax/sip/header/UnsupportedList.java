@@ -27,28 +27,28 @@
 * Product of NIST/ITL Advanced Networking Technologies Division (ANTD).        *
 *******************************************************************************/
 package gov.nist.javax.sip.header;
+
 import javax.sip.header.UnsupportedHeader;
 
 /**
  * List of Unsupported headers.
+ * 
  * @version 1.2 $Revision: 1.6 $ $Date: 2009-07-17 18:57:40 $
  * @author M. Ranganathan
  */
 public class UnsupportedList extends SIPHeaderList<Unsupported> {
 
+	private static final long serialVersionUID = -4052610269407058661L;
 
-    private static final long serialVersionUID = -4052610269407058661L;
+	/**
+	 * Default Constructor
+	 */
+	public UnsupportedList() {
+		super(Unsupported.class, UnsupportedHeader.NAME);
+	}
 
-
-    /** Default Constructor
-     */
-    public UnsupportedList() {
-        super(Unsupported.class, UnsupportedHeader.NAME);
-    }
-
-
-    public Object clone() {
-        UnsupportedList retval = new UnsupportedList();
-        return retval.clonehlist(this.hlist);
-    }
+	public Object clone() {
+		UnsupportedList retval = new UnsupportedList();
+		return retval.clonehlist(this.hlist);
+	}
 }

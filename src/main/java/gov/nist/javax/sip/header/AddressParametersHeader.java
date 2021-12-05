@@ -29,77 +29,85 @@ import javax.sip.header.Parameters;
 
 import gov.nist.javax.sip.address.AddressImpl;
 
-/** An abstract class for headers that take an address and parameters.
+/**
+ * An abstract class for headers that take an address and parameters.
  *
  * @version 1.2 $Revision: 1.11 $ $Date: 2009-07-17 18:57:25 $
  *
  * @since 1.1
  *
- * @author M. Ranganathan   <br/>
+ * @author M. Ranganathan <br/>
  *
  *
  *
  *
  */
-public abstract class AddressParametersHeader extends ParametersHeader implements  Parameters {
+public abstract class AddressParametersHeader extends ParametersHeader implements Parameters {
 
-    protected AddressImpl address;
+	protected AddressImpl address;
 
-    /* (non-Javadoc)
-     * @see gov.nist.javax.sip.header.AddressParameters#getAddress()
-     */
-    public Address getAddress() {
-        return address;
-    }
+	/*
+	 * (non-Javadoc)
+	 * 
+	 * @see gov.nist.javax.sip.header.AddressParameters#getAddress()
+	 */
+	public Address getAddress() {
+		return address;
+	}
 
-    /* (non-Javadoc)
-     * @see gov.nist.javax.sip.header.AddressParameters#setAddress(javax.sip.address.Address)
-     */
-    public void setAddress(Address address) {
-        this.address = (AddressImpl) address;
-    }
+	/*
+	 * (non-Javadoc)
+	 * 
+	 * @see gov.nist.javax.sip.header.AddressParameters#setAddress(javax.sip.address.Address)
+	 */
+	public void setAddress(Address address) {
+		this.address = (AddressImpl) address;
+	}
 
-    /**
-     * Constructor given the name of the header.
-     */
-    protected AddressParametersHeader(String name) {
-        super(name);
-    }
+	/**
+	 * Constructor given the name of the header.
+	 */
+	protected AddressParametersHeader(String name) {
+		super(name);
+	}
 
-    /**
-     * Constructor given a synch flag.
-     *
-     * @param name
-     * @param sync
-     */
+	/**
+	 * Constructor given a synch flag.
+	 *
+	 * @param name
+	 * @param sync
+	 */
 
-    protected AddressParametersHeader(String name, boolean sync) {
-        super(name,sync);
-    }
+	protected AddressParametersHeader(String name, boolean sync) {
+		super(name, sync);
+	}
 
-    /* (non-Javadoc)
-     * @see gov.nist.javax.sip.header.AddressParameters#clone()
-     */
-    public Object clone() {
-        AddressParametersHeader retval = (AddressParametersHeader) super.clone();
-        if (this.address != null)
-            retval.address = (AddressImpl) this.address.clone();
-        return retval;
-    }
+	/*
+	 * (non-Javadoc)
+	 * 
+	 * @see gov.nist.javax.sip.header.AddressParameters#clone()
+	 */
+	public Object clone() {
+		AddressParametersHeader retval = (AddressParametersHeader) super.clone();
+		if (this.address != null)
+			retval.address = (AddressImpl) this.address.clone();
+		return retval;
+	}
 
-    /* (non-Javadoc)
-     * @see gov.nist.javax.sip.header.AddressParameters#equals(java.lang.Object)
-     */
-    public boolean equals(Object other) {
-        if (this==other) return true;
+	/*
+	 * (non-Javadoc)
+	 * 
+	 * @see gov.nist.javax.sip.header.AddressParameters#equals(java.lang.Object)
+	 */
+	public boolean equals(Object other) {
+		if (this == other)
+			return true;
 
-
-
-        if (other instanceof HeaderAddress && other instanceof Parameters) {
-            final HeaderAddress o = (HeaderAddress) other;
-            return this.getAddress().equals( o.getAddress() ) && this.equalParameters( (Parameters) o );
-        }
-        return false;
-    }
+		if (other instanceof HeaderAddress && other instanceof Parameters) {
+			final HeaderAddress o = (HeaderAddress) other;
+			return this.getAddress().equals(o.getAddress()) && this.equalParameters((Parameters) o);
+		}
+		return false;
+	}
 
 }

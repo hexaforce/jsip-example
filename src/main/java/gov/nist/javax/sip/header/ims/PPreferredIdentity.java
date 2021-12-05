@@ -36,58 +36,52 @@ import javax.sip.header.ExtensionHeader;
 import gov.nist.javax.sip.address.AddressImpl;
 import gov.nist.javax.sip.header.AddressParametersHeader;
 
-
-
-
 /**
  * P-Preferred-Identity SIP Private Header - RFC 3325.
  *
  * @author ALEXANDRE MIGUEL SILVA SANTOS - Nú 10045401
  */
 
+public class PPreferredIdentity extends AddressParametersHeader implements PPreferredIdentityHeader, SIPHeaderNamesIms, ExtensionHeader {
 
+	/**
+	 * constructor
+	 * 
+	 * @param address address to set
+	 */
+	public PPreferredIdentity(AddressImpl address) {
+		super(NAME);
+		this.address = address;
+	}
 
-public class PPreferredIdentity
-    extends AddressParametersHeader
-    implements PPreferredIdentityHeader, SIPHeaderNamesIms , ExtensionHeader {
+	/**
+	 * default constructor
+	 */
+	public PPreferredIdentity() {
+		super(P_PREFERRED_IDENTITY);
+	}
 
-    /**
-     * constructor
-     * @param address address to set
-     */
-    public PPreferredIdentity(AddressImpl address) {
-        super(NAME);
-        this.address = address;
-    }
-
-    /**
-     * default constructor
-     */
-    public PPreferredIdentity() {
-        super(P_PREFERRED_IDENTITY);
-    }
-
-    /** Encode into canonical form.
-     * @return String containing the canonicaly encoded header.
-     */
-    public StringBuilder encodeBody(StringBuilder retval) {
+	/**
+	 * Encode into canonical form.
+	 * 
+	 * @return String containing the canonicaly encoded header.
+	 */
+	public StringBuilder encodeBody(StringBuilder retval) {
 //        StringBuilder retval = new StringBuilder();
-        if (address.getAddressType() == AddressImpl.ADDRESS_SPEC) {
-            retval.append(LESS_THAN);
-        }
-        address.encode(retval);
-        if (address.getAddressType() == AddressImpl.ADDRESS_SPEC) {
-            retval.append(GREATER_THAN);
-        }
+		if (address.getAddressType() == AddressImpl.ADDRESS_SPEC) {
+			retval.append(LESS_THAN);
+		}
+		address.encode(retval);
+		if (address.getAddressType() == AddressImpl.ADDRESS_SPEC) {
+			retval.append(GREATER_THAN);
+		}
 
+		return retval;
+	}
 
-        return retval;
-    }
+	public void setValue(String value) throws ParseException {
+		throw new ParseException(value, 0);
 
-    public void setValue(String value) throws ParseException {
-        throw new ParseException (value,0);
-
-    }
+	}
 
 }
-

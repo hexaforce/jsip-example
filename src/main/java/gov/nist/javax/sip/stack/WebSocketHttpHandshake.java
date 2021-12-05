@@ -43,14 +43,13 @@ import gov.nist.core.StackLogger;
  */
 public class WebSocketHttpHandshake {
 
-	private static StackLogger logger = CommonLogger
-			.getLogger(WebSocketHttpHandshake.class);
-	
+	private static StackLogger logger = CommonLogger.getLogger(WebSocketHttpHandshake.class);
+
 	private HashMap<String, String> headers = new HashMap<String, String>();
 
 	public byte[] createHttpResponse(String request) throws Exception {
-		
-		if(logger.isLoggingEnabled(LogLevels.TRACE_DEBUG)) {
+
+		if (logger.isLoggingEnabled(LogLevels.TRACE_DEBUG)) {
 			logger.logDebug("Request=" + request);
 		}
 		InputStream is = new ByteArrayInputStream(request.getBytes());
@@ -92,7 +91,7 @@ public class WebSocketHttpHandshake {
 			is.read(key3);
 		}
 
-		//answer the handshake
+		// answer the handshake
 		StringBuilder sb = new StringBuilder();
 		String lineSeparator = "\r\n";
 		sb.append("HTTP/1.1 101 Web Socket Protocol Handshake").append("\r\n");
@@ -104,25 +103,23 @@ public class WebSocketHttpHandshake {
 
 		sb.append("WebSocket-Origin: ").append(headers.get("Origin")).append(lineSeparator);
 
-
 		if (isSecure) {
 			sb.append("Sec-");
 		}
-		sb.append("WebSocket-Location: ws://").append(headers.get("Host")).
-		append(headers.get("ctx")).append(lineSeparator);
+		sb.append("WebSocket-Location: ws://").append(headers.get("Host")).append(headers.get("ctx")).append(lineSeparator);
 
 		sb.append("Sec-WebSocket-Accept: ").append(computeRev13Response(headers.get("Sec-WebSocket-Key"))).append(lineSeparator);
-		//sb.append("myheader: nothing");
-		//.append("Sec-WebSocket-Protocol: chat")
-		//        .append("Server: Kaazing Gateway\n" + 
-		//        		"Date: Tue, 21 Aug 2012 00:59:35 GMT\n" + 
-		//        		"Access-Control-Allow-Origin: http://www.websocket.org\n" + 
-		//        		"Access-Control-Allow-Credentials: true\n" + 
-		//        		"Access-Control-Allow-Headers: content-type\n" + 
-		//        		"Access-Control-Allow-Headers: authorization\n" + 
-		//        		"Access-Control-Allow-Headers: x-websocket-extensions\n" + 
-		//        		"Access-Control-Allow-Headers: x-websocket-version\n" + 
-		//        		"Access-Control-Allow-Headers: x-websocket-protocol\n");
+		// sb.append("myheader: nothing");
+		// .append("Sec-WebSocket-Protocol: chat")
+		// .append("Server: Kaazing Gateway\n" +
+		// "Date: Tue, 21 Aug 2012 00:59:35 GMT\n" +
+		// "Access-Control-Allow-Origin: http://www.websocket.org\n" +
+		// "Access-Control-Allow-Credentials: true\n" +
+		// "Access-Control-Allow-Headers: content-type\n" +
+		// "Access-Control-Allow-Headers: authorization\n" +
+		// "Access-Control-Allow-Headers: x-websocket-extensions\n" +
+		// "Access-Control-Allow-Headers: x-websocket-version\n" +
+		// "Access-Control-Allow-Headers: x-websocket-protocol\n");
 		if (headers.get("Protocol") != null) {
 			if (isSecure) {
 				sb.append("Sec-");
@@ -137,7 +134,7 @@ public class WebSocketHttpHandshake {
 
 		String response = sb.toString();
 
-		if(logger.isLoggingEnabled(LogLevels.TRACE_DEBUG)) {
+		if (logger.isLoggingEnabled(LogLevels.TRACE_DEBUG)) {
 			logger.logDebug("Response=" + response);
 		}
 		byte[] output = sb.toString().getBytes();
@@ -158,9 +155,8 @@ public class WebSocketHttpHandshake {
 		byte[] digest = md.digest(key.getBytes());
 		ByteArrayOutputStream baos = new ByteArrayOutputStream();
 		return new String(Base64Coder.encode(digest));
-		
-	}
 
+	}
 
 	private String readLine(InputStream is) throws IOException {
 		StringBuilder sb = new StringBuilder();
@@ -184,8 +180,8 @@ public class WebSocketHttpHandshake {
 			if (input == nl && gotcr) {
 				break;
 			} else if (input == nl) {
-				//we do this only because the protocol
-				//tells ut that there must be a cr before the nl.
+				// we do this only because the protocol
+				// tells ut that there must be a cr before the nl.
 				return null;
 			}
 			sb.append((char) input);

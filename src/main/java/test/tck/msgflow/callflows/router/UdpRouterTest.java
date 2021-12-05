@@ -19,21 +19,20 @@
 */
 package test.tck.msgflow.callflows.router;
 
-
 public class UdpRouterTest extends AbstractRouterTestCase {
-    //boolean myFlag;
-    public void setUp() throws Exception {
-        testedImplFlag = false;
-        super.transport = "udp";
-        super.setUp();
-    }
+	// boolean myFlag;
+	public void setUp() throws Exception {
+		testedImplFlag = false;
+		super.transport = "udp";
+		super.setUp();
+	}
 
-    public void testTelUriInvite() {
-        this.shootist.sendInvite();
+	public void testTelUriInvite() {
+		this.shootist.sendInvite();
 
-    }
+	}
 
-    /*public void testTelUriInvite2() {
-        this.shootist.sendInvite();
-    }*/
+	/*
+	 * public void testTelUriInvite2() { this.shootist.sendInvite(); }
+	 */
 }

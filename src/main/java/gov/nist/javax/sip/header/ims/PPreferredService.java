@@ -1,4 +1,5 @@
 package gov.nist.javax.sip.header.ims;
+
 /*
 * Conditions Of Use
 *
@@ -29,89 +30,83 @@ import java.text.ParseException;
 import javax.sip.header.ExtensionHeader;
 
 import gov.nist.javax.sip.header.SIPHeader;
+
 /**
  *
  * @author aayush.bhatnagar
  * @author jean.deruelle@gmail.com
  */
-public class PPreferredService extends SIPHeader implements PPreferredServiceHeader, SIPHeaderNamesIms, ExtensionHeader{
+public class PPreferredService extends SIPHeader implements PPreferredServiceHeader, SIPHeaderNamesIms, ExtensionHeader {
 
-    private String subServiceIds;
-    private String subAppIds;
+	private String subServiceIds;
+	private String subAppIds;
 
-    protected PPreferredService(String name) {
-        super(NAME);
-    }
+	protected PPreferredService(String name) {
+		super(NAME);
+	}
 
-    public PPreferredService()
-    {
-        super(P_PREFERRED_SERVICE);
-    }
+	public PPreferredService() {
+		super(P_PREFERRED_SERVICE);
+	}
 
-    @Override
-    protected StringBuilder encodeBody(StringBuilder retval) {
+	@Override
+	protected StringBuilder encodeBody(StringBuilder retval) {
 //        StringBuilder retval = new StringBuilder();
 
-         retval.append(ParameterNamesIms.SERVICE_ID);
+		retval.append(ParameterNamesIms.SERVICE_ID);
 
-            if(this.subServiceIds!=null)
-            {
-                retval.append(ParameterNamesIms.SERVICE_ID_LABEL).append(".");
-                retval.append(this.getSubserviceIdentifiers());
-            }
+		if (this.subServiceIds != null) {
+			retval.append(ParameterNamesIms.SERVICE_ID_LABEL).append(".");
+			retval.append(this.getSubserviceIdentifiers());
+		}
 
-            else if(this.subAppIds!=null)
-            {
-                retval.append(ParameterNamesIms.APPLICATION_ID_LABEL).append(".");
-                retval.append(this.getApplicationIdentifiers());
-            }
+		else if (this.subAppIds != null) {
+			retval.append(ParameterNamesIms.APPLICATION_ID_LABEL).append(".");
+			retval.append(this.getApplicationIdentifiers());
+		}
 
-        return retval;
-    }
+		return retval;
+	}
 
-    public void setValue(String value) throws ParseException {
-        throw new ParseException(value,0);
+	public void setValue(String value) throws ParseException {
+		throw new ParseException(value, 0);
 
-    }
+	}
 
-    public String getApplicationIdentifiers() {
-        if(this.subAppIds.charAt(0)=='.')
-        {
-        	// https://java.net/jira/browse/JSIP-476 Adding trim to avoid parsing issues
-            return this.subAppIds.substring(1).trim();
-        }
-        return this.subAppIds;
-    }
+	public String getApplicationIdentifiers() {
+		if (this.subAppIds.charAt(0) == '.') {
+			// https://java.net/jira/browse/JSIP-476 Adding trim to avoid parsing issues
+			return this.subAppIds.substring(1).trim();
+		}
+		return this.subAppIds;
+	}
 
-    public String getSubserviceIdentifiers() {
-        if(this.subServiceIds.charAt(0)=='.')
-        {
-        	// https://java.net/jira/browse/JSIP-476 Adding trim to avoid parsing issues
-            return this.subServiceIds.substring(1).trim();
-        }
-        return this.subServiceIds;
-    }
+	public String getSubserviceIdentifiers() {
+		if (this.subServiceIds.charAt(0) == '.') {
+			// https://java.net/jira/browse/JSIP-476 Adding trim to avoid parsing issues
+			return this.subServiceIds.substring(1).trim();
+		}
+		return this.subServiceIds;
+	}
 
-    public void setApplicationIdentifiers(String appids) {
-        this.subAppIds = appids;
+	public void setApplicationIdentifiers(String appids) {
+		this.subAppIds = appids;
 
-    }
+	}
 
-    public void setSubserviceIdentifiers(String subservices) {
-        this.subServiceIds = ".".concat(subservices);
+	public void setSubserviceIdentifiers(String subservices) {
+		this.subServiceIds = ".".concat(subservices);
 
-    }
+	}
 
-    public boolean equals(Object other)
-    {
-        return (other instanceof PPreferredServiceHeader) && super.equals(other);
+	public boolean equals(Object other) {
+		return (other instanceof PPreferredServiceHeader) && super.equals(other);
 
-    }
+	}
 
-
-    public Object clone() {
-        PPreferredService retval = (PPreferredService) super.clone();
-        return retval;
-    }
+	public Object clone() {
+		PPreferredService retval = (PPreferredService) super.clone();
+		return retval;
+	}
 
 }

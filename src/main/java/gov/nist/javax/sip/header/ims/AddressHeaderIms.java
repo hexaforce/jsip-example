@@ -37,48 +37,48 @@ import gov.nist.javax.sip.header.SIPHeader;
 
 /**
  * AddressHeader base class.
+ * 
  * @author ALEXANDRE MIGUEL SILVA SANTOS (PT Innovacau)
  */
 
 public abstract class AddressHeaderIms extends SIPHeader {
 
-    protected AddressImpl address;
+	protected AddressImpl address;
 
-    /**
-     * get the Address field
-     * @return the imbedded  Address
-     */
-    public Address getAddress() {
-        return address;
-    }
+	/**
+	 * get the Address field
+	 * 
+	 * @return the imbedded Address
+	 */
+	public Address getAddress() {
+		return address;
+	}
 
-    /**
-     * set the Address field
-     * @param address Address to set
-     */
-    public void setAddress(Address address) {
-        this.address = (AddressImpl) address;
-    }
+	/**
+	 * set the Address field
+	 * 
+	 * @param address Address to set
+	 */
+	public void setAddress(Address address) {
+		this.address = (AddressImpl) address;
+	}
 
-    public abstract String encodeBody();
-    //protected abstract String encodeBody();
+	public abstract String encodeBody();
+	// protected abstract String encodeBody();
 
+	/**
+	 * Constructor given the name of the header.
+	 */
+	public AddressHeaderIms(String name) {
+		// protected AddressHeader(String name) {
+		super(name);
+	}
 
-    /**
-     * Constructor given the name of the header.
-     */
-    public AddressHeaderIms(String name) {
-    //protected AddressHeader(String name) {
-        super(name);
-    }
-
-    public Object clone() {
-        AddressHeaderIms retval = (AddressHeaderIms) super.clone();
-        if (this.address != null)
-            retval.address = (AddressImpl) this.address.clone();
-        return retval;
-    }
-
+	public Object clone() {
+		AddressHeaderIms retval = (AddressHeaderIms) super.clone();
+		if (this.address != null)
+			retval.address = (AddressImpl) this.address.clone();
+		return retval;
+	}
 
 }
-

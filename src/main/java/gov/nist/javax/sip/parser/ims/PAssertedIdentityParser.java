@@ -43,64 +43,61 @@ import gov.nist.javax.sip.parser.TokenTypes;
  * @author ALEXANDRE MIGUEL SILVA SANTOS
  */
 
-public class PAssertedIdentityParser
-    extends AddressParametersParser
-    implements TokenTypes{
+public class PAssertedIdentityParser extends AddressParametersParser implements TokenTypes {
 
-    /**
-     * Constructor
-     * @param assertedIdentity -  message to parse to set
-     */
-    public PAssertedIdentityParser(String assertedIdentity) {
-        super(assertedIdentity);
+	/**
+	 * Constructor
+	 * 
+	 * @param assertedIdentity - message to parse to set
+	 */
+	public PAssertedIdentityParser(String assertedIdentity) {
+		super(assertedIdentity);
 
-    }
+	}
 
-    protected PAssertedIdentityParser(Lexer lexer) {
-        super(lexer);
+	protected PAssertedIdentityParser(Lexer lexer) {
+		super(lexer);
 
-    }
+	}
 
+	public SIPHeader parse() throws ParseException {
 
-    public SIPHeader parse() throws ParseException {
+		if (debug)
+			dbg_enter("AssertedIdentityParser.parse");
 
-        if (debug)
-            dbg_enter("AssertedIdentityParser.parse");
+		PAssertedIdentityList assertedIdList = new PAssertedIdentityList();
 
-        PAssertedIdentityList assertedIdList = new PAssertedIdentityList();
+		try {
 
-        try {
+			headerName(TokenTypes.P_ASSERTED_IDENTITY);
 
-            headerName(TokenTypes.P_ASSERTED_IDENTITY);
+			PAssertedIdentity pai = new PAssertedIdentity();
+			pai.setHeaderName(SIPHeaderNamesIms.P_ASSERTED_IDENTITY);
 
-            PAssertedIdentity pai = new PAssertedIdentity();
-            pai.setHeaderName(SIPHeaderNamesIms.P_ASSERTED_IDENTITY);
+			super.parse(pai);
+			assertedIdList.add(pai);
 
-            super.parse(pai);
-            assertedIdList.add(pai);
+			this.lexer.SPorHT();
+			while (lexer.lookAhead(0) == ',') {
+				this.lexer.match(',');
+				this.lexer.SPorHT();
 
-            this.lexer.SPorHT();
-            while (lexer.lookAhead(0) == ',')
-            {
-                this.lexer.match(',');
-                this.lexer.SPorHT();
+				pai = new PAssertedIdentity();
+				super.parse(pai);
+				assertedIdList.add(pai);
 
-                pai = new PAssertedIdentity();
-                super.parse(pai);
-                assertedIdList.add(pai);
+				this.lexer.SPorHT();
+			}
+			this.lexer.SPorHT();
+			this.lexer.match('\n');
 
-                this.lexer.SPorHT();
-            }
-            this.lexer.SPorHT();
-            this.lexer.match('\n');
+			return assertedIdList;
 
-            return assertedIdList;
+		}
 
-        }
-
-        finally {
-            if (debug)
-                dbg_leave("AssertedIdentityParser.parse");
-            }
-    }
+		finally {
+			if (debug)
+				dbg_leave("AssertedIdentityParser.parse");
+		}
+	}
 }

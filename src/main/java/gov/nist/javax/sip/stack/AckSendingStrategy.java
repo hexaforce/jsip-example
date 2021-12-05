@@ -39,21 +39,20 @@ import gov.nist.javax.sip.message.SIPRequest;
  */
 public interface AckSendingStrategy {
 
-    /**
-     * send the ack request
-     * 
-     * @param ackRequest
-     * @throws SipException
-     * @throws IOException
-     */
-    public void send(SIPRequest ackRequest) throws SipException, IOException;
+	/**
+	 * send the ack request
+	 * 
+	 * @param ackRequest
+	 * @throws SipException
+	 * @throws IOException
+	 */
+	public void send(SIPRequest ackRequest) throws SipException, IOException;
 
-    /**
-     * Returns the last hop that a send was attempted on.
-     * 
-     * @return the last hop used to send a message or null if an error was encountered while
-     *         determining the hops or if send hasn't been called yet..
-     */
-    public Hop getLastHop();
+	/**
+	 * Returns the last hop that a send was attempted on.
+	 * 
+	 * @return the last hop used to send a message or null if an error was encountered while determining the hops or if send hasn't been called yet..
+	 */
+	public Hop getLastHop();
 
 }

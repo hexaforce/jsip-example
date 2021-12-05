@@ -25,7 +25,6 @@
 */
 package gov.nist.javax.sip.stack;
 
-
 import java.util.EventObject;
 
 /**
@@ -41,53 +40,48 @@ import java.util.EventObject;
  */
 public class SIPTransactionErrorEvent extends EventObject {
 
-    /**
-     * Comment for <code>serialVersionUID</code>
-     */
-    private static final long serialVersionUID = -2713188471978065031L;
+	/**
+	 * Comment for <code>serialVersionUID</code>
+	 */
+	private static final long serialVersionUID = -2713188471978065031L;
 
-    /**
-     * This event ID indicates that the transaction has timed out.
-     */
-    public static final int TIMEOUT_ERROR = 1;
+	/**
+	 * This event ID indicates that the transaction has timed out.
+	 */
+	public static final int TIMEOUT_ERROR = 1;
 
-    /**
-     * This event ID indicates that there was an error sending a message using
-     * the underlying transport.
-     */
-    public static final int TRANSPORT_ERROR = 2;
+	/**
+	 * This event ID indicates that there was an error sending a message using the underlying transport.
+	 */
+	public static final int TRANSPORT_ERROR = 2;
 
-    /**
-     * Retransmit signal to application layer.
-     */
-    public static final int TIMEOUT_RETRANSMIT = 3;
+	/**
+	 * Retransmit signal to application layer.
+	 */
+	public static final int TIMEOUT_RETRANSMIT = 3;
 
+	// ID of this error event
+	private int errorID;
 
+	/**
+	 * Creates a transaction error event.
+	 *
+	 * @param sourceTransaction  Transaction which is raising the error.
+	 * @param transactionErrorID ID of the error that has ocurred.
+	 */
+	SIPTransactionErrorEvent(SIPTransaction sourceTransaction, int transactionErrorID) {
 
-    // ID of this error event
-    private int errorID;
+		super(sourceTransaction);
+		errorID = transactionErrorID;
 
-    /**
-     * Creates a transaction error event.
-     *
-     * @param sourceTransaction Transaction which is raising the error.
-     * @param transactionErrorID ID of the error that has ocurred.
-     */
-    SIPTransactionErrorEvent(
-        SIPTransaction sourceTransaction,
-        int transactionErrorID) {
+	}
 
-        super(sourceTransaction);
-        errorID = transactionErrorID;
-
-    }
-
-    /**
-     * Returns the ID of the error.
-     *
-     * @return Error ID.
-     */
-    public int getErrorID() {
-        return errorID;
-    }
+	/**
+	 * Returns the ID of the error.
+	 *
+	 * @return Error ID.
+	 */
+	public int getErrorID() {
+		return errorID;
+	}
 }

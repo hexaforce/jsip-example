@@ -26,12 +26,12 @@ package test.tck.msgflow.callflows.subsnotify;
  *
  */
 public class TcpSubsnotifyTest extends UdpSubsnotifyTest {
-    boolean myFlag;
+	boolean myFlag;
 
-    public void setUp() throws Exception {
-        super.testedImplFlag = !myFlag;
-        myFlag = !super.testedImplFlag;
-        super.transport = "tcp";
-        super.setUp();
-    }
+	public void setUp() throws Exception {
+		super.testedImplFlag = !myFlag;
+		myFlag = !super.testedImplFlag;
+		super.transport = "tcp";
+		super.setUp();
+	}
 }

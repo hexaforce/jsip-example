@@ -32,8 +32,9 @@ import javax.sip.InvalidArgumentException;
 import javax.sip.header.ContentLengthHeader;
 
 /**
-* ContentLength SIPHeader (of which there can be only one in a SIPMessage).
-*<pre>
+ * ContentLength SIPHeader (of which there can be only one in a SIPMessage).
+ * 
+ * <pre>
 *Fielding, et al.            Standards Track                   [Page 119]
 *RFC 2616                        HTTP/1.1                       June 1999
 *
@@ -65,93 +66,91 @@ import javax.sip.header.ContentLengthHeader;
 *   SHOULD be sent whenever the message's length can be determined prior
 *   to being transferred, unless this is prohibited by the rules in
 *   section 4.4.
-* </pre>
-*
-*@author M. Ranganathan   <br/>
-*@author Olivier Deruelle <br/>
-*@version 1.2 $Revision: 1.8 $ $Date: 2010-05-06 14:07:46 $
-*@since 1.1
-*/
-public class ContentLength
-    extends SIPHeader
-    implements javax.sip.header.ContentLengthHeader {
+ * </pre>
+ *
+ * @author M. Ranganathan <br/>
+ * @author Olivier Deruelle <br/>
+ * @version 1.2 $Revision: 1.8 $ $Date: 2010-05-06 14:07:46 $
+ * @since 1.1
+ */
+public class ContentLength extends SIPHeader implements javax.sip.header.ContentLengthHeader {
 
-    /**
-     * Comment for <code>serialVersionUID</code>
-     */
-    private static final long serialVersionUID = 1187190542411037027L;
-    /**
-     * contentLength field.
-     */
-    protected int contentLength = -1;
+	/**
+	 * Comment for <code>serialVersionUID</code>
+	 */
+	private static final long serialVersionUID = 1187190542411037027L;
+	/**
+	 * contentLength field.
+	 */
+	protected int contentLength = -1;
 
-    /**
-     * Default constructor.
-     */
-    public ContentLength() {
-        super(NAME);
-    }
+	/**
+	 * Default constructor.
+	 */
+	public ContentLength() {
+		super(NAME);
+	}
 
-    /**
-     * Constructor given a length.
-     */
-    public ContentLength(int length) {
-        super(NAME);
-        this.contentLength = length;
-    }
+	/**
+	 * Constructor given a length.
+	 */
+	public ContentLength(int length) {
+		super(NAME);
+		this.contentLength = length;
+	}
 
-    /**
-     * get the ContentLength field.
-     * @return int
-     */
-    public int getContentLength() {
-        return contentLength;
-    }
+	/**
+	 * get the ContentLength field.
+	 * 
+	 * @return int
+	 */
+	public int getContentLength() {
+		return contentLength;
+	}
 
-    /**
-     * Set the contentLength member
-     * @param contentLength int to set
-     */
-    public void setContentLength(int contentLength)
-        throws InvalidArgumentException {
-        if (contentLength < 0)
-            throw new InvalidArgumentException(
-                "JAIN-SIP Exception"
-                    + ", ContentLength, setContentLength(), the contentLength parameter is <0");
-        this.contentLength = Integer.valueOf(contentLength);
-    }
+	/**
+	 * Set the contentLength member
+	 * 
+	 * @param contentLength int to set
+	 */
+	public void setContentLength(int contentLength) throws InvalidArgumentException {
+		if (contentLength < 0)
+			throw new InvalidArgumentException("JAIN-SIP Exception" + ", ContentLength, setContentLength(), the contentLength parameter is <0");
+		this.contentLength = Integer.valueOf(contentLength);
+	}
 
-    /**
-     * Encode into a canonical string.
-     * @return String
-     */
-    public String encodeBody() {
-        return encodeBody(new StringBuilder()).toString();
-    }
+	/**
+	 * Encode into a canonical string.
+	 * 
+	 * @return String
+	 */
+	public String encodeBody() {
+		return encodeBody(new StringBuilder()).toString();
+	}
 
-    protected StringBuilder encodeBody(StringBuilder buffer) {
-        if (contentLength < 0)
-            buffer.append("0");
-        else
-            buffer.append(contentLength);
-        return buffer;
-    }
+	protected StringBuilder encodeBody(StringBuilder buffer) {
+		if (contentLength < 0)
+			buffer.append("0");
+		else
+			buffer.append(contentLength);
+		return buffer;
+	}
 
-    /**
-     * Pattern matcher ignores content length.
-     */
-    public boolean match(Object other) {
-        if (other instanceof ContentLength)
-            return true;
-        else
-            return false;
-    }
+	/**
+	 * Pattern matcher ignores content length.
+	 */
+	public boolean match(Object other) {
+		if (other instanceof ContentLength)
+			return true;
+		else
+			return false;
+	}
 
-    public boolean equals(Object other) {
-        if (other instanceof ContentLengthHeader) {
-            final ContentLengthHeader o = (ContentLengthHeader) other;
-            return this.getContentLength() == o.getContentLength();
-        }
-        return false;
-    }
+	public boolean equals(Object other) {
+		if (other instanceof ContentLengthHeader) {
+			final ContentLengthHeader o = (ContentLengthHeader) other;
+			return this.getContentLength() == o.getContentLength();
+		}
+		return false;
+	}
 }

@@ -46,89 +46,92 @@ import gov.nist.javax.sip.header.SIPHeader;
  */
 public class RetryAfterParser extends HeaderParser {
 
-    /**
-     * Creates a new instance of RetryAfterParser
-     * @param retryAfter the header to parse
-     */
-    public RetryAfterParser(String retryAfter) {
-        super(retryAfter);
-    }
+	/**
+	 * Creates a new instance of RetryAfterParser
+	 * 
+	 * @param retryAfter the header to parse
+	 */
+	public RetryAfterParser(String retryAfter) {
+		super(retryAfter);
+	}
 
-    /**
-     * Constructor
-     * @param lexer the lexer to use to parse the header
-     */
-    protected RetryAfterParser(Lexer lexer) {
-        super(lexer);
-    }
+	/**
+	 * Constructor
+	 * 
+	 * @param lexer the lexer to use to parse the header
+	 */
+	protected RetryAfterParser(Lexer lexer) {
+		super(lexer);
+	}
 
-    /**
-     * parse the String message
-     * @return SIPHeader (RetryAfter object)
-     * @throws SIPParseException if the message does not respect the spec.
-     */
-    public SIPHeader parse() throws ParseException {
+	/**
+	 * parse the String message
+	 * 
+	 * @return SIPHeader (RetryAfter object)
+	 * @throws SIPParseException if the message does not respect the spec.
+	 */
+	public SIPHeader parse() throws ParseException {
 
-        if (debug)
-            dbg_enter("RetryAfterParser.parse");
+		if (debug)
+			dbg_enter("RetryAfterParser.parse");
 
-        RetryAfter retryAfter = new RetryAfter();
-        try {
-            headerName(TokenTypes.RETRY_AFTER);
+		RetryAfter retryAfter = new RetryAfter();
+		try {
+			headerName(TokenTypes.RETRY_AFTER);
 
-            // mandatory delatseconds:
-            String value = lexer.number();
-            try {
-                int ds = Integer.parseInt(value);
-                retryAfter.setRetryAfter(ds);
-            } catch (NumberFormatException ex) {
-                throw createParseException(ex.getMessage());
-            } catch (InvalidArgumentException ex) {
-                throw createParseException(ex.getMessage());
-            }
+			// mandatory delatseconds:
+			String value = lexer.number();
+			try {
+				int ds = Integer.parseInt(value);
+				retryAfter.setRetryAfter(ds);
+			} catch (NumberFormatException ex) {
+				throw createParseException(ex.getMessage());
+			} catch (InvalidArgumentException ex) {
+				throw createParseException(ex.getMessage());
+			}
 
-            this.lexer.SPorHT();
-            if (lexer.lookAhead(0) == '(') {
-                String comment = this.lexer.comment();
-                retryAfter.setComment(comment);
-            }
-            this.lexer.SPorHT();
+			this.lexer.SPorHT();
+			if (lexer.lookAhead(0) == '(') {
+				String comment = this.lexer.comment();
+				retryAfter.setComment(comment);
+			}
+			this.lexer.SPorHT();
 
-            while (lexer.lookAhead(0) == ';') {
-                this.lexer.match(';');
-                this.lexer.SPorHT();
-                lexer.match(TokenTypes.ID);
-                Token token = lexer.getNextToken();
-                value = token.getTokenValue();
-                if (value.equalsIgnoreCase("duration")) {
-                    this.lexer.match('=');
-                    this.lexer.SPorHT();
-                    value = lexer.number();
-                    try {
-                        int duration = Integer.parseInt(value);
-                        retryAfter.setDuration(duration);
-                    } catch (NumberFormatException ex) {
-                        throw createParseException(ex.getMessage());
-                    } catch (InvalidArgumentException ex) {
-                        throw createParseException(ex.getMessage());
-                    }
-                } else {
-                    this.lexer.SPorHT();
-                    this.lexer.match('=');
-                    this.lexer.SPorHT();
-                    lexer.match(TokenTypes.ID);
-                    Token secondToken = lexer.getNextToken();
-                    String secondValue = secondToken.getTokenValue();
-                    retryAfter.setParameter(value, secondValue);
-                }
-                this.lexer.SPorHT();
-            }
-        } finally {
-            if (debug)
-                dbg_leave("RetryAfterParser.parse");
-        }
+			while (lexer.lookAhead(0) == ';') {
+				this.lexer.match(';');
+				this.lexer.SPorHT();
+				lexer.match(TokenTypes.ID);
+				Token token = lexer.getNextToken();
+				value = token.getTokenValue();
+				if (value.equalsIgnoreCase("duration")) {
+					this.lexer.match('=');
+					this.lexer.SPorHT();
+					value = lexer.number();
+					try {
+						int duration = Integer.parseInt(value);
+						retryAfter.setDuration(duration);
+					} catch (NumberFormatException ex) {
+						throw createParseException(ex.getMessage());
+					} catch (InvalidArgumentException ex) {
+						throw createParseException(ex.getMessage());
+					}
+				} else {
+					this.lexer.SPorHT();
+					this.lexer.match('=');
+					this.lexer.SPorHT();
+					lexer.match(TokenTypes.ID);
+					Token secondToken = lexer.getNextToken();
+					String secondValue = secondToken.getTokenValue();
+					retryAfter.setParameter(value, secondValue);
+				}
+				this.lexer.SPorHT();
+			}
+		} finally {
+			if (debug)
+				dbg_leave("RetryAfterParser.parse");
+		}
 
-        return retryAfter;
-    }
+		return retryAfter;
+	}
 
 }

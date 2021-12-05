@@ -25,35 +25,32 @@
 * Product of NIST/ITL Advanced Networking Technologies Division (ANTD).        *
 *******************************************************************************/
 package gov.nist.javax.sip.header;
+
 import javax.sip.header.AlertInfoHeader;
 
 /**
-* AlertInfo SIPHeader - there can be several AlertInfo headers.
-*
-*@author M. Ranganathan   <br/>
-*
-*
-*
-*/
+ * AlertInfo SIPHeader - there can be several AlertInfo headers.
+ *
+ * @author M. Ranganathan <br/>
+ *
+ *
+ *
+ */
 public class AlertInfoList extends SIPHeaderList<AlertInfo> {
 
+	private static final long serialVersionUID = 1L;
 
+	public Object clone() {
+		AlertInfoList retval = new AlertInfoList();
+		retval.clonehlist(this.hlist);
+		return retval;
+	}
 
-    private static final long serialVersionUID = 1L;
-
-
-    public Object clone() {
-        AlertInfoList retval = new AlertInfoList();
-        retval.clonehlist(this.hlist);
-        return retval;
-    }
-
-
-        /** default constructor
-         */
-    public AlertInfoList() {
-        super( AlertInfo.class,AlertInfoHeader.NAME);
-    }
-
+	/**
+	 * default constructor
+	 */
+	public AlertInfoList() {
+		super(AlertInfo.class, AlertInfoHeader.NAME);
+	}
 
 }

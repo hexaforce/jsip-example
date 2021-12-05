@@ -45,118 +45,113 @@ import test.tck.msgflow.callflows.ScenarioHarness;
  */
 public class ReInviteTCPPostParserThreadPoolTest extends ScenarioHarness implements SipListener {
 
+	protected Shootist shootist;
 
-    protected Shootist shootist;
+	private Shootme shootme;
 
-    private Shootme shootme;
+	private static Logger logger = Logger.getLogger("test.tck");
 
-    private static Logger logger = Logger.getLogger("test.tck");
+	private SipListener getSipListener(EventObject sipEvent) {
+		SipProvider source = (SipProvider) sipEvent.getSource();
+		SipListener listener = (SipListener) providerTable.get(source);
+		assertTrue(listener != null);
+		return listener;
+	}
 
-   
-    private SipListener getSipListener(EventObject sipEvent) {
-        SipProvider source = (SipProvider) sipEvent.getSource();
-        SipListener listener = (SipListener) providerTable.get(source);
-        assertTrue(listener != null);
-        return listener;
-    }
+	@Override
+	public String getName() {
+		return ReInviteTCPPostParserThreadPoolTest.class.getName();
+	}
 
-    @Override
-    public String getName() {
-    	return ReInviteTCPPostParserThreadPoolTest.class.getName();
-    }
-    public ReInviteTCPPostParserThreadPoolTest() {
-        super("reinvitetest", true);
-    }
+	public ReInviteTCPPostParserThreadPoolTest() {
+		super("reinvitetest", true);
+	}
 
-    public void setUp() {
+	public void setUp() {
 
-        try {
-            this.transport = "tcp";
+		try {
+			this.transport = "tcp";
 
-            super.setUp();
-            
-            shootist = new Shootist(getRiProtocolObjects());
-            
-            SipProvider shootistProvider = shootist.createSipProvider();
-            providerTable.put(shootistProvider, shootist);
+			super.setUp();
 
-            shootme = new Shootme(getTiProtocolObjects());
-            SipProvider shootmeProvider = shootme.createSipProvider();
-            providerTable.put(shootmeProvider, shootme);
-            shootistProvider.addSipListener(this);
-            shootmeProvider.addSipListener(this);
-            
-            ((SipStackImpl)getTiProtocolObjects().sipStack).setIsBackToBackUserAgent(true);
-            ((SipStackImpl)getRiProtocolObjects().sipStack).setIsBackToBackUserAgent(true);
-            
-        } catch (Exception ex) {
-            ex.printStackTrace();
-            fail("unexpected exception ");
-        }
-    }
+			shootist = new Shootist(getRiProtocolObjects());
 
-    public void testSendInvite() throws Exception {
-        int threads = 32;
-        PostParseExecutorServices.setPostParseExcutorSize(threads, 10000);
-        ((SipStackImpl)getRiProtocolObjects().sipStack).setTcpPostParsingThreadPoolSize(threads);
-        ((SipStackImpl)getTiProtocolObjects().sipStack).setTcpPostParsingThreadPoolSize(threads);
-        getRiProtocolObjects().start();        
-        getTiProtocolObjects().start();
-                   
-        this.shootist.sendInvite();
-        try {
-            Thread.sleep(20000);
-        } catch (InterruptedException e) {
-            e.printStackTrace();
-        }
-        this.shootist.checkState();
-        this.shootme.checkState();
-    }
+			SipProvider shootistProvider = shootist.createSipProvider();
+			providerTable.put(shootistProvider, shootist);
 
-    public void tearDown() {
-        try {            
-            
-            super.tearDown();
-            Thread.sleep(1000);
-            this.providerTable.clear();
-            logTestCompleted();
-        } catch (Exception ex) {
-            ex.printStackTrace();
-        }
+			shootme = new Shootme(getTiProtocolObjects());
+			SipProvider shootmeProvider = shootme.createSipProvider();
+			providerTable.put(shootmeProvider, shootme);
+			shootistProvider.addSipListener(this);
+			shootmeProvider.addSipListener(this);
 
-    }
+			((SipStackImpl) getTiProtocolObjects().sipStack).setIsBackToBackUserAgent(true);
+			((SipStackImpl) getRiProtocolObjects().sipStack).setIsBackToBackUserAgent(true);
 
-    public void processRequest(RequestEvent requestEvent) {
-        getSipListener(requestEvent).processRequest(requestEvent);
+		} catch (Exception ex) {
+			ex.printStackTrace();
+			fail("unexpected exception ");
+		}
+	}
 
-    }
+	public void testSendInvite() throws Exception {
+		int threads = 32;
+		PostParseExecutorServices.setPostParseExcutorSize(threads, 10000);
+		((SipStackImpl) getRiProtocolObjects().sipStack).setTcpPostParsingThreadPoolSize(threads);
+		((SipStackImpl) getTiProtocolObjects().sipStack).setTcpPostParsingThreadPoolSize(threads);
+		getRiProtocolObjects().start();
+		getTiProtocolObjects().start();
 
-    public void processResponse(ResponseEvent responseEvent) {
-        getSipListener(responseEvent).processResponse(responseEvent);
+		this.shootist.sendInvite();
+		try {
+			Thread.sleep(20000);
+		} catch (InterruptedException e) {
+			e.printStackTrace();
+		}
+		this.shootist.checkState();
+		this.shootme.checkState();
+	}
 
-    }
+	public void tearDown() {
+		try {
 
-    public void processTimeout(TimeoutEvent timeoutEvent) {
-        getSipListener(timeoutEvent).processTimeout(timeoutEvent);
-    }
+			super.tearDown();
+			Thread.sleep(1000);
+			this.providerTable.clear();
+			logTestCompleted();
+		} catch (Exception ex) {
+			ex.printStackTrace();
+		}
 
-    public void processIOException(IOExceptionEvent exceptionEvent) {
-        fail("unexpected exception");
+	}
 
-    }
+	public void processRequest(RequestEvent requestEvent) {
+		getSipListener(requestEvent).processRequest(requestEvent);
 
-    public void processTransactionTerminated(
-            TransactionTerminatedEvent transactionTerminatedEvent) {
-        getSipListener(transactionTerminatedEvent)
-                .processTransactionTerminated(transactionTerminatedEvent);
+	}
 
-    }
+	public void processResponse(ResponseEvent responseEvent) {
+		getSipListener(responseEvent).processResponse(responseEvent);
 
-    public void processDialogTerminated(
-            DialogTerminatedEvent dialogTerminatedEvent) {
-        getSipListener(dialogTerminatedEvent).processDialogTerminated(
-                dialogTerminatedEvent);
+	}
 
-    }
+	public void processTimeout(TimeoutEvent timeoutEvent) {
+		getSipListener(timeoutEvent).processTimeout(timeoutEvent);
+	}
+
+	public void processIOException(IOExceptionEvent exceptionEvent) {
+		fail("unexpected exception");
+
+	}
+
+	public void processTransactionTerminated(TransactionTerminatedEvent transactionTerminatedEvent) {
+		getSipListener(transactionTerminatedEvent).processTransactionTerminated(transactionTerminatedEvent);
+
+	}
+
+	public void processDialogTerminated(DialogTerminatedEvent dialogTerminatedEvent) {
+		getSipListener(dialogTerminatedEvent).processDialogTerminated(dialogTerminatedEvent);
+
+	}
 
 }

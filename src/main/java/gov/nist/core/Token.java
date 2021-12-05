@@ -27,23 +27,27 @@ package gov.nist.core;
 
 /**
  * Base token class.
+ * 
  * @version 1.2
  *
- * @author M. Ranganathan   <br/>
+ * @author M. Ranganathan <br/>
  *
  *
  */
 
 public class Token {
-    protected String tokenValue;
-    protected int tokenType;
-    public String getTokenValue() {
-        return this.tokenValue;
-    }
-    public int getTokenType() {
-        return this.tokenType;
-    }
-    public String toString() {
-        return "tokenValue = " + tokenValue + "/tokenType = " + tokenType;
-    }
+	protected String tokenValue;
+	protected int tokenType;
+
+	public String getTokenValue() {
+		return this.tokenValue;
+	}
+
+	public int getTokenType() {
+		return this.tokenType;
+	}
+
+	public String toString() {
+		return "tokenValue = " + tokenValue + "/tokenType = " + tokenType;
+	}
 }

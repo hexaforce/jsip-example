@@ -38,64 +38,66 @@ import javax.sip.header.SIPIfMatchHeader;
  * @version 1.2 $Revision: 1.4 $ $Date: 2010-05-06 14:07:50 $
  * @since 1.2
  */
-public class SIPIfMatch extends SIPHeader implements SIPIfMatchHeader,ExtensionHeader {
+public class SIPIfMatch extends SIPHeader implements SIPIfMatchHeader, ExtensionHeader {
 
-    /**
-     * unique serial id
-     */
-    private static final long serialVersionUID = 3833745477828359730L;
+	/**
+	 * unique serial id
+	 */
+	private static final long serialVersionUID = 3833745477828359730L;
 
-    /**
-     * entity tag field
-     */
-    protected String entityTag;
+	/**
+	 * entity tag field
+	 */
+	protected String entityTag;
 
-    /** Default constructor
-     */
-    public SIPIfMatch() {
-        super(NAME);
-    }
+	/**
+	 * Default constructor
+	 */
+	public SIPIfMatch() {
+		super(NAME);
+	}
 
-    public SIPIfMatch(String etag) throws ParseException {
-        this();
-        this.setETag( etag );
-    }
+	public SIPIfMatch(String etag) throws ParseException {
+		this();
+		this.setETag(etag);
+	}
 
-    /**
-     * Encode into canonical form.
-     * @return String
-     */
-    public StringBuilder encodeBody(StringBuilder retval) {
-        return retval.append(entityTag);
-    }
+	/**
+	 * Encode into canonical form.
+	 * 
+	 * @return String
+	 */
+	public StringBuilder encodeBody(StringBuilder retval) {
+		return retval.append(entityTag);
+	}
 
-    /**
-     * get the priority value.
-     * @return String
-     */
-    public String getETag() {
-        return entityTag;
-    }
+	/**
+	 * get the priority value.
+	 * 
+	 * @return String
+	 */
+	public String getETag() {
+		return entityTag;
+	}
 
-    /**
-     * Set the priority member
-     * @param etag -- the entity tag to set.
-     */
-    public void setETag(String etag) throws ParseException {
-        if (etag == null)
-            throw new NullPointerException(
-                "JAIN-SIP Exception,"
-                    + "SIP-If-Match, setETag(), the etag parameter is null");
-        this.entityTag = etag;
-    }
+	/**
+	 * Set the priority member
+	 * 
+	 * @param etag -- the entity tag to set.
+	 */
+	public void setETag(String etag) throws ParseException {
+		if (etag == null)
+			throw new NullPointerException("JAIN-SIP Exception," + "SIP-If-Match, setETag(), the etag parameter is null");
+		this.entityTag = etag;
+	}
 
-    /**
-     * For v 1.1 backwards compatibility.
-     * @see javax.sip.header.ExtensionHeader#setValue(java.lang.String)
-     */
-    public void setValue(String value) throws ParseException {
-        this.setETag(value);
+	/**
+	 * For v 1.1 backwards compatibility.
+	 * 
+	 * @see javax.sip.header.ExtensionHeader#setValue(java.lang.String)
+	 */
+	public void setValue(String value) throws ParseException {
+		this.setETag(value);
 
-
-    }
+	}
 }

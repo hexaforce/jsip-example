@@ -32,27 +32,28 @@ import javax.sip.header.ReasonHeader;
 
 /**
  * List of Reason headers.
+ * 
  * @version 1.2 $Revision: 1.6 $ $Date: 2009-07-17 18:57:35 $
  *
- * @author M. Ranganathan   <br/>
+ * @author M. Ranganathan <br/>
  *
  *
  */
 public final class ReasonList extends SIPHeaderList<Reason> {
 
-    private static final long serialVersionUID = 7459989997463160670L;
+	private static final long serialVersionUID = 7459989997463160670L;
 
-    public Object clone() {
-        ReasonList retval = new ReasonList();
-        retval.clonehlist(this.hlist);
-        return retval;
-    }
+	public Object clone() {
+		ReasonList retval = new ReasonList();
+		retval.clonehlist(this.hlist);
+		return retval;
+	}
 
-    /** Default constructor
-     */
-    public ReasonList() {
-        super(Reason.class, ReasonHeader.NAME);
-    }
-
+	/**
+	 * Default constructor
+	 */
+	public ReasonList() {
+		super(Reason.class, ReasonHeader.NAME);
+	}
 
 }

@@ -40,29 +40,28 @@ import gov.nist.javax.sip.parser.Lexer;
  */
 public class PServedUserParser extends AddressParametersParser {
 
-    protected PServedUserParser(Lexer lexer) {
-        super(lexer);
-    }
+	protected PServedUserParser(Lexer lexer) {
+		super(lexer);
+	}
 
-    public PServedUserParser(String servedUser){
-        super(servedUser);
-    }
+	public PServedUserParser(String servedUser) {
+		super(servedUser);
+	}
 
-    public SIPHeader parse() throws ParseException {
+	public SIPHeader parse() throws ParseException {
 
-        if (debug)
-            dbg_enter("PServedUser.parse");
+		if (debug)
+			dbg_enter("PServedUser.parse");
 
-        try {
-            PServedUser servedUser = new PServedUser();
-            headerName(P_SERVED_USER);
-            super.parse(servedUser);
-            this.lexer.match('\n');
-            return servedUser;
-        }
-        finally {
-            if (debug)
-                dbg_leave("PServedUser.parse");
-        }
-    }
+		try {
+			PServedUser servedUser = new PServedUser();
+			headerName(P_SERVED_USER);
+			super.parse(servedUser);
+			this.lexer.match('\n');
+			return servedUser;
+		} finally {
+			if (debug)
+				dbg_leave("PServedUser.parse");
+		}
+	}
 }

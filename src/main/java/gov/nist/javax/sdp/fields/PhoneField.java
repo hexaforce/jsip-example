@@ -27,89 +27,97 @@
 * Product of NIST/ITL Advanced Networking Technologies Division (ANTD).        *
 *******************************************************************************/
 package gov.nist.javax.sdp.fields;
+
 import javax.sdp.SdpException;
 import javax.sdp.SdpParseException;
 
 import gov.nist.core.Separators;
+
 /**
-* Phone Field SDP header
-*
-*@version  JSR141-PUBLIC-REVIEW (subject to change).
-*
-*@author Olivier Deruelle <deruelle@antd.nist.gov>
-*@author M. Ranganathan   <br/>
-*
-*
-*
-*/
+ * Phone Field SDP header
+ *
+ * @version JSR141-PUBLIC-REVIEW (subject to change).
+ *
+ * @author Olivier Deruelle <deruelle@antd.nist.gov>
+ * @author M. Ranganathan <br/>
+ *
+ *
+ *
+ */
 public class PhoneField extends SDPField implements javax.sdp.Phone {
-    protected String name;
-    protected String phoneNumber;
+	protected String name;
+	protected String phoneNumber;
 
-    public PhoneField() {
-        super(PHONE_FIELD);
-    }
+	public PhoneField() {
+		super(PHONE_FIELD);
+	}
 
-    public String getName() {
-        return name;
-    }
-    public String getPhoneNumber() {
-        return phoneNumber;
-    }
-    /**
-    * Set the name member
-        *
-        *@param name - the name to set.
-    */
-    public void setName(String name) {
-        this.name = name;
-    }
-    /**
-    * Set the phoneNumber member
-        *@param phoneNumber - phone number to set.
-    */
-    public void setPhoneNumber(String phoneNumber) {
-        this.phoneNumber = phoneNumber;
-    }
+	public String getName() {
+		return name;
+	}
 
-    /** Returns the value.
-     * @throws SdpParseException
-     * @return the value.
-     */
-    public String getValue() throws SdpParseException {
-        return getName();
-    }
+	public String getPhoneNumber() {
+		return phoneNumber;
+	}
 
-    /** Sets the value.
-     * @param value the - new information.
-     * @throws SdpException if the value is null
-     */
-    public void setValue(String value) throws SdpException {
-        if (value == null)
-            throw new SdpException("The value parameter is null");
-        else
-            setName(value);
-    }
+	/**
+	 * Set the name member
+	 *
+	 * @param name - the name to set.
+	 */
+	public void setName(String name) {
+		this.name = name;
+	}
 
-    /**
-     *  Get the string encoded version of this object
-     * @since v1.0
-     * Here, we implement only the "name <phoneNumber>" form
-     * and not the "phoneNumber (name)" form
-     */
-    public String encode() {
-        String encoded_string;
-        encoded_string = PHONE_FIELD;
-        if (name != null) {
-            encoded_string += name + Separators.LESS_THAN;
-        }
-        encoded_string += phoneNumber;
-        if (name != null) {
-            encoded_string += Separators.GREATER_THAN;
-        }
-        encoded_string += Separators.NEWLINE;
-        return encoded_string;
-    }
+	/**
+	 * Set the phoneNumber member
+	 * 
+	 * @param phoneNumber - phone number to set.
+	 */
+	public void setPhoneNumber(String phoneNumber) {
+		this.phoneNumber = phoneNumber;
+	}
+
+	/**
+	 * Returns the value.
+	 * 
+	 * @throws SdpParseException
+	 * @return the value.
+	 */
+	public String getValue() throws SdpParseException {
+		return getName();
+	}
+
+	/**
+	 * Sets the value.
+	 * 
+	 * @param value the - new information.
+	 * @throws SdpException if the value is null
+	 */
+	public void setValue(String value) throws SdpException {
+		if (value == null)
+			throw new SdpException("The value parameter is null");
+		else
+			setName(value);
+	}
+
+	/**
+	 * Get the string encoded version of this object
+	 * 
+	 * @since v1.0 Here, we implement only the "name <phoneNumber>" form and not the "phoneNumber (name)" form
+	 */
+	public String encode() {
+		String encoded_string;
+		encoded_string = PHONE_FIELD;
+		if (name != null) {
+			encoded_string += name + Separators.LESS_THAN;
+		}
+		encoded_string += phoneNumber;
+		if (name != null) {
+			encoded_string += Separators.GREATER_THAN;
+		}
+		encoded_string += Separators.NEWLINE;
+		return encoded_string;
+	}
 
 }
-

@@ -29,102 +29,95 @@
 package gov.nist.javax.sip.header;
 
 /**
- * A generic extension header for the stack.
- * The input text of the header gets recorded here.
+ * A generic extension header for the stack. The input text of the header gets recorded here.
  *
  * @version 1.2 $Revision: 1.6 $ $Date: 2010-05-06 14:07:46 $
  * @since 1.1
  *
- * @author M. Ranganathan   <br/>
+ * @author M. Ranganathan <br/>
  *
  *
  */
-public class ExtensionHeaderImpl
-    extends SIPHeader
-    implements javax.sip.header.ExtensionHeader {
+public class ExtensionHeaderImpl extends SIPHeader implements javax.sip.header.ExtensionHeader {
 
-    /**
-     * Comment for <code>serialVersionUID</code>
-     */
-    private static final long serialVersionUID = -8693922839612081849L;
+	/**
+	 * Comment for <code>serialVersionUID</code>
+	 */
+	private static final long serialVersionUID = -8693922839612081849L;
 
-    protected String value;
+	protected String value;
 
-    /**
-     * This was added to allow for automatic cloning of headers.
-     */
-    public ExtensionHeaderImpl() {
-    }
+	/**
+	 * This was added to allow for automatic cloning of headers.
+	 */
+	public ExtensionHeaderImpl() {
+	}
 
-    public ExtensionHeaderImpl(String headerName) {
-        super(headerName);
-    }
+	public ExtensionHeaderImpl(String headerName) {
+		super(headerName);
+	}
 
-    /**
-     * Set the name of the header.
-     * @param headerName is the name of the header to set.
-     */
+	/**
+	 * Set the name of the header.
+	 * 
+	 * @param headerName is the name of the header to set.
+	 */
 
-    public void setName(String headerName) {
-        this.headerName = headerName;
-    }
+	public void setName(String headerName) {
+		this.headerName = headerName;
+	}
 
-    /**
-     * Set the value of the header.
-     */
-    public void setValue(String value) {
-        this.value = value;
-    }
+	/**
+	 * Set the value of the header.
+	 */
+	public void setValue(String value) {
+		this.value = value;
+	}
 
-    /**
-     * Get the value of the extension header.
-     * @return the value of the extension header.
-     */
-    public String getHeaderValue() {
-        if (this.value != null) {
-            return this.value;
-        } else {
-            String encodedHdr = null;
-            try {
-                // Bug fix submitted by Lamine Brahimi
-                encodedHdr = this.encode();
-            } catch (Exception ex) {
-                return null;
-            }
-            StringBuilder buffer = new StringBuilder(encodedHdr);
-            while (buffer.length() > 0 && buffer.charAt(0) != ':') {
-                buffer.deleteCharAt(0);
-            }
-            buffer.deleteCharAt(0);
-            this.value = buffer.toString().trim();
-            return this.value;
-        }
-    }
+	/**
+	 * Get the value of the extension header.
+	 * 
+	 * @return the value of the extension header.
+	 */
+	public String getHeaderValue() {
+		if (this.value != null) {
+			return this.value;
+		} else {
+			String encodedHdr = null;
+			try {
+				// Bug fix submitted by Lamine Brahimi
+				encodedHdr = this.encode();
+			} catch (Exception ex) {
+				return null;
+			}
+			StringBuilder buffer = new StringBuilder(encodedHdr);
+			while (buffer.length() > 0 && buffer.charAt(0) != ':') {
+				buffer.deleteCharAt(0);
+			}
+			buffer.deleteCharAt(0);
+			this.value = buffer.toString().trim();
+			return this.value;
+		}
+	}
 
-    /**
-     * Return the canonical encoding of this header.
-     */
-    public String encode() {
-        return new StringBuffer(this.headerName)
-            .append(COLON)
-            .append(SP)
-            .append(this.value)
-            .append(NEWLINE)
-            .toString();
-    }
-    
-    /**
-     * Return the canonical encoding of this header.
-     */
-    public StringBuilder encodeBody(StringBuilder buffer) {
-        return buffer.append(this.encodeBody());          
-    }
+	/**
+	 * Return the canonical encoding of this header.
+	 */
+	public String encode() {
+		return new StringBuffer(this.headerName).append(COLON).append(SP).append(this.value).append(NEWLINE).toString();
+	}
 
-    /**
-     * Return just the body of this header encoded (leaving out the
-     * name and the CRLF at the end).
-     */
-    public String encodeBody() {
-        return this.getHeaderValue();
-    }
+	/**
+	 * Return the canonical encoding of this header.
+	 */
+	public StringBuilder encodeBody(StringBuilder buffer) {
+		return buffer.append(this.encodeBody());
+	}
+
+	/**
+	 * Return just the body of this header encoded (leaving out the name and the CRLF at the end).
+	 */
+	public String encodeBody() {
+		return this.getHeaderValue();
+	}
 }

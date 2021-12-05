@@ -37,75 +37,75 @@ import javax.sip.header.InReplyToHeader;
  *
  * @version 1.2 $Revision: 1.7 $ $Date: 2010-05-06 14:07:54 $
  *
- * @author M. Ranganathan   <br/>
+ * @author M. Ranganathan <br/>
  * @author Olivier Deruelle <br/>
  *
  *
  */
 public class InReplyTo extends SIPHeader implements InReplyToHeader {
 
-    /**
-     * Comment for <code>serialVersionUID</code>
-     */
-    private static final long serialVersionUID = 1682602905733508890L;
+	/**
+	 * Comment for <code>serialVersionUID</code>
+	 */
+	private static final long serialVersionUID = 1682602905733508890L;
 
-    protected CallIdentifier callId;
+	protected CallIdentifier callId;
 
-    /** Default constructor
-     */
-    public InReplyTo() {
-        super(IN_REPLY_TO);
-    }
+	/**
+	 * Default constructor
+	 */
+	public InReplyTo() {
+		super(IN_REPLY_TO);
+	}
 
-    /** constructor
-     * @param cid CallIdentifier to set
-     */
-    public InReplyTo(CallIdentifier cid) {
-        super(IN_REPLY_TO);
-        callId = cid;
-    }
+	/**
+	 * constructor
+	 * 
+	 * @param cid CallIdentifier to set
+	 */
+	public InReplyTo(CallIdentifier cid) {
+		super(IN_REPLY_TO);
+		callId = cid;
+	}
 
-    /**
-     * Sets the Call-Id of the InReplyToHeader. The CallId parameter uniquely
-     * identifies a serious of messages within a dialogue.
-     *
-     * @param callId - the string value of the Call-Id of this InReplyToHeader.
-     * @throws ParseException which signals that an error has been reached
-     * unexpectedly while parsing the callId value.
-     */
-    public void setCallId(String callId) throws ParseException {
-        try {
-            this.callId = new CallIdentifier(callId);
-        } catch (Exception e) {
-            throw new ParseException(e.getMessage(), 0);
-        }
-    }
+	/**
+	 * Sets the Call-Id of the InReplyToHeader. The CallId parameter uniquely identifies a serious of messages within a dialogue.
+	 *
+	 * @param callId - the string value of the Call-Id of this InReplyToHeader.
+	 * @throws ParseException which signals that an error has been reached unexpectedly while parsing the callId value.
+	 */
+	public void setCallId(String callId) throws ParseException {
+		try {
+			this.callId = new CallIdentifier(callId);
+		} catch (Exception e) {
+			throw new ParseException(e.getMessage(), 0);
+		}
+	}
 
-    /**
-     * Returns the Call-Id of InReplyToHeader. The CallId parameter uniquely
-     * identifies a series of messages within a dialogue.
-     *
-     * @return the String value of the Call-Id of this InReplyToHeader
-     */
-    public String getCallId() {
-        if (callId == null)
-            return null;
-        return callId.encode();
-    }
+	/**
+	 * Returns the Call-Id of InReplyToHeader. The CallId parameter uniquely identifies a series of messages within a dialogue.
+	 *
+	 * @return the String value of the Call-Id of this InReplyToHeader
+	 */
+	public String getCallId() {
+		if (callId == null)
+			return null;
+		return callId.encode();
+	}
 
-    /**
-         * Generate canonical form of the header.
-         * @return String
-         */
-    public StringBuilder encodeBody(StringBuilder retval) {
-        return callId.encode(retval);
-    }
+	/**
+	 * Generate canonical form of the header.
+	 * 
+	 * @return String
+	 */
+	public StringBuilder encodeBody(StringBuilder retval) {
+		return callId.encode(retval);
+	}
 
-    public Object clone() {
-        InReplyTo retval = (InReplyTo) super.clone();
-        if (this.callId != null)
-            retval.callId = (CallIdentifier) this.callId.clone();
-        return retval;
-    }
+	public Object clone() {
+		InReplyTo retval = (InReplyTo) super.clone();
+		if (this.callId != null)
+			retval.callId = (CallIdentifier) this.callId.clone();
+		return retval;
+	}
 }
-

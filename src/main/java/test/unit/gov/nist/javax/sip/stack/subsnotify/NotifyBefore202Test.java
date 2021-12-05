@@ -2,21 +2,19 @@ package test.unit.gov.nist.javax.sip.stack.subsnotify;
 
 import junit.framework.TestCase;
 
-public class NotifyBefore202Test  extends TestCase {
+public class NotifyBefore202Test extends TestCase {
 	Subscriber subscriber;
-	Notifier   notifier;
-	
-	
+	Notifier notifier;
+
 	public void setUp() throws Exception {
 		subscriber = Subscriber.createSubcriber();
 		notifier = Notifier.createNotifier();
 	}
-	
-	
+
 	public void testSendSubscribe() {
 		subscriber.sendSubscribe();
 	}
-	
+
 	/*
 	 * Non Regression test for issue http://java.net/jira/browse/JSIP-374
 	 */
@@ -26,8 +24,8 @@ public class NotifyBefore202Test  extends TestCase {
 		Thread.sleep(15000);
 		assertTrue(subscriber.checkState());
 	}
-	
-	public void tearDown() throws Exception {		
+
+	public void tearDown() throws Exception {
 		subscriber.tearDown();
 		notifier.tearDown();
 	}

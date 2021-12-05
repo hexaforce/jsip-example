@@ -31,62 +31,62 @@ package gov.nist.javax.sip.header;
 import gov.nist.javax.sip.address.AddressImpl;
 
 /**
- * The Request-Route header is added to a request by any proxy that insists on
- * being in the path of subsequent requests for the same call leg.
+ * The Request-Route header is added to a request by any proxy that insists on being in the path of subsequent requests for the same call leg.
  *
- *@version 1.2 $Revision: 1.7 $ $Date: 2010-05-06 14:07:48 $
+ * @version 1.2 $Revision: 1.7 $ $Date: 2010-05-06 14:07:48 $
  *
- *@author M. Ranganathan   <br/>
+ * @author M. Ranganathan <br/>
  *
  *
  *
  */
-public class RecordRoute
-    extends AddressParametersHeader
-    implements javax.sip.header.RecordRouteHeader {
+public class RecordRoute extends AddressParametersHeader implements javax.sip.header.RecordRouteHeader {
 
-    /**
-     * Comment for <code>serialVersionUID</code>
-     */
-    private static final long serialVersionUID = 2388023364181727205L;
+	/**
+	 * Comment for <code>serialVersionUID</code>
+	 */
+	private static final long serialVersionUID = 2388023364181727205L;
 
-    /**
-     * constructor
-     * @param address address to set
-     */
-    public RecordRoute(AddressImpl address) {
-        super(NAME);
-        this.address = address;
-    }
+	/**
+	 * constructor
+	 * 
+	 * @param address address to set
+	 */
+	public RecordRoute(AddressImpl address) {
+		super(NAME);
+		this.address = address;
+	}
 
-    /**
-     * default constructor
-     */
-    public RecordRoute() {
-        super(RECORD_ROUTE);
+	/**
+	 * default constructor
+	 */
+	public RecordRoute() {
+		super(RECORD_ROUTE);
 
-    }
+	}
 
-    /** Encode into canonical form.
-     *@return String containing the canonicaly encoded header.
-     */
-    public String encodeBody() {
-        return encodeBody(new StringBuilder()).toString();
-    }
+	/**
+	 * Encode into canonical form.
+	 * 
+	 * @return String containing the canonicaly encoded header.
+	 */
+	public String encodeBody() {
+		return encodeBody(new StringBuilder()).toString();
+	}
 
-    protected StringBuilder encodeBody(StringBuilder buffer) {
-        if (address.getAddressType() == AddressImpl.ADDRESS_SPEC) {
-            buffer.append(LESS_THAN);
-        }
-        address.encode(buffer);
-        if (address.getAddressType() == AddressImpl.ADDRESS_SPEC) {
-            buffer.append(GREATER_THAN);
-        }
+	protected StringBuilder encodeBody(StringBuilder buffer) {
+		if (address.getAddressType() == AddressImpl.ADDRESS_SPEC) {
+			buffer.append(LESS_THAN);
+		}
+		address.encode(buffer);
+		if (address.getAddressType() == AddressImpl.ADDRESS_SPEC) {
+			buffer.append(GREATER_THAN);
+		}
 
-        if (!parameters.isEmpty()) {
-            buffer.append(SEMICOLON);
-            this.parameters.encode(buffer);
-        }
-        return buffer;
-    }
+		if (!parameters.isEmpty()) {
+			buffer.append(SEMICOLON);
+			this.parameters.encode(buffer);
+		}
+		return buffer;
+	}
 }

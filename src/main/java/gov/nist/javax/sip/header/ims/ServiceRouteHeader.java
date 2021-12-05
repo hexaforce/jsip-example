@@ -32,19 +32,17 @@ import javax.sip.header.Header;
 import javax.sip.header.HeaderAddress;
 import javax.sip.header.Parameters;
 
-
 /**
  * SERVICE-ROUTE header SIP param: RFC 3608.
  *
  * @author ALEXANDRE MIGUEL SILVA SANTOS - Nú 10045401
  */
 
-
 public interface ServiceRouteHeader extends HeaderAddress, Parameters, Header {
 
-    /**
-     * Name of ServiceRouteHeader
-     */
-    public final static String NAME = "Service-Route";
+	/**
+	 * Name of ServiceRouteHeader
+	 */
+	public final static String NAME = "Service-Route";
 
 }

@@ -33,26 +33,27 @@ package gov.nist.javax.sip.header;
  *
  * @version 1.2 $Revision: 1.6 $ $Date: 2009-07-17 18:57:41 $
  *
- * @author M. Ranganathan   <br/>
+ * @author M. Ranganathan <br/>
  *
  *
  *
  */
 public class WarningList extends SIPHeaderList<Warning> {
 
-    /**
-     * Comment for <code>serialVersionUID</code>
-     */
-    private static final long serialVersionUID = -1423278728898430175L;
+	/**
+	 * Comment for <code>serialVersionUID</code>
+	 */
+	private static final long serialVersionUID = -1423278728898430175L;
 
-    public Object clone() {
-        WarningList retval = new WarningList();
-        return retval.clonehlist(this.hlist);
-    }
-    /**
-     * Constructor.
-     */
-    public WarningList() {
-        super(Warning.class, Warning.NAME);
-    }
+	public Object clone() {
+		WarningList retval = new WarningList();
+		return retval.clonehlist(this.hlist);
+	}
+
+	/**
+	 * Constructor.
+	 */
+	public WarningList() {
+		super(Warning.class, Warning.NAME);
+	}
 }

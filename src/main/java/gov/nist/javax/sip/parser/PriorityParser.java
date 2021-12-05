@@ -36,8 +36,8 @@ import gov.nist.javax.sip.header.SIPHeaderNames;
  *
  * @version 1.2 $Revision: 1.8 $ $Date: 2009-07-17 18:58:02 $
  *
- * @author Olivier Deruelle   <br/>
- * @author M. Ranganathan   <br/>
+ * @author Olivier Deruelle <br/>
+ * @author M. Ranganathan <br/>
  *
  *
  *
@@ -45,70 +45,68 @@ import gov.nist.javax.sip.header.SIPHeaderNames;
  */
 public class PriorityParser extends HeaderParser {
 
-    /**
-     * Creates a new instance of PriorityParser
-     * @param priority the header to parse
-     */
-    public PriorityParser(String priority) {
-        super(priority);
-    }
+	/**
+	 * Creates a new instance of PriorityParser
+	 * 
+	 * @param priority the header to parse
+	 */
+	public PriorityParser(String priority) {
+		super(priority);
+	}
 
-    /**
-     * Constructor
-     * @param lexer the lexer to use to parse the header
-     */
-    protected PriorityParser(Lexer lexer) {
-        super(lexer);
-    }
+	/**
+	 * Constructor
+	 * 
+	 * @param lexer the lexer to use to parse the header
+	 */
+	protected PriorityParser(Lexer lexer) {
+		super(lexer);
+	}
 
-    /**
-     * parse the String header
-     * @return SIPHeader (Priority object)
-     * @throws SIPParseException if the message does not respect the spec.
-     */
-    public SIPHeader parse() throws ParseException {
+	/**
+	 * parse the String header
+	 * 
+	 * @return SIPHeader (Priority object)
+	 * @throws SIPParseException if the message does not respect the spec.
+	 */
+	public SIPHeader parse() throws ParseException {
 
-        if (debug)
-            dbg_enter("PriorityParser.parse");
-        Priority priority = new Priority();
-        try {
-            headerName(TokenTypes.PRIORITY);
+		if (debug)
+			dbg_enter("PriorityParser.parse");
+		Priority priority = new Priority();
+		try {
+			headerName(TokenTypes.PRIORITY);
 
-            priority.setHeaderName(SIPHeaderNames.PRIORITY);
+			priority.setHeaderName(SIPHeaderNames.PRIORITY);
 
-            this.lexer.SPorHT();
-            /*this.lexer.match(TokenTypes.ID);
-            Token token = lexer.getNextToken();
+			this.lexer.SPorHT();
+			/*
+			 * this.lexer.match(TokenTypes.ID); Token token = lexer.getNextToken();
+			 * 
+			 * priority.setPriority(token.getTokenValue());
+			 */
+			// This is in violation of the RFC but
+			// let us be generous in what we accept.
+			priority.setPriority(this.lexer.ttokenSafe());
 
-            priority.setPriority(token.getTokenValue());
-            */
-            // This is in violation of the RFC but
-            // let us be generous in what we accept.
-            priority.setPriority(this.lexer.ttokenSafe());
+			this.lexer.SPorHT();
+			this.lexer.match('\n');
 
-            this.lexer.SPorHT();
-            this.lexer.match('\n');
+			return priority;
+		} finally {
+			if (debug)
+				dbg_leave("PriorityParser.parse");
+		}
+	}
 
-            return priority;
-        } finally {
-            if (debug)
-                dbg_leave("PriorityParser.parse");
-        }
-    }
+	public static void main(String args[]) throws ParseException {
+		String p[] = { "Priority: 8;a\n" };
 
-
-    public static void main(String args[]) throws ParseException {
-    String p[] = {
-            "Priority: 8;a\n"
-            };
-
-    for (int i = 0; i < p.length; i++ ) {
-        PriorityParser parser =
-          new PriorityParser(p[i]);
-        Priority prio= (Priority) parser.parse();
-        System.out.println("encoded = " + prio.encode());
-    }
-    }
+		for (int i = 0; i < p.length; i++) {
+			PriorityParser parser = new PriorityParser(p[i]);
+			Priority prio = (Priority) parser.parse();
+			System.out.println("encoded = " + prio.encode());
+		}
+	}
 
 }
-

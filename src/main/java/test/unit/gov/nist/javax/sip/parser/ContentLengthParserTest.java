@@ -23,6 +23,7 @@
  *The Open SLEE project
  */
 package test.unit.gov.nist.javax.sip.parser;
+
 import gov.nist.javax.sip.parser.ContentLengthParser;
 
 /**
@@ -30,16 +31,12 @@ import gov.nist.javax.sip.parser.ContentLengthParser;
  */
 public class ContentLengthParserTest extends ParserTestCase {
 
-    public void testParser(){
+	public void testParser() {
 
-        String content[] = {
-            "l: 345\n",
-            "Content-Length: 3495\n",
-            "Content-Length: 0 \n"
-                };
+		String content[] = { "l: 345\n", "Content-Length: 3495\n", "Content-Length: 0 \n" };
 
-        super.testParser(ContentLengthParser.class,content);
+		super.testParser(ContentLengthParser.class, content);
 
-    }
+	}
 
 }

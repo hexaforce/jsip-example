@@ -43,124 +43,113 @@ import gov.nist.core.Token;
  * @author ALEXANDRE MIGUEL SILVA SANTOS - Nú 10045401
  */
 
+public class PVisitedNetworkID extends gov.nist.javax.sip.header.ParametersHeader implements PVisitedNetworkIDHeader, SIPHeaderNamesIms, ExtensionHeader {
 
+	/**
+	 * visited Network ID
+	 */
+	private String networkID;
 
-public class PVisitedNetworkID
-    extends gov.nist.javax.sip.header.ParametersHeader
-    implements PVisitedNetworkIDHeader, SIPHeaderNamesIms, ExtensionHeader {
+	// issued by Miguel Freitas
+	private boolean isQuoted;
 
-    /**
-     * visited Network ID
-     */
-    private String networkID;
+	public PVisitedNetworkID() {
 
-    // issued by Miguel Freitas
-    private boolean isQuoted;
+		super(P_VISITED_NETWORK_ID);
 
+	}
 
-    public PVisitedNetworkID() {
+	public PVisitedNetworkID(String networkID) {
 
-        super(P_VISITED_NETWORK_ID);
+		super(P_VISITED_NETWORK_ID);
+		setVisitedNetworkID(networkID);
 
-    }
+	}
 
-    public PVisitedNetworkID(String networkID) {
+	public PVisitedNetworkID(Token tok) {
 
-        super(P_VISITED_NETWORK_ID);
-        setVisitedNetworkID(networkID);
+		super(P_VISITED_NETWORK_ID);
+		setVisitedNetworkID(tok.getTokenValue());
 
-    }
+	}
 
-    public PVisitedNetworkID(Token tok) {
-
-        super(P_VISITED_NETWORK_ID);
-        setVisitedNetworkID(tok.getTokenValue());
-
-    }
-
-    public StringBuilder encodeBody(StringBuilder retval) {
+	public StringBuilder encodeBody(StringBuilder retval) {
 
 //        StringBuilder retval = new StringBuilder();
 
-        if (getVisitedNetworkID() != null)
-        {
-            // issued by Miguel Freitas
-            if (isQuoted)
-                retval.append(DOUBLE_QUOTE).append(getVisitedNetworkID()).append(DOUBLE_QUOTE);
-            else
-                retval.append(getVisitedNetworkID());
-        }
+		if (getVisitedNetworkID() != null) {
+			// issued by Miguel Freitas
+			if (isQuoted)
+				retval.append(DOUBLE_QUOTE).append(getVisitedNetworkID()).append(DOUBLE_QUOTE);
+			else
+				retval.append(getVisitedNetworkID());
+		}
 
-        if (!parameters.isEmpty()) {
-            retval.append(SEMICOLON);
-            this.parameters.encode(retval);
-        }
+		if (!parameters.isEmpty()) {
+			retval.append(SEMICOLON);
+			this.parameters.encode(retval);
+		}
 
-        return retval;
+		return retval;
 
-    }
+	}
 
-    /**
-     * Set the visited network ID as a string. The value will be quoted in the header.
-     * @param networkID - string value
-     */
-    public void setVisitedNetworkID(String networkID) {
-        if (networkID == null)
-            throw new NullPointerException(" the networkID parameter is null");
+	/**
+	 * Set the visited network ID as a string. The value will be quoted in the header.
+	 * 
+	 * @param networkID - string value
+	 */
+	public void setVisitedNetworkID(String networkID) {
+		if (networkID == null)
+			throw new NullPointerException(" the networkID parameter is null");
 
-        this.networkID = networkID;
+		this.networkID = networkID;
 
-        // issued by Miguel Freitas
-        this.isQuoted = true;
-    }
+		// issued by Miguel Freitas
+		this.isQuoted = true;
+	}
 
-    /**
-     * Set the visited network ID as a token
-     * @param networkID - token value
-     */
-    public void setVisitedNetworkID(Token networkID) {
-        if (networkID == null)
-            throw new NullPointerException(" the networkID parameter is null");
+	/**
+	 * Set the visited network ID as a token
+	 * 
+	 * @param networkID - token value
+	 */
+	public void setVisitedNetworkID(Token networkID) {
+		if (networkID == null)
+			throw new NullPointerException(" the networkID parameter is null");
 
-        this.networkID = networkID.getTokenValue();
+		this.networkID = networkID.getTokenValue();
 
-        // issued by Miguel Freitas
-        this.isQuoted = false;
-    }
+		// issued by Miguel Freitas
+		this.isQuoted = false;
+	}
 
-    /**
-     * Get the visited network ID value of this header
-     */
-    public String getVisitedNetworkID() {
-        return networkID;
-    }
+	/**
+	 * Get the visited network ID value of this header
+	 */
+	public String getVisitedNetworkID() {
+		return networkID;
+	}
 
+	public void setValue(String value) throws ParseException {
+		throw new ParseException(value, 0);
 
-    public void setValue(String value) throws ParseException {
-        throw new ParseException (value,0);
+	}
 
-    }
+	public boolean equals(Object other) {
+		if (other instanceof PVisitedNetworkIDHeader) {
+			PVisitedNetworkIDHeader o = (PVisitedNetworkIDHeader) other;
+			return (this.getVisitedNetworkID().equals(o.getVisitedNetworkID()) && this.equalParameters((Parameters) o));
+		}
+		return false;
+	}
 
-
-    public boolean equals(Object other)
-    {
-        if (other instanceof PVisitedNetworkIDHeader)
-        {
-            PVisitedNetworkIDHeader o = (PVisitedNetworkIDHeader) other;
-            return (this.getVisitedNetworkID().equals( o.getVisitedNetworkID() )
-                && this.equalParameters( (Parameters) o ));
-        }
-        return false;
-    }
-
-
-    public Object clone() {
-        PVisitedNetworkID retval = (PVisitedNetworkID) super.clone();
-        if (this.networkID != null)
-            retval.networkID = this.networkID;
-        retval.isQuoted = this.isQuoted;
-        return retval;
-    }
-
+	public Object clone() {
+		PVisitedNetworkID retval = (PVisitedNetworkID) super.clone();
+		if (this.networkID != null)
+			retval.networkID = this.networkID;
+		retval.isQuoted = this.isQuoted;
+		return retval;
+	}
 
 }

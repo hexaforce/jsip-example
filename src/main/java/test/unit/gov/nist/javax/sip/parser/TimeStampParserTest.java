@@ -20,17 +20,14 @@
 package test.unit.gov.nist.javax.sip.parser;
 
 import gov.nist.javax.sip.parser.TimeStampParser;
+
 public class TimeStampParserTest extends ParserTestCase {
 
-    public void testParser() {
-        // TODO Auto-generated method stub
-         String timeStamp[] = {
-                    "Timestamp: 54 \n",
-                    "Timestamp: 52.34 34.5 \n"
-                };
-         super.testParser(TimeStampParser.class, timeStamp);
+	public void testParser() {
+		// TODO Auto-generated method stub
+		String timeStamp[] = { "Timestamp: 54 \n", "Timestamp: 52.34 34.5 \n" };
+		super.testParser(TimeStampParser.class, timeStamp);
 
-
-    }
+	}
 
 }

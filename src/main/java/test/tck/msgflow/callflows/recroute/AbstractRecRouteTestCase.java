@@ -14,86 +14,80 @@ import test.tck.msgflow.callflows.ScenarioHarness;
  * @author Jeroen van Bemmel
  *
  */
-public class AbstractRecRouteTestCase extends ScenarioHarness implements
-        SipListener {
+public class AbstractRecRouteTestCase extends ScenarioHarness implements SipListener {
 
+	protected Shootist shootist;
 
-    protected Shootist shootist;
+	private static Logger logger = Logger.getLogger("test.tck");
 
-    private static Logger logger = Logger.getLogger("test.tck");
+	protected Shootme shootme;
 
+	private Proxy proxy;
 
-    protected Shootme shootme;
+	static {
+		if (!logger.isAttached(console))
+			logger.addAppender(console);
+	}
 
-    private Proxy proxy;
+	// private Appender appender;
 
-    static {
-        if ( !logger.isAttached(console))
-            logger.addAppender(console);
-    }
+	public AbstractRecRouteTestCase() {
 
-    // private Appender appender;
+		super("TCPRecRouteTest", true);
 
-    public AbstractRecRouteTestCase() {
+		try {
+			providerTable = new Hashtable();
 
-        super("TCPRecRouteTest", true);
+		} catch (Exception ex) {
+			logger.error("unexpected exception", ex);
+			fail("unexpected exception ");
+		}
+	}
 
-        try {
-            providerTable = new Hashtable();
+	public void setUp() {
 
-        } catch (Exception ex) {
-            logger.error("unexpected exception", ex);
-            fail("unexpected exception ");
-        }
-    }
+		try {
+			super.setUp(false);
+			shootist = new Shootist(5060, 5070, getTiProtocolObjects());
+			SipProvider shootistProvider = shootist.createSipProvider();
+			providerTable.put(shootistProvider, shootist);
+			shootistProvider.addSipListener(this);
 
-    public void setUp() {
+			this.shootme = new Shootme(5080, getTiProtocolObjects());
+			SipProvider shootmeProvider = shootme.createProvider();
+			providerTable.put(shootmeProvider, shootme);
+			shootmeProvider.addSipListener(this);
 
-        try {
-            super.setUp(false);
-            shootist = new Shootist(5060, 5070, getTiProtocolObjects());
-            SipProvider shootistProvider = shootist.createSipProvider();
-            providerTable.put(shootistProvider, shootist);
-            shootistProvider.addSipListener(this);
+			this.proxy = new Proxy(5070, getRiProtocolObjects());
+			SipProvider provider = proxy.createSipProvider();
+			// provider.setAutomaticDialogSupportEnabled(false);
+			providerTable.put(provider, proxy);
+			provider.addSipListener(this);
 
-            this.shootme = new Shootme(5080, getTiProtocolObjects());
-            SipProvider shootmeProvider = shootme.createProvider();
-            providerTable.put(shootmeProvider, shootme);
-            shootmeProvider.addSipListener(this);
+			getTiProtocolObjects().start();
+			if (getTiProtocolObjects() != getRiProtocolObjects())
+				getRiProtocolObjects().start();
+		} catch (Exception ex) {
+			logger.error("Unexpected exception", ex);
+			fail("unexpected exception ");
+		}
+	}
 
-            this.proxy = new Proxy(5070, getRiProtocolObjects());
-            SipProvider provider = proxy.createSipProvider();
-            //provider.setAutomaticDialogSupportEnabled(false);
-            providerTable.put(provider, proxy);
-            provider.addSipListener(this);
+	public void tearDown() {
+		try {
+			Thread.sleep(5000);
+			this.shootist.checkState();
+			this.shootme.checkState();
+			this.proxy.checkState();
+			super.tearDown();
+			Thread.sleep(4000);
+			this.providerTable.clear();
 
-            getTiProtocolObjects().start();
-            if (getTiProtocolObjects() != getRiProtocolObjects())
-                getRiProtocolObjects().start();
-        } catch (Exception ex) {
-            logger.error("Unexpected exception",ex);
-            fail("unexpected exception ");
-        }
-    }
-
-
-    public void tearDown() {
-        try {
-            Thread.sleep(5000);
-            this.shootist.checkState();
-            this.shootme.checkState();
-            this.proxy.checkState();
-            super.tearDown();
-            Thread.sleep(4000);
-            this.providerTable.clear();
-
-            super.logTestCompleted();
-        } catch (Exception ex) {
-            logger.error("unexpected exception", ex);
-            fail("unexpected exception ");
-        }
-    }
-
-
+			super.logTestCompleted();
+		} catch (Exception ex) {
+			logger.error("unexpected exception", ex);
+			fail("unexpected exception ");
+		}
+	}
 
 }

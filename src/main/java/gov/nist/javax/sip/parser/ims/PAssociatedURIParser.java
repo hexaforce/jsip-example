@@ -39,100 +39,75 @@ import gov.nist.javax.sip.parser.AddressParametersParser;
 import gov.nist.javax.sip.parser.Lexer;
 import gov.nist.javax.sip.parser.TokenTypes;
 
-
 /**
  * P-Associated-URI header parser
  *
  * @author Miguel Freitas (IT) PT-Inovacao
  */
 
-public class PAssociatedURIParser
-    extends AddressParametersParser
-{
+public class PAssociatedURIParser extends AddressParametersParser {
 
+	/**
+	 * Constructor
+	 * 
+	 * @param associatedURI content to set
+	 */
+	public PAssociatedURIParser(String associatedURI) {
+		super(associatedURI);
+	}
 
-    /**
-     * Constructor
-     * @param associatedURI content to set
-     */
-    public PAssociatedURIParser(String associatedURI)
-    {
-        super(associatedURI);
-    }
+	protected PAssociatedURIParser(Lexer lexer) {
+		super(lexer);
+	}
 
-    protected PAssociatedURIParser(Lexer lexer)
-    {
-        super(lexer);
-    }
+	public SIPHeader parse() throws ParseException {
+		if (debug)
+			dbg_enter("PAssociatedURIParser.parse");
 
+		PAssociatedURIList associatedURIList = new PAssociatedURIList();
 
-    public SIPHeader parse() throws ParseException
-    {
-        if (debug)
-            dbg_enter("PAssociatedURIParser.parse");
+		try {
 
-        PAssociatedURIList associatedURIList = new PAssociatedURIList();
+			headerName(TokenTypes.P_ASSOCIATED_URI);
 
-        try {
+			PAssociatedURI associatedURI = new PAssociatedURI();
+			associatedURI.setHeaderName(SIPHeaderNamesIms.P_ASSOCIATED_URI);
 
-            headerName(TokenTypes.P_ASSOCIATED_URI);
+			super.parse(associatedURI);
+			associatedURIList.add(associatedURI);
 
-            PAssociatedURI associatedURI = new PAssociatedURI();
-            associatedURI.setHeaderName(SIPHeaderNamesIms.P_ASSOCIATED_URI);
+			this.lexer.SPorHT();
+			while (lexer.lookAhead(0) == ',') {
+				this.lexer.match(',');
+				this.lexer.SPorHT();
 
-            super.parse(associatedURI);
-            associatedURIList.add(associatedURI);
+				associatedURI = new PAssociatedURI();
+				super.parse(associatedURI);
+				associatedURIList.add(associatedURI);
 
-            this.lexer.SPorHT();
-            while (lexer.lookAhead(0) == ',')
-            {
-                this.lexer.match(',');
-                this.lexer.SPorHT();
+				this.lexer.SPorHT();
+			}
+			this.lexer.SPorHT();
+			this.lexer.match('\n');
 
-                associatedURI = new PAssociatedURI();
-                super.parse(associatedURI);
-                associatedURIList.add(associatedURI);
+			return associatedURIList;
 
-                this.lexer.SPorHT();
-            }
-            this.lexer.SPorHT();
-            this.lexer.match('\n');
+		} finally {
+			if (debug)
+				dbg_leave("PAssociatedURIParser.parse");
+		}
 
-            return associatedURIList;
+	}
 
-
-
-
-        } finally {
-            if (debug)
-                dbg_leave("PAssociatedURIParser.parse");
-        }
-
-    }
-
-
-
-
-
-    /** Test program
-    public static void main(String args[]) throws ParseException
-    {
-        String rou[] = {
-
-                "P-Associated-URI: <sip:123qwe@ptinovacao.pt>\n",
-
-                    "P-Associated-URI: <sip:testes1@ptinovacao.pt>,  " +
-                                    "<sip:testes2@ptinovacao.pt> \n"
-                    };
-
-        for (int i = 0; i < rou.length; i++ ) {
-            PAssociatedURIParser rp =
-              new PAssociatedURIParser(rou[i]);
-            PAssociatedURIList list = (PAssociatedURIList) rp.parse();
-            System.out.println("encoded = " +list.encode());
-        }
-    }
-
-    */
+	/**
+	 * Test program public static void main(String args[]) throws ParseException { String rou[] = {
+	 * 
+	 * "P-Associated-URI: <sip:123qwe@ptinovacao.pt>\n",
+	 * 
+	 * "P-Associated-URI: <sip:testes1@ptinovacao.pt>, " + "<sip:testes2@ptinovacao.pt> \n" };
+	 * 
+	 * for (int i = 0; i < rou.length; i++ ) { PAssociatedURIParser rp = new PAssociatedURIParser(rou[i]); PAssociatedURIList list = (PAssociatedURIList) rp.parse(); System.out.println("encoded = " +list.encode()); } }
+	 * 
+	 */
 
 }

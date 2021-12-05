@@ -29,44 +29,46 @@
 package gov.nist.javax.sdp.fields;
 
 /**
-* Placeholder root class for SDP headers.
-*
-*@version 1.2
-*
-*@author M. Ranganathan   <br/>
-*
-*
-*
-*/
+ * Placeholder root class for SDP headers.
+ *
+ * @version 1.2
+ *
+ * @author M. Ranganathan <br/>
+ *
+ *
+ *
+ */
 
 public abstract class SDPField extends SDPObject {
-    protected String fieldName;
+	protected String fieldName;
 
-    public abstract String encode();
+	public abstract String encode();
 
-    protected SDPField(String hname) {
-        fieldName = hname;
-    }
+	protected SDPField(String hname) {
+		fieldName = hname;
+	}
 
-    public String getFieldName() {
-        return fieldName;
-    }
+	public String getFieldName() {
+		return fieldName;
+	}
 
-    /** Returns the type character for the field.
-    * @return the type character for the field.
-    */
-    public char getTypeChar() {
-        if (fieldName == null)
-            return '\0';
-        else
-            return fieldName.charAt(0);
-    }
+	/**
+	 * Returns the type character for the field.
+	 * 
+	 * @return the type character for the field.
+	 */
+	public char getTypeChar() {
+		if (fieldName == null)
+			return '\0';
+		else
+			return fieldName.charAt(0);
+	}
 
-    public SDPField() {
-    }
+	public SDPField() {
+	}
 
-    public String toString() {
-        return this.encode();
-    }
+	public String toString() {
+		return this.encode();
+	}
 
 }

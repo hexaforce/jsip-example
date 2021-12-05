@@ -35,26 +35,25 @@ import javax.sip.header.ViaHeader;
  *
  * @version 1.2 $Revision: 1.7 $ $Date: 2009-07-17 18:57:41 $
  *
- * @author M. Ranganathan   <br/>
+ * @author M. Ranganathan <br/>
  *
  *
  *
  */
 public final class ViaList extends SIPHeaderList<Via> {
 
-    private static final long serialVersionUID = 3899679374556152313L;
+	private static final long serialVersionUID = 3899679374556152313L;
 
-    public Object clone() {
-        ViaList retval = new ViaList();
-        return retval.clonehlist(this.hlist);
-    }
-    /**
-     * Default Constructor.
-     */
-    public ViaList() {
-        super(Via.class, ViaHeader.NAME);
-    }
+	public Object clone() {
+		ViaList retval = new ViaList();
+		return retval.clonehlist(this.hlist);
+	}
 
-
+	/**
+	 * Default Constructor.
+	 */
+	public ViaList() {
+		super(Via.class, ViaHeader.NAME);
+	}
 
 }

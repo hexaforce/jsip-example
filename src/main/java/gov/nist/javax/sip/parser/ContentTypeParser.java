@@ -30,6 +30,7 @@
  */
 
 package gov.nist.javax.sip.parser;
+
 import java.text.ParseException;
 
 import gov.nist.core.Token;
@@ -41,51 +42,49 @@ import gov.nist.javax.sip.header.SIPHeader;
  *
  * @version 1.2 $Revision: 1.9 $ $Date: 2009-07-17 18:57:59 $
  *
- * @author M. Ranganathan   <br/>
+ * @author M. Ranganathan <br/>
  *
  *
  */
 public class ContentTypeParser extends ParametersParser {
 
-    public ContentTypeParser(String contentType) {
-        super(contentType);
-    }
+	public ContentTypeParser(String contentType) {
+		super(contentType);
+	}
 
-    protected ContentTypeParser(Lexer lexer) {
-        super(lexer);
-    }
+	protected ContentTypeParser(Lexer lexer) {
+		super(lexer);
+	}
 
-    public SIPHeader parse() throws ParseException {
+	public SIPHeader parse() throws ParseException {
 
-        ContentType contentType = new ContentType();
-        if (debug)
-            dbg_enter("ContentTypeParser.parse");
+		ContentType contentType = new ContentType();
+		if (debug)
+			dbg_enter("ContentTypeParser.parse");
 
-        try {
-            this.headerName(TokenTypes.CONTENT_TYPE);
+		try {
+			this.headerName(TokenTypes.CONTENT_TYPE);
 
-            // The type:
-            lexer.match(TokenTypes.ID);
-            Token type = lexer.getNextToken();
-            this.lexer.SPorHT();
-            contentType.setContentType(type.getTokenValue());
+			// The type:
+			lexer.match(TokenTypes.ID);
+			Token type = lexer.getNextToken();
+			this.lexer.SPorHT();
+			contentType.setContentType(type.getTokenValue());
 
-            // The sub-type:
-            lexer.match('/');
-            lexer.match(TokenTypes.ID);
-            Token subType = lexer.getNextToken();
-            this.lexer.SPorHT();
-            contentType.setContentSubType(subType.getTokenValue());
-            super.parse(contentType);
-            this.lexer.match('\n');
-        } finally {
-            if (debug)
-                dbg_leave("ContentTypeParser.parse");
-        }
-        return contentType;
+			// The sub-type:
+			lexer.match('/');
+			lexer.match(TokenTypes.ID);
+			Token subType = lexer.getNextToken();
+			this.lexer.SPorHT();
+			contentType.setContentSubType(subType.getTokenValue());
+			super.parse(contentType);
+			this.lexer.match('\n');
+		} finally {
+			if (debug)
+				dbg_leave("ContentTypeParser.parse");
+		}
+		return contentType;
 
-    }
-
+	}
 
 }
-

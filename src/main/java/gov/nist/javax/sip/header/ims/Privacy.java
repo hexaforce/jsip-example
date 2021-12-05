@@ -27,9 +27,6 @@
  * PRODUCT OF PT INOVACAO - EST DEPARTMENT and Aveiro University - Portugal)   *
  *****************************************************************************/
 
-
-
-
 package gov.nist.javax.sip.header.ims;
 
 import java.text.ParseException;
@@ -44,103 +41,86 @@ import gov.nist.javax.sip.header.SIPHeader;
  * @author Miguel Freitas (IT) PT-Inovacao
  */
 
+public class Privacy extends SIPHeader implements PrivacyHeader, SIPHeaderNamesIms, ExtensionHeader {
 
-public class Privacy
-    extends SIPHeader
-    implements PrivacyHeader, SIPHeaderNamesIms, ExtensionHeader
-{
+	/**
+	 * Privacy type
+	 */
+	private String privacy;
 
-    /**
-     * Privacy type
-     */
-    private String privacy;
+	/**
+	 * Default constructor.
+	 */
+	public Privacy() {
+		super(PRIVACY);
+	}
 
+	/**
+	 * Constructor given a privacy type
+	 * 
+	 * @param privacy
+	 */
+	public Privacy(String privacy) {
+		this();
+		this.privacy = privacy;
 
-    /**
-     * Default constructor.
-     */
-    public Privacy() {
-        super(PRIVACY);
-    }
+	}
 
-    /**
-     * Constructor given a privacy type
-     *@param privacy
-     */
-    public Privacy(String privacy)
-    {
-        this();
-        this.privacy = privacy;
+	/**
+	 * Encode into a canonical string.
+	 * 
+	 * @return String.
+	 */
+	public StringBuilder encodeBody(StringBuilder buffer) {
+		return buffer.append(this.privacy);
+	}
 
-    }
+	/**
+	 * Get privacy type
+	 * 
+	 * @return privacy type
+	 */
+	public String getPrivacy() {
+		return privacy;
+	}
 
+	/**
+	 * set the privacy type.
+	 * 
+	 * @param privacy -- privacy type to set.
+	 */
 
-    /**
-     * Encode into a canonical string.
-     * @return String.
-     */
-    public StringBuilder encodeBody(StringBuilder buffer) {
-        return buffer.append(this.privacy);
-    }
+	public void setPrivacy(String privacy) throws ParseException {
 
+		if (privacy == null || privacy == "")
+			throw new NullPointerException("JAIN-SIP Exception, " + " Privacy, setPrivacy(), privacy value is null or empty");
+		this.privacy = privacy;
 
+	}
 
-    /**
-     * Get privacy type
-     * @return privacy type
-     */
-    public String getPrivacy()
-    {
-        return privacy;
-    }
+	/**
+	 * Suppress direct setting of values.
+	 *
+	 */
+	public void setValue(String value) throws ParseException {
+		throw new ParseException(value, 0);
 
+	}
 
+	public boolean equals(Object other) {
+		if (other instanceof PrivacyHeader) {
+			PrivacyHeader o = (PrivacyHeader) other;
+			return (this.getPrivacy().equals(o.getPrivacy()));
+		}
+		return false;
 
-    /**
-     * set the privacy type.
-     * @param  privacy -- privacy type to set.
-     */
+	}
 
-    public void setPrivacy(String privacy) throws ParseException
-    {
-
-        if (privacy == null || privacy == "")
-            throw new NullPointerException(
-                "JAIN-SIP Exception, "
-                    + " Privacy, setPrivacy(), privacy value is null or empty");
-        this.privacy = privacy;
-
-    }
-
-    /**
-     * Suppress direct setting of values.
-     *
-     */
-    public void setValue(String value) throws ParseException {
-        throw new ParseException(value,0);
-
-    }
-
-
-    public boolean equals(Object other)
-    {
-        if (other instanceof PrivacyHeader)
-        {
-            PrivacyHeader o = (PrivacyHeader) other;
-            return (this.getPrivacy().equals( o.getPrivacy() ));
-        }
-        return false;
-
-    }
-
-
-    public Object clone() {
-        Privacy retval = (Privacy) super.clone();
-        if (this.privacy != null)
-            retval.privacy = this.privacy;
-        return retval;
-    }
-
-
+	public Object clone() {
+		Privacy retval = (Privacy) super.clone();
+		if (this.privacy != null)
+			retval.privacy = this.privacy;
+		return retval;
+	}
 
 }

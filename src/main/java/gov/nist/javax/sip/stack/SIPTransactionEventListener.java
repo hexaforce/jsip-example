@@ -28,18 +28,17 @@ package gov.nist.javax.sip.stack;
 import java.util.EventListener;
 
 /**
- * Interface implemented by classes that want to be notified of asynchronous
- * transacion events.
+ * Interface implemented by classes that want to be notified of asynchronous transacion events.
  *
  * @author Jeff Keyser
  * @version 1.2 $Revision: 1.7 $ $Date: 2009-07-17 18:58:15 $
  */
 public interface SIPTransactionEventListener extends EventListener {
 
-    /**
-     * Invoked when an error has ocurred with a transaction.
-     *
-     * @param transactionErrorEvent Error event.
-     */
-    public void transactionErrorEvent(SIPTransactionErrorEvent transactionErrorEvent);
+	/**
+	 * Invoked when an error has ocurred with a transaction.
+	 *
+	 * @param transactionErrorEvent Error event.
+	 */
+	public void transactionErrorEvent(SIPTransactionErrorEvent transactionErrorEvent);
 }

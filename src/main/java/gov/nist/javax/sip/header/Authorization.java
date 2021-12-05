@@ -37,24 +37,23 @@ import gov.nist.javax.sip.header.ims.AuthorizationHeaderIms;
  *
  * @see ProxyAuthorization
  *
- * @author M. Ranganathan   NIST/ITL/ANTD <br/>
+ * @author M. Ranganathan NIST/ITL/ANTD <br/>
  * @version 1.2 $Revision: 1.6 $ $Date: 2009-07-17 18:57:27 $
  *
  *
  */
-public class Authorization
-    extends gov.nist.javax.sip.header.AuthenticationHeader
-    implements javax.sip.header.AuthorizationHeader, AuthorizationHeaderIms {
+public class Authorization extends gov.nist.javax.sip.header.AuthenticationHeader implements javax.sip.header.AuthorizationHeader, AuthorizationHeaderIms {
 
-    /**
-     * Comment for <code>serialVersionUID</code>
-     */
-    private static final long serialVersionUID = -8897770321892281348L;
+	/**
+	 * Comment for <code>serialVersionUID</code>
+	 */
+	private static final long serialVersionUID = -8897770321892281348L;
 
-    /** Default constructor.
-     */
-    public Authorization() {
-        super(AuthorizationHeader.NAME);
-    }
+	/**
+	 * Default constructor.
+	 */
+	public Authorization() {
+		super(AuthorizationHeader.NAME);
+	}
 
 }

@@ -26,25 +26,22 @@ package gov.nist.javax.sip.header;
 import javax.sip.header.Parameters;
 
 /**
- * Extensions to the {@link Parameters} interface supported by the implementation and 
- * will be included in the next spec release.
+ * Extensions to the {@link Parameters} interface supported by the implementation and will be included in the next spec release.
  * 
- * @author jean.deruelle@gmail.com
- * @ since 2.0
+ * @author jean.deruelle@gmail.com @ since 2.0
  */
 public interface ParametersExt extends Parameters {
-    /**
-     * Returns the value of the named parameter, or null if it is not set. A
-     * zero-length String indicates flag parameter.
-     *
-     * The stack remove the undeeded quotes that are imposed by SIP encoding rules to ensure unambiguous parsing.<br/>
-     * The stripQuotes parameter can be used to get the original value as it has been received by the stack ie with the quotes 
-     *
-     * @param name name of parameter to retrieve
-     * @param stripQuotes will return the value of the parameter as it has been received when the message came into the stack
-     * @return the value of specified parameter
-     * @since 2.0
-     */
-    public String getParameter(String name, boolean stripQuotes);
+	/**
+	 * Returns the value of the named parameter, or null if it is not set. A zero-length String indicates flag parameter.
+	 *
+	 * The stack remove the undeeded quotes that are imposed by SIP encoding rules to ensure unambiguous parsing.<br/>
+	 * The stripQuotes parameter can be used to get the original value as it has been received by the stack ie with the quotes
+	 *
+	 * @param name        name of parameter to retrieve
+	 * @param stripQuotes will return the value of the parameter as it has been received when the message came into the stack
+	 * @return the value of specified parameter
+	 * @since 2.0
+	 */
+	public String getParameter(String name, boolean stripQuotes);
 
 }

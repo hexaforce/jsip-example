@@ -58,9 +58,7 @@ import gov.nist.core.StackLogger;
 import gov.nist.javax.sip.SipStackImpl;
 
 /**
- * Sit in a loop waiting for incoming tls connections and start a new thread to handle each new
- * connection. This is the active object that creates new TLS MessageChannels (one for each new
- * accept socket).
+ * Sit in a loop waiting for incoming tls connections and start a new thread to handle each new connection. This is the active object that creates new TLS MessageChannels (one for each new accept socket).
  * 
  * @version 1.2 $Revision: 1.29 $ $Date: 2010-12-02 22:04:13 $
  * 
@@ -68,229 +66,220 @@ import gov.nist.javax.sip.SipStackImpl;
  * 
  */
 public class TLSMessageProcessor extends ConnectionOrientedMessageProcessor implements Runnable {
-	
+
 	private static StackLogger logger = CommonLogger.getLogger(TLSMessageProcessor.class);
-    
+
 	/**
-     * Constructor.
-     * 
-     * @param ipAddress -- inet address where I am listening.
-     * @param sipStack SIPStack structure.
-     * @param port port where this message processor listens.
-     */
-    protected TLSMessageProcessor(InetAddress ipAddress, SIPTransactionStack sipStack, int port) {
-        super(ipAddress, port, "tls",sipStack);    
-    }
+	 * Constructor.
+	 * 
+	 * @param ipAddress -- inet address where I am listening.
+	 * @param sipStack  SIPStack structure.
+	 * @param port      port where this message processor listens.
+	 */
+	protected TLSMessageProcessor(InetAddress ipAddress, SIPTransactionStack sipStack, int port) {
+		super(ipAddress, port, "tls", sipStack);
+	}
 
-    /**
-     * Start the processor.
-     */
-    public void start() throws IOException {
-        Thread thread = new Thread(this);
-        thread.setName("MessageProcessorThread-TLS-" + getIpAddress().getHostAddress() + '/' + getPort());
-        // ISSUE 184
-        thread.setPriority(sipStack.getThreadPriority());
-        thread.setDaemon(true);
+	/**
+	 * Start the processor.
+	 */
+	public void start() throws IOException {
+		Thread thread = new Thread(this);
+		thread.setName("MessageProcessorThread-TLS-" + getIpAddress().getHostAddress() + '/' + getPort());
+		// ISSUE 184
+		thread.setPriority(sipStack.getThreadPriority());
+		thread.setDaemon(true);
 
-        this.sock = sipStack.getNetworkLayer().createSSLServerSocket(this.getPort(), 0,
-                this.getIpAddress());
-        if(sipStack.getClientAuth() == ClientAuthType.Want || sipStack.getClientAuth() == ClientAuthType.Default) {
-            // we set it to true in Default case as well to keep backward compatibility and default behavior            
-            ((SSLServerSocket) this.sock).setWantClientAuth(true);            
-        } else {
-            ((SSLServerSocket) this.sock).setWantClientAuth(false);
-        }
-        if(sipStack.getClientAuth() == ClientAuthType.Enabled) {
-            ((SSLServerSocket) this.sock).setNeedClientAuth(true);            
-        } else {
-            ((SSLServerSocket) this.sock).setNeedClientAuth(false);
-        }            
-        ((SSLServerSocket) this.sock).setUseClientMode(false);
-        String []enabledCiphers = ((SipStackImpl)sipStack).getEnabledCipherSuites();
-        ((SSLServerSocket)sock).setEnabledProtocols(((SipStackImpl)sipStack).getEnabledProtocols());
-        ((SSLServerSocket) this.sock).setEnabledCipherSuites(enabledCiphers);        
-        if(sipStack.getClientAuth() == ClientAuthType.Want || sipStack.getClientAuth() == ClientAuthType.Default) {
-            // we set it to true in Default case as well to keep backward compatibility and default behavior            
-            ((SSLServerSocket) this.sock).setWantClientAuth(true);            
-        } else {
-            ((SSLServerSocket) this.sock).setWantClientAuth(false);
-        }     
+		this.sock = sipStack.getNetworkLayer().createSSLServerSocket(this.getPort(), 0, this.getIpAddress());
+		if (sipStack.getClientAuth() == ClientAuthType.Want || sipStack.getClientAuth() == ClientAuthType.Default) {
+			// we set it to true in Default case as well to keep backward compatibility and default behavior
+			((SSLServerSocket) this.sock).setWantClientAuth(true);
+		} else {
+			((SSLServerSocket) this.sock).setWantClientAuth(false);
+		}
+		if (sipStack.getClientAuth() == ClientAuthType.Enabled) {
+			((SSLServerSocket) this.sock).setNeedClientAuth(true);
+		} else {
+			((SSLServerSocket) this.sock).setNeedClientAuth(false);
+		}
+		((SSLServerSocket) this.sock).setUseClientMode(false);
+		String[] enabledCiphers = ((SipStackImpl) sipStack).getEnabledCipherSuites();
+		((SSLServerSocket) sock).setEnabledProtocols(((SipStackImpl) sipStack).getEnabledProtocols());
+		((SSLServerSocket) this.sock).setEnabledCipherSuites(enabledCiphers);
+		if (sipStack.getClientAuth() == ClientAuthType.Want || sipStack.getClientAuth() == ClientAuthType.Default) {
+			// we set it to true in Default case as well to keep backward compatibility and default behavior
+			((SSLServerSocket) this.sock).setWantClientAuth(true);
+		} else {
+			((SSLServerSocket) this.sock).setWantClientAuth(false);
+		}
 
-        if(logger.isLoggingEnabled(StackLogger.TRACE_DEBUG)) {
-            logger.logDebug("SSLServerSocket want client auth " + ((SSLServerSocket) this.sock).getWantClientAuth());
-            logger.logDebug("SSLServerSocket need client auth " + ((SSLServerSocket) this.sock).getNeedClientAuth());
-        }
-        
-        this.isRunning = true;
-        thread.start();
+		if (logger.isLoggingEnabled(StackLogger.TRACE_DEBUG)) {
+			logger.logDebug("SSLServerSocket want client auth " + ((SSLServerSocket) this.sock).getWantClientAuth());
+			logger.logDebug("SSLServerSocket need client auth " + ((SSLServerSocket) this.sock).getNeedClientAuth());
+		}
 
-    }
+		this.isRunning = true;
+		thread.start();
 
-    /**
-     * Run method for the thread that gets created for each accept socket.
-     */
-    public void run() {
-        // Accept new connectins on our socket.
-        while (this.isRunning) {
-        	Socket newsock = null; 
-            try {
-            	 
-                synchronized (this) {
-                    // sipStack.maxConnections == -1 means we are
-                    // willing to handle an "infinite" number of
-                    // simultaneous connections (no resource limitation).
-                    // This is the default behavior.
-                    while (sipStack.maxConnections != -1
-                            && this.nConnections >= sipStack.maxConnections) {
-                        try {
-                        	
-                            this.wait();
+	}
 
-                            if (!this.isRunning)
-                                return;
-                        } catch (InterruptedException ex) {
-                            break;
-                        }
-                    }
-                    this.nConnections++;
-                }
-                if (logger.isLoggingEnabled(LogWriter.TRACE_DEBUG)) {
-                    logger.logDebug(" waiting to accept new connection!");
-                }
-                
-                newsock = sock.accept();
-                if (sipStack.isTcpNoDelayEnabled) {
-                    newsock.setTcpNoDelay(true);
-                }
-               
-                if (logger.isLoggingEnabled(LogWriter.TRACE_DEBUG)) {
-                    logger.logDebug("Accepting new connection!");
-                }
+	/**
+	 * Run method for the thread that gets created for each accept socket.
+	 */
+	public void run() {
+		// Accept new connectins on our socket.
+		while (this.isRunning) {
+			Socket newsock = null;
+			try {
 
-            } catch (SocketException ex) {
-                if ( this.isRunning ) {
-                  logger.logError(
-                    "Fatal - SocketException occured while Accepting connection", ex);
-                  	this.isRunning = false;
-                  	break;
-                }
-            } catch (SSLException ex) {
-                this.isRunning = false;
-                logger.logError(
-                        "Fatal - SSSLException occured while Accepting connection", ex);
-                break;
-            } catch (IOException ex) {
-                // Problem accepting connection.
-                logger.logError("Problem Accepting Connection", ex);
+				synchronized (this) {
+					// sipStack.maxConnections == -1 means we are
+					// willing to handle an "infinite" number of
+					// simultaneous connections (no resource limitation).
+					// This is the default behavior.
+					while (sipStack.maxConnections != -1 && this.nConnections >= sipStack.maxConnections) {
+						try {
+
+							this.wait();
+
+							if (!this.isRunning)
+								return;
+						} catch (InterruptedException ex) {
+							break;
+						}
+					}
+					this.nConnections++;
+				}
+				if (logger.isLoggingEnabled(LogWriter.TRACE_DEBUG)) {
+					logger.logDebug(" waiting to accept new connection!");
+				}
+
+				newsock = sock.accept();
+				if (sipStack.isTcpNoDelayEnabled) {
+					newsock.setTcpNoDelay(true);
+				}
+
+				if (logger.isLoggingEnabled(LogWriter.TRACE_DEBUG)) {
+					logger.logDebug("Accepting new connection!");
+				}
+
+			} catch (SocketException ex) {
+				if (this.isRunning) {
+					logger.logError("Fatal - SocketException occured while Accepting connection", ex);
+					this.isRunning = false;
+					break;
+				}
+			} catch (SSLException ex) {
+				this.isRunning = false;
+				logger.logError("Fatal - SSSLException occured while Accepting connection", ex);
+				break;
+			} catch (IOException ex) {
+				// Problem accepting connection.
+				logger.logError("Problem Accepting Connection", ex);
 				continue;
-            } catch (Exception ex) {
-                logger.logError("Unexpected Exception!", ex);
-                continue;
-            }
-            
-            // Note that for an incoming message channel, the
-            // thread is already running
-            if(isRunning) {
-	            try {
-	            	// lyolik: even if SocketException is thrown (could be a result of bad handshake, 
-	            	// it's not a reason to stop execution
-		            TLSMessageChannel newChannel = new TLSMessageChannel(newsock, sipStack, this, "TLSMessageChannelThread-" + nConnections);
-		            if (logger.isLoggingEnabled(LogWriter.TRACE_DEBUG))
-		                 logger.logDebug(Thread.currentThread() + " adding incoming channel " + newChannel.getKey());
-		            // https://code.google.com/p/jain-sip/issues/detail?id=14 add it only if the handshake has been completed successfully
-		            if(newChannel.isHandshakeCompleted()) {
-		                incomingMessageChannels.put(newChannel.getKey(), newChannel);
-		            }
-	            } catch (Exception ex) {
-	                logger.logError("A problem occured while Accepting connection", ex);
-	            }
-            }
-        }
-    }   
+			} catch (Exception ex) {
+				logger.logError("Unexpected Exception!", ex);
+				continue;
+			}
 
-    /**
-     * Stop the message processor. Feature suggested by Jeff Keyser.
-     */
-    public synchronized void stop() {
-        if (!isRunning)
-            return;
+			// Note that for an incoming message channel, the
+			// thread is already running
+			if (isRunning) {
+				try {
+					// lyolik: even if SocketException is thrown (could be a result of bad handshake,
+					// it's not a reason to stop execution
+					TLSMessageChannel newChannel = new TLSMessageChannel(newsock, sipStack, this, "TLSMessageChannelThread-" + nConnections);
+					if (logger.isLoggingEnabled(LogWriter.TRACE_DEBUG))
+						logger.logDebug(Thread.currentThread() + " adding incoming channel " + newChannel.getKey());
+					// https://code.google.com/p/jain-sip/issues/detail?id=14 add it only if the handshake has been completed successfully
+					if (newChannel.isHandshakeCompleted()) {
+						incomingMessageChannels.put(newChannel.getKey(), newChannel);
+					}
+				} catch (Exception ex) {
+					logger.logError("A problem occured while Accepting connection", ex);
+				}
+			}
+		}
+	}
 
-        isRunning = false;
-        try {
-        	if(sock == null) {
-        		logger.logDebug("Socket was null, perhaps not started properly");
-        	} else {
-        		sock.close();
-        	}
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
+	/**
+	 * Stop the message processor. Feature suggested by Jeff Keyser.
+	 */
+	public synchronized void stop() {
+		if (!isRunning)
+			return;
 
-        Collection en = messageChannels.values();
-        for (Iterator it = en.iterator(); it.hasNext();) {
-            TLSMessageChannel next = (TLSMessageChannel) it.next();
-            next.close();
-        }
-        for (Iterator incomingMCIterator = incomingMessageChannels.values().iterator(); incomingMCIterator
-                .hasNext();) {
-            TLSMessageChannel next = (TLSMessageChannel) incomingMCIterator.next();
-            next.close();
-        }
-        this.notify();
+		isRunning = false;
+		try {
+			if (sock == null) {
+				logger.logDebug("Socket was null, perhaps not started properly");
+			} else {
+				sock.close();
+			}
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
 
-    }
+		Collection en = messageChannels.values();
+		for (Iterator it = en.iterator(); it.hasNext();) {
+			TLSMessageChannel next = (TLSMessageChannel) it.next();
+			next.close();
+		}
+		for (Iterator incomingMCIterator = incomingMessageChannels.values().iterator(); incomingMCIterator.hasNext();) {
+			TLSMessageChannel next = (TLSMessageChannel) incomingMCIterator.next();
+			next.close();
+		}
+		this.notify();
 
-    public synchronized MessageChannel createMessageChannel(HostPort targetHostPort)
-            throws IOException {
-        String key = MessageChannel.getKey(targetHostPort, "TLS");
-        if (messageChannels.get(key) != null) {
-            return (TLSMessageChannel) this.messageChannels.get(key);
-        } else {
-            TLSMessageChannel retval = new TLSMessageChannel(targetHostPort.getInetAddress(),
-                    targetHostPort.getPort(), sipStack, this);
-            this.messageChannels.put(key, retval);
-            retval.isCached = true;
-            if (logger.isLoggingEnabled(LogWriter.TRACE_DEBUG)) {
-                logger.logDebug("key " + key);
-                logger.logDebug("Creating " + retval);
-            }
-            return retval;
-        }
-    }
+	}
 
-    public synchronized MessageChannel createMessageChannel(InetAddress host, int port)
-            throws IOException {
-        try {
-            String key = MessageChannel.getKey(host, port, "TLS");
-            if (messageChannels.get(key) != null) {
-                return (TLSMessageChannel) this.messageChannels.get(key);
-            } else {
-                TLSMessageChannel retval = new TLSMessageChannel(host, port, sipStack, this);
-                this.messageChannels.put(key, retval);
-                retval.isCached = true;
-                if (logger.isLoggingEnabled(LogWriter.TRACE_DEBUG)) {
-                    logger.logDebug("key " + key);
-                    logger.logDebug("Creating " + retval);
-                }
-                return retval;
-            }
-        } catch (UnknownHostException ex) {
-            throw new IOException(ex.getMessage());
-        }
-    }    
+	public synchronized MessageChannel createMessageChannel(HostPort targetHostPort) throws IOException {
+		String key = MessageChannel.getKey(targetHostPort, "TLS");
+		if (messageChannels.get(key) != null) {
+			return (TLSMessageChannel) this.messageChannels.get(key);
+		} else {
+			TLSMessageChannel retval = new TLSMessageChannel(targetHostPort.getInetAddress(), targetHostPort.getPort(), sipStack, this);
+			this.messageChannels.put(key, retval);
+			retval.isCached = true;
+			if (logger.isLoggingEnabled(LogWriter.TRACE_DEBUG)) {
+				logger.logDebug("key " + key);
+				logger.logDebug("Creating " + retval);
+			}
+			return retval;
+		}
+	}
 
-    /**
-     * Default target port for TLS
-     */
-    public int getDefaultTargetPort() {
-        return 5061;
-    }
+	public synchronized MessageChannel createMessageChannel(InetAddress host, int port) throws IOException {
+		try {
+			String key = MessageChannel.getKey(host, port, "TLS");
+			if (messageChannels.get(key) != null) {
+				return (TLSMessageChannel) this.messageChannels.get(key);
+			} else {
+				TLSMessageChannel retval = new TLSMessageChannel(host, port, sipStack, this);
+				this.messageChannels.put(key, retval);
+				retval.isCached = true;
+				if (logger.isLoggingEnabled(LogWriter.TRACE_DEBUG)) {
+					logger.logDebug("key " + key);
+					logger.logDebug("Creating " + retval);
+				}
+				return retval;
+			}
+		} catch (UnknownHostException ex) {
+			throw new IOException(ex.getMessage());
+		}
+	}
 
-    /**
-     * TLS is a secure protocol.
-     */
-    public boolean isSecure() {
-        return true;
-    }
+	/**
+	 * Default target port for TLS
+	 */
+	public int getDefaultTargetPort() {
+		return 5061;
+	}
+
+	/**
+	 * TLS is a secure protocol.
+	 */
+	public boolean isSecure() {
+		return true;
+	}
 }
-

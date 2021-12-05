@@ -30,53 +30,56 @@ import java.text.ParseException;
 import gov.nist.javax.sip.header.Organization;
 import gov.nist.javax.sip.header.SIPHeader;
 
-/** Parser for Organization header.
+/**
+ * Parser for Organization header.
  *
  * @version 1.2 $Revision: 1.8 $ $Date: 2009-07-17 18:58:01 $
  *
- * @author Olivier Deruelle   <br/>
- * @author M. Ranganathan   <br/>
+ * @author Olivier Deruelle <br/>
+ * @author M. Ranganathan <br/>
  *
  *
  */
 public class OrganizationParser extends HeaderParser {
 
-    /**
-     * Creates a new instance of OrganizationParser
-     * @param organization the header to parse
-     */
-    public OrganizationParser(String organization) {
-        super(organization);
-    }
+	/**
+	 * Creates a new instance of OrganizationParser
+	 * 
+	 * @param organization the header to parse
+	 */
+	public OrganizationParser(String organization) {
+		super(organization);
+	}
 
-    /**
-     * Constructor
-     * @param lexer the lexer to use to parse the header
-     */
-    protected OrganizationParser(Lexer lexer) {
-        super(lexer);
-    }
+	/**
+	 * Constructor
+	 * 
+	 * @param lexer the lexer to use to parse the header
+	 */
+	protected OrganizationParser(Lexer lexer) {
+		super(lexer);
+	}
 
-    /**
-     * parse the String header
-     * @return SIPHeader (Organization object)
-     * @throws SIPParseException if the message does not respect the spec.
-     */
-    public SIPHeader parse() throws ParseException {
+	/**
+	 * parse the String header
+	 * 
+	 * @return SIPHeader (Organization object)
+	 * @throws SIPParseException if the message does not respect the spec.
+	 */
+	public SIPHeader parse() throws ParseException {
 
-        if (debug)
-            dbg_enter("OrganizationParser.parse");
-        Organization organization = new Organization();
-        try {
-            headerName(TokenTypes.ORGANIZATION);
-            String value = this.lexer.getRest();
-            organization.setOrganization(value.trim());
-            return organization;
-        } finally {
-            if (debug)
-                dbg_leave("OrganizationParser.parse");
-        }
-    }
-
+		if (debug)
+			dbg_enter("OrganizationParser.parse");
+		Organization organization = new Organization();
+		try {
+			headerName(TokenTypes.ORGANIZATION);
+			String value = this.lexer.getRest();
+			organization.setOrganization(value.trim());
+			return organization;
+		} finally {
+			if (debug)
+				dbg_leave("OrganizationParser.parse");
+		}
+	}
 
 }

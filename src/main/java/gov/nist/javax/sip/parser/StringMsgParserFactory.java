@@ -35,9 +35,10 @@ public class StringMsgParserFactory implements MessageParserFactory {
 
 	/*
 	 * (non-Javadoc)
+	 * 
 	 * @see gov.nist.javax.sip.parser.MessageParserFactory#createMessageParser(gov.nist.javax.sip.stack.SIPTransactionStack)
 	 */
-	public MessageParser createMessageParser(SIPTransactionStack stack) {	
+	public MessageParser createMessageParser(SIPTransactionStack stack) {
 		return new StringMsgParser();
 	}
 

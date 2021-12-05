@@ -32,29 +32,31 @@ import javax.sip.header.ProxyAuthorizationHeader;
 
 /**
  * List of ProxyAuthorization headers.
+ * 
  * @version 1.2 $Revision: 1.5 $ $Date: 2009-07-17 18:57:34 $
  *
- * @author M. Ranganathan   <br/>
+ * @author M. Ranganathan <br/>
  *
  *
  *
  */
-public class ProxyAuthorizationList extends SIPHeaderList<ProxyAuthorization>{
+public class ProxyAuthorizationList extends SIPHeaderList<ProxyAuthorization> {
 
-    /**
-     * Comment for <code>serialVersionUID</code>
-     */
-    private static final long serialVersionUID = -1L;
+	/**
+	 * Comment for <code>serialVersionUID</code>
+	 */
+	private static final long serialVersionUID = -1L;
 
-    public Object clone() {
-        ProxyAuthorizationList retval = new ProxyAuthorizationList();
-        retval.clonehlist(this.hlist);
-        return retval;
-    }
+	public Object clone() {
+		ProxyAuthorizationList retval = new ProxyAuthorizationList();
+		retval.clonehlist(this.hlist);
+		return retval;
+	}
 
-    /** Default constructor
-     */
-    public ProxyAuthorizationList() {
-        super(ProxyAuthorization.class, ProxyAuthorizationHeader.NAME);
-    }
+	/**
+	 * Default constructor
+	 */
+	public ProxyAuthorizationList() {
+		super(ProxyAuthorization.class, ProxyAuthorizationHeader.NAME);
+	}
 }

@@ -19,14 +19,13 @@
 */
 package test.tck.msgflow.callflows.router;
 
-
 public class TcpRouterTest extends UdpRouterTest {
-    boolean myFlag;
+	boolean myFlag;
 
-    public void setUp() throws Exception {
-        super.testedImplFlag = !myFlag;
-        myFlag = !super.testedImplFlag;
-        super.transport = "tcp";
-        super.setUp();
-    }
+	public void setUp() throws Exception {
+		super.testedImplFlag = !myFlag;
+		myFlag = !super.testedImplFlag;
+		super.transport = "tcp";
+		super.setUp();
+	}
 }

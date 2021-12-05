@@ -18,18 +18,17 @@ package gov.nist.javax.sip.stack;
 import java.util.EventListener;
 
 /**
- * Interface implemented by classes that want to be notified of asynchronous
- * dialog events.
+ * Interface implemented by classes that want to be notified of asynchronous dialog events.
  *
  * @author jean deruelle
- * @since 2.0 
+ * @since 2.0
  */
 public interface SIPDialogEventListener extends EventListener {
 
-    /**
-     * Invoked when an error has ocurred with a dialog.
-     *
-     * @param dialogErrorEvent Error event.
-     */
-    public void dialogErrorEvent(SIPDialogErrorEvent dialogErrorEvent);
+	/**
+	 * Invoked when an error has ocurred with a dialog.
+	 *
+	 * @param dialogErrorEvent Error event.
+	 */
+	public void dialogErrorEvent(SIPDialogErrorEvent dialogErrorEvent);
 }

@@ -31,8 +31,6 @@
 
 package gov.nist.javax.sip.header.ims;
 
-
-
 import java.text.ParseException;
 
 import javax.sip.InvalidArgumentException;
@@ -42,328 +40,307 @@ import gov.nist.core.NameValue;
 import gov.nist.core.Separators;
 import gov.nist.javax.sip.header.ParametersHeader;
 
-
 /**
- * "Security Mechanism Agreemet for SIP Sessions"
- *  - sec-agree: RFC 3329 + 3GPP TS33.203 (Annex H).
+ * "Security Mechanism Agreemet for SIP Sessions" - sec-agree: RFC 3329 + 3GPP TS33.203 (Annex H).
  *
- * <p>Headers: Security-Server + Security-Client + Security-Verify</p>
+ * <p>
+ * Headers: Security-Server + Security-Client + Security-Verify
+ * </p>
  *
  * @author Miguel Freitas (IT) PT-Inovacao
  */
 
+public abstract class SecurityAgree extends ParametersHeader {
+	// TODO serialVersionUID
+	// private static final long serialVersionUID = -6671234553927258745L;
 
-public abstract class SecurityAgree
-    extends ParametersHeader
-{
-    //TODO serialVersionUID
-    //private static final long serialVersionUID = -6671234553927258745L;
+	// public static final String EALG = ParameterNamesIms.EALG;
+	// ...
 
-    //public static final String EALG = ParameterNamesIms.EALG;
-    // ...
+	/**
+	 * Security Mechanism value
+	 */
+	private String secMechanism;
 
-    /**
-     * Security Mechanism value
-     */
-    private String secMechanism;
+	/**
+	 * Constructor
+	 * 
+	 * @param name - name of the Security Agree header to create
+	 */
+	public SecurityAgree(String name) {
+		super(name);
+		parameters.setSeparator(Separators.SEMICOLON);
+	}
 
+	/**
+	 * Default constructor
+	 */
+	public SecurityAgree() {
+		super();
+		parameters.setSeparator(Separators.SEMICOLON);
+	}
 
-    /**
-     * Constructor
-     * @param name - name of the Security Agree header to create
-     */
-    public SecurityAgree(String name)
-    {
-        super(name);
-        parameters.setSeparator(Separators.SEMICOLON);
-    }
+	public void setParameter(String name, String value) throws ParseException {
+		if (value == null)
+			throw new NullPointerException("null value");
 
-    /**
-     * Default constructor
-     */
-    public SecurityAgree()
-    {
-        super();
-        parameters.setSeparator(Separators.SEMICOLON);
-    }
+		NameValue nv = super.parameters.getNameValue(name.toLowerCase());
+		if (nv == null) {
+			nv = new NameValue(name, value);
 
+			// quoted values
+			if (name.equalsIgnoreCase(ParameterNamesIms.D_VER)) {
+				nv.setQuotedValue();
 
-    public void setParameter(String name, String value) throws ParseException
-    {
-        if (value == null)
-            throw new NullPointerException("null value");
+				if (value.startsWith(Separators.DOUBLE_QUOTE))
+					throw new ParseException(value + " : Unexpected DOUBLE_QUOTE", 0);
+			}
 
-        NameValue nv = super.parameters.getNameValue(name.toLowerCase());
-        if (nv == null)
-        {
-            nv = new NameValue(name, value);
+			super.setParameter(nv);
+		} else {
+			nv.setValueAsObject(value);
+		}
 
-            // quoted values
-            if (name.equalsIgnoreCase(ParameterNamesIms.D_VER))
-            {
-                nv.setQuotedValue();
+	}
 
-                if (value.startsWith(Separators.DOUBLE_QUOTE))
-                    throw new ParseException(value
-                            + " : Unexpected DOUBLE_QUOTE", 0);
-            }
+	public StringBuilder encodeBody(StringBuilder retval) {
+		retval.append(this.secMechanism).append(SEMICOLON).append(SP);
+		return parameters.encode(retval);
+	}
 
-            super.setParameter(nv);
-        }
-        else
-        {
-            nv.setValueAsObject(value);
-        }
+	/**
+	 * Set security mechanism.
+	 * <p>
+	 * eg: Security-Client: ipsec-3gpp
+	 * </p>
+	 * 
+	 * @param secMech - security mechanism name
+	 */
+	public void setSecurityMechanism(String secMech) throws ParseException {
+		if (secMech == null)
+			throw new NullPointerException("JAIN-SIP " + "Exception, SecurityAgree, setSecurityMechanism(), the sec-mechanism parameter is null");
+		this.secMechanism = secMech;
+	}
 
-    }
+	/**
+	 * Set Encryption Algorithm (ealg parameter)
+	 * 
+	 * @param ealg - encryption algorithm value
+	 * @throws ParseException
+	 */
+	public void setEncryptionAlgorithm(String ealg) throws ParseException {
+		if (ealg == null)
+			throw new NullPointerException("JAIN-SIP " + "Exception, SecurityClient, setEncryptionAlgorithm(), the encryption-algorithm parameter is null");
 
-    public StringBuilder encodeBody(StringBuilder retval) {
-    	retval.append(this.secMechanism).append(SEMICOLON).append(SP);
-    	return parameters.encode(retval);
-    }
+		setParameter(ParameterNamesIms.EALG, ealg);
+	}
 
+	/**
+	 * Set Algorithm (alg parameter)
+	 * 
+	 * @param alg - algorithm value
+	 * @throws ParseException
+	 */
+	public void setAlgorithm(String alg) throws ParseException {
+		if (alg == null)
+			throw new NullPointerException("JAIN-SIP " + "Exception, SecurityClient, setAlgorithm(), the algorithm parameter is null");
+		setParameter(ParameterNamesIms.ALG, alg);
+	}
 
+	/**
+	 * Set Protocol (prot paramater)
+	 * 
+	 * @param prot - protocol value
+	 * @throws ParseException
+	 */
+	public void setProtocol(String prot) throws ParseException {
+		if (prot == null)
+			throw new NullPointerException("JAIN-SIP " + "Exception, SecurityClient, setProtocol(), the protocol parameter is null");
+		setParameter(ParameterNamesIms.PROT, prot);
+	}
 
-    /**
-     * Set security mechanism.
-     * <p>eg: Security-Client: ipsec-3gpp</p>
-     * @param secMech - security mechanism name
-     */
-    public void setSecurityMechanism(String secMech) throws ParseException {
-        if (secMech == null)
-            throw new NullPointerException(
-                "JAIN-SIP "
-                    + "Exception, SecurityAgree, setSecurityMechanism(), the sec-mechanism parameter is null");
-        this.secMechanism = secMech;
-    }
+	/**
+	 * Set Mode (mod parameter)
+	 * 
+	 * @param mod - mode value
+	 * @throws ParseException
+	 */
+	public void setMode(String mod) throws ParseException {
+		if (mod == null)
+			throw new NullPointerException("JAIN-SIP " + "Exception, SecurityClient, setMode(), the mode parameter is null");
+		setParameter(ParameterNamesIms.MOD, mod);
+	}
 
-    /**
-     * Set Encryption Algorithm (ealg parameter)
-     * @param ealg - encryption algorithm value
-     * @throws ParseException
-     */
-    public void setEncryptionAlgorithm(String ealg) throws ParseException {
-        if (ealg == null)
-            throw new NullPointerException(
-                "JAIN-SIP "
-                    + "Exception, SecurityClient, setEncryptionAlgorithm(), the encryption-algorithm parameter is null");
+	/**
+	 * Set Client SPI (spi-c parameter)
+	 * 
+	 * @param spic - spi-c value
+	 * @throws InvalidArgumentException
+	 */
+	public void setSPIClient(int spic) throws InvalidArgumentException {
+		if (spic < 0)
+			throw new InvalidArgumentException("JAIN-SIP " + "Exception, SecurityClient, setSPIClient(), the spi-c parameter is <0");
+		setParameter(ParameterNamesIms.SPI_C, spic);
+	}
 
-        setParameter(ParameterNamesIms.EALG, ealg);
-    }
+	/**
+	 * Set Server SPI (spi-s parameter)
+	 * 
+	 * @param spis - spi-s value
+	 * @throws InvalidArgumentException - when value is not valid
+	 */
+	public void setSPIServer(int spis) throws InvalidArgumentException {
+		if (spis < 0)
+			throw new InvalidArgumentException("JAIN-SIP " + "Exception, SecurityClient, setSPIServer(), the spi-s parameter is <0");
+		setParameter(ParameterNamesIms.SPI_S, spis);
+	}
 
-    /**
-     * Set Algorithm (alg parameter)
-     * @param alg - algorithm value
-     * @throws ParseException
-     */
-    public void setAlgorithm(String alg) throws ParseException {
-        if (alg == null)
-            throw new NullPointerException(
-                "JAIN-SIP "
-                    + "Exception, SecurityClient, setAlgorithm(), the algorithm parameter is null");
-        setParameter(ParameterNamesIms.ALG, alg);
-    }
+	/**
+	 * Set Client Port (port-c parameter)
+	 * 
+	 * @param portC - port-c value
+	 * @throws InvalidArgumentException - when value is not valid
+	 */
+	public void setPortClient(int portC) throws InvalidArgumentException {
+		if (portC < 0)
+			throw new InvalidArgumentException("JAIN-SIP " + "Exception, SecurityClient, setPortClient(), the port-c parameter is <0");
+		setParameter(ParameterNamesIms.PORT_C, portC);
+	}
 
-    /**
-     * Set Protocol (prot paramater)
-     * @param prot - protocol value
-     * @throws ParseException
-     */
-    public void setProtocol(String prot) throws ParseException {
-        if (prot == null)
-            throw new NullPointerException(
-                "JAIN-SIP "
-                    + "Exception, SecurityClient, setProtocol(), the protocol parameter is null");
-        setParameter(ParameterNamesIms.PROT, prot);
-    }
+	/**
+	 * Set Server Port (port-s parameter)
+	 * 
+	 * @param portS - port-s value
+	 * @throws InvalidArgumentException - when value is not valid
+	 */
+	public void setPortServer(int portS) throws InvalidArgumentException {
+		if (portS < 0)
+			throw new InvalidArgumentException("JAIN-SIP " + "Exception, SecurityClient, setPortServer(), the port-s parameter is <0");
+		setParameter(ParameterNamesIms.PORT_S, portS);
+	}
 
-    /**
-     * Set Mode (mod parameter)
-     * @param mod - mode value
-     * @throws ParseException
-     */
-    public void setMode(String mod) throws ParseException {
-        if (mod == null)
-            throw new NullPointerException(
-                "JAIN-SIP "
-                    + "Exception, SecurityClient, setMode(), the mode parameter is null");
-        setParameter(ParameterNamesIms.MOD, mod);
-    }
+	/**
+	 * <p>
+	 * Set Preference. The "q" parameter indicates a relative preference for the particular mechanism. The higher the value the more preferred the mechanism is. Range from 0.001 to 0.999.
+	 * </p>
+	 * 
+	 * @param q - q parameter value
+	 * @throws InvalidArgumentException - when value is not valid
+	 */
+	public void setPreference(float q) throws InvalidArgumentException {
+		if (q < 0.0f)
+			throw new InvalidArgumentException("JAIN-SIP " + "Exception, SecurityClient, setPreference(), the preference (q) parameter is <0");
+		setParameter(ParameterNamesIms.Q, q);
+	}
 
-    /**
-     * Set Client SPI (spi-c parameter)
-     * @param spic - spi-c value
-     * @throws InvalidArgumentException
-     */
-    public void setSPIClient(int spic) throws InvalidArgumentException {
-        if (spic < 0)
-            throw new InvalidArgumentException(
-                "JAIN-SIP "
-                    + "Exception, SecurityClient, setSPIClient(), the spi-c parameter is <0");
-        setParameter(ParameterNamesIms.SPI_C, spic);
-    }
+	// get param
 
-    /**
-     * Set Server SPI (spi-s parameter)
-     * @param spis - spi-s value
-     * @throws InvalidArgumentException - when value is not valid
-     */
-    public void setSPIServer(int spis) throws InvalidArgumentException {
-        if (spis < 0)
-            throw new InvalidArgumentException(
-                "JAIN-SIP "
-                    + "Exception, SecurityClient, setSPIServer(), the spi-s parameter is <0");
-        setParameter(ParameterNamesIms.SPI_S, spis);
-    }
+	/**
+	 * Get Security Mechanism
+	 * 
+	 * @return security mechanims value
+	 */
+	public String getSecurityMechanism() {
+		return this.secMechanism;
+	}
 
-    /**
-     * Set Client Port (port-c parameter)
-     * @param portC - port-c value
-     * @throws InvalidArgumentException - when value is not valid
-     */
-    public void setPortClient(int portC) throws InvalidArgumentException {
-        if (portC < 0)
-            throw new InvalidArgumentException(
-                "JAIN-SIP "
-                    + "Exception, SecurityClient, setPortClient(), the port-c parameter is <0");
-        setParameter(ParameterNamesIms.PORT_C, portC);
-    }
+	/**
+	 * Get Encryption Algorithm
+	 * 
+	 * @return ealg parameter value
+	 */
+	public String getEncryptionAlgorithm() {
+		return getParameter(ParameterNamesIms.EALG);
+	}
 
-    /**
-     * Set Server Port (port-s parameter)
-     * @param portS - port-s value
-     * @throws InvalidArgumentException - when value is not valid
-     */
-    public void setPortServer(int portS) throws InvalidArgumentException {
-        if (portS < 0)
-            throw new InvalidArgumentException(
-                "JAIN-SIP "
-                    + "Exception, SecurityClient, setPortServer(), the port-s parameter is <0");
-        setParameter(ParameterNamesIms.PORT_S, portS);
-    }
+	/**
+	 * Get Algorithm
+	 * 
+	 * @return alg parameter value
+	 */
+	public String getAlgorithm() {
+		return getParameter(ParameterNamesIms.ALG);
+	}
 
-    /**
-     * <p>Set Preference.
-     * The "q" parameter indicates a relative preference for the particular mechanism.
-     * The higher the value the more preferred the mechanism is.
-     * Range from 0.001 to 0.999.</p>
-     * @param q - q parameter value
-     * @throws InvalidArgumentException - when value is not valid
-     */
-    public void setPreference(float q) throws InvalidArgumentException {
-        if (q < 0.0f)
-            throw new InvalidArgumentException(
-                "JAIN-SIP "
-                    + "Exception, SecurityClient, setPreference(), the preference (q) parameter is <0");
-        setParameter(ParameterNamesIms.Q, q);
-    }
+	/**
+	 * Get Protocol
+	 * 
+	 * @return prot parameter value
+	 */
+	public String getProtocol() {
+		return getParameter(ParameterNamesIms.PROT);
+	}
 
+	/**
+	 * Get Mode
+	 * 
+	 * @return mod parameter value
+	 */
+	public String getMode() {
+		return getParameter(ParameterNamesIms.MOD);
 
+	}
 
-    // get param
+	/**
+	 * Get Client SPI
+	 * 
+	 * @return spi-c parameter value
+	 */
+	public int getSPIClient() {
+		return (Integer.parseInt(getParameter(ParameterNamesIms.SPI_C)));
+	}
 
-    /**
-     * Get Security Mechanism
-     * @return security mechanims value
-     */
-    public String getSecurityMechanism() {
-        return this.secMechanism;
-    }
-    /**
-     * Get Encryption Algorithm
-     * @return ealg parameter value
-     */
-    public String getEncryptionAlgorithm() {
-        return getParameter(ParameterNamesIms.EALG);
-    }
+	/**
+	 * Get Server SPI
+	 * 
+	 * @return spi-s parameter value
+	 */
+	public int getSPIServer() {
+		return (Integer.parseInt(getParameter(ParameterNamesIms.SPI_S)));
+	}
 
-    /**
-     * Get Algorithm
-     * @return alg parameter value
-     */
-    public String getAlgorithm() {
-        return getParameter(ParameterNamesIms.ALG);
-    }
+	/**
+	 * Get Client Port
+	 * 
+	 * @return port-c parameter value
+	 */
+	public int getPortClient() {
+		return (Integer.parseInt(getParameter(ParameterNamesIms.PORT_C)));
+	}
 
-    /**
-     * Get Protocol
-     * @return prot parameter value
-     */
-    public String getProtocol() {
-        return getParameter(ParameterNamesIms.PROT);
-    }
+	/**
+	 * Get Server Port
+	 * 
+	 * @return port-s parameter value
+	 */
+	public int getPortServer() {
+		return (Integer.parseInt(getParameter(ParameterNamesIms.PORT_S)));
+	}
 
-    /**
-     * Get Mode
-     * @return mod parameter value
-     */
-    public String getMode() {
-        return getParameter(ParameterNamesIms.MOD);
+	/**
+	 * Get Preference
+	 * 
+	 * @return q parameter value
+	 */
+	public float getPreference() {
+		return (Float.parseFloat(getParameter(ParameterNamesIms.Q)));
+	}
 
-    }
-    /**
-     * Get Client SPI
-     * @return spi-c parameter value
-     */
-    public int getSPIClient() {
-        return (Integer.parseInt(getParameter(ParameterNamesIms.SPI_C)));
-    }
+	public boolean equals(Object other) {
 
-    /**
-     * Get Server SPI
-     * @return spi-s parameter value
-     */
-    public int getSPIServer() {
-        return (Integer.parseInt(getParameter(ParameterNamesIms.SPI_S)));
-    }
+		if (other instanceof SecurityAgreeHeader) {
+			SecurityAgreeHeader o = (SecurityAgreeHeader) other;
+			return (this.getSecurityMechanism().equals(o.getSecurityMechanism()) && this.equalParameters((Parameters) o));
+		}
+		return false;
 
-    /**
-     * Get Client Port
-     * @return port-c parameter value
-     */
-    public int getPortClient() {
-        return (Integer.parseInt(getParameter(ParameterNamesIms.PORT_C)));
-    }
+	}
 
-    /**
-     * Get Server Port
-     * @return port-s parameter value
-     */
-    public int getPortServer() {
-        return (Integer.parseInt(getParameter(ParameterNamesIms.PORT_S)));
-    }
-
-    /**
-     * Get Preference
-     * @return q parameter value
-     */
-    public float getPreference() {
-        return (Float.parseFloat(getParameter(ParameterNamesIms.Q)));
-    }
-
-
-    public boolean equals(Object other)
-    {
-
-        if(other instanceof SecurityAgreeHeader)
-        {
-            SecurityAgreeHeader o = (SecurityAgreeHeader) other;
-            return (this.getSecurityMechanism().equals( o.getSecurityMechanism() )
-                && this.equalParameters( (Parameters) o ));
-        }
-        return false;
-
-    }
-
-
-    public Object clone() {
-        SecurityAgree retval = (SecurityAgree) super.clone();
-        if (this.secMechanism != null)
-            retval.secMechanism = this.secMechanism;
-        return retval;
-    }
-
+	public Object clone() {
+		SecurityAgree retval = (SecurityAgree) super.clone();
+		if (this.secMechanism != null)
+			retval.secMechanism = this.secMechanism;
+		return retval;
+	}
 
 }
-
-

@@ -34,16 +34,14 @@ import javax.sip.header.Header;
 import javax.sip.header.HeaderAddress;
 import javax.sip.header.Parameters;
 
-
 /**
  * P-Called-Party-ID header - Private Header: RFC 3455.
- * <p>A proxy server inserts a P-Called-Party-ID header, typically in an INVITE request,
- * en-route to its destination. The header is populated with the Request-URI received
- * by the proxy in the request. </p>
- * <p>Both the business SIP URI and the personal SIP URI are registered in the SIP registrar,
- * so both URIs can receive invitations to new sessions. When the user receives an invitation
- * to join a session, he/she should be aware of which of the several registered SIP URIs this
- * session was sent to. </p>
+ * <p>
+ * A proxy server inserts a P-Called-Party-ID header, typically in an INVITE request, en-route to its destination. The header is populated with the Request-URI received by the proxy in the request.
+ * </p>
+ * <p>
+ * Both the business SIP URI and the personal SIP URI are registered in the SIP registrar, so both URIs can receive invitations to new sessions. When the user receives an invitation to join a session, he/she should be aware of which of the several registered SIP URIs this session was sent to.
+ * </p>
  *
  * <pre>
  * P-Called-Party-ID    = "P-Called-Party-ID" HCOLON
@@ -56,12 +54,11 @@ import javax.sip.header.Parameters;
  *
  */
 
-
 public interface PCalledPartyIDHeader extends HeaderAddress, Parameters, Header {
 
-    /**
-     * Name of CalledPartyIDHeader
-     */
-    public final static String NAME = "P-Called-Party-ID";
+	/**
+	 * Name of CalledPartyIDHeader
+	 */
+	public final static String NAME = "P-Called-Party-ID";
 
 }

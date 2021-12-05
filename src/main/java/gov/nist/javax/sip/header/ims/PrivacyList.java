@@ -29,9 +29,7 @@
 
 package gov.nist.javax.sip.header.ims;
 
-
 import gov.nist.javax.sip.header.SIPHeaderList;
-
 
 /**
  * List of Privacy headers.
@@ -39,26 +37,20 @@ import gov.nist.javax.sip.header.SIPHeaderList;
  * @author Miguel Freitas (IT) PT-Inovacao
  */
 
-
 public class PrivacyList extends SIPHeaderList<Privacy> {
 
-    private static final long serialVersionUID = 1798720509806307461L;
+	private static final long serialVersionUID = 1798720509806307461L;
 
+	/**
+	 * Default constructor
+	 */
+	public PrivacyList() {
+		super(Privacy.class, PrivacyHeader.NAME);
+	}
 
-    /**
-     * Default constructor
-     */
-    public PrivacyList() {
-        super(Privacy.class, PrivacyHeader.NAME);
-    }
-
-
-    public Object clone() {
-        PrivacyList retval = new PrivacyList();
-        return retval.clonehlist(this.hlist);
-    }
-
-
-
+	public Object clone() {
+		PrivacyList retval = new PrivacyList();
+		return retval.clonehlist(this.hlist);
+	}
 
 }

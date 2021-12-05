@@ -31,7 +31,6 @@
 
 package gov.nist.javax.sip.header.ims;
 
-
 import java.text.ParseException;
 
 import javax.sip.address.URI;
@@ -40,13 +39,18 @@ import javax.sip.header.ExtensionHeader;
 import gov.nist.javax.sip.address.AddressImpl;
 import gov.nist.javax.sip.address.GenericURI;
 
-
 /**
- * <p>P-Associated-URI SIP Private Header. </p>
- * <p>An associated URI is a URI that the service provider
- * has allocated to a user for his own usage (address-of-record). </p>
+ * <p>
+ * P-Associated-URI SIP Private Header.
+ * </p>
+ * <p>
+ * An associated URI is a URI that the service provider has allocated to a user for his own usage (address-of-record).
+ * </p>
  *
- * <p>sintax (RFC 3455): </p>
+ * <p>
+ * sintax (RFC 3455):
+ * </p>
+ * 
  * <pre>
  * P-Associated-URI  = "P-Associated-URI" HCOLON
  *                    (p-aso-uri-spec) *(COMMA p-aso-uri-spec)
@@ -59,103 +63,96 @@ import gov.nist.javax.sip.address.GenericURI;
  * @author Miguel Freitas (IT) PT-Inovacao
  */
 
+public class PAssociatedURI extends gov.nist.javax.sip.header.AddressParametersHeader implements PAssociatedURIHeader, SIPHeaderNamesIms, ExtensionHeader {
+	// TODO: Need a unique UID
 
-public class PAssociatedURI
-    extends gov.nist.javax.sip.header.AddressParametersHeader
-    implements PAssociatedURIHeader, SIPHeaderNamesIms, ExtensionHeader
-{
-    // TODO: Need a unique UID
+	/**
+	 * Default Constructor
+	 */
+	public PAssociatedURI() {
+		super(PAssociatedURIHeader.NAME);
+	}
 
+	/**
+	 * Constructor
+	 * 
+	 * @param address to be set in the header
+	 */
+	public PAssociatedURI(AddressImpl address) {
+		super(PAssociatedURIHeader.NAME);
+		this.address = address;
+	}
 
-    /**
-     * Default Constructor
-     */
-    public PAssociatedURI()
-    {
-        super(PAssociatedURIHeader.NAME);
-    }
+	/**
+	 * Constructor
+	 * 
+	 * @param associatedURI - GenericURI to be set in the address of this header
+	 */
+	public PAssociatedURI(GenericURI associatedURI) {
+		super(PAssociatedURIHeader.NAME);
+		this.address = new AddressImpl();
+		this.address.setURI(associatedURI);
+	}
 
-    /**
-     * Constructor
-     * @param address to be set in the header
-     */
-    public PAssociatedURI(AddressImpl address)
-    {
-        super(PAssociatedURIHeader.NAME);
-        this.address = address;
-    }
-
-    /**
-     * Constructor
-     * @param associatedURI - GenericURI to be set in the address of this header
-     */
-    public PAssociatedURI(GenericURI associatedURI)
-    {
-        super(PAssociatedURIHeader.NAME);
-        this.address = new AddressImpl();
-        this.address.setURI(associatedURI);
-    }
-
-
-
-
-    /**
-     * Encode into canonical form.
-     * @return String containing the canonicaly encoded header.
-     */
-    public StringBuilder encodeBody(StringBuilder retval) {    
+	/**
+	 * Encode into canonical form.
+	 * 
+	 * @return String containing the canonicaly encoded header.
+	 */
+	public StringBuilder encodeBody(StringBuilder retval) {
 //        StringBuilder retval = new StringBuilder();
-        if (address.getAddressType() == AddressImpl.ADDRESS_SPEC) {
-            retval.append(LESS_THAN);
-        }
-        address.encode(retval);
-        if (address.getAddressType() == AddressImpl.ADDRESS_SPEC) {
-            retval.append(GREATER_THAN);
-        }
+		if (address.getAddressType() == AddressImpl.ADDRESS_SPEC) {
+			retval.append(LESS_THAN);
+		}
+		address.encode(retval);
+		if (address.getAddressType() == AddressImpl.ADDRESS_SPEC) {
+			retval.append(GREATER_THAN);
+		}
 
+		if (!parameters.isEmpty()) {
+			retval = retval.append(SEMICOLON);
+			retval = this.parameters.encode(retval);
+		}
+		return retval;
+	}
 
-        if (!parameters.isEmpty()) {
-            retval= retval.append(SEMICOLON);
-            retval= this.parameters.encode(retval);
-        }        
-        return retval;
-    }
+	/**
+	 * <p>
+	 * Set the URI on this address
+	 * </p>
+	 * 
+	 * @param associatedURI - GenericURI to be set in the address of this header
+	 * @throws NullPointerException when supplied URI is null
+	 */
+	public void setAssociatedURI(URI associatedURI) throws NullPointerException {
+		if (associatedURI == null)
+			throw new NullPointerException("null URI");
 
+		this.address.setURI(associatedURI);
+	}
 
-    /**
-     * <p>Set the URI on this address</p>
-     * @param associatedURI - GenericURI to be set in the address of this header
-     * @throws NullPointerException when supplied URI is null
-     */
-    public void setAssociatedURI(URI associatedURI) throws NullPointerException
-    {
-        if (associatedURI == null)
-            throw new NullPointerException("null URI");
+	/**
+	 * <p>
+	 * Get the address's URI
+	 * </p>
+	 * 
+	 * @return URI set in the address of this header
+	 */
+	public URI getAssociatedURI() {
+		return this.address.getURI();
+	}
 
-        this.address.setURI(associatedURI);
-    }
+	public Object clone() {
+		PAssociatedURI retval = (PAssociatedURI) super.clone();
+		if (this.address != null)
+			retval.address = (AddressImpl) this.address.clone();
+		return retval;
+	}
 
-    /**
-     * <p>Get the address's URI</p>
-     * @return URI set in the address of this header
-     */
-    public URI getAssociatedURI() {
-        return this.address.getURI();
-    }
+	public void setValue(String value) throws ParseException {
+		// not implemented
+		throw new ParseException(value, 0);
 
-
-    public Object clone() {
-        PAssociatedURI retval = (PAssociatedURI) super.clone();
-        if (this.address != null)
-            retval.address = (AddressImpl) this.address.clone();
-        return retval;
-    }
-
-
-    public void setValue(String value) throws ParseException{
-        // not implemented
-        throw new ParseException(value,0);
-
-    }
+	}
 
 }

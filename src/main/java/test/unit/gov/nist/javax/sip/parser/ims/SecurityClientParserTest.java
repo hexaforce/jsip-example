@@ -27,17 +27,15 @@ package test.unit.gov.nist.javax.sip.parser.ims;
 import gov.nist.javax.sip.parser.ims.SecurityClientParser;
 import test.unit.gov.nist.javax.sip.parser.ParserTestCase;
 
-public class SecurityClientParserTest extends ParserTestCase
-{
-    public void testParser() {
-        // TODO Auto-generated method stub
+public class SecurityClientParserTest extends ParserTestCase {
+	public void testParser() {
+		// TODO Auto-generated method stub
 
-        String[] securityClient =  {
-         "Security-Client: ipsec-3gpp; alg=hmac-sha-1-96; spi-c=23456789; spi-s=12345678; port-c=2468; port-s=1357\n"
+		String[] securityClient = { "Security-Client: ipsec-3gpp; alg=hmac-sha-1-96; spi-c=23456789; spi-s=12345678; port-c=2468; port-s=1357\n"
 
-        };
+		};
 
-        super.testParser(SecurityClientParser.class,securityClient);
-    }
+		super.testParser(SecurityClientParser.class, securityClient);
+	}
 
 }

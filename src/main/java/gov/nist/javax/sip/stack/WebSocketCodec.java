@@ -34,17 +34,15 @@ import gov.nist.core.StackLogger;
 
 /**
  * 
- * Decodes a web socket frame from wire protocol version 8 format. This code was originally based on <a
- * href="https://github.com/joewalnes/webbit">webbit</a>.
+ * Decodes a web socket frame from wire protocol version 8 format. This code was originally based on <a href="https://github.com/joewalnes/webbit">webbit</a>.
  *
  * @author vladimirralev
  *
  */
 public class WebSocketCodec {
 
-	private static StackLogger logger = CommonLogger
-			.getLogger(WebSocketCodec.class);
-	
+	private static StackLogger logger = CommonLogger.getLogger(WebSocketCodec.class);
+
 	private static final byte OPCODE_CONT = 0x0;
 	private static final byte OPCODE_TEXT = 0x1;
 	private static final byte OPCODE_BINARY = 0x2;
@@ -52,7 +50,7 @@ public class WebSocketCodec {
 	private static final byte OPCODE_PING = 0x9;
 	private static final byte OPCODE_PONG = 0xA;
 
-	private static final byte[] trivialMask = new byte[] {1,1,1,1};
+	private static final byte[] trivialMask = new byte[] { 1, 1, 1, 1 };
 
 	// Websocket metadata
 	private int fragmentedFramesCount;
@@ -65,7 +63,6 @@ public class WebSocketCodec {
 	private final boolean maskedPayload;
 	private boolean closeOpcodeReceived;
 
-	
 	// THe payload inside the websocket frame starts at this index
 	private int payloadStartIndex = -1;
 
@@ -73,34 +70,32 @@ public class WebSocketCodec {
 	private byte[] decodeBuffer = new byte[2048];
 	private int writeIndex = 0;
 	private int readIndex;
-	
+
 	// Total webscoket frame (metadata + payload)
 	private long totalPacketLength = -1;
-
 
 	public WebSocketCodec(boolean maskedPayload, boolean allowExtensions) {
 
 		this.maskedPayload = maskedPayload;
 		this.allowExtensions = allowExtensions;
 	}
+
 	private byte readNextByte() {
-		if(readIndex >= writeIndex) {
+		if (readIndex >= writeIndex) {
 			throw new IllegalStateException();
 		}
 		return this.decodeBuffer[readIndex++];
 	}
 
-	public byte[] decode(InputStream is)
-			throws Exception {
+	public byte[] decode(InputStream is) throws Exception {
 		do {
 			// Attempt to resize the decode buffer when it's approaching capacity
 			int bytesLeft = decodeBuffer.length - writeIndex;
 			int availToRead = is.available();
-			if(availToRead > bytesLeft - 1) {
-				int newSize = Math.max(2*decodeBuffer.length, 4*availToRead);
-				if(logger.isLoggingEnabled(LogLevels.TRACE_DEBUG)) {
-					logger.logDebug("Increasing buffer size from " + decodeBuffer.length + 
-							" avail " + availToRead + " newSize " + newSize);
+			if (availToRead > bytesLeft - 1) {
+				int newSize = Math.max(2 * decodeBuffer.length, 4 * availToRead);
+				if (logger.isLoggingEnabled(LogLevels.TRACE_DEBUG)) {
+					logger.logDebug("Increasing buffer size from " + decodeBuffer.length + " avail " + availToRead + " newSize " + newSize);
 				}
 				byte[] resizeBuffer = new byte[newSize];
 				System.arraycopy(this.decodeBuffer, 0, resizeBuffer, 0, writeIndex);
@@ -108,18 +103,19 @@ public class WebSocketCodec {
 			}
 
 			int bytesRead = is.read(decodeBuffer, writeIndex, bytesLeft);
-			if(bytesRead < 0) bytesRead = 0;
+			if (bytesRead < 0)
+				bytesRead = 0;
 
 			// Update the count in the buffer
 			writeIndex += bytesRead;
-		} while(is.available()>0);
+		} while (is.available() > 0);
 
 		// Start over from scratch. If the frame is big this may be repeated a few times O(logN) and doesn't affect performance
 		readIndex = 0;
-		
+
 		// All TCP slow-start algorithms will be cut off right here without further analysis
-		if(writeIndex<4) {
-			if(logger.isLoggingEnabled(LogLevels.TRACE_DEBUG)) {
+		if (writeIndex < 4) {
+			if (logger.isLoggingEnabled(LogLevels.TRACE_DEBUG)) {
 				logger.logDebug("Abort decode. Write index is at " + writeIndex);
 			}
 			return null;
@@ -130,16 +126,14 @@ public class WebSocketCodec {
 		frameRsv = (b & 0x70) >> 4;
 		frameOpcode = b & 0x0F;
 
-		if(logger.isLoggingEnabled(LogLevels.TRACE_DEBUG)) {
+		if (logger.isLoggingEnabled(LogLevels.TRACE_DEBUG)) {
 			logger.logDebug("Decoding WebSocket Frame opCode=" + frameOpcode);
 		}
-		
-		
-		if(frameOpcode == 8) {
-			//https://code.google.com/p/chromium/issues/detail?id=388243#c15
+
+		if (frameOpcode == 8) {
+			// https://code.google.com/p/chromium/issues/detail?id=388243#c15
 			this.closeOpcodeReceived = true;
 		}
-
 
 		// MASK, PAYLOAD LEN 1
 		b = readNextByte();
@@ -163,14 +157,14 @@ public class WebSocketCodec {
 			if (framePayloadLen1 == 126) {
 				int byte1 = 0xff & readNextByte();
 				int byte2 = 0xff & readNextByte();
-				int value = (byte1<<8) | byte2;
+				int value = (byte1 << 8) | byte2;
 				framePayloadLength = value;
 			} else if (framePayloadLen1 == 127) {
 				long value = 0;
-				for(int q=0;q<8;q++) {
+				for (int q = 0; q < 8; q++) {
 					byte nextByte = readNextByte();
-					long valuePart = ((long)(0xff&nextByte));
-					valuePart <<= (7-q)*8;
+					long valuePart = ((long) (0xff & nextByte));
+					valuePart <<= (7 - q) * 8;
 					value |= valuePart;
 				}
 				framePayloadLength = value;
@@ -179,26 +173,25 @@ public class WebSocketCodec {
 					protocolViolation("invalid data frame length (not using minimal length encoding): " + framePayloadLength);
 					return null;
 				}
-				
+
 			} else {
 				framePayloadLength = framePayloadLen1;
 			}
-			
-			if(framePayloadLength < 0) {
+
+			if (framePayloadLength < 0) {
 				protocolViolation("Negative payload size: " + framePayloadLength);
 			}
 
-			if(logger.isLoggingEnabled(LogLevels.TRACE_DEBUG)) {
+			if (logger.isLoggingEnabled(LogLevels.TRACE_DEBUG)) {
 				logger.logDebug("Decoding WebSocket Frame length=" + framePayloadLength);
 			}
 
 			// Analyze the mask
 			if (frameMasked) {
-				for(int q=0; q<4 ;q++)
+				for (int q = 0; q < 4; q++)
 					maskingKey[q] = readNextByte();
 			}
-		}
-		catch (IllegalStateException e) {
+		} catch (IllegalStateException e) {
 			// the stream has ended we don't have enough data to continue
 			return null;
 		}
@@ -208,8 +201,8 @@ public class WebSocketCodec {
 		totalPacketLength = readIndex + framePayloadLength;
 
 		// Check if we have enough data at all
-		if(writeIndex < totalPacketLength) {
-			if(logger.isLoggingEnabled(LogLevels.TRACE_DEBUG)) {
+		if (writeIndex < totalPacketLength) {
+			if (logger.isLoggingEnabled(LogLevels.TRACE_DEBUG)) {
 				logger.logDebug("Abort decode. Write index is at " + writeIndex + " and totalPacketLength is " + totalPacketLength);
 			}
 			return null; // wait for more data
@@ -223,32 +216,31 @@ public class WebSocketCodec {
 		// Finally isolate the unmasked payload, the bytes are plaintext here
 		byte[] plainTextBytes = new byte[(int) framePayloadLength];
 		System.arraycopy(decodeBuffer, payloadStartIndex, plainTextBytes, 0, (int) framePayloadLength);
-		
+
 		// Now move the pending data to the begining of the buffer so we can continue having good stream
-		for(int q=1; q<writeIndex - totalPacketLength; q++) {
-			decodeBuffer[q] = decodeBuffer[(int)totalPacketLength + q];
+		for (int q = 1; q < writeIndex - totalPacketLength; q++) {
+			decodeBuffer[q] = decodeBuffer[(int) totalPacketLength + q];
 		}
 		writeIndex -= totalPacketLength;
-		
-		if(logger.isLoggingEnabled(LogLevels.TRACE_DEBUG)) {
+
+		if (logger.isLoggingEnabled(LogLevels.TRACE_DEBUG)) {
 			logger.logDebug("writeIndex = " + writeIndex + " " + totalPacketLength);
 		}
-		
+
 		// All done, we are ready to be called again
 		return plainTextBytes;
 	}
-	
+
 	protected static byte[] encode(byte[] msg, int rsv, boolean fin, boolean maskPayload) throws Exception {
 		return encode(msg, rsv, fin, maskPayload, OPCODE_TEXT);
 	}
-
 
 	protected static byte[] encode(byte[] msg, int rsv, boolean fin, boolean maskPayload, byte opcode) throws Exception {
 		ByteArrayOutputStream frame = new ByteArrayOutputStream();
 
 		long length = msg.length;
 
-		if(logger.isLoggingEnabled(LogLevels.TRACE_DEBUG)) {
+		if (logger.isLoggingEnabled(LogLevels.TRACE_DEBUG)) {
 			logger.logDebug("Encoding WebSocket Frame opCode=" + opcode + " length=" + length);
 		}
 
@@ -259,7 +251,6 @@ public class WebSocketCodec {
 		b0 |= rsv % 8 << 4;
 		b0 |= opcode % 128;
 
-
 		if (length <= 125) {
 			frame.write(b0);
 			byte b = (byte) (maskPayload ? 0x80 | (byte) length : (byte) length);
@@ -267,17 +258,17 @@ public class WebSocketCodec {
 		} else if (length <= 0xFFFF) {
 			frame.write(b0);
 			frame.write(maskPayload ? 0xFE : 126);
-			frame.write((byte)(length >>> 8));
-			frame.write((byte)length);
+			frame.write((byte) (length >>> 8));
+			frame.write((byte) length);
 		} else {
 			frame.write(b0);
 			frame.write(maskPayload ? 0xFF : 127);
-			for(int q=0;q<8;q++) {
-				byte b = (byte)(length>>>(7-q)*8);
+			for (int q = 0; q < 8; q++) {
+				byte b = (byte) (length >>> (7 - q) * 8);
 				frame.write(b);
 			}
 		}
-		if(maskPayload) {
+		if (maskPayload) {
 			frame.write(trivialMask);
 			applyMask(msg, 0, msg.length, trivialMask);
 		}
@@ -289,14 +280,14 @@ public class WebSocketCodec {
 	private void unmask(byte[] frame, int startIndex, int endIndex) {
 		applyMask(frame, startIndex, endIndex, maskingKey);
 	}
-	
+
 	public static void applyMask(byte[] frame, int startIndex, int endIndex, byte[] mask) {
-		for (int i = 0; i < endIndex-startIndex; i++) {
-			frame[startIndex+i] = (byte) (frame[startIndex+i] ^ mask[i % 4]);
+		for (int i = 0; i < endIndex - startIndex; i++) {
+			frame[startIndex + i] = (byte) (frame[startIndex + i] ^ mask[i % 4]);
 		}
 	}
 
-	private void protocolViolation(String reason)  {
+	private void protocolViolation(String reason) {
 		throw new RuntimeException(reason);
 	}
 
@@ -329,7 +320,7 @@ public class WebSocketCodec {
 			}
 		}
 	}
-	
+
 	public boolean isCloseOpcodeReceived() {
 		return this.closeOpcodeReceived;
 	}

@@ -30,9 +30,9 @@ import java.nio.charset.Charset;
 import java.nio.charset.UnsupportedCharsetException;
 
 /**
- * Replacement for previous RFC2396UrlDecoder class removed for licensing restrictions, hacked from scratch this time
- * might be less performant though
- * @author <A HREF="mailto:jean.deruelle@gmail.com">Jean Deruelle</A> 
+ * Replacement for previous RFC2396UrlDecoder class removed for licensing restrictions, hacked from scratch this time might be less performant though
+ * 
+ * @author <A HREF="mailto:jean.deruelle@gmail.com">Jean Deruelle</A>
  *
  */
 public class UriDecoder {
@@ -42,40 +42,41 @@ public class UriDecoder {
 		try {
 			utf8CharSet = Charset.forName("UTF8");
 		} catch (UnsupportedCharsetException e) {
-			//the situation that UTF-8 is not supported should never happen
+			// the situation that UTF-8 is not supported should never happen
 			throw new RuntimeException("Problem in decodePath: UTF-8 charset not supported.", e);
 		}
 	}
-    /**
-     * Decode a uri.
-     *
-     * Replace %XX (where XX is hexadecimal number) by its corresponding UTF-8 encoded bytes.
-     * 
-     * @param uri the uri to decode
-     * @return the decoded uri
-     */
-    public static String decode(String uri) {
-    	// if there is no % we just return the same uri
-    	String uriToWorkOn = uri;
-        int indexOfNextPercent = uriToWorkOn.indexOf("%");
-        StringBuilder decodedUri = new StringBuilder();
-             
-        while(indexOfNextPercent != -1) {
-        	decodedUri.append(uriToWorkOn.substring(0, indexOfNextPercent));
-            if(indexOfNextPercent + 2 < uriToWorkOn.length()) {
-            	String hexadecimalString = uriToWorkOn.substring(indexOfNextPercent + 1, indexOfNextPercent + 3);
-            	try {
-                    byte hexadecimalNumber = (byte) Integer.parseInt(hexadecimalString, 16);
-                    String correspondingCharacter = utf8CharSet.decode(ByteBuffer.wrap(new byte[] {hexadecimalNumber})).toString();
-                    decodedUri.append(correspondingCharacter);
-                } catch (NumberFormatException e) {
-                    throw new IllegalArgumentException("Illegal hex characters in pattern %" + hexadecimalString);
-                }
-            }        
-            uriToWorkOn = uriToWorkOn.substring(indexOfNextPercent + 3);
-            indexOfNextPercent = uriToWorkOn.indexOf("%");
-        }               
-        decodedUri.append(uriToWorkOn);
-        return decodedUri.toString();
-    }
+
+	/**
+	 * Decode a uri.
+	 *
+	 * Replace %XX (where XX is hexadecimal number) by its corresponding UTF-8 encoded bytes.
+	 * 
+	 * @param uri the uri to decode
+	 * @return the decoded uri
+	 */
+	public static String decode(String uri) {
+		// if there is no % we just return the same uri
+		String uriToWorkOn = uri;
+		int indexOfNextPercent = uriToWorkOn.indexOf("%");
+		StringBuilder decodedUri = new StringBuilder();
+
+		while (indexOfNextPercent != -1) {
+			decodedUri.append(uriToWorkOn.substring(0, indexOfNextPercent));
+			if (indexOfNextPercent + 2 < uriToWorkOn.length()) {
+				String hexadecimalString = uriToWorkOn.substring(indexOfNextPercent + 1, indexOfNextPercent + 3);
+				try {
+					byte hexadecimalNumber = (byte) Integer.parseInt(hexadecimalString, 16);
+					String correspondingCharacter = utf8CharSet.decode(ByteBuffer.wrap(new byte[] { hexadecimalNumber })).toString();
+					decodedUri.append(correspondingCharacter);
+				} catch (NumberFormatException e) {
+					throw new IllegalArgumentException("Illegal hex characters in pattern %" + hexadecimalString);
+				}
+			}
+			uriToWorkOn = uriToWorkOn.substring(indexOfNextPercent + 3);
+			indexOfNextPercent = uriToWorkOn.indexOf("%");
+		}
+		decodedUri.append(uriToWorkOn);
+		return decodedUri.toString();
+	}
 }

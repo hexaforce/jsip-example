@@ -35,253 +35,231 @@ import javax.sip.header.ExtensionHeader;
 import gov.nist.javax.sip.header.ParametersHeader;
 
 /**
- * <p>P-Access-Network-Info SIP Private Header</p>
+ * <p>
+ * P-Access-Network-Info SIP Private Header
+ * </p>
  *
  * @author Miguel Freitas (IT) PT-Inovacao
  *
  * @since 1.2
  */
 
-public class PAccessNetworkInfo
-    extends ParametersHeader
-    implements PAccessNetworkInfoHeader, ExtensionHeader {
+public class PAccessNetworkInfo extends ParametersHeader implements PAccessNetworkInfoHeader, ExtensionHeader {
 
-    // TODO: serialVersionUID
+	// TODO: serialVersionUID
 
-    private String accessType;
+	private String accessType;
 
-    private Object extendAccessInfo;
+	private Object extendAccessInfo;
 
-    /**
-     * Public constructor.
-     */
-    public PAccessNetworkInfo() {
-        super(PAccessNetworkInfoHeader.NAME);
-        parameters.setSeparator(SEMICOLON);
-    }
+	/**
+	 * Public constructor.
+	 */
+	public PAccessNetworkInfo() {
+		super(PAccessNetworkInfoHeader.NAME);
+		parameters.setSeparator(SEMICOLON);
+	}
 
-    /**
-     * Constructor.
-     */
-    public PAccessNetworkInfo(String accessTypeVal) {
-        this();
-        setAccessType(accessTypeVal);
-    }
+	/**
+	 * Constructor.
+	 */
+	public PAccessNetworkInfo(String accessTypeVal) {
+		this();
+		setAccessType(accessTypeVal);
+	}
 
-    /**
-     * Set the accessTpe
-     *
-     * @param accessTypeVal - access type
-     * @throws NullPointerException
-     */
-    public void setAccessType(String accessTypeVal) {
-        if (accessTypeVal == null)
-            throw new NullPointerException(
-                    "JAIN-SIP Exception, "
-                            + "P-Access-Network-Info, setAccessType(), the accessType parameter is null.");
+	/**
+	 * Set the accessTpe
+	 *
+	 * @param accessTypeVal - access type
+	 * @throws NullPointerException
+	 */
+	public void setAccessType(String accessTypeVal) {
+		if (accessTypeVal == null)
+			throw new NullPointerException("JAIN-SIP Exception, " + "P-Access-Network-Info, setAccessType(), the accessType parameter is null.");
 
-        this.accessType = accessTypeVal;
-    }
+		this.accessType = accessTypeVal;
+	}
 
-    /**
-     * @return String access type
-     */
-    public String getAccessType() {
-        return accessType;
-    }
+	/**
+	 * @return String access type
+	 */
+	public String getAccessType() {
+		return accessType;
+	}
 
-    /**
-     *
-     * @param cgi -- String CGI value
-     * @throws NullPointerException -- if null argument passed in
-     * @throws ParseException -- if bad argument passed in.
-     */
-    public void setCGI3GPP(String cgi) throws ParseException {
+	/**
+	 *
+	 * @param cgi -- String CGI value
+	 * @throws NullPointerException -- if null argument passed in
+	 * @throws ParseException       -- if bad argument passed in.
+	 */
+	public void setCGI3GPP(String cgi) throws ParseException {
 
-        if (cgi == null)
-            throw new NullPointerException(
-                    "JAIN-SIP Exception, "
-                            + "P-Access-Network-Info, setCGI3GPP(), the cgi parameter is null.");
+		if (cgi == null)
+			throw new NullPointerException("JAIN-SIP Exception, " + "P-Access-Network-Info, setCGI3GPP(), the cgi parameter is null.");
 
-        setParameter(ParameterNamesIms.CGI_3GPP, cgi);
+		setParameter(ParameterNamesIms.CGI_3GPP, cgi);
 
-    }
+	}
 
-    /**
-     *
-     * @return String CGI value
-     */
-    public String getCGI3GPP() {
-        return getParameter(ParameterNamesIms.CGI_3GPP);
-    }
+	/**
+	 *
+	 * @return String CGI value
+	 */
+	public String getCGI3GPP() {
+		return getParameter(ParameterNamesIms.CGI_3GPP);
+	}
 
-    /**
-     * Set the UtranCellID field.
-     *
-     * @param  utranCellID -- String UTRAN Cell ID value
-     * @throws NullPointerException
-     * @throws ParseException
-     */
-    public void setUtranCellID3GPP(String utranCellID) throws ParseException {
+	/**
+	 * Set the UtranCellID field.
+	 *
+	 * @param utranCellID -- String UTRAN Cell ID value
+	 * @throws NullPointerException
+	 * @throws ParseException
+	 */
+	public void setUtranCellID3GPP(String utranCellID) throws ParseException {
 
-        if (utranCellID == null)
-            throw new NullPointerException(
-                    "JAIN-SIP Exception, "
-                            + "P-Access-Network-Info, setUtranCellID3GPP(), the utranCellID parameter is null.");
+		if (utranCellID == null)
+			throw new NullPointerException("JAIN-SIP Exception, " + "P-Access-Network-Info, setUtranCellID3GPP(), the utranCellID parameter is null.");
 
-        setParameter(ParameterNamesIms.UTRAN_CELL_ID_3GPP, utranCellID);
+		setParameter(ParameterNamesIms.UTRAN_CELL_ID_3GPP, utranCellID);
 
-    }
+	}
 
-    /**
-     *
-     * @return String UTRAN Cell ID value
-     */
-    public String getUtranCellID3GPP() {
-        return getParameter(ParameterNamesIms.UTRAN_CELL_ID_3GPP);
-    }
+	/**
+	 *
+	 * @return String UTRAN Cell ID value
+	 */
+	public String getUtranCellID3GPP() {
+		return getParameter(ParameterNamesIms.UTRAN_CELL_ID_3GPP);
+	}
 
-    /**
-     *
-     * @param dslLocation - String with the DSL location value
-     * @throws NullPointerException
-     * @throws ParseException
-     */
-    public void setDSLLocation(String dslLocation) throws ParseException {
+	/**
+	 *
+	 * @param dslLocation - String with the DSL location value
+	 * @throws NullPointerException
+	 * @throws ParseException
+	 */
+	public void setDSLLocation(String dslLocation) throws ParseException {
 
-        if (dslLocation == null)
-            throw new NullPointerException(
-                    "JAIN-SIP Exception, "
-                            + "P-Access-Network-Info, setDSLLocation(), the dslLocation parameter is null.");
+		if (dslLocation == null)
+			throw new NullPointerException("JAIN-SIP Exception, " + "P-Access-Network-Info, setDSLLocation(), the dslLocation parameter is null.");
 
-        setParameter(ParameterNamesIms.DSL_LOCATION, dslLocation);
+		setParameter(ParameterNamesIms.DSL_LOCATION, dslLocation);
 
-    }
+	}
 
-    /**
-     *
-     * @return String DSL location value
-     */
-    public String getDSLLocation() {
-        return getParameter(ParameterNamesIms.DSL_LOCATION);
-    }
+	/**
+	 *
+	 * @return String DSL location value
+	 */
+	public String getDSLLocation() {
+		return getParameter(ParameterNamesIms.DSL_LOCATION);
+	}
 
-    /**
-     *
-     * @param ci3Gpp2 -- String CI 3GPP2 value
-     * @throws NullPointerException -- if arg is null
-     * @throws ParseException -- if arg is bad.
-     */
-    public void setCI3GPP2(String ci3Gpp2) throws ParseException {
-        if (ci3Gpp2 == null)
-            throw new NullPointerException(
-                    "JAIN-SIP Exception, "
-                            + "P-Access-Network-Info, setCI3GPP2(), the ci3Gpp2 parameter is null.");
+	/**
+	 *
+	 * @param ci3Gpp2 -- String CI 3GPP2 value
+	 * @throws NullPointerException -- if arg is null
+	 * @throws ParseException       -- if arg is bad.
+	 */
+	public void setCI3GPP2(String ci3Gpp2) throws ParseException {
+		if (ci3Gpp2 == null)
+			throw new NullPointerException("JAIN-SIP Exception, " + "P-Access-Network-Info, setCI3GPP2(), the ci3Gpp2 parameter is null.");
 
-        setParameter(ParameterNamesIms.CI_3GPP2, ci3Gpp2);
-    }
+		setParameter(ParameterNamesIms.CI_3GPP2, ci3Gpp2);
+	}
 
-    /**
-     *
-     * @return String CI 3GPP2 value
-     */
-    public String getCI3GPP2() {
-        return getParameter(ParameterNamesIms.CI_3GPP2);
-    }
+	/**
+	 *
+	 * @return String CI 3GPP2 value
+	 */
+	public String getCI3GPP2() {
+		return getParameter(ParameterNamesIms.CI_3GPP2);
+	}
 
-    /**
-     *
-     * @param name --
-     *            parameter name
-     * @param value --
-     *            value of parameter
-     */
-    public void setParameter(String name, Object value) {
-        /**
-         * @todo ParametersHeader needs to be fix!? missing "throws
-         *       ParseException" in setParameter(String, Object)
-         */
+	/**
+	 *
+	 * @param name  -- parameter name
+	 * @param value -- value of parameter
+	 */
+	public void setParameter(String name, Object value) {
+		/**
+		 * @todo ParametersHeader needs to be fix!? missing "throws ParseException" in setParameter(String, Object)
+		 */
 
-        if (name.equalsIgnoreCase(ParameterNamesIms.CGI_3GPP)
-                || name.equalsIgnoreCase(ParameterNamesIms.UTRAN_CELL_ID_3GPP)
-                || name.equalsIgnoreCase(ParameterNamesIms.DSL_LOCATION)
-                || name.equalsIgnoreCase(ParameterNamesIms.CI_3GPP2)) {
-            try {
-                super.setQuotedParameter(name, value.toString());
-            } catch (ParseException e) {
+		if (name.equalsIgnoreCase(ParameterNamesIms.CGI_3GPP) || name.equalsIgnoreCase(ParameterNamesIms.UTRAN_CELL_ID_3GPP) || name.equalsIgnoreCase(ParameterNamesIms.DSL_LOCATION) || name.equalsIgnoreCase(ParameterNamesIms.CI_3GPP2)) {
+			try {
+				super.setQuotedParameter(name, value.toString());
+			} catch (ParseException e) {
 
-            }
+			}
 
-        } else {
-            // value can be token either than a quoted-string
-            super.setParameter(name, value);
+		} else {
+			// value can be token either than a quoted-string
+			super.setParameter(name, value);
 
-        }
+		}
 
-    }
+	}
 
-    /**
-     * extension-access-info = gen-value gen-value = token / host /
-     * quoted-string
-     *
-     * @param extendAccessInfo - extended Access Information
-     */
-    public void setExtensionAccessInfo(Object extendAccessInfo)
-            throws ParseException {
+	/**
+	 * extension-access-info = gen-value gen-value = token / host / quoted-string
+	 *
+	 * @param extendAccessInfo - extended Access Information
+	 */
+	public void setExtensionAccessInfo(Object extendAccessInfo) throws ParseException {
 
-        if (extendAccessInfo == null)
-            throw new NullPointerException(
-                    "JAIN-SIP Exception, "
-                            + "P-Access-Network-Info, setExtendAccessInfo(), the extendAccessInfo parameter is null.");
+		if (extendAccessInfo == null)
+			throw new NullPointerException("JAIN-SIP Exception, " + "P-Access-Network-Info, setExtendAccessInfo(), the extendAccessInfo parameter is null.");
 
-        // or -> setParameter("", extendAccessInfo);
+		// or -> setParameter("", extendAccessInfo);
 
-        this.extendAccessInfo = extendAccessInfo;
+		this.extendAccessInfo = extendAccessInfo;
 
-    }
+	}
 
-    public Object getExtensionAccessInfo() {
-        return this.extendAccessInfo;
-    }
+	public Object getExtensionAccessInfo() {
+		return this.extendAccessInfo;
+	}
 
-    public StringBuilder encodeBody(StringBuilder encoding) {
+	public StringBuilder encodeBody(StringBuilder encoding) {
 
 //        StringBuilder encoding = new StringBuilder();
 
-        if (getAccessType() != null)
-            encoding.append(getAccessType());
+		if (getAccessType() != null)
+			encoding.append(getAccessType());
 
-        if (!parameters.isEmpty()) {
-            encoding = encoding.append(SEMICOLON).append(SP);
-            encoding = this.parameters.encode(encoding);
-        }
-        // else if (getExtendAccessInfo() != null) // stack deve limitar, de
-        // acordo com a especificação ?
-        if (getExtensionAccessInfo() != null) {
-            encoding.append(SEMICOLON).append(SP).append(getExtensionAccessInfo().toString());
-        }
+		if (!parameters.isEmpty()) {
+			encoding = encoding.append(SEMICOLON).append(SP);
+			encoding = this.parameters.encode(encoding);
+		}
+		// else if (getExtendAccessInfo() != null) // stack deve limitar, de
+		// acordo com a especificação ?
+		if (getExtensionAccessInfo() != null) {
+			encoding.append(SEMICOLON).append(SP).append(getExtensionAccessInfo().toString());
+		}
 
-        return encoding;
+		return encoding;
 
-    }
+	}
 
-    public void setValue(String value) throws ParseException {
-        throw new ParseException(value, 0);
+	public void setValue(String value) throws ParseException {
+		throw new ParseException(value, 0);
 
-    }
+	}
 
+	public boolean equals(Object other) {
+		return (other instanceof PAccessNetworkInfoHeader) && super.equals(other);
+	}
 
-    public boolean equals(Object other) {
-        return (other instanceof PAccessNetworkInfoHeader) && super.equals(other);
-    }
-
-    /*
-     * Makes a deep clone. (ParametersHeader)
-     */
-    public Object clone() {
-        PAccessNetworkInfo retval = (PAccessNetworkInfo) super.clone();
-        return retval;
-    }
-
+	/*
+	 * Makes a deep clone. (ParametersHeader)
+	 */
+	public Object clone() {
+		PAccessNetworkInfo retval = (PAccessNetworkInfo) super.clone();
+		return retval;
+	}
 
 }

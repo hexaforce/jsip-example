@@ -31,17 +31,16 @@ import gov.nist.javax.sip.parser.InReplyToParser;
  */
 public class InReplyToParserTest extends ParserTestCase {
 
-    /* (non-Javadoc)
-     * @see test.unit.gov.nist.javax.sip.parser.ParserTestCase#testParser()
-     */
-    public void testParser() {
+	/*
+	 * (non-Javadoc)
+	 * 
+	 * @see test.unit.gov.nist.javax.sip.parser.ParserTestCase#testParser()
+	 */
+	public void testParser() {
 
-        String p[] = { "In-Reply-To: 2d809fa3f4ad434c760f23bc130d062b@::6555:2418:5736:aee4:a00:8, henxdhwhw445wdgh107020000@::2425:2418:5736:aee7:a00:8\n",
-                "In-Reply-To: 70710@saturn.bell-tel.com, 17320@saturn.bell-tel.com\n",
-                "In-Reply-To: 70710 \n"
-                };
+		String p[] = { "In-Reply-To: 2d809fa3f4ad434c760f23bc130d062b@::6555:2418:5736:aee4:a00:8, henxdhwhw445wdgh107020000@::2425:2418:5736:aee7:a00:8\n", "In-Reply-To: 70710@saturn.bell-tel.com, 17320@saturn.bell-tel.com\n", "In-Reply-To: 70710 \n" };
 
-        super.testParser(InReplyToParser.class,p);
-    }
+		super.testParser(InReplyToParser.class, p);
+	}
 
 }

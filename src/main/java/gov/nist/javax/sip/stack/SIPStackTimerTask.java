@@ -32,25 +32,23 @@
  */
 package gov.nist.javax.sip.stack;
 
-
 /**
- * A subclass of TimerTask which runs TimerTask code within a try/catch block to
- * avoid killing the SIPTransactionStack timer thread. Note: subclasses MUST not
- * override run(); instead they should override runTask().
+ * A subclass of TimerTask which runs TimerTask code within a try/catch block to avoid killing the SIPTransactionStack timer thread. Note: subclasses MUST not override run(); instead they should override runTask().
  *
  * @author Brett Buckingham
  *
  */
 public abstract class SIPStackTimerTask {
 	// the underlying timer task that was scheduled in the Stack SIP timer
-	Object timerTask = null; 
-    // Implements code to be run when the SIPStackTimerTask is executed.
-    public abstract void runTask();
-    
-    public void cleanUpBeforeCancel() {
-    	
-    }
-    
+	Object timerTask = null;
+
+	// Implements code to be run when the SIPStackTimerTask is executed.
+	public abstract void runTask();
+
+	public void cleanUpBeforeCancel() {
+
+	}
+
 	public void setSipTimerTask(Object timer) {
 		timerTask = timer;
 	}

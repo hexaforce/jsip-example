@@ -31,14 +31,11 @@ import gov.nist.javax.sip.parser.ContentEncodingParser;
  */
 public class ContentEncodingParserTest extends ParserTestCase {
 
+	public void testParser() {
+		// TODO Auto-generated method stub
 
-    public void testParser() {
-        // TODO Auto-generated method stub
+		String r[] = { "Content-Encoding: gzip \n", "Content-Encoding: gzip, tar \n" };
 
-        String r[] = { "Content-Encoding: gzip \n",
-                "Content-Encoding: gzip, tar \n" };
-
-        super.testParser(ContentEncodingParser.class, r);
-    }
+		super.testParser(ContentEncodingParser.class, r);
+	}
 }
-

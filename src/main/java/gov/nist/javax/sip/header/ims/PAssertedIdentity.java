@@ -37,68 +37,61 @@ import javax.sip.header.ExtensionHeader;
 import gov.nist.javax.sip.address.AddressImpl;
 import gov.nist.javax.sip.header.AddressParametersHeader;
 
-
 /**
  * P-Asserted-Identity SIP Private Header.
  *
  * @author ALEXANDRE MIGUEL SILVA SANTOS - Nú 10045401
  */
 
-public class PAssertedIdentity
-    extends AddressParametersHeader
-    implements PAssertedIdentityHeader, SIPHeaderNamesIms, ExtensionHeader {
+public class PAssertedIdentity extends AddressParametersHeader implements PAssertedIdentityHeader, SIPHeaderNamesIms, ExtensionHeader {
 
+	/**
+	 * constructor
+	 * 
+	 * @param address address to set
+	 */
+	public PAssertedIdentity(AddressImpl address) {
+		super(NAME);
+		this.address = address;
+	}
 
+	/**
+	 * default constructor
+	 */
+	public PAssertedIdentity() {
+		super(NAME);
+	}
 
-    /**
-     * constructor
-     * @param address address to set
-     */
-    public PAssertedIdentity(AddressImpl address) {
-        super(NAME);
-        this.address = address;
-    }
-
-    /**
-     * default constructor
-     */
-    public PAssertedIdentity()
-    {
-        super(NAME);
-    }
-
-    /** Encode into canonical form.
-     *@return String containing the canonicaly encoded header.
-     */
-    public StringBuilder encodeBody(StringBuilder retval) {
+	/**
+	 * Encode into canonical form.
+	 * 
+	 * @return String containing the canonicaly encoded header.
+	 */
+	public StringBuilder encodeBody(StringBuilder retval) {
 //        StringBuilder retval = new StringBuilder();
-        if (address.getAddressType() == AddressImpl.ADDRESS_SPEC) {
-            retval.append(LESS_THAN);
-        }
-        address.encode(retval);
-        if (address.getAddressType() == AddressImpl.ADDRESS_SPEC) {
-            retval.append(GREATER_THAN);
-        }
+		if (address.getAddressType() == AddressImpl.ADDRESS_SPEC) {
+			retval.append(LESS_THAN);
+		}
+		address.encode(retval);
+		if (address.getAddressType() == AddressImpl.ADDRESS_SPEC) {
+			retval.append(GREATER_THAN);
+		}
 
+		if (!parameters.isEmpty()) {
+			retval = retval.append(COMMA);
+			retval = this.parameters.encode(retval);
+		}
+		return retval;
+	}
 
-        if (!parameters.isEmpty()) {
-            retval= retval.append(COMMA);
-            retval= this.parameters.encode(retval);
-        }
-        return retval;
-    }
+	public Object clone() {
+		PAssertedIdentity retval = (PAssertedIdentity) super.clone();
+		return retval;
+	}
 
+	public void setValue(String value) throws ParseException {
+		throw new ParseException(value, 0);
 
-    public Object clone() {
-        PAssertedIdentity retval = (PAssertedIdentity) super.clone();
-        return retval;
-    }
-
-
-    public void setValue(String value) throws ParseException {
-        throw new ParseException(value,0);
-
-    }
-
+	}
 
 }

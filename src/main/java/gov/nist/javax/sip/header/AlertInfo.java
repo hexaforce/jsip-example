@@ -35,7 +35,7 @@ import gov.nist.javax.sip.address.GenericURI;
 /**
  * AlertInfo SIP Header.
  *
- * @author M. Ranganathan   <br/>
+ * @author M. Ranganathan <br/>
  *
  * @since 1.1
  *
@@ -43,88 +43,93 @@ import gov.nist.javax.sip.address.GenericURI;
  *
  *
  */
-public final class AlertInfo
-    extends ParametersHeader
-    implements javax.sip.header.AlertInfoHeader {
+public final class AlertInfo extends ParametersHeader implements javax.sip.header.AlertInfoHeader {
 
-    /**
-     * Comment for <code>serialVersionUID</code>
-     */
-    private static final long serialVersionUID = 4159657362051508719L;
-    /** URI field
-     */
-    protected GenericURI uri;
-    /** String field
-     */
-    protected String string;
+	/**
+	 * Comment for <code>serialVersionUID</code>
+	 */
+	private static final long serialVersionUID = 4159657362051508719L;
+	/**
+	 * URI field
+	 */
+	protected GenericURI uri;
+	/**
+	 * String field
+	 */
+	protected String string;
 
-    /** Constructor
-     */
-    public AlertInfo() {
-        super(NAME);
-    }
+	/**
+	 * Constructor
+	 */
+	public AlertInfo() {
+		super(NAME);
+	}
 
-    /**
-     * Return value encoding in canonical form.
-     * @return The value of the header in canonical encoding.
-     */
-    @Override
-    protected StringBuilder encodeBody(StringBuilder encoding) {
+	/**
+	 * Return value encoding in canonical form.
+	 * 
+	 * @return The value of the header in canonical encoding.
+	 */
+	@Override
+	protected StringBuilder encodeBody(StringBuilder encoding) {
 //        StringBuilder encoding = new StringBuilder();
-        if (uri != null) {
-            encoding.append(LESS_THAN).append(uri.encode()).append(GREATER_THAN);
-        } else if (string != null) {
-            encoding.append(string);
-        }
-        if (!parameters.isEmpty()) {
-            encoding.append(SEMICOLON).append(parameters.encode());
-        }
-        return encoding;
-    }
+		if (uri != null) {
+			encoding.append(LESS_THAN).append(uri.encode()).append(GREATER_THAN);
+		} else if (string != null) {
+			encoding.append(string);
+		}
+		if (!parameters.isEmpty()) {
+			encoding.append(SEMICOLON).append(parameters.encode());
+		}
+		return encoding;
+	}
 
-    /**
-     * Set the uri member
-     * @param uri URI to set
-     */
-    public void setAlertInfo(URI uri) {
-        this.uri = (GenericURI) uri;
-    }
+	/**
+	 * Set the uri member
+	 * 
+	 * @param uri URI to set
+	 */
+	public void setAlertInfo(URI uri) {
+		this.uri = (GenericURI) uri;
+	}
 
-    /**
-     * Set the string member
-     * @param string String to set
-     */
-    public void setAlertInfo(String string) {
-        this.string = string;
-    }
+	/**
+	 * Set the string member
+	 * 
+	 * @param string String to set
+	 */
+	public void setAlertInfo(String string) {
+		this.string = string;
+	}
 
-    /**
-     * Returns the AlertInfo value of this AlertInfoHeader.
-     * @return the URI representing the AlertInfo.
-     */
-    public URI getAlertInfo() {
-        URI alertInfoUri = null;
+	/**
+	 * Returns the AlertInfo value of this AlertInfoHeader.
+	 * 
+	 * @return the URI representing the AlertInfo.
+	 */
+	public URI getAlertInfo() {
+		URI alertInfoUri = null;
 
-        if (this.uri != null) {
-            alertInfoUri = (URI) this.uri;
-        } else {
-            try {
-                alertInfoUri = (URI) new GenericURI(string);
-            } catch (ParseException e) {
-                ;  // Eat the exception.
-            }
-        }
+		if (this.uri != null) {
+			alertInfoUri = (URI) this.uri;
+		} else {
+			try {
+				alertInfoUri = (URI) new GenericURI(string);
+			} catch (ParseException e) {
+				; // Eat the exception.
+			}
+		}
 
-        return alertInfoUri;
-    }
+		return alertInfoUri;
+	}
 
-    public Object clone() {
-        AlertInfo retval = (AlertInfo) super.clone();
-        if (this.uri != null) {
-            retval.uri = (GenericURI) this.uri.clone();
-        } else if (this.string != null) {
-            retval.string = this.string;
-        }
-        return retval;
-    }
+	public Object clone() {
+		AlertInfo retval = (AlertInfo) super.clone();
+		if (this.uri != null) {
+			retval.uri = (GenericURI) this.uri.clone();
+		} else if (this.string != null) {
+			retval.string = this.string;
+		}
+		return retval;
+	}
 }

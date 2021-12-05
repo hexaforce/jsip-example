@@ -46,58 +46,56 @@ import gov.nist.javax.sip.parser.TokenTypes;
 
 public class ServiceRouteParser extends AddressParametersParser {
 
-    /**
-     * Constructor
-     */
-    public ServiceRouteParser(String serviceRoute) {
-        super(serviceRoute);
+	/**
+	 * Constructor
+	 */
+	public ServiceRouteParser(String serviceRoute) {
+		super(serviceRoute);
 
-    }
+	}
 
-    protected ServiceRouteParser(Lexer lexer) {
-        super(lexer);
+	protected ServiceRouteParser(Lexer lexer) {
+		super(lexer);
 
-    }
+	}
 
+	/**
+	 * parse the String message and generate the RecordRoute List Object
+	 * 
+	 * @return SIPHeader the RecordRoute List object
+	 * @throws ParseException if errors occur during the parsing
+	 */
 
+	public SIPHeader parse() throws ParseException {
+		ServiceRouteList serviceRouteList = new ServiceRouteList();
 
+		if (debug)
+			dbg_enter("ServiceRouteParser.parse");
 
-    /**
-     * parse the String message and generate the RecordRoute List Object
-     * @return SIPHeader the RecordRoute List object
-     * @throws ParseException if errors occur during the parsing
-     */
+		try {
+			this.lexer.match(TokenTypes.SERVICE_ROUTE);
+			this.lexer.SPorHT();
+			this.lexer.match(':');
+			this.lexer.SPorHT();
+			while (true) {
+				ServiceRoute serviceRoute = new ServiceRoute();
+				super.parse(serviceRoute);
+				serviceRouteList.add(serviceRoute);
+				this.lexer.SPorHT();
+				if (lexer.lookAhead(0) == ',') {
+					this.lexer.match(',');
+					this.lexer.SPorHT();
+				} else if (lexer.lookAhead(0) == '\n')
+					break;
+				else
+					throw createParseException("unexpected char");
+			}
+			return serviceRouteList;
+		} finally {
+			if (debug)
+				dbg_leave("ServiceRouteParser.parse");
+		}
 
-    public SIPHeader parse() throws ParseException {
-        ServiceRouteList serviceRouteList = new ServiceRouteList();
-
-        if (debug)
-            dbg_enter("ServiceRouteParser.parse");
-
-        try {
-            this.lexer.match(TokenTypes.SERVICE_ROUTE);
-            this.lexer.SPorHT();
-            this.lexer.match(':');
-            this.lexer.SPorHT();
-            while (true) {
-                ServiceRoute serviceRoute = new ServiceRoute();
-                super.parse(serviceRoute);
-                serviceRouteList.add(serviceRoute);
-                this.lexer.SPorHT();
-                if (lexer.lookAhead(0) == ',') {
-                    this.lexer.match(',');
-                    this.lexer.SPorHT();
-                } else if (lexer.lookAhead(0) == '\n')
-                    break;
-                else
-                    throw createParseException("unexpected char");
-            }
-            return serviceRouteList;
-        } finally {
-            if (debug)
-                dbg_leave("ServiceRouteParser.parse");
-        }
-
-    }
+	}
 
 }

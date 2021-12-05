@@ -31,30 +31,28 @@ package gov.nist.javax.sip.header;
 import javax.sip.header.ContactHeader;
 
 /**
- * List of contact headers.ContactLists are also maintained in a hashtable
- * for quick lookup.
- * @author M. Ranganathan   <br/>
+ * List of contact headers.ContactLists are also maintained in a hashtable for quick lookup.
+ * 
+ * @author M. Ranganathan <br/>
  * @version 1.2 $Revision: 1.7 $ $Date: 2009-07-17 18:57:28 $
  * @since 1.1
  */
-public class ContactList extends SIPHeaderList<Contact>  {
+public class ContactList extends SIPHeaderList<Contact> {
 
-    private static final long serialVersionUID = 1224806837758986814L;
+	private static final long serialVersionUID = 1224806837758986814L;
 
-    public Object clone() {
-        ContactList retval = new ContactList();
-        retval.clonehlist(this.hlist);
-        return retval;
-    }
-    /**
-     * Constructor.
-     */
-    public ContactList() {
-        super(Contact.class, ContactHeader.NAME);
+	public Object clone() {
+		ContactList retval = new ContactList();
+		retval.clonehlist(this.hlist);
+		return retval;
+	}
 
-    }
+	/**
+	 * Constructor.
+	 */
+	public ContactList() {
+		super(Contact.class, ContactHeader.NAME);
 
-
-
+	}
 
 }

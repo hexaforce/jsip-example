@@ -33,79 +33,76 @@ import javax.sip.header.RouteHeader;
 import gov.nist.javax.sip.address.AddressImpl;
 
 /**
- * Route  SIPHeader Object
+ * Route SIPHeader Object
  *
  * @version 1.2 $Revision: 1.7 $ $Date: 2010-05-06 14:07:52 $
  *
- * @author M. Ranganathan   <br/>
+ * @author M. Ranganathan <br/>
  *
  *
  */
-public class Route
-    extends AddressParametersHeader
-    implements javax.sip.header.RouteHeader {
+public class Route extends AddressParametersHeader implements javax.sip.header.RouteHeader {
 
-    /**
-     * Comment for <code>serialVersionUID</code>
-     */
-    private static final long serialVersionUID = 5683577362998368846L;
+	/**
+	 * Comment for <code>serialVersionUID</code>
+	 */
+	private static final long serialVersionUID = 5683577362998368846L;
 
-    /** Default constructor
-     */
-    public Route() {
-        super(NAME);
-    }
+	/**
+	 * Default constructor
+	 */
+	public Route() {
+		super(NAME);
+	}
 
-    /** Default constructor given an address.
-     *
-     *@param address -- address of this header.
-     *
-     */
+	/**
+	 * Default constructor given an address.
+	 *
+	 * @param address -- address of this header.
+	 *
+	 */
 
-    public Route(AddressImpl address) {
-        super(NAME);
-        this.address = address;
-    }
+	public Route(AddressImpl address) {
+		super(NAME);
+		this.address = address;
+	}
 
-    /**
-     * Hashcode so this header can be inserted into a set.
-     *
-     *@return the hashcode of the encoded address.
-     */
-    public int hashCode() {
-        return this.address.getHostPort().encode().toLowerCase().hashCode();
-    }
+	/**
+	 * Hashcode so this header can be inserted into a set.
+	 *
+	 * @return the hashcode of the encoded address.
+	 */
+	public int hashCode() {
+		return this.address.getHostPort().encode().toLowerCase().hashCode();
+	}
 
-    /**
-     * Encode into canonical form.
-     * Acknowledgement: contains a bug fix for a bug reported by
-     * Laurent Schwizer
-     *
-     *@return a canonical encoding of the header.
-     */
-    public String encodeBody() {
-        return encodeBody(new StringBuilder()).toString();
-    }
+	/**
+	 * Encode into canonical form. Acknowledgement: contains a bug fix for a bug reported by Laurent Schwizer
+	 *
+	 * @return a canonical encoding of the header.
+	 */
+	public String encodeBody() {
+		return encodeBody(new StringBuilder()).toString();
+	}
 
-    protected StringBuilder encodeBody(StringBuilder buffer) {
-        boolean addrFlag = address.getAddressType() == AddressImpl.NAME_ADDR;
-        if (!addrFlag) {
-            buffer.append('<');
-            address.encode(buffer);
-            buffer.append('>');
-        } else {
-            address.encode(buffer);
-        }
-        if (!parameters.isEmpty()) {
-            buffer.append(SEMICOLON);
-            parameters.encode(buffer);
-        }
-        return buffer;
-    }
+	protected StringBuilder encodeBody(StringBuilder buffer) {
+		boolean addrFlag = address.getAddressType() == AddressImpl.NAME_ADDR;
+		if (!addrFlag) {
+			buffer.append('<');
+			address.encode(buffer);
+			buffer.append('>');
+		} else {
+			address.encode(buffer);
+		}
+		if (!parameters.isEmpty()) {
+			buffer.append(SEMICOLON);
+			parameters.encode(buffer);
+		}
+		return buffer;
+	}
 
-    public boolean equals(Object other) {
-        return (other instanceof RouteHeader) && super.equals(other);
-    }
+	public boolean equals(Object other) {
+		return (other instanceof RouteHeader) && super.equals(other);
+	}
 
 }
-

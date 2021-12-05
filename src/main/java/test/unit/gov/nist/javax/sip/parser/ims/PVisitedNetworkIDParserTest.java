@@ -27,21 +27,19 @@ package test.unit.gov.nist.javax.sip.parser.ims;
 import gov.nist.javax.sip.parser.ims.PVisitedNetworkIDParser;
 import test.unit.gov.nist.javax.sip.parser.ParserTestCase;
 
-public class PVisitedNetworkIDParserTest extends ParserTestCase
-{
-    public void testParser() {
-        // TODO Auto-generated method stub
+public class PVisitedNetworkIDParserTest extends ParserTestCase {
+	public void testParser() {
+		// TODO Auto-generated method stub
 
-        String[] visitedNet =  {
-         "P-Visited-Network-ID: \"visited network 1\"\n",
+		String[] visitedNet = { "P-Visited-Network-ID: \"visited network 1\"\n",
 
-         "P-Visited-Network-ID: \"visited network 1\", \"visited network 2\"\n",
+				"P-Visited-Network-ID: \"visited network 1\", \"visited network 2\"\n",
 
-         "P-Visited-Network-ID: ptinovacao, \"visited network 1\"\n"
+				"P-Visited-Network-ID: ptinovacao, \"visited network 1\"\n"
 
-        };
+		};
 
-        super.testParser(PVisitedNetworkIDParser.class,visitedNet);
-    }
+		super.testParser(PVisitedNetworkIDParser.class, visitedNet);
+	}
 
 }

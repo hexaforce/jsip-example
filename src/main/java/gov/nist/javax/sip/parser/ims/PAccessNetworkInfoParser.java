@@ -29,7 +29,6 @@
 
 package gov.nist.javax.sip.parser.ims;
 
-
 import java.text.ParseException;
 
 import gov.nist.core.NameValue;
@@ -42,14 +41,17 @@ import gov.nist.javax.sip.parser.HeaderParser;
 import gov.nist.javax.sip.parser.Lexer;
 import gov.nist.javax.sip.parser.TokenTypes;
 
-
 /**
  * P-Access-Network-Info header parser.
  *
- * <p>RFC 3455 - Private Header (P-Header) Extensions to the Session Initiation
- *   Protocol (SIP) for the 3rd-Generation Partnership Project (3GPP) </p>
+ * <p>
+ * RFC 3455 - Private Header (P-Header) Extensions to the Session Initiation Protocol (SIP) for the 3rd-Generation Partnership Project (3GPP)
+ * </p>
  *
- * <p>Syntax (RFC 3455):</p>
+ * <p>
+ * Syntax (RFC 3455):
+ * </p>
+ * 
  * <pre>
  * P-Access-Network-Info  = "P-Access-Network-Info" HCOLON access-net-spec
  * access-net-spec        = access-type *(SEMI access-info)
@@ -63,8 +65,13 @@ import gov.nist.javax.sip.parser.TokenTypes;
  * gen-value              = token / host / quoted-string
  * </pre>
  * 
- * <p>RFC 7913 - P-Access-Network-Info ABNF Update </p>
- * <p>Newer RFC https://tools.ietf.org/html/rfc7913</p>
+ * <p>
+ * RFC 7913 - P-Access-Network-Info ABNF Update
+ * </p>
+ * <p>
+ * Newer RFC https://tools.ietf.org/html/rfc7913
+ * </p>
+ * 
  * <pre>
  *       access-info            = cgi-3gpp / utran-cell-id-3gpp /
  *                                dsl-location / i-wlan-node-id /
@@ -84,24 +91,18 @@ import gov.nist.javax.sip.parser.TokenTypes;
  * @author Miguel Freitas (IT) PT-Inovacao
  */
 
+public class PAccessNetworkInfoParser extends HeaderParser implements TokenTypes {
 
-public class PAccessNetworkInfoParser
-    extends HeaderParser
-    implements TokenTypes
-{
+	public PAccessNetworkInfoParser(String accessNetwork) {
 
-    public PAccessNetworkInfoParser(String accessNetwork) {
+		super(accessNetwork);
 
-        super(accessNetwork);
+	}
 
-    }
+	protected PAccessNetworkInfoParser(Lexer lexer) {
+		super(lexer);
 
-
-    protected PAccessNetworkInfoParser(Lexer lexer) {
-        super(lexer);
-
-    }
-
+	}
 
 	public SIPHeader parse() throws ParseException {
 		if (debug)

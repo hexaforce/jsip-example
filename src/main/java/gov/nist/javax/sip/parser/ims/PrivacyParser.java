@@ -27,7 +27,6 @@
  * PRODUCT OF PT INOVACAO - EST DEPARTMENT and Telecommunications Institute (Aveiro, Portugal)  *
  ************************************************************************************************/
 
-
 package gov.nist.javax.sip.parser.ims;
 
 import java.text.ParseException;
@@ -51,92 +50,73 @@ import gov.nist.javax.sip.parser.HeaderParser;
 import gov.nist.javax.sip.parser.Lexer;
 import gov.nist.javax.sip.parser.TokenTypes;
 
+public class PrivacyParser extends HeaderParser implements TokenTypes {
 
+	public PrivacyParser(String privacyType) {
 
-public class PrivacyParser
-    extends HeaderParser
-    implements TokenTypes
-{
+		super(privacyType);
+	}
 
+	protected PrivacyParser(Lexer lexer) {
 
-    public PrivacyParser(String privacyType) {
+		super(lexer);
+	}
 
-        super(privacyType);
-    }
+	public SIPHeader parse() throws ParseException {
+		if (debug)
+			dbg_enter("PrivacyParser.parse");
 
-    protected PrivacyParser(Lexer lexer) {
+		PrivacyList privacyList = new PrivacyList();
 
-        super(lexer);
-    }
+		try {
+			this.headerName(TokenTypes.PRIVACY);
 
+			while (lexer.lookAhead(0) != '\n') {
+				this.lexer.SPorHT();
 
-    public SIPHeader parse() throws ParseException
-    {
-        if (debug)
-            dbg_enter("PrivacyParser.parse");
+				Privacy privacy = new Privacy();
+				privacy.setHeaderName(SIPHeaderNamesIms.PRIVACY);
 
-        PrivacyList privacyList = new PrivacyList();
+				this.lexer.match(TokenTypes.ID);
+				Token token = lexer.getNextToken();
+				privacy.setPrivacy(token.getTokenValue());
+				this.lexer.SPorHT();
+				privacyList.add(privacy);
 
-        try
-        {
-            this.headerName(TokenTypes.PRIVACY);
+				// Parsing others option-tags
+				while (lexer.lookAhead(0) == ';') {
+					this.lexer.match(';');
+					this.lexer.SPorHT();
+					privacy = new Privacy();
+					this.lexer.match(TokenTypes.ID);
+					token = lexer.getNextToken();
+					privacy.setPrivacy(token.getTokenValue());
+					this.lexer.SPorHT();
 
-            while (lexer.lookAhead(0) != '\n') {
-                this.lexer.SPorHT();
+					privacyList.add(privacy);
+				}
+			}
 
-                Privacy privacy = new Privacy();
-                privacy.setHeaderName(SIPHeaderNamesIms.PRIVACY);
+			return privacyList;
 
-                this.lexer.match(TokenTypes.ID);
-                Token token = lexer.getNextToken();
-                privacy.setPrivacy(token.getTokenValue());
-                this.lexer.SPorHT();
-                privacyList.add(privacy);
+		} finally {
+			if (debug)
+				dbg_leave("PrivacyParser.parse");
+		}
 
-                // Parsing others option-tags
-                while (lexer.lookAhead(0) == ';')
-                {
-                    this.lexer.match(';');
-                    this.lexer.SPorHT();
-                    privacy = new Privacy();
-                    this.lexer.match(TokenTypes.ID);
-                    token = lexer.getNextToken();
-                    privacy.setPrivacy(token.getTokenValue());
-                    this.lexer.SPorHT();
+	}
 
-                    privacyList.add(privacy);
-                }
-            }
+	/** Test program */
+	public static void main(String args[]) throws ParseException {
+		String rou[] = {
 
-            return privacyList;
+				"Privacy: none\n", "Privacy: none;id;user\n" };
 
-        }
-        finally {
-            if (debug)
-                dbg_leave("PrivacyParser.parse");
-        }
-
-    }
-
-
-    /** Test program */
-    public static void main(String args[]) throws ParseException
-    {
-        String rou[] = {
-
-                "Privacy: none\n",
-                "Privacy: none;id;user\n"
-            };
-
-        for (int i = 0; i < rou.length; i++ ) {
-            PrivacyParser rp =
-              new PrivacyParser(rou[i]);
-            PrivacyList list = (PrivacyList) rp.parse();
-            System.out.println("encoded = " +list.encode());
-        }
-    }
-
-
+		for (int i = 0; i < rou.length; i++) {
+			PrivacyParser rp = new PrivacyParser(rou[i]);
+			PrivacyList list = (PrivacyList) rp.parse();
+			System.out.println("encoded = " + list.encode());
+		}
+	}
 
 }
-

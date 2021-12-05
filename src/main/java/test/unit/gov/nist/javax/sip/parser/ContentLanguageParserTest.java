@@ -23,6 +23,7 @@
  *The Open SLEE project
  */
 package test.unit.gov.nist.javax.sip.parser;
+
 import gov.nist.javax.sip.parser.ContentLanguageParser;
 
 /**
@@ -30,17 +31,15 @@ import gov.nist.javax.sip.parser.ContentLanguageParser;
  */
 public class ContentLanguageParserTest extends ParserTestCase {
 
-    /*
-     * (non-Javadoc)
-     *
-     * @see test.unit.gov.nist.javax.sip.parser.ParserTestCase#testParser()
-     */
-    public void testParser() {
+	/*
+	 * (non-Javadoc)
+	 *
+	 * @see test.unit.gov.nist.javax.sip.parser.ParserTestCase#testParser()
+	 */
+	public void testParser() {
 
-        String r[] = { "Content-Language: fr \n",
-                "Content-Language: fr , he \n" };
-        super.testParser(ContentLanguageParser.class,r);
+		String r[] = { "Content-Language: fr \n", "Content-Language: fr , he \n" };
+		super.testParser(ContentLanguageParser.class, r);
 
-    }
+	}
 }
-

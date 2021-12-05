@@ -32,32 +32,26 @@ import gov.nist.javax.sip.header.SIPHeaderNames;
 
 /**
  * Default constants for SIP.
+ * 
  * @version 1.2 $Revision: 1.9 $ $Date: 2009-07-17 18:57:20 $
  */
-public interface SIPConstants
-    extends
-        SIPHeaderNames,
-        gov.nist.javax.sip.address.ParameterNames,
-        gov.nist.javax.sip.header.ParameterNames {
-    public static final int DEFAULT_PORT = 5060;
+public interface SIPConstants extends SIPHeaderNames, gov.nist.javax.sip.address.ParameterNames, gov.nist.javax.sip.header.ParameterNames {
+	public static final int DEFAULT_PORT = 5060;
 
-    // Added by Daniel J. Martinez Manzano <dani@dif.um.es>
-    public static final int DEFAULT_TLS_PORT = 5061;
+	// Added by Daniel J. Martinez Manzano <dani@dif.um.es>
+	public static final int DEFAULT_TLS_PORT = 5061;
 
-    /**
-     * Prefix for the branch parameter that identifies
-     * BIS 09 compatible branch strings. This indicates
-     * that the branch may be as a global identifier for
-     * identifying transactions.
-     */
-    public static final String BRANCH_MAGIC_COOKIE = "z9hG4bK";
+	/**
+	 * Prefix for the branch parameter that identifies BIS 09 compatible branch strings. This indicates that the branch may be as a global identifier for identifying transactions.
+	 */
+	public static final String BRANCH_MAGIC_COOKIE = "z9hG4bK";
 
-    public static final String BRANCH_MAGIC_COOKIE_LOWER_CASE = "z9hg4bk";
+	public static final String BRANCH_MAGIC_COOKIE_LOWER_CASE = "z9hg4bk";
 
-    public static final String BRANCH_MAGIC_COOKIE_UPPER_CASE = "Z9HG4BK";
+	public static final String BRANCH_MAGIC_COOKIE_UPPER_CASE = "Z9HG4BK";
 
-    /**
-     * constant SIP_VERSION_STRING
-     */
-    public static final String SIP_VERSION_STRING = "SIP/2.0";
+	/**
+	 * constant SIP_VERSION_STRING
+	 */
+	public static final String SIP_VERSION_STRING = "SIP/2.0";
 }

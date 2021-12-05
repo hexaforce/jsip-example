@@ -25,32 +25,31 @@
 * Product of NIST/ITL Advanced Networking Technologies Division (ANTD).        *
 *******************************************************************************/
 package gov.nist.javax.sip.header;
+
 import javax.sip.header.ContentEncodingHeader;
 
 /**
-*  Content Encoding SIP header List. Keeps a list of ContentEncoding headers.
-*
-*@author M. Rangananthan
-*@version 1.2
-*@since 1.1
-*/
+ * Content Encoding SIP header List. Keeps a list of ContentEncoding headers.
+ *
+ * @author M. Rangananthan
+ * @version 1.2
+ * @since 1.1
+ */
 public final class ContentEncodingList extends SIPHeaderList<ContentEncoding> {
 
-    private static final long serialVersionUID = 7365216146576273970L;
+	private static final long serialVersionUID = 7365216146576273970L;
 
+	public Object clone() {
+		ContentEncodingList retval = new ContentEncodingList();
+		retval.clonehlist(this.hlist);
+		return retval;
+	}
 
-    public Object clone() {
-        ContentEncodingList retval = new ContentEncodingList();
-        retval.clonehlist(this.hlist);
-        return retval;
-    }
-
-
-        /** Default constructor.
-         */
-    public ContentEncodingList () {
-        super( ContentEncoding.class,
-            ContentEncodingHeader.NAME);
-    }
+	/**
+	 * Default constructor.
+	 */
+	public ContentEncodingList() {
+		super(ContentEncoding.class, ContentEncodingHeader.NAME);
+	}
 
 }

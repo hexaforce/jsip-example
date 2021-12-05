@@ -27,30 +27,28 @@
 * Product of NIST/ITL Advanced Networking Technologies Division (ANTD).        *
 *******************************************************************************/
 package gov.nist.javax.sip.header;
+
 import javax.sip.header.AuthenticationInfoHeader;
 
-
 /**
-* A list of AuthenticationInfo headers (there can be multiple in a message).
-*
-*@author M. Ranganathan   <br/>
-*
-*/
+ * A list of AuthenticationInfo headers (there can be multiple in a message).
+ *
+ * @author M. Ranganathan <br/>
+ *
+ */
 public class AuthenticationInfoList extends SIPHeaderList<AuthenticationInfo> {
 
-    private static final long serialVersionUID = 1L;
+	private static final long serialVersionUID = 1L;
 
+	public Object clone() {
+		AuthenticationInfoList retval = new AuthenticationInfoList();
+		retval.clonehlist(this.hlist);
+		return retval;
+	}
 
-    public Object clone() {
-        AuthenticationInfoList retval = new AuthenticationInfoList();
-        retval.clonehlist(this.hlist);
-        return retval;
-    }
-
-
-    /** Creates a new instance of AuthenticationList */
-    public AuthenticationInfoList() {
-        super( AuthenticationInfo.class, AuthenticationInfoHeader.NAME);
-    }
+	/** Creates a new instance of AuthenticationList */
+	public AuthenticationInfoList() {
+		super(AuthenticationInfo.class, AuthenticationInfoHeader.NAME);
+	}
 
 }

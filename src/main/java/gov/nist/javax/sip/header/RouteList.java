@@ -37,54 +37,54 @@ import javax.sip.header.RouteHeader;
  *
  * @version 1.2 $Revision: 1.8 $ $Date: 2009-07-17 18:57:36 $
  *
- * @author M. Ranganathan   <br/>
+ * @author M. Ranganathan <br/>
  *
  *
  *
  */
 public class RouteList extends SIPHeaderList<Route> {
 
-    private static final long serialVersionUID = 3407603519354809748L;
+	private static final long serialVersionUID = 3407603519354809748L;
 
+	/**
+	 * default constructor
+	 */
+	public RouteList() {
+		super(Route.class, RouteHeader.NAME);
 
-    /** default constructor
-     */
-    public RouteList() {
-        super(Route.class, RouteHeader.NAME);
+	}
 
-    }
+	public Object clone() {
+		RouteList retval = new RouteList();
+		retval.clonehlist(this.hlist);
+		return retval;
+	}
 
-    public Object clone() {
-        RouteList retval = new RouteList();
-        retval.clonehlist(this.hlist);
-        return retval;
-    }
+	public String encode() {
+		if (super.hlist.isEmpty())
+			return "";
+		else
+			return super.encode();
+	}
 
-    public String encode() {
-        if ( super.hlist.isEmpty()) return "";
-        else return super.encode();
-    }
-
-
-    /**
-    * Order is important when comparing route lists.
-    */
-    public boolean equals(Object other) {
-        if (!(other instanceof RouteList))
-            return false;
-        RouteList that = (RouteList) other;
-        if (this.size() != that.size())
-            return false;
-        ListIterator<Route> it = this.listIterator();
-        ListIterator<Route> it1 = that.listIterator();
-        while (it.hasNext()) {
-            Route route = (Route) it.next();
-            Route route1 = (Route) it1.next();
-            if (!route.equals(route1))
-                return false;
-        }
-        return true;
-    }
-
+	/**
+	 * Order is important when comparing route lists.
+	 */
+	public boolean equals(Object other) {
+		if (!(other instanceof RouteList))
+			return false;
+		RouteList that = (RouteList) other;
+		if (this.size() != that.size())
+			return false;
+		ListIterator<Route> it = this.listIterator();
+		ListIterator<Route> it1 = that.listIterator();
+		while (it.hasNext()) {
+			Route route = (Route) it.next();
+			Route route1 = (Route) it1.next();
+			if (!route.equals(route1))
+				return false;
+		}
+		return true;
+	}
 
 }

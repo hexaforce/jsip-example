@@ -1,4 +1,5 @@
 package gov.nist.javax.sip.parser.ims;
+
 /*
 * Conditions Of Use
 *
@@ -34,41 +35,39 @@ import gov.nist.javax.sip.parser.TokenTypes;
 
 /**
  *
- * @author aayush.bhatnagar
- * Rancore Technologies Pvt Ltd, Mumbai India.
+ * @author aayush.bhatnagar Rancore Technologies Pvt Ltd, Mumbai India.
  *
  */
-public class PProfileKeyParser extends AddressParametersParser implements TokenTypes{
+public class PProfileKeyParser extends AddressParametersParser implements TokenTypes {
 
-    protected PProfileKeyParser(Lexer lexer) {
-        super(lexer);
+	protected PProfileKeyParser(Lexer lexer) {
+		super(lexer);
 
-    }
+	}
 
-    public PProfileKeyParser(String profilekey){
-        super(profilekey);
-    }
+	public PProfileKeyParser(String profilekey) {
+		super(profilekey);
+	}
 
-    public SIPHeader parse() throws ParseException {
-        if (debug)
-            dbg_enter("PProfileKey.parse");
-        try {
+	public SIPHeader parse() throws ParseException {
+		if (debug)
+			dbg_enter("PProfileKey.parse");
+		try {
 
-            this.lexer.match(TokenTypes.P_PROFILE_KEY);
-            this.lexer.SPorHT();
-            this.lexer.match(':');
-            this.lexer.SPorHT();
+			this.lexer.match(TokenTypes.P_PROFILE_KEY);
+			this.lexer.SPorHT();
+			this.lexer.match(':');
+			this.lexer.SPorHT();
 
-            PProfileKey p = new PProfileKey();
-            super.parse(p);
-            return p;
+			PProfileKey p = new PProfileKey();
+			super.parse(p);
+			return p;
 
-        } finally {
-            if (debug)
-                dbg_leave("PProfileKey.parse");
-            }
+		} finally {
+			if (debug)
+				dbg_leave("PProfileKey.parse");
+		}
 
-
-    }
+	}
 
 }

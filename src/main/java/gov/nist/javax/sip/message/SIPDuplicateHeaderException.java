@@ -33,37 +33,35 @@ import java.text.ParseException;
 import gov.nist.javax.sip.header.SIPHeader;
 
 /**
- * Duplicate header exception:  thrown when there is more
- * than one header of a type where there should only be one.
- * The exception handler may choose to :
- * 1. discard the duplicate  by returning null
- * 2. keep the duplicate by just returning it.
- * 3. Discard the entire message by throwing an exception.
+ * Duplicate header exception: thrown when there is more than one header of a type where there should only be one. The exception handler may choose to : 1. discard the duplicate by returning null 2. keep the duplicate by just returning it. 3. Discard the entire message by throwing an exception.
+ * 
  * @version 1.2 $Revision: 1.6 $ $Date: 2009-07-17 18:57:54 $
  * @since 1.1
  * @author M. Ranganathan
  */
 public class SIPDuplicateHeaderException extends ParseException {
 
-    private static final long serialVersionUID = 8241107266407879291L;
-    protected SIPHeader sipHeader;
-    protected SIPMessage sipMessage;
-    public SIPDuplicateHeaderException(String msg) {
-        super(msg, 0);
-    }
-    public SIPMessage getSIPMessage() {
-        return sipMessage;
-    }
+	private static final long serialVersionUID = 8241107266407879291L;
+	protected SIPHeader sipHeader;
+	protected SIPMessage sipMessage;
 
-    public SIPHeader getSIPHeader() {
-        return sipHeader;
-    }
+	public SIPDuplicateHeaderException(String msg) {
+		super(msg, 0);
+	}
 
-    public void setSIPHeader(SIPHeader sipHeader) {
-        this.sipHeader = sipHeader;
-    }
+	public SIPMessage getSIPMessage() {
+		return sipMessage;
+	}
 
-    public void setSIPMessage(SIPMessage sipMessage) {
-        this.sipMessage = sipMessage;
-    }
+	public SIPHeader getSIPHeader() {
+		return sipHeader;
+	}
+
+	public void setSIPHeader(SIPHeader sipHeader) {
+		this.sipHeader = sipHeader;
+	}
+
+	public void setSIPMessage(SIPMessage sipMessage) {
+		this.sipMessage = sipMessage;
+	}
 }

@@ -33,8 +33,9 @@ import java.text.ParseException;
 import javax.sip.header.ContentTypeHeader;
 
 /**
-*  ContentType SIP Header
-* <pre>
+ * ContentType SIP Header
+ * 
+ * <pre>
 *14.17 Content-Type
 *
 *   The Content-Type entity-header field indicates the media type of the
@@ -51,173 +52,189 @@ import javax.sip.header.ContentTypeHeader;
 *   entity is provided in section 7.2.1.
 *
 * From  HTTP RFC 2616
-* </pre>
-*
-*
-*@version 1.2
-*
-*@author M. Ranganathan   <br/>
-*@author Olivier Deruelle <br/>
-*@version 1.2 $Revision: 1.8 $ $Date: 2010-05-06 14:07:47 $
-*@since 1.1
-*
-*/
-public class ContentType
-    extends ParametersHeader
-    implements javax.sip.header.ContentTypeHeader {
+ * </pre>
+ *
+ *
+ * @version 1.2
+ *
+ * @author M. Ranganathan <br/>
+ * @author Olivier Deruelle <br/>
+ * @version 1.2 $Revision: 1.8 $ $Date: 2010-05-06 14:07:47 $
+ * @since 1.1
+ *
+ */
+public class ContentType extends ParametersHeader implements javax.sip.header.ContentTypeHeader {
 
-    /**
-     * Comment for <code>serialVersionUID</code>
-     */
-    private static final long serialVersionUID = 8475682204373446610L;
-    /** mediaRange field.
-     */
-    protected MediaRange mediaRange;
+	/**
+	 * Comment for <code>serialVersionUID</code>
+	 */
+	private static final long serialVersionUID = 8475682204373446610L;
+	/**
+	 * mediaRange field.
+	 */
+	protected MediaRange mediaRange;
 
-    /** Default constructor.
-     */
-    public ContentType() {
-        super(CONTENT_TYPE);
-    }
+	/**
+	 * Default constructor.
+	 */
+	public ContentType() {
+		super(CONTENT_TYPE);
+	}
 
-    /** Constructor given a content type and subtype.
-    *@param contentType is the content type.
-    *@param contentSubtype is the content subtype
-    */
-    public ContentType(String contentType, String contentSubtype) {
-        this();
-        this.setContentType(contentType, contentSubtype);
-    }
+	/**
+	 * Constructor given a content type and subtype.
+	 * 
+	 * @param contentType    is the content type.
+	 * @param contentSubtype is the content subtype
+	 */
+	public ContentType(String contentType, String contentSubtype) {
+		this();
+		this.setContentType(contentType, contentSubtype);
+	}
 
-    /** compare two MediaRange headers.
-     * @param media String to set
-     * @return int.
-     */
-    public int compareMediaRange(String media) {
-        return (
-            mediaRange.type + "/" + mediaRange.subtype).compareToIgnoreCase(
-            media);
-    }
+	/**
+	 * compare two MediaRange headers.
+	 * 
+	 * @param media String to set
+	 * @return int.
+	 */
+	public int compareMediaRange(String media) {
+		return (mediaRange.type + "/" + mediaRange.subtype).compareToIgnoreCase(media);
+	}
 
-    /**
-     * Encode into a canonical string.
-     * @return String.
-     */
-    public String encodeBody() {
-        return encodeBody(new StringBuilder()).toString();
-    }
+	/**
+	 * Encode into a canonical string.
+	 * 
+	 * @return String.
+	 */
+	public String encodeBody() {
+		return encodeBody(new StringBuilder()).toString();
+	}
 
-    protected StringBuilder encodeBody(StringBuilder buffer) {
-        mediaRange.encode(buffer);
-        if (hasParameters()) {
-            buffer.append(SEMICOLON);
-            parameters.encode(buffer);
-        }
-        return buffer;
-    }
+	protected StringBuilder encodeBody(StringBuilder buffer) {
+		mediaRange.encode(buffer);
+		if (hasParameters()) {
+			buffer.append(SEMICOLON);
+			parameters.encode(buffer);
+		}
+		return buffer;
+	}
 
-    /** get the mediaRange field.
-     * @return MediaRange.
-     */
-    public MediaRange getMediaRange() {
-        return mediaRange;
-    }
+	/**
+	 * get the mediaRange field.
+	 * 
+	 * @return MediaRange.
+	 */
+	public MediaRange getMediaRange() {
+		return mediaRange;
+	}
 
-    /** get the Media Type.
-     * @return String.
-     */
-    public String getMediaType() {
-        return mediaRange.type;
-    }
+	/**
+	 * get the Media Type.
+	 * 
+	 * @return String.
+	 */
+	public String getMediaType() {
+		return mediaRange.type;
+	}
 
-    /** get the MediaSubType field.
-     * @return String.
-     */
-    public String getMediaSubType() {
-        return mediaRange.subtype;
-    }
+	/**
+	 * get the MediaSubType field.
+	 * 
+	 * @return String.
+	 */
+	public String getMediaSubType() {
+		return mediaRange.subtype;
+	}
 
-    /** Get the content subtype.
-    *@return the content subtype string (or null if not set).
-    */
-    public String getContentSubType() {
-        return mediaRange == null ? null : mediaRange.getSubtype();
-    }
+	/**
+	 * Get the content subtype.
+	 * 
+	 * @return the content subtype string (or null if not set).
+	 */
+	public String getContentSubType() {
+		return mediaRange == null ? null : mediaRange.getSubtype();
+	}
 
-    /** Get the content subtype.
-    *@return the content tyep string (or null if not set).
-    */
+	/**
+	 * Get the content subtype.
+	 * 
+	 * @return the content tyep string (or null if not set).
+	 */
 
-    public String getContentType() {
-        return mediaRange == null ? null : mediaRange.getType();
-    }
+	public String getContentType() {
+		return mediaRange == null ? null : mediaRange.getType();
+	}
 
-    /** Get the charset parameter.
-    */
-    public String getCharset() {
-        return this.getParameter("charset");
-    }
+	/**
+	 * Get the charset parameter.
+	 */
+	public String getCharset() {
+		return this.getParameter("charset");
+	}
 
-    /**
-     * Set the mediaRange member
-     * @param m mediaRange field.
-     */
-    public void setMediaRange(MediaRange m) {
-        mediaRange = m;
-    }
+	/**
+	 * Set the mediaRange member
+	 * 
+	 * @param m mediaRange field.
+	 */
+	public void setMediaRange(MediaRange m) {
+		mediaRange = m;
+	}
 
-    /**
-    * set the content type and subtype.
-    *@param contentType Content type string.
-    *@param contentSubType content subtype string
-    */
-    public void setContentType(String contentType, String contentSubType) {
-        if (mediaRange == null)
-            mediaRange = new MediaRange();
-        mediaRange.setType(contentType);
-        mediaRange.setSubtype(contentSubType);
-    }
+	/**
+	 * set the content type and subtype.
+	 * 
+	 * @param contentType    Content type string.
+	 * @param contentSubType content subtype string
+	 */
+	public void setContentType(String contentType, String contentSubType) {
+		if (mediaRange == null)
+			mediaRange = new MediaRange();
+		mediaRange.setType(contentType);
+		mediaRange.setSubtype(contentSubType);
+	}
 
-    /**
-    * set the content type.
-    *@param contentType Content type string.
-    */
+	/**
+	 * set the content type.
+	 * 
+	 * @param contentType Content type string.
+	 */
 
-    public void setContentType(String contentType) throws ParseException {
-        if (contentType == null)
-            throw new NullPointerException("null arg");
-        if (mediaRange == null)
-            mediaRange = new MediaRange();
-        mediaRange.setType(contentType);
+	public void setContentType(String contentType) throws ParseException {
+		if (contentType == null)
+			throw new NullPointerException("null arg");
+		if (mediaRange == null)
+			mediaRange = new MediaRange();
+		mediaRange.setType(contentType);
 
-    }
+	}
 
-    /** Set the content subtype.
-         * @param contentType String to set
-         */
-    public void setContentSubType(String contentType) throws ParseException {
-        if (contentType == null)
-            throw new NullPointerException("null arg");
-        if (mediaRange == null)
-            mediaRange = new MediaRange();
-        mediaRange.setSubtype(contentType);
-    }
+	/**
+	 * Set the content subtype.
+	 * 
+	 * @param contentType String to set
+	 */
+	public void setContentSubType(String contentType) throws ParseException {
+		if (contentType == null)
+			throw new NullPointerException("null arg");
+		if (mediaRange == null)
+			mediaRange = new MediaRange();
+		mediaRange.setSubtype(contentType);
+	}
 
-    public Object clone() {
-        ContentType retval = (ContentType) super.clone();
-        if (this.mediaRange != null)
-            retval.mediaRange = (MediaRange) this.mediaRange.clone();
-        return retval;
-    }
+	public Object clone() {
+		ContentType retval = (ContentType) super.clone();
+		if (this.mediaRange != null)
+			retval.mediaRange = (MediaRange) this.mediaRange.clone();
+		return retval;
+	}
 
-    public boolean equals(Object other) {
-        if (other instanceof ContentTypeHeader) {
-            final ContentTypeHeader o = (ContentTypeHeader) other;
-            return this.getContentType().equalsIgnoreCase( o.getContentType() )
-                && this.getContentSubType().equalsIgnoreCase( o.getContentSubType() )
-                && equalParameters( o );
-        }
-        return false;
-    }
+	public boolean equals(Object other) {
+		if (other instanceof ContentTypeHeader) {
+			final ContentTypeHeader o = (ContentTypeHeader) other;
+			return this.getContentType().equalsIgnoreCase(o.getContentType()) && this.getContentSubType().equalsIgnoreCase(o.getContentSubType()) && equalParameters(o);
+		}
+		return false;
+	}
 }
-

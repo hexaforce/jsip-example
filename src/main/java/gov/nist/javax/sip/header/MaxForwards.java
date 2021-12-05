@@ -27,6 +27,7 @@
 * Product of NIST/ITL Advanced Networking Technologies Division (ANTD).        *
 *******************************************************************************/
 package gov.nist.javax.sip.header;
+
 import javax.sip.InvalidArgumentException;
 import javax.sip.header.MaxForwardsHeader;
 import javax.sip.header.TooManyHopsException;
@@ -36,84 +37,93 @@ import javax.sip.header.TooManyHopsException;
  *
  * @version 1.2 $Revision: 1.9 $ $Date: 2010-05-06 14:07:50 $
  *
- * @author M. Ranganathan   <br/>
+ * @author M. Ranganathan <br/>
  * @author Olivier Deruelle <br/>
  *
  */
 public class MaxForwards extends SIPHeader implements MaxForwardsHeader {
 
-    /**
-     * Comment for <code>serialVersionUID</code>
-     */
-    private static final long serialVersionUID = -3096874323347175943L;
-    /** maxForwards field.
-     */
-    protected int maxForwards;
+	/**
+	 * Comment for <code>serialVersionUID</code>
+	 */
+	private static final long serialVersionUID = -3096874323347175943L;
+	/**
+	 * maxForwards field.
+	 */
+	protected int maxForwards;
 
-    /** Default constructor.
-     */
-    public MaxForwards() {
-        super(NAME);
-    }
+	/**
+	 * Default constructor.
+	 */
+	public MaxForwards() {
+		super(NAME);
+	}
 
-  public MaxForwards( int m ) throws InvalidArgumentException {
-        super(NAME);
-        this.setMaxForwards( m );
-    }
+	public MaxForwards(int m) throws InvalidArgumentException {
+		super(NAME);
+		this.setMaxForwards(m);
+	}
 
-    /** get the MaxForwards field.
-     * @return the maxForwards member.
-     */
-    public int getMaxForwards() {
-        return maxForwards;
-    }
+	/**
+	 * get the MaxForwards field.
+	 * 
+	 * @return the maxForwards member.
+	 */
+	public int getMaxForwards() {
+		return maxForwards;
+	}
 
-    /**
-         * Set the maxForwards member
-         * @param maxForwards maxForwards parameter to set
-         */
-    public void setMaxForwards(int maxForwards)
-        throws InvalidArgumentException {
-        if (maxForwards < 0 || maxForwards > 255)
-            throw new InvalidArgumentException(
-                "bad max forwards value " + maxForwards);
-        this.maxForwards = maxForwards;
-    }
+	/**
+	 * Set the maxForwards member
+	 * 
+	 * @param maxForwards maxForwards parameter to set
+	 */
+	public void setMaxForwards(int maxForwards) throws InvalidArgumentException {
+		if (maxForwards < 0 || maxForwards > 255)
+			throw new InvalidArgumentException("bad max forwards value " + maxForwards);
+		this.maxForwards = maxForwards;
+	}
 
-    /**
-         * Encode into a string.
-         * @return encoded string.
-         *
-         */
-    public String encodeBody() {
-        return encodeBody(new StringBuilder()).toString();
-    }
+	/**
+	 * Encode into a string.
+	 * 
+	 * @return encoded string.
+	 *
+	 */
+	public String encodeBody() {
+		return encodeBody(new StringBuilder()).toString();
+	}
 
-    protected StringBuilder encodeBody(StringBuilder buffer) {
-        return buffer.append(maxForwards);
-    }
+	protected StringBuilder encodeBody(StringBuilder buffer) {
+		return buffer.append(maxForwards);
+	}
 
-    /** Boolean function
-     * @return true if MaxForwards field reached zero.
-     */
-    public boolean hasReachedZero() {
-        return maxForwards == 0;
-    }
+	/**
+	 * Boolean function
+	 * 
+	 * @return true if MaxForwards field reached zero.
+	 */
+	public boolean hasReachedZero() {
+		return maxForwards == 0;
+	}
 
-    /** decrement MaxForwards field one by one.
-     */
-    public void decrementMaxForwards() throws TooManyHopsException {
-        if (maxForwards > 0)
-            maxForwards--;
-        else throw new TooManyHopsException ("has already reached 0!");
-    }
+	/**
+	 * decrement MaxForwards field one by one.
+	 */
+	public void decrementMaxForwards() throws TooManyHopsException {
+		if (maxForwards > 0)
+			maxForwards--;
+		else
+			throw new TooManyHopsException("has already reached 0!");
+	}
 
-    public boolean equals(Object other) {
-        if (this==other) return true;
-        if (other instanceof MaxForwardsHeader) {
-            final MaxForwardsHeader o = (MaxForwardsHeader) other;
-            return this.getMaxForwards() == o.getMaxForwards();
-        }
-        return false;
-    }
+	public boolean equals(Object other) {
+		if (this == other)
+			return true;
+		if (other instanceof MaxForwardsHeader) {
+			final MaxForwardsHeader o = (MaxForwardsHeader) other;
+			return this.getMaxForwards() == o.getMaxForwards();
+		}
+		return false;
+	}
 }

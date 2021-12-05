@@ -28,9 +28,7 @@
  * PRODUCT OF PT INOVACAO - EST DEPARTMENT and Aveiro University - Portugal)   *
  *****************************************************************************/
 
-
 package gov.nist.javax.sip.header.ims;
-
 
 import java.text.ParseException;
 
@@ -39,103 +37,92 @@ import javax.sip.header.ExtensionHeader;
 
 import gov.nist.javax.sip.header.SIPHeader;
 
-
 /**
  * P-Media-Authorization SIP Private Header - RFC 3313.
  *
- * <p>Sintax:</p>
+ * <p>
+ * Sintax:
+ * </p>
+ * 
  * <pre>
  * P-Media-Authorization   = "P-Media-Authorization" HCOLON
  *                            P-Media-Authorization-Token
  *                            *(COMMA P-Media-Authorization-Token)
  * P-Media-Authorization-Token = 1*HEXDIG
  * </pre>
+ * 
  * @author Miguel Freitas (IT) PT-Inovacao
  */
 
-public class PMediaAuthorization
-    extends SIPHeader
-    implements PMediaAuthorizationHeader, SIPHeaderNamesIms, ExtensionHeader
-{
+public class PMediaAuthorization extends SIPHeader implements PMediaAuthorizationHeader, SIPHeaderNamesIms, ExtensionHeader {
 
-    /**
-     * Comment for <code>serialVersionUID</code>
-     */
-    private static final long serialVersionUID = -6463630258703731133L;
+	/**
+	 * Comment for <code>serialVersionUID</code>
+	 */
+	private static final long serialVersionUID = -6463630258703731133L;
 
+	/**
+	 * P-Media-Authorization Token
+	 */
+	private String token;
 
-    /**
-     *  P-Media-Authorization Token
-     */
-    private String token;
+	/**
+	 * Constructor
+	 */
+	public PMediaAuthorization() {
+		super(P_MEDIA_AUTHORIZATION);
+	}
 
+	/**
+	 * Get the media authorization token.
+	 *
+	 * @return token
+	 */
+	public String getToken() {
+		return token;
+	}
 
-    /**
-     * Constructor
-     */
-    public PMediaAuthorization()
-    {
-        super(P_MEDIA_AUTHORIZATION);
-    }
+	/**
+	 * Set the media authorization token.
+	 *
+	 * @param token - media authorization token to set
+	 * @throws InvalidArgumentException - if token is null or empty
+	 */
+	public void setMediaAuthorizationToken(String token) throws InvalidArgumentException {
+		if (token == null || token.length() == 0)
+			throw new InvalidArgumentException(" the Media-Authorization-Token parameter is null or empty");
 
+		this.token = token;
+	}
 
-    /**
-     * Get the media authorization token.
-     *
-     * @return token
-     */
-    public String getToken()
-    {
-        return token;
-    }
+	/**
+	 * Encode header
+	 * 
+	 * @return the header content
+	 */
+	public StringBuilder encodeBody(StringBuilder encoding) {
+		return encoding.append(token);
+	}
 
+	public void setValue(String value) throws ParseException {
+		throw new ParseException(value, 0);
 
-    /**
-     * Set the media authorization token.
-     *
-     * @param token - media authorization token to set
-     * @throws InvalidArgumentException - if token is null or empty
-     */
-    public void setMediaAuthorizationToken(String token) throws InvalidArgumentException
-    {
-        if (token == null || token.length() == 0)
-            throw new InvalidArgumentException(" the Media-Authorization-Token parameter is null or empty");
+	}
 
-        this.token = token;
-    }
+	public boolean equals(Object other) {
+		if (other instanceof PMediaAuthorizationHeader) {
+			final PMediaAuthorizationHeader o = (PMediaAuthorizationHeader) other;
+			return this.getToken().equals(o.getToken());
+		}
+		return false;
 
-    /**
-     * Encode header
-     * @return the header content
-     */
-    public StringBuilder encodeBody(StringBuilder encoding) {
-        return encoding.append(token);
-    }
+	}
 
-
-    public void setValue(String value) throws ParseException {
-        throw new ParseException (value,0);
-
-    }
-
-
-    public boolean equals(Object other)
-    {
-        if (other instanceof PMediaAuthorizationHeader)
-        {
-            final PMediaAuthorizationHeader o = (PMediaAuthorizationHeader) other;
-            return this.getToken().equals(o.getToken());
-        }
-        return false;
-
-    }
-
-
-    public Object clone() {
-        PMediaAuthorization retval = (PMediaAuthorization) super.clone();
-        if (this.token != null)
-            retval.token = this.token;
-        return retval;
-    }
+	public Object clone() {
+		PMediaAuthorization retval = (PMediaAuthorization) super.clone();
+		if (this.token != null)
+			retval.token = this.token;
+		return retval;
+	}
 
 }

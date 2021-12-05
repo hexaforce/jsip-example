@@ -37,7 +37,6 @@ import javax.sip.header.Parameters;
  * @author ALEXANDRE MIGUEL SILVA SANTOS - Nú 10045401
  */
 
-
 /**
  * PATH header SIP param: RFC 3327.
  *
@@ -45,13 +44,11 @@ import javax.sip.header.Parameters;
  *
  */
 
-
-
 public interface PathHeader extends HeaderAddress, Parameters, Header {
 
-    /**
-     * Name of PathHeader
-     */
-    public final static String NAME = "Path";
+	/**
+	 * Name of PathHeader
+	 */
+	public final static String NAME = "Path";
 
 }

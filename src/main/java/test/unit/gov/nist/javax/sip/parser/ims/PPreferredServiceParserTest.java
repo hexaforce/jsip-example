@@ -1,4 +1,5 @@
 package test.unit.gov.nist.javax.sip.parser.ims;
+
 /*
 * Conditions Of Use
 *
@@ -28,45 +29,40 @@ import gov.nist.javax.sip.header.HeaderFactoryImpl;
 import gov.nist.javax.sip.header.ims.PPreferredServiceHeader;
 import gov.nist.javax.sip.parser.ims.PPreferredServiceParser;
 import test.unit.gov.nist.javax.sip.parser.ParserTestCase;
+
 /**
  *
  * @author aayush.bhatnagar
  *
  */
-public class PPreferredServiceParserTest extends ParserTestCase{
+public class PPreferredServiceParserTest extends ParserTestCase {
 
-    @Override
-    public void testParser() {
+	@Override
+	public void testParser() {
 
-        System.out.println("***********************************************");
-        System.out.println(" parsie parsie......");
-        System.out.println("***********************************************");
+		System.out.println("***********************************************");
+		System.out.println(" parsie parsie......");
+		System.out.println("***********************************************");
 
-        String p_pref_serv[] ={"P-Preferred-Service: urn:urn-7:3gpp-service.videogaming.service1\n",
-                               "P-Preferred-Service: urn:urn-7:3gpp-application.chatterboi.service2\n",
-                               "P-Preferred-Service: urn:urn-7:3gpp-service.photoshare.collage.privacyenabled.service3\n",
-                               "P-Preferred-Service: urn:urn-7:3gpp-application.calltracerservice\n",
-                               "P-Preferred-Service: urn:urn-7:3gpp-service.missedcallalertservice\n",
-                               "P-Preferred-Service: urn:urn-7:3gpp-service.ims.icsi.mmtel.gsma.ipcall\n"};
+		String p_pref_serv[] = { "P-Preferred-Service: urn:urn-7:3gpp-service.videogaming.service1\n", "P-Preferred-Service: urn:urn-7:3gpp-application.chatterboi.service2\n", "P-Preferred-Service: urn:urn-7:3gpp-service.photoshare.collage.privacyenabled.service3\n", "P-Preferred-Service: urn:urn-7:3gpp-application.calltracerservice\n", "P-Preferred-Service: urn:urn-7:3gpp-service.missedcallalertservice\n", "P-Preferred-Service: urn:urn-7:3gpp-service.ims.icsi.mmtel.gsma.ipcall\n" };
 
-        super.testParser(PPreferredServiceParser.class, p_pref_serv);
+		super.testParser(PPreferredServiceParser.class, p_pref_serv);
 
-        System.out.println("***********************************************");
-        System.out.println("Let us now test the usage of this header from the");
-        System.out.println("perspective of the application");
-        System.out.println("***********************************************");
+		System.out.println("***********************************************");
+		System.out.println("Let us now test the usage of this header from the");
+		System.out.println("perspective of the application");
+		System.out.println("***********************************************");
 
+		HeaderFactoryImpl himpl = new HeaderFactoryImpl();
 
-        HeaderFactoryImpl himpl = new HeaderFactoryImpl();
+		PPreferredServiceHeader ppsh = himpl.createPPreferredServiceHeader();
 
-        PPreferredServiceHeader ppsh = himpl.createPPreferredServiceHeader();
+		// This is a 3gpp-service type:
+		ppsh.setSubserviceIdentifiers("chatroom.presenceenabled.photoshareservice");
 
-        // This is a 3gpp-service type:
-        ppsh.setSubserviceIdentifiers("chatroom.presenceenabled.photoshareservice");
+		System.out.println("The encoded header is-----> " + ppsh.toString());
+		System.out.println("The sub-service defined is---->" + ppsh.getSubserviceIdentifiers());
 
-        System.out.println("The encoded header is-----> "+ppsh.toString());
-        System.out.println("The sub-service defined is---->"+ppsh.getSubserviceIdentifiers());
-
-    }
+	}
 
 }

@@ -33,20 +33,17 @@ import javax.sip.header.Header;
 import javax.sip.header.HeaderAddress;
 
 /**
- * P-Preferred-Identity header -
- * SIP Private Header: RFC 3325
+ * P-Preferred-Identity header - SIP Private Header: RFC 3325
  *
  * <ul>
- * <li>
- * . is used from a user agent to a trusted proxy to carry the identity the
- * user sending the SIP message wishes to be used for the P-Asserted-Header
- * field value that the trusted element will insert.
- * <li>
- * . If there are two values, one value MUST be a sip or sips URI and the other
- * MUST be a tel URI.
+ * <li>. is used from a user agent to a trusted proxy to carry the identity the user sending the SIP message wishes to be used for the P-Asserted-Header field value that the trusted element will insert.
+ * <li>. If there are two values, one value MUST be a sip or sips URI and the other MUST be a tel URI.
  * </ul>
  *
- * <p>Sintax: </p>
+ * <p>
+ * Sintax:
+ * </p>
+ * 
  * <pre>
  * PPreferredID = "P-Preferred-Identity" HCOLON PPreferredID-value
  *                 *(COMMA PPreferredID-value)
@@ -56,12 +53,11 @@ import javax.sip.header.HeaderAddress;
  * @author ALEXANDRE MIGUEL SILVA SANTOS - Nú 10045401
  */
 
-
 public interface PPreferredIdentityHeader extends HeaderAddress, Header {
 
-     /**
-     * Name of PreferredIdentityHeader
-     */
-    public final static String NAME = "P-Preferred-Identity";
+	/**
+	 * Name of PreferredIdentityHeader
+	 */
+	public final static String NAME = "P-Preferred-Identity";
 
 }

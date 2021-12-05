@@ -43,69 +43,48 @@ import gov.nist.javax.sip.parser.TokenTypes;
  * @author Miguel Freitas (IT) PT-Inovacao
  */
 
-public class PCalledPartyIDParser
-    extends AddressParametersParser
-{
+public class PCalledPartyIDParser extends AddressParametersParser {
 
+	/**
+	 * Constructor
+	 * 
+	 * @param calledPartyID content to set
+	 */
+	public PCalledPartyIDParser(String calledPartyID) {
+		super(calledPartyID);
+	}
 
-    /**
-     * Constructor
-     * @param calledPartyID content to set
-     */
-    public PCalledPartyIDParser(String calledPartyID)
-    {
-        super(calledPartyID);
-    }
+	protected PCalledPartyIDParser(Lexer lexer) {
+		super(lexer);
+	}
 
-    protected PCalledPartyIDParser(Lexer lexer)
-    {
-        super(lexer);
-    }
+	public SIPHeader parse() throws ParseException {
 
+		if (debug)
+			dbg_enter("PCalledPartyIDParser.parse");
 
-    public SIPHeader parse() throws ParseException
-    {
+		try {
+			this.lexer.match(TokenTypes.P_CALLED_PARTY_ID);
+			this.lexer.SPorHT();
+			this.lexer.match(':');
+			this.lexer.SPorHT();
 
-        if (debug)
-            dbg_enter("PCalledPartyIDParser.parse");
+			PCalledPartyID calledPartyID = new PCalledPartyID();
+			super.parse(calledPartyID);
 
-        try {
-            this.lexer.match(TokenTypes.P_CALLED_PARTY_ID);
-            this.lexer.SPorHT();
-            this.lexer.match(':');
-            this.lexer.SPorHT();
+			return calledPartyID;
 
-            PCalledPartyID calledPartyID = new PCalledPartyID();
-            super.parse(calledPartyID);
+		} finally {
+			if (debug)
+				dbg_leave("PCalledPartyIDParser.parse");
+		}
 
-            return calledPartyID;
+	}
 
-        } finally {
-            if (debug)
-                dbg_leave("PCalledPartyIDParser.parse");
-        }
-
-    }
-
-
-
-
-    /** Test program
-    public static void main(String args[]) throws ParseException
-    {
-        String rou[] = {
-                    "P-Associated-URI: <sip:testes1@ptinovacao.pt>,  " +
-                                    "<sip:testes2@ptinovacao.pt> \n"
-                    };
-
-        for (int i = 0; i < rou.length; i++ ) {
-            RecordRouteParser rp =
-              new RecordRouteParser(rou[i]);
-            RecordRouteList recordRouteList = (RecordRouteList) rp.parse();
-            System.out.println("encoded = " +recordRouteList.encode());
-        }
-    }
-    */
-
+	/**
+	 * Test program public static void main(String args[]) throws ParseException { String rou[] = { "P-Associated-URI: <sip:testes1@ptinovacao.pt>, " + "<sip:testes2@ptinovacao.pt> \n" };
+	 * 
+	 * for (int i = 0; i < rou.length; i++ ) { RecordRouteParser rp = new RecordRouteParser(rou[i]); RecordRouteList recordRouteList = (RecordRouteList) rp.parse(); System.out.println("encoded = " +recordRouteList.encode()); } }
+	 */
 
 }

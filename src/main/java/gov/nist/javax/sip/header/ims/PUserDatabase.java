@@ -1,4 +1,5 @@
 package gov.nist.javax.sip.header.ims;
+
 /*
 * Conditions Of Use
 *
@@ -30,81 +31,73 @@ import javax.sip.header.ExtensionHeader;
 
 /**
  *
- * @author aayush.bhatnagar
- * Rancore Technologies Pvt Ltd, Mumbai India.
+ * @author aayush.bhatnagar Rancore Technologies Pvt Ltd, Mumbai India.
  *
  */
-public class PUserDatabase extends gov.nist.javax.sip.header.ParametersHeader  implements PUserDatabaseHeader,SIPHeaderNamesIms, ExtensionHeader{
+public class PUserDatabase extends gov.nist.javax.sip.header.ParametersHeader implements PUserDatabaseHeader, SIPHeaderNamesIms, ExtensionHeader {
 
-    private String databaseName;
+	private String databaseName;
 
-    /**
-     *
-     * @param databaseName
-     */
-    public PUserDatabase(String databaseName)
-    {
-        super(NAME);
-        this.databaseName = databaseName;
-    }
+	/**
+	 *
+	 * @param databaseName
+	 */
+	public PUserDatabase(String databaseName) {
+		super(NAME);
+		this.databaseName = databaseName;
+	}
 
-    /**
-     * Default constructor.
-     */
-    public PUserDatabase() {
-        super(P_USER_DATABASE);
-    }
+	/**
+	 * Default constructor.
+	 */
+	public PUserDatabase() {
+		super(P_USER_DATABASE);
+	}
 
-    public String getDatabaseName() {
+	public String getDatabaseName() {
 
-        return this.databaseName;
-    }
+		return this.databaseName;
+	}
 
+	public void setDatabaseName(String databaseName) {
+		if ((databaseName == null) || (databaseName.equals(" ")))
+			throw new NullPointerException("Database name is null");
+		else if (!databaseName.contains("aaa://"))
+			this.databaseName = new StringBuilder().append("aaa://").append(databaseName).toString();
+		else
+			this.databaseName = databaseName;
 
-    public void setDatabaseName(String databaseName) {
-        if((databaseName==null)||(databaseName.equals(" ")))
-            throw new NullPointerException("Database name is null");
-        else
-            if(!databaseName.contains("aaa://"))
-        this.databaseName = new StringBuilder().append("aaa://").append(databaseName).toString();
-            else
-                this.databaseName = databaseName;
+	}
 
-    }
-
-    public StringBuilder encodeBody(StringBuilder retval) {
+	public StringBuilder encodeBody(StringBuilder retval) {
 
 //        StringBuilder retval = new StringBuilder();
-        retval.append("<");
-        if(getDatabaseName()!=null)
-        retval.append(getDatabaseName());
+		retval.append("<");
+		if (getDatabaseName() != null)
+			retval.append(getDatabaseName());
 
-        if (!parameters.isEmpty()) {
-            retval.append(SEMICOLON);
-            this.parameters.encode(retval);
-        }
-        retval.append(">");
+		if (!parameters.isEmpty()) {
+			retval.append(SEMICOLON);
+			this.parameters.encode(retval);
+		}
+		retval.append(">");
 
-        return retval;
-    }
+		return retval;
+	}
 
-    public boolean equals(Object other)
-    {
-        return (other instanceof PUserDatabaseHeader) && super.equals(other);
+	public boolean equals(Object other) {
+		return (other instanceof PUserDatabaseHeader) && super.equals(other);
 
-    }
+	}
 
+	public Object clone() {
+		PUserDatabase retval = (PUserDatabase) super.clone();
+		return retval;
+	}
 
-    public Object clone() {
-        PUserDatabase retval = (PUserDatabase) super.clone();
-        return retval;
-    }
+	public void setValue(String value) throws ParseException {
+		throw new ParseException(value, 0);
 
-    public void setValue(String value) throws ParseException {
-        throw new ParseException(value,0);
-
-    }
-
-
+	}
 
 }

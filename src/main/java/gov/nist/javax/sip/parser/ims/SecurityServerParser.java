@@ -27,7 +27,6 @@
  * PRODUCT OF PT INOVACAO - EST DEPARTMENT and Telecommunications Institute (Aveiro, Portugal)  *
  ************************************************************************************************/
 
-
 package gov.nist.javax.sip.parser.ims;
 
 import java.text.ParseException;
@@ -38,93 +37,59 @@ import java.text.ParseException;
  * @author Miguel Freitas (IT) PT-Inovacao
  */
 
-
 import gov.nist.javax.sip.header.SIPHeader;
 import gov.nist.javax.sip.header.ims.SecurityServer;
 import gov.nist.javax.sip.header.ims.SecurityServerList;
 import gov.nist.javax.sip.parser.Lexer;
 import gov.nist.javax.sip.parser.TokenTypes;
 
+public class SecurityServerParser extends SecurityAgreeParser {
 
-public class SecurityServerParser extends SecurityAgreeParser
-{
+	public SecurityServerParser(String security) {
+		super(security);
+	}
 
-    public SecurityServerParser(String security)
-    {
-        super(security);
-    }
+	protected SecurityServerParser(Lexer lexer) {
+		super(lexer);
+	}
 
-    protected SecurityServerParser(Lexer lexer)
-    {
-        super(lexer);
-    }
+	public SIPHeader parse() throws ParseException {
+		if (debug)
+			dbg_enter("SecuriryServer parse");
+		try {
 
+			headerName(TokenTypes.SECURITY_SERVER);
+			SecurityServer secServer = new SecurityServer();
+			SecurityServerList secServerList = (SecurityServerList) super.parse(secServer);
+			return secServerList;
 
-    public SIPHeader parse() throws ParseException
-    {
-    	if (debug)
-    		dbg_enter("SecuriryServer parse");
-        try {
+		} finally {
+			if (debug)
+				dbg_leave("SecuriryServer parse");
+		}
+	}
 
-            headerName(TokenTypes.SECURITY_SERVER);
-            SecurityServer secServer = new SecurityServer();
-            SecurityServerList secServerList =
-                (SecurityServerList) super.parse(secServer);
-            return secServerList;
-
-        } finally {
-        	if (debug)
-        		dbg_leave("SecuriryServer parse");
-        }
-    }
-
-
-
-    /** Test program
-
-    public static void main(String args[]) throws ParseException {
-        String r[] = {
-                "Security-Server: ipsec-3gpp; ealg=aes-cbc; " +
-                                "alg=hmac-md5-96; port-c=5062; port-s=5063; " +
-                                "q=0.1\n"
-                };
-
-        String r2[] = {
-                "Security-Server: ipsec-3gpp; ealg=aes-cbc; " +
-                                "alg=hmac-md5-96; port-c=5062; port-s=5063; " +
-                                "q=0.1, " +
-                                "digest; d-alg=md5; " +
-                                "d-qop=auth-int; d-ver=AEF1D222; " +
-                                "q=0.01\n"
-                };
-
-
-        for (int i = 0; i < r.length; i++ )
-        {
-
-            SecurityServerParser parser =
-              new SecurityServerParser(r[i]);
-
-            SecurityServer secServer= (SecurityServer) parser.parse();
-            System.out.println("encoded = " + secServer.encode());
-        }
-
-
-        for (int i = 0; i < r2.length; i++ ) {
-            SecurityServerParser parser =
-              new SecurityServerParser(r2[i]);
-
-            java.util.ListIterator list;
-            SecurityServerList secList = (SecurityServerList) parser.parse();
-            System.out.println("encoded = " + secList.encode());
-        }
-
-
-    }
-    */
-
-
+	/**
+	 * Test program
+	 * 
+	 * public static void main(String args[]) throws ParseException { String r[] = { "Security-Server: ipsec-3gpp; ealg=aes-cbc; " + "alg=hmac-md5-96; port-c=5062; port-s=5063; " + "q=0.1\n" };
+	 * 
+	 * String r2[] = { "Security-Server: ipsec-3gpp; ealg=aes-cbc; " + "alg=hmac-md5-96; port-c=5062; port-s=5063; " + "q=0.1, " + "digest; d-alg=md5; " + "d-qop=auth-int; d-ver=AEF1D222; " + "q=0.01\n" };
+	 * 
+	 * 
+	 * for (int i = 0; i < r.length; i++ ) {
+	 * 
+	 * SecurityServerParser parser = new SecurityServerParser(r[i]);
+	 * 
+	 * SecurityServer secServer= (SecurityServer) parser.parse(); System.out.println("encoded = " + secServer.encode()); }
+	 * 
+	 * 
+	 * for (int i = 0; i < r2.length; i++ ) { SecurityServerParser parser = new SecurityServerParser(r2[i]);
+	 * 
+	 * java.util.ListIterator list; SecurityServerList secList = (SecurityServerList) parser.parse(); System.out.println("encoded = " + secList.encode()); }
+	 * 
+	 * 
+	 * }
+	 */
 
 }
-
-

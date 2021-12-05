@@ -27,29 +27,31 @@
 * Product of NIST/ITL Advanced Networking Technologies Division (ANTD).        *
 *******************************************************************************/
 package gov.nist.javax.sip.header;
+
 import javax.sip.header.AcceptEncodingHeader;
 
 /**
  * AcceptEncodingList of AccepEncoding headers.
  *
- *@author M. Ranganathan
- *@version 1.2 $Revision: 1.6 $ $Date: 2009-07-17 18:57:25 $
- *@since 1.1
+ * @author M. Ranganathan
+ * @version 1.2 $Revision: 1.6 $ $Date: 2009-07-17 18:57:25 $
+ * @since 1.1
  *
  *
  */
-public class AcceptEncodingList extends SIPHeaderList<AcceptEncoding>{
+public class AcceptEncodingList extends SIPHeaderList<AcceptEncoding> {
 
-    @Override
-    public Object clone() {
-        AcceptEncodingList retval = new AcceptEncodingList();
-        retval.clonehlist(this.hlist);
-        return retval;
-    }
+	@Override
+	public Object clone() {
+		AcceptEncodingList retval = new AcceptEncodingList();
+		retval.clonehlist(this.hlist);
+		return retval;
+	}
 
-    /** default constructor
-     */
-    public AcceptEncodingList() {
-        super(AcceptEncoding.class, AcceptEncodingHeader.NAME);
-    }
+	/**
+	 * default constructor
+	 */
+	public AcceptEncodingList() {
+		super(AcceptEncoding.class, AcceptEncodingHeader.NAME);
+	}
 }

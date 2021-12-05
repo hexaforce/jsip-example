@@ -31,61 +31,67 @@ import java.text.ParseException;
 /**
  * Allow SIPHeader.
  *
- * @author M. Ranganathan   <br/>
+ * @author M. Ranganathan <br/>
  * @version 1.2 $Revision: 1.7 $ $Date: 2010-05-06 14:07:47 $
  * @since 1.1
  *
  *
  */
-public final class Allow extends
-    SIPHeader implements javax.sip.header.AllowHeader {
+public final class Allow extends SIPHeader implements javax.sip.header.AllowHeader {
 
-    /**
-     * Comment for <code>serialVersionUID</code>
-     */
-    private static final long serialVersionUID = -3105079479020693930L;
-    /** method field
-     */
-    protected String method = "";
+	/**
+	 * Comment for <code>serialVersionUID</code>
+	 */
+	private static final long serialVersionUID = -3105079479020693930L;
+	/**
+	 * method field
+	 */
+	protected String method = "";
 
-    /** default constructor
-     */
-    public Allow() {
-        super(ALLOW);
-    }
+	/**
+	 * default constructor
+	 */
+	public Allow() {
+		super(ALLOW);
+	}
 
-    /** constructor
-     * @param m String to set
-     */
-    public Allow(String m) {
-        super(ALLOW);
-        method = m;
-    }
+	/**
+	 * constructor
+	 * 
+	 * @param m String to set
+	 */
+	public Allow(String m) {
+		super(ALLOW);
+		method = m;
+	}
 
-    /** get the method field
-     * @return String
-     */
-    public String getMethod() {
-        return method;
-    }
+	/**
+	 * get the method field
+	 * 
+	 * @return String
+	 */
+	public String getMethod() {
+		return method;
+	}
 
-    /**
-     * Set the method member
-     * @param method method to set.
-     */
-    public void setMethod(String method) throws ParseException {
-        if (method == null)
-            throw new NullPointerException(
-                "JAIN-SIP Exception"
-                    + ", Allow, setMethod(), the method parameter is null.");
-        this.method = method;
-    }
+	/**
+	 * Set the method member
+	 * 
+	 * @param method method to set.
+	 */
+	public void setMethod(String method) throws ParseException {
+		if (method == null)
+			throw new NullPointerException("JAIN-SIP Exception" + ", Allow, setMethod(), the method parameter is null.");
+		this.method = method;
+	}
 
-    /** Return body encoded in canonical form.
-     * @return body encoded as a string.
-     */
-    @Override
-    protected StringBuilder encodeBody(StringBuilder buffer) {
-        return buffer.append(method);
-    }
+	/**
+	 * Return body encoded in canonical form.
+	 * 
+	 * @return body encoded as a string.
+	 */
+	@Override
+	protected StringBuilder encodeBody(StringBuilder buffer) {
+		return buffer.append(method);
+	}
 }

@@ -31,43 +31,30 @@
 
 package gov.nist.javax.sip.header.ims;
 
-
-
 import java.text.ParseException;
 
 import javax.sip.header.ExtensionHeader;
 
-
 /**
- * Security-Client header
- *  - sec-agree: RFC 3329 + 3GPP TS33.203 (Annex H).
+ * Security-Client header - sec-agree: RFC 3329 + 3GPP TS33.203 (Annex H).
  *
- * <p></p>
+ * <p>
+ * </p>
  *
  * @author Miguel Freitas (IT) PT-Inovacao
  */
 
+public class SecurityClient extends SecurityAgree implements SecurityClientHeader, ExtensionHeader {
 
-public class SecurityClient
-    extends SecurityAgree
-    implements SecurityClientHeader, ExtensionHeader
-{
+	// TODO serialVersionUID
 
-    // TODO serialVersionUID
+	public SecurityClient() {
+		super(SecurityClientHeader.NAME);
 
-    public SecurityClient()
-    {
-        super(SecurityClientHeader.NAME);
+	}
 
-    }
-
-
-    public void setValue(String value) throws ParseException
-    {
-        throw new ParseException(value,0);
-    }
+	public void setValue(String value) throws ParseException {
+		throw new ParseException(value, 0);
+	}
 
 }
-
-
-

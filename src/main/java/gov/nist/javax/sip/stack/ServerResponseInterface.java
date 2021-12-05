@@ -27,6 +27,7 @@
 * Product of NIST/ITL Advanced Networking Technologies Division (ANTD).        *
 *******************************************************************************/
 package gov.nist.javax.sip.stack;
+
 import gov.nist.javax.sip.message.SIPResponse;
 
 /*
@@ -35,44 +36,31 @@ import gov.nist.javax.sip.message.SIPResponse;
  */
 
 /**
- * An interface for a genereic message processor for SIP Response messages.
- * This is implemented by the application. The stack calls the message
- * factory with a pointer to the parsed structure to create one of these
- * and then calls processResponse on the newly created SIPServerResponse
- * It is the applications responsibility to take care of what needs to be
- * done to actually process the response.
+ * An interface for a genereic message processor for SIP Response messages. This is implemented by the application. The stack calls the message factory with a pointer to the parsed structure to create one of these and then calls processResponse on the newly created SIPServerResponse It is the applications responsibility to take care of what needs to be done to actually process the response.
  *
  * @version 1.2 $Revision: 1.4 $ $Date: 2009-07-17 18:58:15 $
  *
- * @author M. Ranganathan   <br/>
+ * @author M. Ranganathan <br/>
  *
  *
  *
  */
 public interface ServerResponseInterface {
-    /**
-     * Process the Response.
-     * @param  incomingChannel is the incoming message channel
-     * @param sipResponse is the responseto process.
-     * @param sipDialog -- dialog for this response
-     */
-    public void processResponse(
-        SIPResponse sipResponse,
-        MessageChannel incomingChannel,
-        SIPDialog sipDialog);
+	/**
+	 * Process the Response.
+	 * 
+	 * @param incomingChannel is the incoming message channel
+	 * @param sipResponse     is the responseto process.
+	 * @param sipDialog       -- dialog for this response
+	 */
+	public void processResponse(SIPResponse sipResponse, MessageChannel incomingChannel, SIPDialog sipDialog);
 
-
-
-
-    /**
-     * This method is called prior to dialog assignment.
-     * @param sipResponse
-     * @param incomingChannel
-     */
-    public void processResponse(
-            SIPResponse sipResponse,
-            MessageChannel incomingChannel);
-
-
+	/**
+	 * This method is called prior to dialog assignment.
+	 * 
+	 * @param sipResponse
+	 * @param incomingChannel
+	 */
+	public void processResponse(SIPResponse sipResponse, MessageChannel incomingChannel);
 
 }

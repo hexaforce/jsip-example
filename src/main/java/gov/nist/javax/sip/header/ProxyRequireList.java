@@ -27,6 +27,7 @@
 * Product of NIST/ITL Advanced Networking Technologies Division (ANTD).        *
 *******************************************************************************/
 package gov.nist.javax.sip.header;
+
 import javax.sip.header.ProxyRequireHeader;
 
 /**
@@ -34,29 +35,29 @@ import javax.sip.header.ProxyRequireHeader;
  *
  * @version 1.2 $Revision: 1.6 $ $Date: 2009-07-17 18:57:34 $
  *
- * @author M. Ranganathan   <br/>
+ * @author M. Ranganathan <br/>
  *
  *
  *
  */
 public class ProxyRequireList extends SIPHeaderList<ProxyRequire> {
 
-    /**
-     * Comment for <code>serialVersionUID</code>
-     */
-    private static final long serialVersionUID = 5648630649476486042L;
+	/**
+	 * Comment for <code>serialVersionUID</code>
+	 */
+	private static final long serialVersionUID = 5648630649476486042L;
 
-    public Object clone() {
-        ProxyRequireList retval = new ProxyRequireList();
-        retval.clonehlist(this.hlist);
-        return retval;
-    }
+	public Object clone() {
+		ProxyRequireList retval = new ProxyRequireList();
+		retval.clonehlist(this.hlist);
+		return retval;
+	}
 
-    /** Default Constructor
-     */
-    public ProxyRequireList() {
-        super(ProxyRequire.class, ProxyRequireHeader.NAME);
-    }
-
+	/**
+	 * Default Constructor
+	 */
+	public ProxyRequireList() {
+		super(ProxyRequire.class, ProxyRequireHeader.NAME);
+	}
 
 }

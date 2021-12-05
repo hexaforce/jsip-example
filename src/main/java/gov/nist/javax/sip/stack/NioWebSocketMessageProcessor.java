@@ -25,7 +25,6 @@
  */
 package gov.nist.javax.sip.stack;
 
-
 import java.io.IOException;
 import java.net.InetAddress;
 import java.nio.channels.SocketChannel;
@@ -37,72 +36,69 @@ import gov.nist.core.StackLogger;
 
 public class NioWebSocketMessageProcessor extends NioTcpMessageProcessor {
 
-    private static StackLogger logger = CommonLogger.getLogger(NioWebSocketMessageProcessor.class);
-    
-	public NioWebSocketMessageProcessor(InetAddress ipAddress,
-			SIPTransactionStack sipStack, int port) {
+	private static StackLogger logger = CommonLogger.getLogger(NioWebSocketMessageProcessor.class);
+
+	public NioWebSocketMessageProcessor(InetAddress ipAddress, SIPTransactionStack sipStack, int port) {
 		super(ipAddress, sipStack, port);
 		transport = "WS"; // by default its WS, can be overriden if there is TLS acclereator
 	}
-	
+
 	@Override
 	public NioTcpMessageChannel createMessageChannel(NioTcpMessageProcessor nioTcpMessageProcessor, SocketChannel client) throws IOException {
-    	return NioWebSocketMessageChannel.create(this, client);
-    }
-	
-    @Override
-    public MessageChannel createMessageChannel(HostPort targetHostPort) throws IOException {
-    	if (logger.isLoggingEnabled(LogWriter.TRACE_DEBUG)) {
-    		logger.logDebug(":createMessageChannel: " + targetHostPort);
-    	}
-    	try {
-    		String key = MessageChannel.getKey(targetHostPort, transport);
-    		if (messageChannels.get(key) != null) {
-    			return this.messageChannels.get(key);
-    		} else {
-    			NioWebSocketMessageChannel retval = new NioWebSocketMessageChannel(targetHostPort.getInetAddress(),
-    					targetHostPort.getPort(), sipStack, this);
-    			
-    			
-    		//	retval.getSocketChannel().register(selector, SelectionKey.OP_READ);
-    			synchronized(messageChannels) {
-    				this.messageChannels.put(key, retval);
-    			}
-    			retval.isCached = true;
-    			if (logger.isLoggingEnabled(LogWriter.TRACE_DEBUG)) {
-    				logger.logDebug("key " + key);
-    				logger.logDebug("Creating " + retval);
-    			}
-    			selector.wakeup();
-    			return retval;
+		return NioWebSocketMessageChannel.create(this, client);
+	}
 
-    		}
-    	} finally {
-    		if(logger.isLoggingEnabled(LogWriter.TRACE_DEBUG)) {
-    			logger.logDebug("MessageChannel::createMessageChannel - exit");
-    		}
-    	}
-    }
+	@Override
+	public MessageChannel createMessageChannel(HostPort targetHostPort) throws IOException {
+		if (logger.isLoggingEnabled(LogWriter.TRACE_DEBUG)) {
+			logger.logDebug(":createMessageChannel: " + targetHostPort);
+		}
+		try {
+			String key = MessageChannel.getKey(targetHostPort, transport);
+			if (messageChannels.get(key) != null) {
+				return this.messageChannels.get(key);
+			} else {
+				NioWebSocketMessageChannel retval = new NioWebSocketMessageChannel(targetHostPort.getInetAddress(), targetHostPort.getPort(), sipStack, this);
 
-    @Override
-    public MessageChannel createMessageChannel(InetAddress targetHost, int port) throws IOException {
-        String key = MessageChannel.getKey(targetHost, port, transport);
-        if (messageChannels.get(key) != null) {
-            return this.messageChannels.get(key);
-        } else {
-            NioWebSocketMessageChannel retval = new NioWebSocketMessageChannel(targetHost, port, sipStack, this);
-            
-            selector.wakeup();
- //           retval.getSocketChannel().register(selector, SelectionKey.OP_READ);
-            this.messageChannels.put(key, retval);
-            retval.isCached = true;
-            if (logger.isLoggingEnabled(LogWriter.TRACE_DEBUG)) {
-                logger.logDebug("key " + key);
-                logger.logDebug("Creating " + retval);
-            }
-            return retval;
-        }
+				// retval.getSocketChannel().register(selector, SelectionKey.OP_READ);
+				synchronized (messageChannels) {
+					this.messageChannels.put(key, retval);
+				}
+				retval.isCached = true;
+				if (logger.isLoggingEnabled(LogWriter.TRACE_DEBUG)) {
+					logger.logDebug("key " + key);
+					logger.logDebug("Creating " + retval);
+				}
+				selector.wakeup();
+				return retval;
 
-    }
+			}
+		} finally {
+			if (logger.isLoggingEnabled(LogWriter.TRACE_DEBUG)) {
+				logger.logDebug("MessageChannel::createMessageChannel - exit");
+			}
+		}
+	}
+
+	@Override
+	public MessageChannel createMessageChannel(InetAddress targetHost, int port) throws IOException {
+		String key = MessageChannel.getKey(targetHost, port, transport);
+		if (messageChannels.get(key) != null) {
+			return this.messageChannels.get(key);
+		} else {
+			NioWebSocketMessageChannel retval = new NioWebSocketMessageChannel(targetHost, port, sipStack, this);
+
+			selector.wakeup();
+			// retval.getSocketChannel().register(selector, SelectionKey.OP_READ);
+			this.messageChannels.put(key, retval);
+			retval.isCached = true;
+			if (logger.isLoggingEnabled(LogWriter.TRACE_DEBUG)) {
+				logger.logDebug("key " + key);
+				logger.logDebug("Creating " + retval);
+			}
+			return retval;
+		}
+
+	}
 
 }

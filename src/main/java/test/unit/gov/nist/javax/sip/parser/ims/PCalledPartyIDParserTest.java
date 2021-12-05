@@ -27,19 +27,17 @@ package test.unit.gov.nist.javax.sip.parser.ims;
 import gov.nist.javax.sip.parser.ims.PCalledPartyIDParser;
 import test.unit.gov.nist.javax.sip.parser.ParserTestCase;
 
-public class PCalledPartyIDParserTest extends ParserTestCase
-{
-    public void testParser() {
-        // TODO Auto-generated method stub
+public class PCalledPartyIDParserTest extends ParserTestCase {
+	public void testParser() {
+		// TODO Auto-generated method stub
 
-        String[] calledPartuID =  {
-         "P-Called-Party-ID: <sip:bob@atlanta.com>\n",
+		String[] calledPartuID = { "P-Called-Party-ID: <sip:bob@atlanta.com>\n",
 
-         "P-Called-Party-ID: \"AliceA\" <sip:alice@atlanta.com>\n"
+				"P-Called-Party-ID: \"AliceA\" <sip:alice@atlanta.com>\n"
 
-        };
+		};
 
-        super.testParser(PCalledPartyIDParser.class,calledPartuID);
-    }
+		super.testParser(PCalledPartyIDParser.class, calledPartuID);
+	}
 
 }

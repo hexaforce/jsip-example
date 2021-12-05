@@ -24,6 +24,7 @@
 *
 */
 package gov.nist.javax.sip.parser;
+
 import java.text.ParseException;
 import java.util.Calendar;
 
@@ -31,56 +32,56 @@ import gov.nist.javax.sip.header.SIPDateHeader;
 import gov.nist.javax.sip.header.SIPHeader;
 
 /**
- * Parser for SIP Date field. Converts from SIP Date to the
- * internal storage (Calendar)
+ * Parser for SIP Date field. Converts from SIP Date to the internal storage (Calendar)
  *
  * @version 1.2 $Revision: 1.11 $ $Date: 2009-07-17 18:57:59 $
  */
 public class DateParser extends HeaderParser {
 
-    /**
-     * Constructor
-     * @param date message to parse to set
-     */
-    public DateParser(String date) {
-        super(date);
-    }
+	/**
+	 * Constructor
+	 * 
+	 * @param date message to parse to set
+	 */
+	public DateParser(String date) {
+		super(date);
+	}
 
-    protected DateParser(Lexer lexer) {
-        super(lexer);
-    }
+	protected DateParser(Lexer lexer) {
+		super(lexer);
+	}
 
-    /**
-     * Parse method.
-     * @throws ParseException
-     * @return  the parsed Date header/
-     */
-    public SIPHeader parse() throws ParseException {
-        if (debug)
-            dbg_enter("DateParser.parse");
-        try {
-            headerName(TokenTypes.DATE);
-            wkday();
-            lexer.match(',');
-            lexer.match(' ');
-            Calendar cal = date();
-            lexer.match(' ');
-            time(cal);
-            lexer.match(' ');
-            String tzone = this.lexer.ttoken().toLowerCase();
-            if (!"gmt".equals(tzone))
-                throw createParseException("Bad Time Zone " + tzone);
-            this.lexer.match('\n');
-            SIPDateHeader retval = new SIPDateHeader();
-            retval.setDate(cal);
-            return retval;
-        } finally {
-            if (debug)
-                dbg_leave("DateParser.parse");
+	/**
+	 * Parse method.
+	 * 
+	 * @throws ParseException
+	 * @return the parsed Date header/
+	 */
+	public SIPHeader parse() throws ParseException {
+		if (debug)
+			dbg_enter("DateParser.parse");
+		try {
+			headerName(TokenTypes.DATE);
+			wkday();
+			lexer.match(',');
+			lexer.match(' ');
+			Calendar cal = date();
+			lexer.match(' ');
+			time(cal);
+			lexer.match(' ');
+			String tzone = this.lexer.ttoken().toLowerCase();
+			if (!"gmt".equals(tzone))
+				throw createParseException("Bad Time Zone " + tzone);
+			this.lexer.match('\n');
+			SIPDateHeader retval = new SIPDateHeader();
+			retval.setDate(cal);
+			return retval;
+		} finally {
+			if (debug)
+				dbg_leave("DateParser.parse");
 
-        }
+		}
 
-    }
-
+	}
 
 }

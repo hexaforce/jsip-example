@@ -27,47 +27,36 @@
 * Product of NIST/ITL Advanced Networking Technologies Division (ANTD).        *
 *******************************************************************************/
 package gov.nist.javax.sip.header;
+
 import javax.sip.header.AcceptLanguageHeader;
 
 /**
  * AcceptLanguageList: Strings together a list of AcceptLanguage SIPHeaders.
+ * 
  * @author M. Ranganathan
  * @version 1.2 $Revision: 1.7 $ $Date: 2009-07-17 18:57:25 $
  * @since 1.1
  *
  *
  */
-public class AcceptLanguageList extends SIPHeaderList<AcceptLanguage>  {
+public class AcceptLanguageList extends SIPHeaderList<AcceptLanguage> {
 
+	private static final long serialVersionUID = -3289606805203488840L;
 
-    private static final long serialVersionUID = -3289606805203488840L;
+	@Override
+	public Object clone() {
+		AcceptLanguageList retval = new AcceptLanguageList();
+		retval.clonehlist(this.hlist);
+		return retval;
+	}
 
-    @Override
-    public Object clone() {
-        AcceptLanguageList retval = new AcceptLanguageList();
-        retval.clonehlist(this.hlist);
-        return retval;
-    }
+	public AcceptLanguageList() {
+		super(AcceptLanguage.class, AcceptLanguageHeader.NAME);
+	}
 
-    public AcceptLanguageList() {
-        super(AcceptLanguage.class, AcceptLanguageHeader.NAME);
-    }
-
-    /*
-    public AcceptLanguage getFirst() {
-        AcceptLanguage retval = (AcceptLanguage) super.getFirst();
-        if (retval != null)
-            return retval;
-        else
-            return new AcceptLanguage();
-    }
-
-    public AcceptLanguage getLast() {
-        AcceptLanguage retval = (AcceptLanguage) super.getLast();
-        if (retval != null)
-            return retval;
-        else
-            return new AcceptLanguage();
-    }
-    */
+	/*
+	 * public AcceptLanguage getFirst() { AcceptLanguage retval = (AcceptLanguage) super.getFirst(); if (retval != null) return retval; else return new AcceptLanguage(); }
+	 * 
+	 * public AcceptLanguage getLast() { AcceptLanguage retval = (AcceptLanguage) super.getLast(); if (retval != null) return retval; else return new AcceptLanguage(); }
+	 */
 }

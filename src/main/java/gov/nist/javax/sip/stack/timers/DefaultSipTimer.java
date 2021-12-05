@@ -36,7 +36,7 @@ import gov.nist.javax.sip.SipStackImpl;
 import gov.nist.javax.sip.stack.SIPStackTimerTask;
 
 /**
- * Default SIP Timer implementation based on java.util.Timer 
+ * Default SIP Timer implementation based on java.util.Timer
  * 
  * @author jean.deruelle@gmail.com
  *
@@ -46,102 +46,106 @@ public class DefaultSipTimer extends Timer implements SipTimer {
 
 	protected AtomicBoolean started = new AtomicBoolean(false);
 	protected SipStackImpl sipStackImpl;
-	
+
 	private class DefaultTimerTask extends TimerTask {
 		private SIPStackTimerTask task;
 
 		public DefaultTimerTask(SIPStackTimerTask task) {
-			this.task= task;
+			this.task = task;
 			task.setSipTimerTask(this);
 		}
-		
+
 		public void run() {
-			 try {
-				 // task can be null if it has been cancelled
-				 if(task != null) {
-					 task.runTask();					 
-				 }
-	        } catch (Throwable e) {
-	            System.out.println("SIP stack timer task failed due to exception:");
-	            e.printStackTrace();
-	        }
+			try {
+				// task can be null if it has been cancelled
+				if (task != null) {
+					task.runTask();
+				}
+			} catch (Throwable e) {
+				System.out.println("SIP stack timer task failed due to exception:");
+				e.printStackTrace();
+			}
 		}
-		
+
 		public boolean cancel() {
-			if(task != null) {
+			if (task != null) {
 				task.cleanUpBeforeCancel();
 				task = null;
 			}
 			return super.cancel();
 		}
 	}
-	
+
 	/*
 	 * (non-Javadoc)
+	 * 
 	 * @see gov.nist.javax.sip.stack.timers.SipTimer#schedule(gov.nist.javax.sip.stack.SIPStackTimerTask, long)
 	 */
 	public boolean schedule(SIPStackTimerTask task, long delay) {
-		if(!started.get()) {
+		if (!started.get()) {
 			throw new IllegalStateException("The SIP Stack Timer has been stopped, no new tasks can be scheduled !");
 		}
 		super.schedule(new DefaultTimerTask(task), delay);
 		return true;
 	}
-	
+
 	/*
 	 * (non-Javadoc)
+	 * 
 	 * @see gov.nist.javax.sip.stack.timers.SipTimer#scheduleWithFixedDelay(gov.nist.javax.sip.stack.SIPStackTimerTask, long, long)
 	 */
-	public boolean scheduleWithFixedDelay(SIPStackTimerTask task, long delay,
-			long period) {
-		if(!started.get()) {
+	public boolean scheduleWithFixedDelay(SIPStackTimerTask task, long delay, long period) {
+		if (!started.get()) {
 			throw new IllegalStateException("The SIP Stack Timer has been stopped, no new tasks can be scheduled !");
 		}
 		super.schedule(new DefaultTimerTask(task), delay, period);
 		return true;
 	}
-	
+
 	/*
 	 * (non-Javadoc)
+	 * 
 	 * @see gov.nist.javax.sip.stack.timers.SipTimer#cancel(gov.nist.javax.sip.stack.SIPStackTimerTask)
 	 */
 	public boolean cancel(SIPStackTimerTask task) {
-		return ((TimerTask)task.getSipTimerTask()).cancel();
+		return ((TimerTask) task.getSipTimerTask()).cancel();
 	}
 
 	/*
 	 * (non-Javadoc)
+	 * 
 	 * @see gov.nist.javax.sip.stack.timers.SipTimer#start(gov.nist.javax.sip.SipStackImpl, java.util.Properties)
 	 */
 	public void start(SipStackImpl sipStack, Properties configurationProperties) {
-		sipStackImpl= sipStack;
+		sipStackImpl = sipStack;
 		// don't need the properties so nothing to see here
 		started.set(true);
-		if(logger.isLoggingEnabled(StackLogger.TRACE_INFO)) {
+		if (logger.isLoggingEnabled(StackLogger.TRACE_INFO)) {
 			logger.logInfo("the sip stack timer " + this.getClass().getName() + " has been started");
 		}
 	}
 
 	/*
 	 * (non-Javadoc)
+	 * 
 	 * @see gov.nist.javax.sip.stack.timers.SipTimer#stop()
 	 */
 	public void stop() {
 		started.set(false);
-		cancel();		
+		cancel();
 		logger.logStackTrace(StackLogger.TRACE_DEBUG);
-		if(logger.isLoggingEnabled(StackLogger.TRACE_INFO)) {
+		if (logger.isLoggingEnabled(StackLogger.TRACE_INFO)) {
 			logger.logInfo("the sip stack timer " + this.getClass().getName() + " has been stopped");
 		}
 	}
-	
+
 	/*
 	 * (non-Javadoc)
+	 * 
 	 * @see gov.nist.javax.sip.stack.timers.SipTimer#isStarted()
 	 */
 	public boolean isStarted() {
 		return started.get();
 	}
-
 
 }

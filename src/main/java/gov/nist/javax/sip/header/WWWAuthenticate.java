@@ -43,40 +43,40 @@ import gov.nist.javax.sip.header.ims.WWWAuthenticateHeaderIms;
  * @see WWWAuthenticateList SIPHeader which strings these together.
  */
 
-public class WWWAuthenticate
-    extends AuthenticationHeader
-    implements WWWAuthenticateHeader, WWWAuthenticateHeaderIms {
+public class WWWAuthenticate extends AuthenticationHeader implements WWWAuthenticateHeader, WWWAuthenticateHeaderIms {
 
-    /**
-     * Comment for <code>serialVersionUID</code>
-     */
-    private static final long serialVersionUID = 115378648697363486L;
+	/**
+	 * Comment for <code>serialVersionUID</code>
+	 */
+	private static final long serialVersionUID = 115378648697363486L;
 
-    /**
-     * Default Constructor.
-     */
-    public WWWAuthenticate() {
-        super(NAME);
-    }
+	/**
+	 * Default Constructor.
+	 */
+	public WWWAuthenticate() {
+		super(NAME);
+	}
 
-    /* (non-Javadoc)
-     * @see gov.nist.javax.sip.header.AuthenticationHeader#getURI()
-     *
-     * @since 1.2 this method is deprecated, uri is not a valid paramter for this header
-     * Fail silently for backwards compatibility
-     */
-    public URI getURI() {
-        return null;
-    }
+	/*
+	 * (non-Javadoc)
+	 * 
+	 * @see gov.nist.javax.sip.header.AuthenticationHeader#getURI()
+	 *
+	 * @since 1.2 this method is deprecated, uri is not a valid paramter for this header Fail silently for backwards compatibility
+	 */
+	public URI getURI() {
+		return null;
+	}
 
-    /* (non-Javadoc)
-     * @see gov.nist.javax.sip.header.AuthenticationHeader#setURI(javax.sip.address.URI)
-     *
-     * @since 1.2 this method is deprecated, uri is not a valid paramter for this header
-     * Fail silently for backwards compatibility
-     */
-    public void setURI(URI uri) {
-        // empty, fail silently
-    }
+	/*
+	 * (non-Javadoc)
+	 * 
+	 * @see gov.nist.javax.sip.header.AuthenticationHeader#setURI(javax.sip.address.URI)
+	 *
+	 * @since 1.2 this method is deprecated, uri is not a valid paramter for this header Fail silently for backwards compatibility
+	 */
+	public void setURI(URI uri) {
+		// empty, fail silently
+	}
 
 }

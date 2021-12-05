@@ -27,17 +27,18 @@
  * PRODUCT OF PT INOVACAO - EST DEPARTMENT and Aveiro University - Portugal)   *
  *****************************************************************************/
 
-
 package gov.nist.javax.sip.header.ims;
 
 import javax.sip.InvalidArgumentException;
 import javax.sip.header.Header;
 
-
 /**
  * The P-Media-Authorization SIP Private Header - RFC 3313.
  *
- * <p>Sintax:</p>
+ * <p>
+ * Sintax:
+ * </p>
+ * 
  * <pre>
  * P-Media-Authorization   = "P-Media-Authorization" HCOLON
  *                            P-Media-Authorization-Token
@@ -48,26 +49,26 @@ import javax.sip.header.Header;
  * @author Miguel Freitas (IT) PT-Inovacao
  */
 
-public interface PMediaAuthorizationHeader extends Header
-{
+public interface PMediaAuthorizationHeader extends Header {
 
-    /**
-     * Name of PMediaAuthorizationHeader
-     */
-    public final static String NAME = "P-Media-Authorization";
+	/**
+	 * Name of PMediaAuthorizationHeader
+	 */
+	public final static String NAME = "P-Media-Authorization";
 
-    /**
-     * Set the media authorization token.
-     * @param token - media authorization token to set
-     * @throws InvalidArgumentException - if token is null or empty
-     */
-    public void setMediaAuthorizationToken(String token) throws InvalidArgumentException;
+	/**
+	 * Set the media authorization token.
+	 * 
+	 * @param token - media authorization token to set
+	 * @throws InvalidArgumentException - if token is null or empty
+	 */
+	public void setMediaAuthorizationToken(String token) throws InvalidArgumentException;
 
-    /**
-     * Get the media authorization token.
-     * @return token
-     */
-    public String getToken();
-
+	/**
+	 * Get the media authorization token.
+	 * 
+	 * @return token
+	 */
+	public String getToken();
 
 }

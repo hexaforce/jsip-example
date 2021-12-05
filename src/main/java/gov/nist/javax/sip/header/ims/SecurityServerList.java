@@ -31,36 +31,28 @@
 
 package gov.nist.javax.sip.header.ims;
 
-
-
 import gov.nist.javax.sip.header.SIPHeaderList;
-
 
 /**
  * List of Security-Server headers.
  *
- * <p></p>
+ * <p>
+ * </p>
  *
  * @author Miguel Freitas (IT) PT-Inovacao
  */
 
+public class SecurityServerList extends SIPHeaderList<SecurityServer> {
 
-public class SecurityServerList extends SIPHeaderList<SecurityServer>
-{
+	private static final long serialVersionUID = -1392066520803180238L;
 
+	public SecurityServerList() {
+		super(SecurityServer.class, SecurityServerHeader.NAME);
+	}
 
-    private static final long serialVersionUID = -1392066520803180238L;
-
-    public SecurityServerList()
-    {
-        super(SecurityServer.class, SecurityServerHeader.NAME);
-    }
-
-    public Object clone() {
-        SecurityServerList retval = new SecurityServerList();
-        return retval.clonehlist(this.hlist);
-    }
+	public Object clone() {
+		SecurityServerList retval = new SecurityServerList();
+		return retval.clonehlist(this.hlist);
+	}
 
 }
-
-

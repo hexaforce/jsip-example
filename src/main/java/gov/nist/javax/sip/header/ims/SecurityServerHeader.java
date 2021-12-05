@@ -26,26 +26,21 @@
  * PRODUCT OF PT INOVACAO - EST DEPARTMENT and Telecommunications Institute (Aveiro, Portugal)  *
  ************************************************************************************************/
 
-
 package gov.nist.javax.sip.header.ims;
 
 /**
- * Security-Server header
- *  - sec-agree: RFC 3329 + 3GPP TS33.203 (Annex H).
+ * Security-Server header - sec-agree: RFC 3329 + 3GPP TS33.203 (Annex H).
  *
- * <p></p>
+ * <p>
+ * </p>
  *
  * @author Miguel Freitas (IT) PT-Inovacao
  */
 
-
-public interface SecurityServerHeader extends SecurityAgreeHeader
-{
-    /**
-     * Name of SecurityServerHeader
-     */
-    public final static String NAME = "Security-Server";
-
-
+public interface SecurityServerHeader extends SecurityAgreeHeader {
+	/**
+	 * Name of SecurityServerHeader
+	 */
+	public final static String NAME = "Security-Server";
 
 }

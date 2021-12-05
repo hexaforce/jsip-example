@@ -42,73 +42,72 @@ import gov.nist.javax.sip.header.ViaList;
 import gov.nist.javax.sip.message.SIPRequest;
 
 public class TestCall {
-	
+
 	private String localTag;
 	private CallIdHeader outgoingDialogCallId;
-	
+
 	private SipProvider sipProvider;
 	private MessageFactory messageFactory;
 	private HeaderFactory headerFactory;
 	private Dialog incomingDialog;
 	private Dialog outgoingDialog;
 	private ServerTransaction serverTransaction;
-	
+
 	public TestCall(String localTag, SipProvider sipProvider, HeaderFactory headerFactory, MessageFactory messageFactory) {
 		this.localTag = localTag;
 		this.sipProvider = sipProvider;
 		this.messageFactory = messageFactory;
 		this.headerFactory = headerFactory;
 	}
-	
+
 	/**
 	 * @return the incomingDialog
 	 */
 	public Dialog getIncomingDialog() {
 		return incomingDialog;
 	}
-	
+
 	/**
 	 * @return the outgoingDialog
 	 */
 	public Dialog getOutgoingDialog() {
 		return outgoingDialog;
 	}
-	
+
 	public void processInvite(RequestEvent requestEvent) {
-		//System.out.println("Got invite: "+requestEvent.getRequest());
+		// System.out.println("Got invite: "+requestEvent.getRequest());
 		try {
 			serverTransaction = requestEvent.getServerTransaction();
 			if (serverTransaction == null) {
 				try {
 					serverTransaction = sipProvider.getNewServerTransaction(requestEvent.getRequest());
-				}
-				catch (Exception e) {
+				} catch (Exception e) {
 					e.printStackTrace();
 					return;
 				}
 			}
-			//serverTransaction.sendResponse(messageFactory.createResponse(100, requestEvent.getRequest()));
+			// serverTransaction.sendResponse(messageFactory.createResponse(100, requestEvent.getRequest()));
 			setupIncomingDialog();
-			forwardInvite();			
+			forwardInvite();
 		} catch (Exception ex) {
 			ex.printStackTrace();
 		}
 	}
-	
+
 	/**
 	 * @param serverTransaction2
 	 * @return
-	 * @throws SipException 
+	 * @throws SipException
 	 */
 	private void setupIncomingDialog() throws SipException {
 		this.incomingDialog = sipProvider.getNewDialog(serverTransaction);
 		this.incomingDialog.setApplicationData(this);
 	}
-	
+
 	/**
 	 * @param incomingDialog2
 	 * @return
-	 * @throws SipException 
+	 * @throws SipException
 	 */
 	private void forwardInvite() throws SipException {
 		this.outgoingDialogCallId = sipProvider.getNewCallId();
@@ -136,11 +135,11 @@ public class TestCall {
 		final ViaList viaList = new ViaList();
 		viaList.add((Via) listeningPointImpl.createViaHeader());
 		request.setVia(viaList);
-		
+
 		try {
 			request.setHeader(headerFactory.createMaxForwardsHeader(70));
 		} catch (InvalidArgumentException e) {
-			throw new SipException("Failed to create max forwards header",e);
+			throw new SipException("Failed to create max forwards header", e);
 		}
 		request.setHeader((Header) outgoingDialogCallId.clone());
 		// note: cseq will be set by dialog when sending
@@ -150,10 +149,7 @@ public class TestCall {
 		}
 
 		/*
-		 * Route header fields of the upstream request MAY be copied in the
-		 * downstream request, except the topmost Route header if it is under
-		 * the responsibility of the B2BUA. Additional Route header fields MAY
-		 * also be added to the downstream request.
+		 * Route header fields of the upstream request MAY be copied in the downstream request, except the topmost Route header if it is under the responsibility of the B2BUA. Additional Route header fields MAY also be added to the downstream request.
 		 */
 		if (outgoingDialog == null || outgoingDialog.getState() == null) {
 			// first request, no route available
@@ -163,39 +159,34 @@ public class TestCall {
 				final URI topRouteURI = topRoute.getAddress().getURI();
 				if (topRouteURI.isSipURI()) {
 					final SipURI topRouteSipURI = (SipURI) topRouteURI;
-					if (topRouteSipURI.getHost().equals(listeningPointImpl.getIPAddress())
-							&& topRouteSipURI.getPort() == listeningPointImpl.getPort()) {
+					if (topRouteSipURI.getHost().equals(listeningPointImpl.getIPAddress()) && topRouteSipURI.getPort() == listeningPointImpl.getPort()) {
 						if (routeList.size() > 1) {
 							routeList.remove(0);
-						}
-						else {
+						} else {
 							request.removeHeader(RouteHeader.NAME);
-						}					
+						}
 					}
 				}
-			}			
-		}
-		else {
+			}
+		} else {
 			// replace route in orig request with the one in dialog
 			request.removeHeader(RouteHeader.NAME);
 			final RouteList routeList = new RouteList();
 			for (Iterator<Route> it = outgoingDialog.getRouteSet(); it.hasNext();) {
-				Route route = it.next();				
-				routeList.add(route);								
+				Route route = it.next();
+				routeList.add(route);
 			}
 			if (!routeList.isEmpty()) {
 				request.addHeader(routeList);
 			}
 		}
-		
+
 		/*
-		 * Record-Route header fields of the upstream request are not copied in
-		 * the new downstream request, as Record-Route is only meaningful for
-		 * the upstream dialog.
+		 * Record-Route header fields of the upstream request are not copied in the new downstream request, as Record-Route is only meaningful for the upstream dialog.
 		 */
 		request.removeHeader(RecordRouteHeader.NAME);
 
-		return request;		
+		return request;
 	}
 
 	public void processAck(RequestEvent requestEvent) {
@@ -208,48 +199,46 @@ public class TestCall {
 			final Request request = createRequest(requestEvent.getRequest());
 			final ClientTransaction ct = sipProvider.getNewClientTransaction(request);
 			outgoingDialog.sendRequest(ct);
-		}
-		catch (Exception e) {
+		} catch (Exception e) {
 			e.printStackTrace();
 		}
 	}
-	
+
 	public void process180(ResponseEvent responseEvent) {
 		try {
 			forwardResponse(responseEvent.getResponse());
-		}
-		catch (Exception e) {
+		} catch (Exception e) {
 			e.printStackTrace();
 		}
 	}
-	
+
 	/**
 	 * @param responseEvent
-	 * @throws InvalidArgumentException 
+	 * @throws InvalidArgumentException
 	 */
 	@SuppressWarnings("unchecked")
 	private void forwardResponse(Response receivedResponse) throws SipException, InvalidArgumentException {
 
-		final ServerTransaction origServerTransaction = this.serverTransaction;	
+		final ServerTransaction origServerTransaction = this.serverTransaction;
 		Response forgedResponse = null;
-		
+
 		try {
 			forgedResponse = messageFactory.createResponse(receivedResponse.getStatusCode(), origServerTransaction.getRequest());
 		} catch (ParseException e) {
 			throw new SipException("Failed to forge message", e);
 		}
-		
+
 		final DialogState dialogState = incomingDialog.getState();
 		if ((dialogState == null || dialogState == DialogState.EARLY) && localTag != null && incomingDialog.isServer()) {
 			// no tag set in the response, since the dialog creating transaction didn't had it
 			try {
-				((ToHeader)forgedResponse.getHeader(ToHeader.NAME)).setTag(localTag);
+				((ToHeader) forgedResponse.getHeader(ToHeader.NAME)).setTag(localTag);
 			} catch (ParseException e) {
 				throw new SipException("Failed to set local tag", e);
 			}
 		}
-		
-		// copy headers 
+
+		// copy headers
 		ListIterator<String> lit = receivedResponse.getHeaderNames();
 		String headerName = null;
 		ListIterator<Header> headersIterator = null;
@@ -261,44 +250,41 @@ public class TestCall {
 				forgedResponse.removeHeader(headerName);
 				headersIterator = receivedResponse.getHeaders(headerName);
 				while (headersIterator.hasNext()) {
-					forgedResponse.addLast((Header)headersIterator.next().clone());
+					forgedResponse.addLast((Header) headersIterator.next().clone());
 				}
 			}
 		}
-		
+
 		// Copy content
 		final byte[] rawOriginal = receivedResponse.getRawContent();
 		if (rawOriginal != null && rawOriginal.length != 0) {
 			final byte[] copy = new byte[rawOriginal.length];
 			System.arraycopy(rawOriginal, 0, copy, 0, copy.length);
 			try {
-				forgedResponse.setContent(copy, (ContentTypeHeader) forgedResponse
-						.getHeader(ContentTypeHeader.NAME));
+				forgedResponse.setContent(copy, (ContentTypeHeader) forgedResponse.getHeader(ContentTypeHeader.NAME));
 			} catch (ParseException e) {
-				throw new SipException("Failed to copy content.",e);
+				throw new SipException("Failed to copy content.", e);
 			}
 		}
-		
+
 		// set contact if the received response had it
 		if (receivedResponse.getHeader(ContactHeader.NAME) != null) {
 			final String transport = ((ViaHeader) forgedResponse.getHeader(ViaHeader.NAME)).getTransport();
-			forgedResponse.setHeader(((ListeningPointImpl)sipProvider.getListeningPoint(transport)).createContactHeader());
+			forgedResponse.setHeader(((ListeningPointImpl) sipProvider.getListeningPoint(transport)).createContactHeader());
 		}
-		
+
 		origServerTransaction.sendResponse(forgedResponse);
 	}
 
 	public void process200(ResponseEvent responseEvent) {
 		try {
-			final CSeqHeader cSeqHeader = (CSeqHeader) responseEvent.getResponse().getHeader(CSeqHeader.NAME); 			
+			final CSeqHeader cSeqHeader = (CSeqHeader) responseEvent.getResponse().getHeader(CSeqHeader.NAME);
 			if (cSeqHeader.getMethod().equals(Request.INVITE)) {
-				processInvite200(responseEvent,cSeqHeader);
-			}
-			else if (cSeqHeader.getMethod().equals(Request.BYE)) {
+				processInvite200(responseEvent, cSeqHeader);
+			} else if (cSeqHeader.getMethod().equals(Request.BYE)) {
 				processBye200(responseEvent);
-			}
-			else {
-				System.err.println("Unexpected response: "+responseEvent.getResponse());
+			} else {
+				System.err.println("Unexpected response: " + responseEvent.getResponse());
 			}
 		} catch (Exception ex) {
 			ex.printStackTrace();
@@ -307,18 +293,18 @@ public class TestCall {
 
 	/**
 	 * @param responseEvent
-	 * @throws SipException 
-	 * @throws InvalidArgumentException 
+	 * @throws SipException
+	 * @throws InvalidArgumentException
 	 */
-	private void processInvite200(ResponseEvent responseEvent,CSeqHeader cseq) throws InvalidArgumentException, SipException {
+	private void processInvite200(ResponseEvent responseEvent, CSeqHeader cseq) throws InvalidArgumentException, SipException {
 		// lets ack it ourselves to avoid UAS retransmissions due to
 		// forwarding of this response and further UAC Ack
 		// note that the app does not handles UAC ACKs
 		final Request ack = responseEvent.getDialog().createAck(cseq.getSeqNumber());
 		responseEvent.getDialog().sendAck(ack);
-		forwardResponse(responseEvent.getResponse());			
+		forwardResponse(responseEvent.getResponse());
 	}
-	
+
 	/**
 	 * @param responseEvent
 	 */
@@ -344,5 +330,5 @@ public class TestCall {
 		}
 		return HEADERS_TO_OMMIT_ON_RESPONSE_COPY;
 	}
-	
+
 }

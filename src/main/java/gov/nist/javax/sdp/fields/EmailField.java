@@ -27,81 +27,89 @@
 * Product of NIST/ITL Advanced Networking Technologies Division (ANTD).        *
 *******************************************************************************/
 package gov.nist.javax.sdp.fields;
+
 import javax.sdp.SdpException;
 import javax.sdp.SdpParseException;
 
 import gov.nist.core.Separators;
+
 /**
-* email field in the SDP announce.
-*
-*@version  JSR141-PUBLIC-REVIEW (subject to change).
-*
-*@author Olivier Deruelle <deruelle@antd.nist.gov>
-*@author M. Ranganathan   <br/>
-*
-*
-*/
+ * email field in the SDP announce.
+ *
+ * @version JSR141-PUBLIC-REVIEW (subject to change).
+ *
+ * @author Olivier Deruelle <deruelle@antd.nist.gov>
+ * @author M. Ranganathan <br/>
+ *
+ *
+ */
 public class EmailField extends SDPField implements javax.sdp.EMail {
 
-    protected EmailAddress emailAddress;
+	protected EmailAddress emailAddress;
 
-    public EmailField() {
-        super(SDPFieldNames.EMAIL_FIELD);
-        emailAddress = new EmailAddress();
-    }
+	public EmailField() {
+		super(SDPFieldNames.EMAIL_FIELD);
+		emailAddress = new EmailAddress();
+	}
 
-    public EmailAddress getEmailAddress() {
-        return emailAddress;
-    }
-    /**
-     * Set the emailAddress member
-     */
-    public void setEmailAddress(EmailAddress emailAddress) {
-        this.emailAddress = emailAddress;
-    }
+	public EmailAddress getEmailAddress() {
+		return emailAddress;
+	}
 
-    /**
-     *  Get the string encoded version of this object
-     * @since v1.0
-     */
-    public String encode() {
-        return EMAIL_FIELD + emailAddress.encode() + Separators.NEWLINE;
-    }
+	/**
+	 * Set the emailAddress member
+	 */
+	public void setEmailAddress(EmailAddress emailAddress) {
+		this.emailAddress = emailAddress;
+	}
 
-    public String toString() {
-        return this.encode();
-    }
+	/**
+	 * Get the string encoded version of this object
+	 * 
+	 * @since v1.0
+	 */
+	public String encode() {
+		return EMAIL_FIELD + emailAddress.encode() + Separators.NEWLINE;
+	}
 
-    /** Returns the value.
-     * @throws SdpParseException
-     * @return the value
-     */
-    public String getValue() throws SdpParseException {
-        if (emailAddress == null)
-            return null;
-        else {
-            return emailAddress.getDisplayName();
-        }
-    }
+	public String toString() {
+		return this.encode();
+	}
 
-    /** Set the value.
-     * @param value to set
-     * @throws SdpException if the value is null
-     */
-    public void setValue(String value) throws SdpException {
-        if (value == null)
-            throw new SdpException("The value is null");
-        else {
+	/**
+	 * Returns the value.
+	 * 
+	 * @throws SdpParseException
+	 * @return the value
+	 */
+	public String getValue() throws SdpParseException {
+		if (emailAddress == null)
+			return null;
+		else {
+			return emailAddress.getDisplayName();
+		}
+	}
 
-            emailAddress.setDisplayName(value);
-        }
-    }
+	/**
+	 * Set the value.
+	 * 
+	 * @param value to set
+	 * @throws SdpException if the value is null
+	 */
+	public void setValue(String value) throws SdpException {
+		if (value == null)
+			throw new SdpException("The value is null");
+		else {
 
-    public Object clone() {
-        EmailField retval = (EmailField) super.clone();
-        if (this.emailAddress != null)
-            retval.emailAddress = (EmailAddress) this.emailAddress.clone();
-        return retval;
-    }
+			emailAddress.setDisplayName(value);
+		}
+	}
+
+	public Object clone() {
+		EmailField retval = (EmailField) super.clone();
+		if (this.emailAddress != null)
+			retval.emailAddress = (EmailAddress) this.emailAddress.clone();
+		return retval;
+	}
 
 }

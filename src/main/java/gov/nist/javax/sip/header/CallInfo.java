@@ -27,6 +27,7 @@
 * Product of NIST/ITL Advanced Networking Technologies Division (ANTD).        *
 *******************************************************************************/
 package gov.nist.javax.sip.header;
+
 import java.text.ParseException;
 
 import gov.nist.javax.sip.address.GenericURI;
@@ -35,90 +36,93 @@ import gov.nist.javax.sip.address.GenericURI;
  * CallInfo SIPHeader.
  *
  *
- * @author "M. Ranganathan"  <br/>
+ * @author "M. Ranganathan" <br/>
  * @version 1.2 $Revision: 1.8 $ $Date: 2010-05-06 14:07:48 $
  * @since 1.1
  */
-public final class CallInfo
-    extends ParametersHeader
-    implements javax.sip.header.CallInfoHeader {
+public final class CallInfo extends ParametersHeader implements javax.sip.header.CallInfoHeader {
 
-    /**
-     * Comment for <code>serialVersionUID</code>
-     */
-    private static final long serialVersionUID = -8179246487696752928L;
+	/**
+	 * Comment for <code>serialVersionUID</code>
+	 */
+	private static final long serialVersionUID = -8179246487696752928L;
 
-    protected GenericURI info;
+	protected GenericURI info;
 
-    /**
-     * Default constructor
-     */
-    public CallInfo() {
-        super(CALL_INFO);
-    }
+	/**
+	 * Default constructor
+	 */
+	public CallInfo() {
+		super(CALL_INFO);
+	}
 
-    /**
-     * Return canonical representation.
-     * @return String
-     */
-    public String encodeBody() {
-        return encodeBody(new StringBuilder()).toString();
-    }
+	/**
+	 * Return canonical representation.
+	 * 
+	 * @return String
+	 */
+	public String encodeBody() {
+		return encodeBody(new StringBuilder()).toString();
+	}
 
-    protected StringBuilder encodeBody(StringBuilder buffer) {
-        buffer.append(LESS_THAN);
-        info.encode(buffer);
-        buffer.append(GREATER_THAN);
+	protected StringBuilder encodeBody(StringBuilder buffer) {
+		buffer.append(LESS_THAN);
+		info.encode(buffer);
+		buffer.append(GREATER_THAN);
 
-        if (parameters != null && !parameters.isEmpty()) {
-            buffer.append(SEMICOLON);
-            parameters.encode(buffer);
-        }
+		if (parameters != null && !parameters.isEmpty()) {
+			buffer.append(SEMICOLON);
+			parameters.encode(buffer);
+		}
 
-        return buffer;
-    }
+		return buffer;
+	}
 
-    /**
-     * get the purpose field
-     * @return String
-     */
-    public String getPurpose() {
-        return this.getParameter("purpose");
-    }
+	/**
+	 * get the purpose field
+	 * 
+	 * @return String
+	 */
+	public String getPurpose() {
+		return this.getParameter("purpose");
+	}
 
-    /**
-     * get the URI field
-     * @return URI
-     */
-    public javax.sip.address.URI getInfo() {
-        return info;
-    }
+	/**
+	 * get the URI field
+	 * 
+	 * @return URI
+	 */
+	public javax.sip.address.URI getInfo() {
+		return info;
+	}
 
-    /**
-     * set the purpose field
-     * @param purpose is the purpose field.
-     */
-    public void setPurpose(String purpose) {
-        if (purpose == null)
-            throw new NullPointerException("null arg");
-        try {
-            this.setParameter("purpose", purpose);
-        } catch (ParseException ex) {
-        }
-    }
+	/**
+	 * set the purpose field
+	 * 
+	 * @param purpose is the purpose field.
+	 */
+	public void setPurpose(String purpose) {
+		if (purpose == null)
+			throw new NullPointerException("null arg");
+		try {
+			this.setParameter("purpose", purpose);
+		} catch (ParseException ex) {
+		}
+	}
 
-    /**
-     * set the URI field
-     * @param info is the URI to set.
-     */
-    public void setInfo(javax.sip.address.URI info) {
-        this.info = (GenericURI) info;
-    }
+	/**
+	 * set the URI field
+	 * 
+	 * @param info is the URI to set.
+	 */
+	public void setInfo(javax.sip.address.URI info) {
+		this.info = (GenericURI) info;
+	}
 
-    public Object clone() {
-        CallInfo retval = (CallInfo) super.clone();
-        if (this.info != null)
-            retval.info = (GenericURI) this.info.clone();
-        return retval;
-    }
+	public Object clone() {
+		CallInfo retval = (CallInfo) super.clone();
+		if (this.info != null)
+			retval.info = (GenericURI) this.info.clone();
+		return retval;
+	}
 }

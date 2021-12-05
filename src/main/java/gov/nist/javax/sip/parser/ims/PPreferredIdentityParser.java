@@ -44,41 +44,38 @@ import gov.nist.javax.sip.parser.TokenTypes;
  */
 
 public class PPreferredIdentityParser
-    //extends AddressHeaderParser
-    extends AddressParametersParser
-    implements TokenTypes {
+		// extends AddressHeaderParser
+		extends AddressParametersParser implements TokenTypes {
 
-    public PPreferredIdentityParser(String preferredIdentity) {
-        super(preferredIdentity);
+	public PPreferredIdentityParser(String preferredIdentity) {
+		super(preferredIdentity);
 
-    }
+	}
 
+	protected PPreferredIdentityParser(Lexer lexer) {
+		super(lexer);
 
-    protected PPreferredIdentityParser(Lexer lexer) {
-        super(lexer);
+	}
 
-    }
+	public SIPHeader parse() throws ParseException {
 
-    public SIPHeader parse() throws ParseException {
+		if (debug)
+			dbg_enter("PreferredIdentityParser.parse");
 
-        if (debug)
-            dbg_enter("PreferredIdentityParser.parse");
+		try {
+			this.lexer.match(TokenTypes.P_PREFERRED_IDENTITY);
+			this.lexer.SPorHT();
+			this.lexer.match(':');
+			this.lexer.SPorHT();
 
-        try {
-            this.lexer.match(TokenTypes.P_PREFERRED_IDENTITY);
-            this.lexer.SPorHT();
-            this.lexer.match(':');
-            this.lexer.SPorHT();
+			PPreferredIdentity p = new PPreferredIdentity();
+			super.parse(p);
+			return p;
+		} finally {
+			if (debug)
+				dbg_leave("PreferredIdentityParser.parse");
+		}
 
-            PPreferredIdentity p = new PPreferredIdentity();
-            super.parse( p );
-            return p;
-        } finally {
-            if (debug)
-                dbg_leave("PreferredIdentityParser.parse");
-            }
-
-
-    }
+	}
 
 }

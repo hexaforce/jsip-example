@@ -38,165 +38,133 @@ import test.tck.TckInternalError;
 import test.tck.TiUnexpectedError;
 
 /**
- * Timeout test for invite client transactions -- test to see if an timeout
- * event is delivered to the listener if the RI refuses to send OK to the INVITE
- * Client Tx.
+ * Timeout test for invite client transactions -- test to see if an timeout event is delivered to the listener if the RI refuses to send OK to the INVITE Client Tx.
  *
  * @author M. Ranganathan
  */
 
 public class TransactionTimeoutEventTest extends MessageFlowHarness {
-    private static Logger logger = Logger
-            .getLogger(InviteClientTransactionsStateMachineTest.class);
+	private static Logger logger = Logger.getLogger(InviteClientTransactionsStateMachineTest.class);
 
-    public TransactionTimeoutEventTest(String name) {
-        super(name, false); // disable auto-dialog for the RI, else ACKs get
-                            // filtered out
-    }
+	public TransactionTimeoutEventTest(String name) {
+		super(name, false); // disable auto-dialog for the RI, else ACKs get
+							// filtered out
+	}
 
-    // ==================== tests ==============================
+	// ==================== tests ==============================
 
-    /**
-     * Test if the tx timeout is delivered.
-     */
-    public void testClientTransactionTimeout() {
-        try {
-            Request invite = createTiInviteRequest(null, null, null);
-            ClientTransaction tran = null;
-            try {
-                eventCollector.collectRequestEvent(riSipProvider);
+	/**
+	 * Test if the tx timeout is delivered.
+	 */
+	public void testClientTransactionTimeout() {
+		try {
+			Request invite = createTiInviteRequest(null, null, null);
+			ClientTransaction tran = null;
+			try {
+				eventCollector.collectRequestEvent(riSipProvider);
 
-                tran = tiSipProvider.getNewClientTransaction(invite);
-                tran.sendRequest();
-            } catch (SipException ex) {
-                throw new TiUnexpectedError(
-                        "A SipExceptionOccurred while trying to send request!",
-                        ex);
-            } catch (TooManyListenersException ex) {
-                throw new TckInternalError(
-                        "Failed to regiest a SipListener with an RI SipProvider",
-                        ex);
-            }
-            waitForMessage();
-            RequestEvent inviteReceivedEvent = eventCollector
-                    .extractCollectedRequestEvent();
-            assertNotNull("RequestEvent", inviteReceivedEvent);
-            try {
-                eventCollector.collectTimeoutEvent(tiSipProvider);
-            } catch (TooManyListenersException ex) {
-                throw new TiUnexpectedError(
-                        "Failed to register a SipListener with TI", ex);
-            }
-            waitForTimeout();
-            TimeoutEvent timeoutEvent = eventCollector
-                    .extractCollectedTimeoutEvent();
-            assertNotNull("Timeout event", timeoutEvent);
-            assertTrue("Timeout event type ", timeoutEvent.getTimeout().equals(
-                    Timeout.TRANSACTION));
-        } catch (Exception ex) {
-            logger.error("unexpected exception ", ex);
-            ex.printStackTrace();
-            fail("unexpected exception");
-        }
-    }
+				tran = tiSipProvider.getNewClientTransaction(invite);
+				tran.sendRequest();
+			} catch (SipException ex) {
+				throw new TiUnexpectedError("A SipExceptionOccurred while trying to send request!", ex);
+			} catch (TooManyListenersException ex) {
+				throw new TckInternalError("Failed to regiest a SipListener with an RI SipProvider", ex);
+			}
+			waitForMessage();
+			RequestEvent inviteReceivedEvent = eventCollector.extractCollectedRequestEvent();
+			assertNotNull("RequestEvent", inviteReceivedEvent);
+			try {
+				eventCollector.collectTimeoutEvent(tiSipProvider);
+			} catch (TooManyListenersException ex) {
+				throw new TiUnexpectedError("Failed to register a SipListener with TI", ex);
+			}
+			waitForTimeout();
+			TimeoutEvent timeoutEvent = eventCollector.extractCollectedTimeoutEvent();
+			assertNotNull("Timeout event", timeoutEvent);
+			assertTrue("Timeout event type ", timeoutEvent.getTimeout().equals(Timeout.TRANSACTION));
+		} catch (Exception ex) {
+			logger.error("unexpected exception ", ex);
+			ex.printStackTrace();
+			fail("unexpected exception");
+		}
+	}
 
+	public void testServerTransactionForTimeout() {
+		try {
+			Request invite = createRiInviteRequest(null, null, null);
+			ClientTransaction tran = null;
+			try {
+				eventCollector.collectRequestEvent(tiSipProvider);
+				tran = riSipProvider.getNewClientTransaction(invite);
+				tran.sendRequest();
+			} catch (SipException ex) {
+				throw new TiUnexpectedError("A SipExceptionOccurred while trying to send request!", ex);
+			} catch (TooManyListenersException ex) {
+				throw new TckInternalError("Failed to regiest a SipListener with an RI SipProvider", ex);
+			}
+			waitForMessage();
+			RequestEvent inviteReceivedEvent = eventCollector.extractCollectedRequestEvent();
+			assertNotNull("RequestEvent not seen at TI", inviteReceivedEvent);
+			assertTrue("Server Transaction MUST be null", inviteReceivedEvent.getServerTransaction() == null);
+			ServerTransaction st = tiSipProvider.getNewServerTransaction(inviteReceivedEvent.getRequest());
+			Response response = tiMessageFactory.createResponse(Response.OK, inviteReceivedEvent.getRequest());
+			ToHeader toHeader = (ToHeader) response.getHeader(ToHeader.NAME);
+			toHeader.setTag("123456");
+			ContactHeader contact = super.createTiContact();
+			response.setHeader(contact);
+			st.sendResponse(response);
 
-    public void testServerTransactionForTimeout() {
-        try {
-            Request invite = createRiInviteRequest(null, null, null);
-            ClientTransaction tran = null;
-            try {
-                eventCollector.collectRequestEvent(tiSipProvider);
-                tran = riSipProvider.getNewClientTransaction(invite);
-                tran.sendRequest();
-            } catch (SipException ex) {
-                throw new TiUnexpectedError(
-                        "A SipExceptionOccurred while trying to send request!",
-                        ex);
-            } catch (TooManyListenersException ex) {
-                throw new TckInternalError(
-                        "Failed to regiest a SipListener with an RI SipProvider",
-                        ex);
-            }
-            waitForMessage();
-            RequestEvent inviteReceivedEvent = eventCollector
-                    .extractCollectedRequestEvent();
-            assertNotNull("RequestEvent not seen at TI", inviteReceivedEvent);
-            assertTrue("Server Transaction MUST be null", inviteReceivedEvent
-                    .getServerTransaction() == null);
-            ServerTransaction st = tiSipProvider
-                    .getNewServerTransaction(inviteReceivedEvent.getRequest());
-            Response response = tiMessageFactory.createResponse(Response.OK,
-                    inviteReceivedEvent.getRequest());
-            ToHeader toHeader = (ToHeader) response.getHeader(ToHeader.NAME);
-            toHeader.setTag("123456");
-            ContactHeader contact = super.createTiContact();
-            response.setHeader(contact);
-            st.sendResponse(response);
+			eventCollector.collectTimeoutEvent(tiSipProvider);
+			waitForTimeout();
+			TimeoutEvent timeoutEvent = eventCollector.extractCollectedTimeoutEvent();
+			assertNull("Timeout event", timeoutEvent);
+			// assertNotNull("Timeout event", timeoutEvent);
+			// assertTrue("Timeout event type must be TRANSACTION ", timeoutEvent
+			// .getTimeout().equals(Timeout.TRANSACTION));
 
-            eventCollector.collectTimeoutEvent(tiSipProvider);
-            waitForTimeout();
-            TimeoutEvent timeoutEvent = eventCollector
-                    .extractCollectedTimeoutEvent();
-            assertNull("Timeout event", timeoutEvent);
-            //assertNotNull("Timeout event", timeoutEvent);
-            //assertTrue("Timeout event type must be TRANSACTION ", timeoutEvent
-                //.getTimeout().equals(Timeout.TRANSACTION));
+		} catch (Exception ex) {
+			logger.error("unexpected exception ", ex);
+			ex.printStackTrace();
+			fail("unexpected exception");
+		}
+	}
 
-        } catch (Exception ex) {
-            logger.error("unexpected exception ", ex);
-            ex.printStackTrace();
-            fail("unexpected exception");
-        }
-    }
+	public void testServerTransactionForRetransmissionAlerts() {
+		try {
+			Request invite = createRiInviteRequest(null, null, null);
+			ClientTransaction tran = null;
+			tiSipProvider.setAutomaticDialogSupportEnabled(false);
+			try {
+				eventCollector.collectRequestEvent(tiSipProvider);
+				tran = riSipProvider.getNewClientTransaction(invite);
+				tran.sendRequest();
+			} catch (SipException ex) {
+				throw new TiUnexpectedError("A SipExceptionOccurred while trying to send request!", ex);
+			} catch (TooManyListenersException ex) {
+				throw new TckInternalError("Failed to regiest a SipListener with an RI SipProvider", ex);
+			}
+			waitForMessage();
+			RequestEvent inviteReceivedEvent = eventCollector.extractCollectedRequestEvent();
+			assertNotNull("RequestEvent not seen at TI", inviteReceivedEvent);
+			assertTrue("Server Transaction MUST be null", inviteReceivedEvent.getServerTransaction() == null);
+			ServerTransaction st = tiSipProvider.getNewServerTransaction(inviteReceivedEvent.getRequest());
+			Response response = tiMessageFactory.createResponse(Response.OK, inviteReceivedEvent.getRequest());
+			ToHeader toHeader = (ToHeader) response.getHeader(ToHeader.NAME);
+			toHeader.setTag("1234567");
+			ContactHeader contact = super.createTiContact();
+			response.setHeader(contact);
+			st.enableRetransmissionAlerts();
+			st.sendResponse(response);
+			eventCollector.collectTimeoutEvent(tiSipProvider);
+			waitForTimeout();
+			TimeoutEvent timeoutEvent = eventCollector.extractCollectedTimeoutEvent();
+			assertNotNull("Timeout event not found ", timeoutEvent);
+			assertTrue("Timeout event type must be retransmit ", timeoutEvent.getTimeout().equals(Timeout.RETRANSMIT));
 
-
-    public void testServerTransactionForRetransmissionAlerts() {
-        try {
-            Request invite = createRiInviteRequest(null, null, null);
-            ClientTransaction tran = null;
-            tiSipProvider.setAutomaticDialogSupportEnabled(false);
-            try {
-                eventCollector.collectRequestEvent(tiSipProvider);
-                tran = riSipProvider.getNewClientTransaction(invite);
-                tran.sendRequest();
-            } catch (SipException ex) {
-                throw new TiUnexpectedError(
-                        "A SipExceptionOccurred while trying to send request!",
-                        ex);
-            } catch (TooManyListenersException ex) {
-                throw new TckInternalError(
-                        "Failed to regiest a SipListener with an RI SipProvider",
-                        ex);
-            }
-            waitForMessage();
-            RequestEvent inviteReceivedEvent = eventCollector
-                    .extractCollectedRequestEvent();
-            assertNotNull("RequestEvent not seen at TI", inviteReceivedEvent);
-            assertTrue("Server Transaction MUST be null", inviteReceivedEvent
-                    .getServerTransaction() == null);
-            ServerTransaction st = tiSipProvider
-                    .getNewServerTransaction(inviteReceivedEvent.getRequest());
-            Response response = tiMessageFactory.createResponse(Response.OK,
-                    inviteReceivedEvent.getRequest());
-            ToHeader toHeader = (ToHeader) response.getHeader(ToHeader.NAME);
-            toHeader.setTag("1234567");
-            ContactHeader contact = super.createTiContact();
-            response.setHeader(contact);
-            st.enableRetransmissionAlerts();
-            st.sendResponse(response);
-            eventCollector.collectTimeoutEvent(tiSipProvider);
-            waitForTimeout();
-            TimeoutEvent timeoutEvent = eventCollector
-                    .extractCollectedTimeoutEvent();
-            assertNotNull("Timeout event not found ", timeoutEvent);
-            assertTrue("Timeout event type must be retransmit ", timeoutEvent
-                    .getTimeout().equals(Timeout.RETRANSMIT));
-
-        } catch (Exception ex) {
-            logger.error("unexpected exception ", ex);
-            ex.printStackTrace();
-            fail("unexpected exception");
-        }
-    }
+		} catch (Exception ex) {
+			logger.error("unexpected exception ", ex);
+			ex.printStackTrace();
+			fail("unexpected exception");
+		}
+	}
 }

@@ -54,197 +54,179 @@ import test.tck.msgflow.callflows.ProtocolObjects;
 
 public class Shootme implements SipListener {
 
-    private static SipProvider sipProvider;
+	private static SipProvider sipProvider;
 
-    private static AddressFactory addressFactory;
+	private static AddressFactory addressFactory;
 
-    private static MessageFactory messageFactory;
+	private static MessageFactory messageFactory;
 
-    private static HeaderFactory headerFactory;
+	private static HeaderFactory headerFactory;
 
-    private static SipStack sipStack;
+	private static SipStack sipStack;
 
-    private static final String myAddress = "127.0.0.1";
+	private static final String myAddress = "127.0.0.1";
 
-    protected ServerTransaction inviteTid;
+	protected ServerTransaction inviteTid;
 
-    private Dialog dialog;
+	private Dialog dialog;
 
-    private String toTag;
+	private String toTag;
 
-    private String transport;
+	private String transport;
 
-    private boolean inviteReceived;
+	private boolean inviteReceived;
 
-    public static final int myPort = 5080;
+	public static final int myPort = 5080;
 
-    private static Logger logger = Logger.getLogger("test.tck");
+	private static Logger logger = Logger.getLogger("test.tck");
 
-    public Shootme(ProtocolObjects protObjects) {
-        addressFactory = protObjects.addressFactory;
-        messageFactory = protObjects.messageFactory;
-        headerFactory = protObjects.headerFactory;
-        sipStack = protObjects.sipStack;
-        transport = protObjects.transport;
-    }
+	public Shootme(ProtocolObjects protObjects) {
+		addressFactory = protObjects.addressFactory;
+		messageFactory = protObjects.messageFactory;
+		headerFactory = protObjects.headerFactory;
+		sipStack = protObjects.sipStack;
+		transport = protObjects.transport;
+	}
 
-    public void processRequest(RequestEvent requestEvent) {
-        Request request = requestEvent.getRequest();
-        ServerTransaction serverTransactionId = requestEvent
-                .getServerTransaction();
+	public void processRequest(RequestEvent requestEvent) {
+		Request request = requestEvent.getRequest();
+		ServerTransaction serverTransactionId = requestEvent.getServerTransaction();
 
-        logger.info("\n\nRequest " + request.getMethod()
-                + " received at " + sipStack.getStackName()
-                + " with server transaction id " + serverTransactionId);
+		logger.info("\n\nRequest " + request.getMethod() + " received at " + sipStack.getStackName() + " with server transaction id " + serverTransactionId);
 
-        if (request.getMethod().equals(Request.INVITE)) {
-            processInvite(requestEvent, serverTransactionId);
-        } else if (request.getMethod().equals(Request.ACK)) {
-            processAck(requestEvent, serverTransactionId);
-        } else if (request.getMethod().equals(Request.BYE)) {
-            processBye(requestEvent, serverTransactionId);
-        }
+		if (request.getMethod().equals(Request.INVITE)) {
+			processInvite(requestEvent, serverTransactionId);
+		} else if (request.getMethod().equals(Request.ACK)) {
+			processAck(requestEvent, serverTransactionId);
+		} else if (request.getMethod().equals(Request.BYE)) {
+			processBye(requestEvent, serverTransactionId);
+		}
 
-    }
+	}
 
+	public void processResponse(ResponseEvent responseEvent) {
+	}
 
+	/**
+	 * Process the ACK request. Send the bye and complete the call flow.
+	 */
+	public void processAck(RequestEvent requestEvent, ServerTransaction serverTransaction) {
 
-    public void processResponse(ResponseEvent responseEvent) {
-    }
+		try {
+			logger.info("shootme: got an ACK! Sending  a BYE");
+			logger.info("Dialog State = " + dialog.getState());
+			Dialog dialog = serverTransaction.getDialog();
+			AbstractRouterTestCase.assertTrue("Dialog mismatch", dialog == this.dialog);
+			SipProvider provider = (SipProvider) requestEvent.getSource();
+			AbstractRouterTestCase.assertTrue("Provider mismatch", sipProvider == provider);
+			Request byeRequest = dialog.createRequest(Request.BYE);
+			ClientTransaction ct = provider.getNewClientTransaction(byeRequest);
+			dialog.sendRequest(ct);
+		} catch (Exception ex) {
+			TestHarness.fail(ex.getMessage());
+		}
 
-    /**
-     * Process the ACK request. Send the bye and complete the call flow.
-     */
-    public void processAck(RequestEvent requestEvent,
-            ServerTransaction serverTransaction) {
+	}
 
-        try {
-            logger.info("shootme: got an ACK! Sending  a BYE");
-            logger.info("Dialog State = " + dialog.getState());
-            Dialog dialog = serverTransaction.getDialog();
-            AbstractRouterTestCase.assertTrue("Dialog mismatch", dialog == this.dialog);
-            SipProvider provider = (SipProvider) requestEvent.getSource();
-            AbstractRouterTestCase.assertTrue("Provider mismatch", sipProvider == provider);
-            Request byeRequest = dialog.createRequest(Request.BYE);
-            ClientTransaction ct = provider.getNewClientTransaction(byeRequest);
-            dialog.sendRequest(ct);
-        } catch (Exception ex) {
-            TestHarness.fail(ex.getMessage());
-        }
+	/**
+	 * Process the invite request.
+	 */
+	public void processInvite(RequestEvent requestEvent, ServerTransaction serverTransaction) {
+		inviteReceived = true;
+		SipProvider sipProvider = (SipProvider) requestEvent.getSource();
+		Request request = requestEvent.getRequest();
+		try {
+			logger.info("shootme: got an Invite sending Trying");
+			// logger.info("shootme: " + request);
+			Response response = messageFactory.createResponse(Response.TRYING, request);
+			ServerTransaction st = requestEvent.getServerTransaction();
 
-    }
+			if (st == null) {
+				st = sipProvider.getNewServerTransaction(request);
+			}
+			dialog = st.getDialog();
 
-    /**
-     * Process the invite request.
-     */
-    public void processInvite(RequestEvent requestEvent,
-            ServerTransaction serverTransaction) {
-        inviteReceived = true;
-        SipProvider sipProvider = (SipProvider) requestEvent.getSource();
-        Request request = requestEvent.getRequest();
-        try {
-            logger.info("shootme: got an Invite sending Trying");
-            // logger.info("shootme: " + request);
-            Response response = messageFactory.createResponse(Response.TRYING,
-                    request);
-            ServerTransaction st = requestEvent.getServerTransaction();
+			st.sendResponse(response);
 
-            if (st == null) {
-                st = sipProvider.getNewServerTransaction(request);
-            }
-            dialog = st.getDialog();
+			// reliable provisional response.
 
-            st.sendResponse(response);
+			Response okResponse = messageFactory.createResponse(Response.OK, request);
+			ToHeader toHeader = (ToHeader) okResponse.getHeader(ToHeader.NAME);
+			this.toTag = "4321";
+			toHeader.setTag(toTag); // Application is supposed to set.
+			this.inviteTid = st;
+			Address address = addressFactory.createAddress("Shootme <sip:" + myAddress + ":" + myPort + ">");
+			ContactHeader contactHeader = headerFactory.createContactHeader(address);
+			okResponse.addHeader(contactHeader);
 
-            // reliable provisional response.
+			logger.info("sending response.");
 
-            Response okResponse = messageFactory.createResponse(Response.OK, request);
-            ToHeader toHeader = (ToHeader) okResponse.getHeader(ToHeader.NAME);
-            this.toTag = "4321";
-            toHeader.setTag(toTag); // Application is supposed to set.
-            this.inviteTid = st;
-            Address address = addressFactory.createAddress("Shootme <sip:"
-                    + myAddress + ":" + myPort + ">");
-            ContactHeader contactHeader = headerFactory
-                    .createContactHeader(address);
-            okResponse.addHeader(contactHeader);
+			st.sendResponse(okResponse);
 
-            logger.info("sending response.");
+			// new Timer().schedule(new MyTimerTask(this), 100);
+		} catch (Exception ex) {
+			TestHarness.fail(ex.getMessage());
 
-            st.sendResponse(okResponse);
+		}
+	}
 
-            // new Timer().schedule(new MyTimerTask(this), 100);
-        } catch (Exception ex) {
-            TestHarness.fail(ex.getMessage());
+	/**
+	 * Process the bye request.
+	 */
+	public void processBye(RequestEvent requestEvent, ServerTransaction serverTransactionId) {
+		Request request = requestEvent.getRequest();
+		try {
+			logger.info("shootme:  got a bye sending OK.");
+			Response response = messageFactory.createResponse(200, request);
+			serverTransactionId.sendResponse(response);
+			logger.info("Dialog State is " + serverTransactionId.getDialog().getState());
 
-        }
-    }
+		} catch (Exception ex) {
+			TestHarness.fail(ex.getMessage());
+			System.exit(0);
 
-    /**
-     * Process the bye request.
-     */
-    public void processBye(RequestEvent requestEvent,
-            ServerTransaction serverTransactionId) {
-        Request request = requestEvent.getRequest();
-        try {
-            logger.info("shootme:  got a bye sending OK.");
-            Response response = messageFactory.createResponse(200, request);
-            serverTransactionId.sendResponse(response);
-            logger.info("Dialog State is "
-                    + serverTransactionId.getDialog().getState());
+		}
+	}
 
-        } catch (Exception ex) {
-            TestHarness.fail(ex.getMessage());
-            System.exit(0);
+	public void processTimeout(javax.sip.TimeoutEvent timeoutEvent) {
+		Transaction transaction;
+		if (timeoutEvent.isServerTransaction()) {
+			transaction = timeoutEvent.getServerTransaction();
+		} else {
+			transaction = timeoutEvent.getClientTransaction();
+		}
+		logger.info("state = " + transaction.getState());
+		logger.info("dialog = " + transaction.getDialog());
+		logger.info("dialogState = " + transaction.getDialog().getState());
+		logger.info("Transaction Time out");
+	}
 
-        }
-    }
+	public SipProvider createProvider() throws Exception {
+		ListeningPoint lp = sipStack.createListeningPoint("127.0.0.1", myPort, transport);
 
+		sipProvider = sipStack.createSipProvider(lp);
+		logger.info(transport + " SIP provider " + sipProvider);
 
+		return sipProvider;
+	}
 
-    public void processTimeout(javax.sip.TimeoutEvent timeoutEvent) {
-        Transaction transaction;
-        if (timeoutEvent.isServerTransaction()) {
-            transaction = timeoutEvent.getServerTransaction();
-        } else {
-            transaction = timeoutEvent.getClientTransaction();
-        }
-        logger.info("state = " + transaction.getState());
-        logger.info("dialog = " + transaction.getDialog());
-        logger.info("dialogState = "
-                + transaction.getDialog().getState());
-        logger.info("Transaction Time out");
-    }
+	public void processIOException(IOExceptionEvent exceptionEvent) {
+		logger.info("IOException");
 
-    public SipProvider createProvider() throws Exception {
-        ListeningPoint lp = sipStack.createListeningPoint("127.0.0.1",
-                myPort, transport);
+	}
 
-        sipProvider = sipStack.createSipProvider(lp);
-        logger.info(transport + " SIP provider " + sipProvider);
+	public void processTransactionTerminated(TransactionTerminatedEvent transactionTerminatedEvent) {
+		logger.info("Transaction terminated event recieved");
 
-        return sipProvider;
-    }
+	}
 
-    public void processIOException(IOExceptionEvent exceptionEvent) {
-        logger.info("IOException");
+	public void processDialogTerminated(DialogTerminatedEvent dialogTerminatedEvent) {
+		logger.info("Dialog terminated event recieved");
 
-    }
+	}
 
-    public void processTransactionTerminated(
-            TransactionTerminatedEvent transactionTerminatedEvent) {
-        logger.info("Transaction terminated event recieved");
-
-    }
-
-    public void processDialogTerminated(
-            DialogTerminatedEvent dialogTerminatedEvent) {
-        logger.info("Dialog terminated event recieved");
-
-    }
-
-    public void checkState() {
-        TestHarness.assertTrue( inviteReceived);
-    }
+	public void checkState() {
+		TestHarness.assertTrue(inviteReceived);
+	}
 
 }

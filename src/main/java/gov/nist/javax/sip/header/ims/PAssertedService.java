@@ -1,4 +1,5 @@
 package gov.nist.javax.sip.header.ims;
+
 /*
 * Conditions Of Use
 *
@@ -29,91 +30,84 @@ import java.text.ParseException;
 import javax.sip.header.ExtensionHeader;
 
 import gov.nist.javax.sip.header.SIPHeader;
+
 /**
  *
- * @author aayush.bhatnagar
- * Rancore Technologies Pvt Ltd, Mumbai India.
+ * @author aayush.bhatnagar Rancore Technologies Pvt Ltd, Mumbai India.
  *
  */
-public class PAssertedService extends SIPHeader implements PAssertedServiceHeader, SIPHeaderNamesIms, ExtensionHeader{
+public class PAssertedService extends SIPHeader implements PAssertedServiceHeader, SIPHeaderNamesIms, ExtensionHeader {
 
-    private String subServiceIds;
-    private String subAppIds;
+	private String subServiceIds;
+	private String subAppIds;
 
-    protected PAssertedService(String name) {
-        super(NAME);
-    }
+	protected PAssertedService(String name) {
+		super(NAME);
+	}
 
-    public PAssertedService()
-    {
-        super(P_ASSERTED_SERVICE);
-    }
+	public PAssertedService() {
+		super(P_ASSERTED_SERVICE);
+	}
 
-    @Override
-    protected StringBuilder encodeBody(StringBuilder retval) {
+	@Override
+	protected StringBuilder encodeBody(StringBuilder retval) {
 //        StringBuilder retval = new StringBuilder();
 
-         retval.append(ParameterNamesIms.SERVICE_ID);
+		retval.append(ParameterNamesIms.SERVICE_ID);
 
-            if(this.subServiceIds!=null)
-            {
-                retval.append(ParameterNamesIms.SERVICE_ID_LABEL).append(".");
+		if (this.subServiceIds != null) {
+			retval.append(ParameterNamesIms.SERVICE_ID_LABEL).append(".");
 
-            retval.append(this.getSubserviceIdentifiers());
-            }
+			retval.append(this.getSubserviceIdentifiers());
+		}
 
-            else if(this.subAppIds!=null)
-            {
-                retval.append(ParameterNamesIms.APPLICATION_ID_LABEL).append(".");
-                retval.append(this.getApplicationIdentifiers());
-            }
+		else if (this.subAppIds != null) {
+			retval.append(ParameterNamesIms.APPLICATION_ID_LABEL).append(".");
+			retval.append(this.getApplicationIdentifiers());
+		}
 
-        return retval;
-    }
+		return retval;
+	}
 
-    public void setValue(String value) throws ParseException {
-        throw new ParseException(value,0);
+	public void setValue(String value) throws ParseException {
+		throw new ParseException(value, 0);
 
-    }
+	}
 
-    public String getApplicationIdentifiers() {
-        if(this.subAppIds.charAt(0)=='.')
-        {
-        	// https://java.net/jira/browse/JSIP-476 Adding trim to avoid parsing issues
-            return this.subAppIds.substring(1).trim();
-        }
-        return this.subAppIds;
-    }
+	public String getApplicationIdentifiers() {
+		if (this.subAppIds.charAt(0) == '.') {
+			// https://java.net/jira/browse/JSIP-476 Adding trim to avoid parsing issues
+			return this.subAppIds.substring(1).trim();
+		}
+		return this.subAppIds;
+	}
 
-    public String getSubserviceIdentifiers() {
-        if(this.subServiceIds.charAt(0)=='.')
-        {
-        	// https://java.net/jira/browse/JSIP-476 Adding trim to avoid parsing issues
-            return this.subServiceIds.substring(1).trim();
-        }
-        return this.subServiceIds;
-    }
-    public void setApplicationIdentifiers(String appids) {
-        this.subAppIds = appids;
+	public String getSubserviceIdentifiers() {
+		if (this.subServiceIds.charAt(0) == '.') {
+			// https://java.net/jira/browse/JSIP-476 Adding trim to avoid parsing issues
+			return this.subServiceIds.substring(1).trim();
+		}
+		return this.subServiceIds;
+	}
 
-    }
+	public void setApplicationIdentifiers(String appids) {
+		this.subAppIds = appids;
 
-    public void setSubserviceIdentifiers(String subservices) {
-        this.subServiceIds = subservices;
+	}
 
-    }
+	public void setSubserviceIdentifiers(String subservices) {
+		this.subServiceIds = subservices;
 
-    public boolean equals(Object other)
-    {
-        return (other instanceof PAssertedServiceHeader) && super.equals(other);
+	}
 
-    }
+	public boolean equals(Object other) {
+		return (other instanceof PAssertedServiceHeader) && super.equals(other);
 
+	}
 
-    public Object clone() {
-        PAssertedService retval = (PAssertedService) super.clone();
-        return retval;
-    }
-
+	public Object clone() {
+		PAssertedService retval = (PAssertedService) super.clone();
+		return retval;
+	}
 
 }

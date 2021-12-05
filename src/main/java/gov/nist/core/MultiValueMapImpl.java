@@ -34,166 +34,165 @@ import java.util.Set;
 
 public class MultiValueMapImpl<V> implements MultiValueMap<String, V>, Cloneable {
 	// jeand : lazy init of the map to reduce mem consumption
-    private HashMap<String, ArrayList<V>> map = null;
+	private HashMap<String, ArrayList<V>> map = null;
 
-    private static final long serialVersionUID = 4275505380960964605L;
+	private static final long serialVersionUID = 4275505380960964605L;
 
-    public MultiValueMapImpl() {
-        super();
-    }
+	public MultiValueMapImpl() {
+		super();
+	}
 
-    public List<V> put(String key, V value) {    	
-        ArrayList<V> keyList = null;
-        if(map != null) {
-        	keyList = map.get(key);
-        }
-        if (keyList == null) {
-            keyList = new ArrayList<V>();
-            getMap().put(key, keyList);
-        }
+	public List<V> put(String key, V value) {
+		ArrayList<V> keyList = null;
+		if (map != null) {
+			keyList = map.get(key);
+		}
+		if (keyList == null) {
+			keyList = new ArrayList<V>();
+			getMap().put(key, keyList);
+		}
 
-        keyList.add(value);
-        return keyList;
-    }
+		keyList.add(value);
+		return keyList;
+	}
 
-    public boolean containsValue(Object value) {
-        Set pairs = null;
-        if(map != null) {
-        	pairs = map.entrySet();
-        }
-        if (pairs == null)
-            return false;
+	public boolean containsValue(Object value) {
+		Set pairs = null;
+		if (map != null) {
+			pairs = map.entrySet();
+		}
+		if (pairs == null)
+			return false;
 
-        Iterator pairsIterator = pairs.iterator();
-        while (pairsIterator.hasNext()) {
-            Map.Entry keyValuePair = (Map.Entry) (pairsIterator.next());
-            ArrayList list = (ArrayList) (keyValuePair.getValue());
-            if (list.contains(value))
-                return true;
-        }
-        return false;
-    }
+		Iterator pairsIterator = pairs.iterator();
+		while (pairsIterator.hasNext()) {
+			Map.Entry keyValuePair = (Map.Entry) (pairsIterator.next());
+			ArrayList list = (ArrayList) (keyValuePair.getValue());
+			if (list.contains(value))
+				return true;
+		}
+		return false;
+	}
 
-    public void clear() {
-    	if(map != null) {
-	        Set pairs = map.entrySet();
-	        Iterator pairsIterator = pairs.iterator();
-	        while (pairsIterator.hasNext()) {
-	            Map.Entry keyValuePair = (Map.Entry) (pairsIterator.next());
-	            ArrayList list = (ArrayList) (keyValuePair.getValue());
-	            list.clear();
-	        }
-	        map.clear();
-    	}
-    }
+	public void clear() {
+		if (map != null) {
+			Set pairs = map.entrySet();
+			Iterator pairsIterator = pairs.iterator();
+			while (pairsIterator.hasNext()) {
+				Map.Entry keyValuePair = (Map.Entry) (pairsIterator.next());
+				ArrayList list = (ArrayList) (keyValuePair.getValue());
+				list.clear();
+			}
+			map.clear();
+		}
+	}
 
-    public Collection values() {
-    	if(map == null) {
-    		return new ArrayList();
-    	}
-        ArrayList returnList = new ArrayList(map.size());
+	public Collection values() {
+		if (map == null) {
+			return new ArrayList();
+		}
+		ArrayList returnList = new ArrayList(map.size());
 
-        Set pairs = map.entrySet();
-        Iterator pairsIterator = pairs.iterator();
-        while (pairsIterator.hasNext()) {
-            Map.Entry keyValuePair = (Map.Entry) (pairsIterator.next());
-            ArrayList list = (ArrayList) (keyValuePair.getValue());
+		Set pairs = map.entrySet();
+		Iterator pairsIterator = pairs.iterator();
+		while (pairsIterator.hasNext()) {
+			Map.Entry keyValuePair = (Map.Entry) (pairsIterator.next());
+			ArrayList list = (ArrayList) (keyValuePair.getValue());
 
-            Object[] values = list.toArray();
-            for (int ii = 0; ii < values.length; ii++) {
-                returnList.add(values[ii]);
-            }
-        }
-        return returnList;
-    }
+			Object[] values = list.toArray();
+			for (int ii = 0; ii < values.length; ii++) {
+				returnList.add(values[ii]);
+			}
+		}
+		return returnList;
+	}
 
-    public Object clone() {
-        MultiValueMapImpl obj = new MultiValueMapImpl<V>();
-        if(map != null) {
-        	obj.map = (HashMap<Object, ArrayList<V>>) this.map.clone();
-        }
-        return obj;
-    }
+	public Object clone() {
+		MultiValueMapImpl obj = new MultiValueMapImpl<V>();
+		if (map != null) {
+			obj.map = (HashMap<Object, ArrayList<V>>) this.map.clone();
+		}
+		return obj;
+	}
 
-    public int size() {
-    	if(map == null) {
-    		return 0;
-    	}
-        return this.map.size();
-    }
+	public int size() {
+		if (map == null) {
+			return 0;
+		}
+		return this.map.size();
+	}
 
-    public boolean containsKey(Object key) {
-    	if(map == null) {
-    		return false;
-    	}
-        return map.containsKey(key);
-    }
+	public boolean containsKey(Object key) {
+		if (map == null) {
+			return false;
+		}
+		return map.containsKey(key);
+	}
 
-    public Set entrySet() {
-    	if(map == null) {
-    		return new HashSet();
-    	}
-        return map.entrySet();
-    }
+	public Set entrySet() {
+		if (map == null) {
+			return new HashSet();
+		}
+		return map.entrySet();
+	}
 
-    public boolean isEmpty() {
-    	if(map == null) {
-    		return true;
-    	}
-        return map.isEmpty();
-    }
+	public boolean isEmpty() {
+		if (map == null) {
+			return true;
+		}
+		return map.isEmpty();
+	}
 
-    public Set<String> keySet() {
-    	if(map == null) {
-    		return new HashSet<String>();
-    	}
-        return this.map.keySet();
-    }
+	public Set<String> keySet() {
+		if (map == null) {
+			return new HashSet<String>();
+		}
+		return this.map.keySet();
+	}
 
-    public Object removeKV(String key, V item) {
-    	if(map == null) {
-    		return null;
-    	}
-        ArrayList<V> list = this.map.get(key);
-        if (list == null) {
-            return null;
-        } else {
-            return list.remove(item);
-        }
-    }
+	public Object removeKV(String key, V item) {
+		if (map == null) {
+			return null;
+		}
+		ArrayList<V> list = this.map.get(key);
+		if (list == null) {
+			return null;
+		} else {
+			return list.remove(item);
+		}
+	}
 
-    public List<V> get(Object key) {
-    	if(map == null) {
-    		return null;
-    	}
-        return map.get(key);
-    }
+	public List<V> get(Object key) {
+		if (map == null) {
+			return null;
+		}
+		return map.get(key);
+	}
 
-    public List<V> put(String key, List<V> value) {
-        return this.getMap().put(key,(ArrayList<V>) value);
-    }
+	public List<V> put(String key, List<V> value) {
+		return this.getMap().put(key, (ArrayList<V>) value);
+	}
 
-    public List<V> remove(Object key) {
-    	if(map == null) {
-    		return null;
-    	}
-        return map.remove(key);
-    }
-    
-    public void putAll(Map< ? extends String, ? extends List<V>> mapToPut) {
-        for (String k : mapToPut.keySet()) {
-            ArrayList<V> al = new ArrayList<V>();
-            al.addAll(mapToPut.get(k));
-            getMap().put(k, al);
-        }  
-    }
+	public List<V> remove(Object key) {
+		if (map == null) {
+			return null;
+		}
+		return map.remove(key);
+	}
 
+	public void putAll(Map<? extends String, ? extends List<V>> mapToPut) {
+		for (String k : mapToPut.keySet()) {
+			ArrayList<V> al = new ArrayList<V>();
+			al.addAll(mapToPut.get(k));
+			getMap().put(k, al);
+		}
+	}
 
 	/**
 	 * @return the map
 	 */
 	public HashMap<String, ArrayList<V>> getMap() {
-		if(map == null) {
+		if (map == null) {
 			map = new HashMap<String, ArrayList<V>>(0);
 		}
 		return map;

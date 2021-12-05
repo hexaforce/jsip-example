@@ -27,34 +27,35 @@
 * Product of NIST/ITL Advanced Networking Technologies Division (ANTD).        *
 *******************************************************************************/
 package gov.nist.javax.sip.header;
+
 import javax.sip.header.InReplyToHeader;
 
 /**
-* In-Reply-To SIP header. Keeps a list of InReplyToHeader
-*
-* @version 1.2 $Revision: 1.6 $ $Date: 2009-07-17 18:57:31 $
-* @since 1.1
-*
-*@author M. Ranganathan   <br/>
-*
-*
-*
-*/
-public final class InReplyToList extends SIPHeaderList<InReplyTo>  {
+ * In-Reply-To SIP header. Keeps a list of InReplyToHeader
+ *
+ * @version 1.2 $Revision: 1.6 $ $Date: 2009-07-17 18:57:31 $
+ * @since 1.1
+ *
+ * @author M. Ranganathan <br/>
+ *
+ *
+ *
+ */
+public final class InReplyToList extends SIPHeaderList<InReplyTo> {
 
+	private static final long serialVersionUID = -7993498496830999237L;
 
-    private static final long serialVersionUID = -7993498496830999237L;
+	public Object clone() {
+		InReplyToList retval = new InReplyToList();
+		retval.clonehlist(this.hlist);
+		return retval;
+	}
 
-    public Object clone() {
-        InReplyToList retval = new InReplyToList();
-        retval.clonehlist(this.hlist);
-        return retval;
-    }
-
-    /** Default constructor
-     */
-    public InReplyToList() {
-        super(InReplyTo.class, InReplyToHeader.NAME);
-    }
+	/**
+	 * Default constructor
+	 */
+	public InReplyToList() {
+		super(InReplyTo.class, InReplyToHeader.NAME);
+	}
 
 }

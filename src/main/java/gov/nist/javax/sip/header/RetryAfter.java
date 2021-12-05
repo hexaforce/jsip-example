@@ -39,155 +39,158 @@ import javax.sip.header.RetryAfterHeader;
  *
  * @version 1.2 $Revision: 1.10 $ $Date: 2010-05-06 14:07:47 $
  *
- * @author M. Ranganathan   <br/>
+ * @author M. Ranganathan <br/>
  * @author Olivier Deruelle <br/>
  *
  *
  */
 public class RetryAfter extends ParametersHeader implements RetryAfterHeader {
 
-    /**
-     * Comment for <code>serialVersionUID</code>
-     */
-    private static final long serialVersionUID = -1029458515616146140L;
+	/**
+	 * Comment for <code>serialVersionUID</code>
+	 */
+	private static final long serialVersionUID = -1029458515616146140L;
 
-    /** constant DURATION parameter.
-     */
-    public static final String DURATION = ParameterNames.DURATION;
+	/**
+	 * constant DURATION parameter.
+	 */
+	public static final String DURATION = ParameterNames.DURATION;
 
-    /** duration field
-     */
-    protected Integer retryAfter = Integer.valueOf(0);
+	/**
+	 * duration field
+	 */
+	protected Integer retryAfter = Integer.valueOf(0);
 
-    /** comment field
-     */
-    protected String comment;
+	/**
+	 * comment field
+	 */
+	protected String comment;
 
-    /** Default constructor
-     */
-    public RetryAfter() {
-        super(NAME);
-    }
+	/**
+	 * Default constructor
+	 */
+	public RetryAfter() {
+		super(NAME);
+	}
 
-    /** Encode body of this into cannonical form.
-     * @return encoded body
-     */
-    public StringBuilder encodeBody(StringBuilder retval) {
+	/**
+	 * Encode body of this into cannonical form.
+	 * 
+	 * @return encoded body
+	 */
+	public StringBuilder encodeBody(StringBuilder retval) {
 //        StringBuilder s = new StringBuilder();
-        
-        if (retryAfter != null)
-            retval.append(retryAfter);
 
-        if (comment != null)
-            retval.append(SP + LPAREN + comment + RPAREN);
+		if (retryAfter != null)
+			retval.append(retryAfter);
 
-        if (!parameters.isEmpty()) {
-            retval.append(SEMICOLON); 
-            parameters.encode(retval);
-        }
+		if (comment != null)
+			retval.append(SP + LPAREN + comment + RPAREN);
 
-        return retval;
-    }
+		if (!parameters.isEmpty()) {
+			retval.append(SEMICOLON);
+			parameters.encode(retval);
+		}
 
-    /** Boolean function
-     * @return true if comment exist, false otherwise
-     */
-    public boolean hasComment() {
-        return comment != null;
-    }
+		return retval;
+	}
 
-    /** remove comment field
-     */
-    public void removeComment() {
-        comment = null;
-    }
+	/**
+	 * Boolean function
+	 * 
+	 * @return true if comment exist, false otherwise
+	 */
+	public boolean hasComment() {
+		return comment != null;
+	}
 
-    /** remove duration field
-     */
-    public void removeDuration() {
-        super.removeParameter(DURATION);
-    }
+	/**
+	 * remove comment field
+	 */
+	public void removeComment() {
+		comment = null;
+	}
 
-    /**
-     * Sets the retry after value of the RetryAfterHeader.
-     * The retry after value MUST be greater than zero and
-     * MUST be less than 2**31.
-     *
-     * @param retryAfter - the new retry after value of this RetryAfterHeader
-     * @throws InvalidArgumentException if supplied value is less than zero.
-     *
-     */
+	/**
+	 * remove duration field
+	 */
+	public void removeDuration() {
+		super.removeParameter(DURATION);
+	}
 
-    public void setRetryAfter(int retryAfter) throws InvalidArgumentException {
-        if (retryAfter < 0)
-            throw new InvalidArgumentException(
-                "invalid parameter " + retryAfter);
-        this.retryAfter = Integer.valueOf(retryAfter);
-    }
+	/**
+	 * Sets the retry after value of the RetryAfterHeader. The retry after value MUST be greater than zero and MUST be less than 2**31.
+	 *
+	 * @param retryAfter - the new retry after value of this RetryAfterHeader
+	 * @throws InvalidArgumentException if supplied value is less than zero.
+	 *
+	 */
 
-    /**
-     * Gets the retry after value of the RetryAfterHeader. This retry after
-     * value is relative time.
-     *
-     * @return the retry after value of the RetryAfterHeader.
-     *
-     */
+	public void setRetryAfter(int retryAfter) throws InvalidArgumentException {
+		if (retryAfter < 0)
+			throw new InvalidArgumentException("invalid parameter " + retryAfter);
+		this.retryAfter = Integer.valueOf(retryAfter);
+	}
 
-    public int getRetryAfter() {
-        return retryAfter.intValue();
-    }
+	/**
+	 * Gets the retry after value of the RetryAfterHeader. This retry after value is relative time.
+	 *
+	 * @return the retry after value of the RetryAfterHeader.
+	 *
+	 */
 
-    /**
-     * Gets the comment of RetryAfterHeader.
-     *
-     * @return the comment of this RetryAfterHeader, return null if no comment
-     * is available.
-     */
+	public int getRetryAfter() {
+		return retryAfter.intValue();
+	}
 
-    public String getComment() {
-        return comment;
-    }
+	/**
+	 * Gets the comment of RetryAfterHeader.
+	 *
+	 * @return the comment of this RetryAfterHeader, return null if no comment is available.
+	 */
 
-    /**
-     * Sets the comment value of the RetryAfterHeader.
-     *
-     * @param comment - the new comment string value of the RetryAfterHeader.
-     * @throws ParseException which signals that an error has been reached
-     * unexpectedly while parsing the comment.
-     */
+	public String getComment() {
+		return comment;
+	}
 
-    public void setComment(String comment) throws ParseException {
-        if (comment == null)
-            throw new NullPointerException("the comment parameter is null");
-        this.comment = comment;
-    }
+	/**
+	 * Sets the comment value of the RetryAfterHeader.
+	 *
+	 * @param comment - the new comment string value of the RetryAfterHeader.
+	 * @throws ParseException which signals that an error has been reached unexpectedly while parsing the comment.
+	 */
 
-    /**
-     * Sets the duration value of the RetryAfterHeader. The retry after value
-     * MUST be greater than zero and MUST be less than 2**31.
-     *
-     * @param duration - the new duration value of this RetryAfterHeader
-     * @throws InvalidArgumentException if supplied value is less than zero.
-     *
-     */
+	public void setComment(String comment) throws ParseException {
+		if (comment == null)
+			throw new NullPointerException("the comment parameter is null");
+		this.comment = comment;
+	}
 
-    public void setDuration(int duration) throws InvalidArgumentException {
-        if (duration < 0)
-            throw new InvalidArgumentException("the duration parameter is <0");
-        this.setParameter(DURATION, duration);
-    }
+	/**
+	 * Sets the duration value of the RetryAfterHeader. The retry after value MUST be greater than zero and MUST be less than 2**31.
+	 *
+	 * @param duration - the new duration value of this RetryAfterHeader
+	 * @throws InvalidArgumentException if supplied value is less than zero.
+	 *
+	 */
 
-    /**
-     * Gets the duration value of the RetryAfterHeader. This duration value
-     * is relative time.
-     *
-     * @return the duration value of the RetryAfterHeader, return zero if not
-     * set.
-     *
-     */
+	public void setDuration(int duration) throws InvalidArgumentException {
+		if (duration < 0)
+			throw new InvalidArgumentException("the duration parameter is <0");
+		this.setParameter(DURATION, duration);
+	}
 
-    public int getDuration() {
-      if (this.getParameter(DURATION) == null) return -1;
-      else return super.getParameterAsInt(DURATION);
-    }
+	/**
+	 * Gets the duration value of the RetryAfterHeader. This duration value is relative time.
+	 *
+	 * @return the duration value of the RetryAfterHeader, return zero if not set.
+	 *
+	 */
+
+	public int getDuration() {
+		if (this.getParameter(DURATION) == null)
+			return -1;
+		else
+			return super.getParameterAsInt(DURATION);
+	}
 }

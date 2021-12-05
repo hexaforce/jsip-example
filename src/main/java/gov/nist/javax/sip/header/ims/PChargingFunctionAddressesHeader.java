@@ -36,18 +36,13 @@ import java.util.ListIterator;
 import javax.sip.header.Header;
 import javax.sip.header.Parameters;
 
-
 /**
- * P-Charging-Function-Addresses header -
- * Private Header: RFC 3455.
+ * P-Charging-Function-Addresses header - Private Header: RFC 3455.
  *
- * There is a need to inform each SIP proxy involved in a transaction about the common
- * charging functional entities to receive the generated charging records or charging events.
+ * There is a need to inform each SIP proxy involved in a transaction about the common charging functional entities to receive the generated charging records or charging events.
  * <ul>
- * <li>
- *   - CCF is used for off-line charging (e.g., for postpaid account charging).
- * <li>
- *   - ECF is used for on-line charging (e.g., for pre-paid account charging).
+ * <li>- CCF is used for off-line charging (e.g., for postpaid account charging).
+ * <li>- ECF is used for on-line charging (e.g., for pre-paid account charging).
  * </ul>
  * Only one instance of the header MUST be present in a particular request or response.
  *
@@ -75,68 +70,89 @@ import javax.sip.header.Parameters;
  * @author ALEXANDRE MIGUEL SILVA SANTOS - Nú 10045401
  */
 
-
-
 public interface PChargingFunctionAddressesHeader extends Parameters, Header {
 
-    /**
-     * Name of PChargingFunctionAddressesHeader
-     */
-    public final static String NAME = "P-Charging-Function-Addresses";
+	/**
+	 * Name of PChargingFunctionAddressesHeader
+	 */
+	public final static String NAME = "P-Charging-Function-Addresses";
 
+	/**
+	 * <p>
+	 * Set the Charging Collection Function (CCF) Address
+	 * </p>
+	 * 
+	 * @param ccfAddress - the address to set in the CCF parameter
+	 * @throws ParseException
+	 */
+	public void setChargingCollectionFunctionAddress(String ccfAddress) throws ParseException;
 
-    /**
-     * <p>Set the Charging Collection Function (CCF) Address</p>
-     * @param ccfAddress - the address to set in the CCF parameter
-     * @throws ParseException
-     */
-    public void setChargingCollectionFunctionAddress(String ccfAddress) throws ParseException;
+	/**
+	 * <p>
+	 * Add another Charging Collection Function (CCF) Address to this header
+	 * </p>
+	 * 
+	 * @param ccfAddress - the address to set in the CCF parameter
+	 * @throws ParseException
+	 */
+	public void addChargingCollectionFunctionAddress(String ccfAddress) throws ParseException;
 
-    /**
-     * <p>Add another Charging Collection Function (CCF) Address to this header</p>
-     * @param ccfAddress - the address to set in the CCF parameter
-     * @throws ParseException
-     */
-    public void addChargingCollectionFunctionAddress(String ccfAddress) throws ParseException;
+	/**
+	 * <p>
+	 * Remove a Charging Collection Function (CCF) Address set in this header
+	 * </p>
+	 * 
+	 * @param ccfAddress - the address in the CCF parameter to remove
+	 * @throws ParseException if the address was not removed
+	 */
+	public void removeChargingCollectionFunctionAddress(String ccfAddress) throws ParseException;
 
-    /**
-     * <p>Remove a Charging Collection Function (CCF) Address set in this header</p>
-     * @param ccfAddress - the address in the CCF parameter to remove
-     * @throws ParseException if the address was not removed
-     */
-    public void removeChargingCollectionFunctionAddress(String ccfAddress) throws ParseException;
+	/**
+	 * <p>
+	 * Get all the Charging Collection Function (CCF) Addresses set in this header
+	 * </p>
+	 * 
+	 * @return ListIterator that constains all CCF addresses of this header
+	 */
+	public ListIterator getChargingCollectionFunctionAddresses();
 
-    /**
-     * <p>Get all the Charging Collection Function (CCF) Addresses set in this header</p>
-     * @return ListIterator that constains all CCF addresses of this header
-     */
-    public ListIterator getChargingCollectionFunctionAddresses();
+	/**
+	 * <p>
+	 * Set the Event Charging Function (ECF) Address
+	 * </p>
+	 * 
+	 * @param ecfAddress - the address to set in the ECF parameter
+	 * @throws ParseException
+	 */
+	public void setEventChargingFunctionAddress(String ecfAddress) throws ParseException;
 
-    /**
-     * <p>Set the Event Charging Function (ECF) Address</p>
-     * @param ecfAddress - the address to set in the ECF parameter
-     * @throws ParseException
-     */
-    public void setEventChargingFunctionAddress(String ecfAddress)throws ParseException;
+	/**
+	 * <p>
+	 * Add another Event Charging Function (ECF) Address to this header
+	 * </p>
+	 * 
+	 * @param ecfAddress - the address to set in the ECF parameter
+	 * @throws ParseException
+	 */
+	public void addEventChargingFunctionAddress(String ecfAddress) throws ParseException;
 
-    /**
-     * <p>Add another Event Charging Function (ECF) Address to this header</p>
-     * @param ecfAddress - the address to set in the ECF parameter
-     * @throws ParseException
-     */
-    public void addEventChargingFunctionAddress(String ecfAddress) throws ParseException;
+	/**
+	 * <p>
+	 * Remove a Event Charging Function (ECF) Address set in this header
+	 * </p>
+	 * 
+	 * @param ecfAddress - the address in the ECF parameter to remove
+	 * @throws ParseException if the address was not removed
+	 */
+	public void removeEventChargingFunctionAddress(String ecfAddress) throws ParseException;
 
-    /**
-     * <p>Remove a Event Charging Function (ECF) Address set in this header</p>
-     * @param ecfAddress - the address in the ECF parameter to remove
-     * @throws ParseException if the address was not removed
-     */
-    public void removeEventChargingFunctionAddress(String ecfAddress) throws ParseException;
-
-    /**
-     * <p>Get all the Event Charging Function (ECF) Addresses set in this header</p>
-     * @return ListIterator that constains all CCF addresses of this header
-     */
-    public ListIterator getEventChargingFunctionAddresses();
+	/**
+	 * <p>
+	 * Get all the Event Charging Function (ECF) Addresses set in this header
+	 * </p>
+	 * 
+	 * @return ListIterator that constains all CCF addresses of this header
+	 */
+	public ListIterator getEventChargingFunctionAddresses();
 
 }

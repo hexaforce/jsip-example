@@ -1,4 +1,5 @@
 package gov.nist.javax.sip.header.ims;
+
 /*
 * Conditions Of Use
 *
@@ -34,133 +35,112 @@ import gov.nist.javax.sip.header.AddressParametersHeader;
 
 /**
  *
- * @author aayush.bhatnagar
- * Rancore Technologies Pvt Ltd, Mumbai India.
+ * @author aayush.bhatnagar Rancore Technologies Pvt Ltd, Mumbai India.
  *
- * This is the class used for encoding of the P-Served-User header
+ *         This is the class used for encoding of the P-Served-User header
  *
  *
  */
-public class PServedUser extends AddressParametersHeader implements PServedUserHeader, SIPHeaderNamesIms, ExtensionHeader{
+public class PServedUser extends AddressParametersHeader implements PServedUserHeader, SIPHeaderNamesIms, ExtensionHeader {
 
+	public PServedUser(AddressImpl address) {
+		super(P_SERVED_USER);
+		this.address = address;
+	}
 
-    public PServedUser(AddressImpl address)
-    {
-        super(P_SERVED_USER);
-        this.address = address;
-    }
+	public PServedUser() {
+		super(NAME);
+	}
 
-    public PServedUser()
-    {
-        super(NAME);
-    }
+	public String getRegistrationState() {
 
-    public String getRegistrationState() {
+		return getParameter(ParameterNamesIms.REGISTRATION_STATE);
+	}
 
-        return getParameter(ParameterNamesIms.REGISTRATION_STATE);
-    }
+	public String getSessionCase() {
 
-    public String getSessionCase() {
+		return getParameter(ParameterNamesIms.SESSION_CASE);
+	}
 
-        return getParameter(ParameterNamesIms.SESSION_CASE);
-    }
+	public void setRegistrationState(String registrationState) {
 
-    public void setRegistrationState(String registrationState) {
+		if ((registrationState != null)) {
+			if (registrationState.equals("reg") || registrationState.equals("unreg")) {
+				try {
+					setParameter(ParameterNamesIms.REGISTRATION_STATE, registrationState);
+				} catch (ParseException e) {
+					e.printStackTrace();
+				}
 
-        if((registrationState!=null))
-        {
-            if(registrationState.equals("reg")||registrationState.equals("unreg"))
-            {
-                try {
-                    setParameter(ParameterNamesIms.REGISTRATION_STATE, registrationState);
-                } catch (ParseException e) {
-                    e.printStackTrace();
-                }
+			} else {
+				try {
+					throw new InvalidArgumentException("Value can be either reg or unreg");
+				} catch (InvalidArgumentException e) {
+					e.printStackTrace();
+				}
+			}
 
-            }
-              else
-              {
-                  try {
-                      throw new InvalidArgumentException("Value can be either reg or unreg");
-                  } catch (InvalidArgumentException e) {
-                         e.printStackTrace();
-                    }
-              }
+		} else {
+			throw new NullPointerException("regstate Parameter value is null");
+		}
 
-        }
-        else
-        {
-            throw new NullPointerException("regstate Parameter value is null");
-        }
+	}
 
-    }
+	public void setSessionCase(String sessionCase) {
 
-    public void setSessionCase(String sessionCase) {
+		if ((sessionCase != null)) {
+			if ((sessionCase.equals("orig")) || (sessionCase.equals("term"))) {
+				try {
+					setParameter(ParameterNamesIms.SESSION_CASE, sessionCase);
+				} catch (ParseException e) {
+					e.printStackTrace();
+				}
+			} else {
+				try {
+					throw new InvalidArgumentException("Value can be either orig or term");
+				} catch (InvalidArgumentException e) {
+					e.printStackTrace();
+				}
 
-        if((sessionCase!=null))
-        {
-            if((sessionCase.equals("orig"))||(sessionCase.equals("term")))
-            {
-                try {
-                    setParameter(ParameterNamesIms.SESSION_CASE, sessionCase);
-                } catch (ParseException e) {
-                    e.printStackTrace();
-                }
-            }
-              else
-              {
-                  try {
-                    throw new InvalidArgumentException("Value can be either orig or term");
-                } catch (InvalidArgumentException e) {
-                    e.printStackTrace();
-                }
+			}
+		} else {
+			throw new NullPointerException("sess-case Parameter value is null");
+		}
 
-              }
-        }
-        else
-        {
-            throw new NullPointerException("sess-case Parameter value is null");
-        }
+	}
 
-    }
-
-    @Override
-    protected StringBuilder encodeBody(StringBuilder retval) {
+	@Override
+	protected StringBuilder encodeBody(StringBuilder retval) {
 
 //        StringBuilder retval = new StringBuilder();
 
-        retval.append(address.encode());
+		retval.append(address.encode());
 
-        if(parameters.containsKey(ParameterNamesIms.REGISTRATION_STATE))
-            retval.append(SEMICOLON).append(ParameterNamesIms.REGISTRATION_STATE).append(EQUALS)
-            .append(this.getRegistrationState());
+		if (parameters.containsKey(ParameterNamesIms.REGISTRATION_STATE))
+			retval.append(SEMICOLON).append(ParameterNamesIms.REGISTRATION_STATE).append(EQUALS).append(this.getRegistrationState());
 
-        if(parameters.containsKey(ParameterNamesIms.SESSION_CASE))
-            retval.append(SEMICOLON).append(ParameterNamesIms.SESSION_CASE).append(EQUALS)
-            .append(this.getSessionCase());
+		if (parameters.containsKey(ParameterNamesIms.SESSION_CASE))
+			retval.append(SEMICOLON).append(ParameterNamesIms.SESSION_CASE).append(EQUALS).append(this.getSessionCase());
 
-        return retval;
-    }
+		return retval;
+	}
 
-    public void setValue(String value) throws ParseException {
-        throw new ParseException(value,0);
+	public void setValue(String value) throws ParseException {
+		throw new ParseException(value, 0);
 
-    }
+	}
 
-    public boolean equals(Object other)
-    {
-         if(other instanceof PServedUser)
-         {
-            final PServedUserHeader psu = (PServedUserHeader)other;
-            return this.getAddress().equals(((PServedUser) other).getAddress());
-         }
-        return false;
-    }
+	public boolean equals(Object other) {
+		if (other instanceof PServedUser) {
+			final PServedUserHeader psu = (PServedUserHeader) other;
+			return this.getAddress().equals(((PServedUser) other).getAddress());
+		}
+		return false;
+	}
 
-
-    public Object clone() {
-        PServedUser retval = (PServedUser) super.clone();
-        return retval;
-    }
+	public Object clone() {
+		PServedUser retval = (PServedUser) super.clone();
+		return retval;
+	}
 
 }

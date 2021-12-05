@@ -42,65 +42,60 @@ import gov.nist.javax.sip.parser.TokenTypes;
  * @author ALEXANDRE MIGUEL SILVA SANTOS
  */
 
-
 public class PathParser extends AddressParametersParser implements TokenTypes {
 
-    /**
-     * Constructor
-     */
-    public PathParser(String path) {
-        super(path);
+	/**
+	 * Constructor
+	 */
+	public PathParser(String path) {
+		super(path);
 
-    }
+	}
 
-    protected PathParser(Lexer lexer) {
-        super(lexer);
+	protected PathParser(Lexer lexer) {
+		super(lexer);
 
-    }
+	}
 
+	/**
+	 * parse the String message and generate the RecordRoute List Object
+	 * 
+	 * @return SIPHeader the RecordRoute List object
+	 * @throws ParseException if errors occur during the parsing
+	 */
 
+	public SIPHeader parse() throws ParseException {
 
+		PathList pathList = new PathList();
 
-    /**
-     * parse the String message and generate the RecordRoute List Object
-     * @return SIPHeader the RecordRoute List object
-     * @throws ParseException if errors occur during the parsing
-     */
+		if (debug)
+			dbg_enter("PathParser.parse");
 
-    public SIPHeader parse() throws ParseException {
+		try {
+			this.lexer.match(TokenTypes.PATH);
+			this.lexer.SPorHT();
+			this.lexer.match(':');
+			this.lexer.SPorHT();
+			while (true) {
+				Path path = new Path();
+				super.parse(path);
+				pathList.add(path);
+				this.lexer.SPorHT();
+				char la = lexer.lookAhead(0);
+				if (la == ',') {
+					this.lexer.match(',');
+					this.lexer.SPorHT();
+				} else if (la == '\n')
+					break;
+				else
+					throw createParseException("unexpected char");
+			}
+			return pathList;
+		} finally {
+			if (debug)
+				dbg_leave("PathParser.parse");
+		}
 
-        PathList pathList = new PathList();
-
-        if (debug)
-            dbg_enter("PathParser.parse");
-
-        try {
-            this.lexer.match(TokenTypes.PATH);
-            this.lexer.SPorHT();
-            this.lexer.match(':');
-            this.lexer.SPorHT();
-            while (true) {
-                Path path = new Path();
-                super.parse(path);
-                pathList.add(path);
-                this.lexer.SPorHT();
-                char la = lexer.lookAhead(0);
-                if (la == ',') {
-                    this.lexer.match(',');
-                    this.lexer.SPorHT();
-                } else if (la == '\n')
-                    break;
-                else
-                    throw createParseException("unexpected char");
-            }
-            return pathList;
-        } finally {
-            if (debug)
-                dbg_leave("PathParser.parse");
-        }
-
-    }
-
-
+	}
 
 }

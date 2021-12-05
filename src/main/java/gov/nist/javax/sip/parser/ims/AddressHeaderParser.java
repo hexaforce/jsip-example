@@ -43,31 +43,28 @@ import gov.nist.javax.sip.parser.Lexer;
 
 abstract class AddressHeaderParser extends HeaderParser {
 
+	protected AddressHeaderParser(Lexer lexer) {
+		super(lexer);
+	}
 
-    protected AddressHeaderParser(Lexer lexer) {
-        super(lexer);
-    }
+	protected AddressHeaderParser(String buffer) {
+		super(buffer);
+	}
 
-    protected AddressHeaderParser(String buffer) {
-        super(buffer);
-    }
+	protected void parse(AddressHeaderIms addressHeader) throws ParseException {
+		if (debug)
+			dbg_enter("AddressHeaderParser.parse");
+		try {
+			AddressParser addressParser = new AddressParser(this.getLexer());
+			AddressImpl addr = addressParser.address(true);
+			addressHeader.setAddress(addr);
 
-    protected void parse(AddressHeaderIms addressHeader)
-        throws ParseException {
-    	if (debug)
-    		dbg_enter("AddressHeaderParser.parse");
-        try {
-            AddressParser addressParser = new AddressParser(this.getLexer());
-            AddressImpl addr = addressParser.address(true);
-            addressHeader.setAddress(addr);
-
-
-        } catch (ParseException ex) {
-            throw ex;
-        } finally {
-        	if (debug)
-        		dbg_leave("AddressParametersParser.parse");
-        }
-    }
+		} catch (ParseException ex) {
+			throw ex;
+		} finally {
+			if (debug)
+				dbg_leave("AddressParametersParser.parse");
+		}
+	}
 
 }

@@ -29,46 +29,43 @@ public final class SCTPMessageProcessor extends MessageProcessor implements Runn
 	private Selector selector;
 	private SelectionKey key;
 	private boolean isRunning, doClose;
-	
-	private final Set<SCTPMessageChannel> channels 
-		= new ConcurrentSkipListSet<SCTPMessageChannel>();
-	
+
+	private final Set<SCTPMessageChannel> channels = new ConcurrentSkipListSet<SCTPMessageChannel>();
+
 	/**
 	 * Constructor, called via Class.newInstance() by SIPTransactionStack
 	 */
 	public SCTPMessageProcessor() {
-		super( "sctp" );
+		super("sctp");
 	}
 
-	Selector getSelector() { return selector; }
-	
-	SelectionKey registerChannel( SCTPMessageChannel c, SctpChannel channel ) 
-		throws ClosedChannelException {
+	Selector getSelector() {
+		return selector;
+	}
+
+	SelectionKey registerChannel(SCTPMessageChannel c, SctpChannel channel) throws ClosedChannelException {
 		synchronized (this) {
 			selector.wakeup();
-			return channel.register( selector, SelectionKey.OP_READ, c );
+			return channel.register(selector, SelectionKey.OP_READ, c);
 		}
-	}
-	
-	@Override
-	public MessageChannel createMessageChannel(HostPort targetHostPort)
-			throws IOException {		
-		return this.createMessageChannel( targetHostPort.getInetAddress(), targetHostPort.getPort() );
 	}
 
 	@Override
-	public MessageChannel createMessageChannel(InetAddress targetHost, int port)
-			throws IOException {
-		
-		SCTPMessageChannel c = new SCTPMessageChannel( this, 
-				new InetSocketAddress(targetHost,port) );
-		channels.add( c );
+	public MessageChannel createMessageChannel(HostPort targetHostPort) throws IOException {
+		return this.createMessageChannel(targetHostPort.getInetAddress(), targetHostPort.getPort());
+	}
+
+	@Override
+	public MessageChannel createMessageChannel(InetAddress targetHost, int port) throws IOException {
+
+		SCTPMessageChannel c = new SCTPMessageChannel(this, new InetSocketAddress(targetHost, port));
+		channels.add(c);
 		return c;
 	}
 
 	@Override
-	public int getDefaultTargetPort() {		
-		return 5060;	// same as UDP and TCP
+	public int getDefaultTargetPort() {
+		return 5060; // same as UDP and TCP
 	}
 
 	@Override
@@ -95,29 +92,29 @@ public final class SCTPMessageProcessor extends MessageProcessor implements Runn
 		try {
 			do {
 				int n = selector.select();
-				if (n>0) {
+				if (n > 0) {
 					Iterator<SelectionKey> i = selector.selectedKeys().iterator();
-					while ( i.hasNext() ) {
+					while (i.hasNext()) {
 						SelectionKey key = i.next();
 						i.remove();
-						if ( key.isReadable() ) {
+						if (key.isReadable()) {
 							SCTPMessageChannel channel = (SCTPMessageChannel) key.attachment();
 							channel.readMessages();
 						} else if (key.isAcceptable()) {
 							SctpChannel ch = sctpServerChannel.accept();
-							SCTPMessageChannel c = new SCTPMessageChannel( this, ch );
-							channels.add( c );
+							SCTPMessageChannel c = new SCTPMessageChannel(this, ch);
+							channels.add(c);
 						}
 					}
 				}
-				
+
 				synchronized (this) {
 					if (doClose) {
 						selector.close();
 						return;
 					}
-				}				
-			} while ( selector.isOpen() );
+				}
+			} while (selector.isOpen());
 		} catch (IOException ioe) {
 			ioe.printStackTrace();
 			try {
@@ -133,34 +130,34 @@ public final class SCTPMessageProcessor extends MessageProcessor implements Runn
 	@Override
 	public void start() throws IOException {
 
-		this.sctpServerChannel = SctpServerChannel.open();		
-		sctpServerChannel.bind( new InetSocketAddress(this.getIpAddress(),this.getPort()) );
-		sctpServerChannel.configureBlocking( false );
-		
+		this.sctpServerChannel = SctpServerChannel.open();
+		sctpServerChannel.bind(new InetSocketAddress(this.getIpAddress(), this.getPort()));
+		sctpServerChannel.configureBlocking(false);
+
 		this.selector = Selector.open();
-		this.key = sctpServerChannel.register( selector, SelectionKey.OP_ACCEPT );
-				
+		this.key = sctpServerChannel.register(selector, SelectionKey.OP_ACCEPT);
+
 		// Start a daemon thread to handle reception
 		this.isRunning = true;
-        Thread thread = new Thread(this);
-        thread.setDaemon(true);
-        thread.setName("SCTPMessageProcessorThread");
-        thread.setPriority(Thread.MAX_PRIORITY);
-        thread.start();
+		Thread thread = new Thread(this);
+		thread.setDaemon(true);
+		thread.setName("SCTPMessageProcessorThread");
+		thread.setPriority(Thread.MAX_PRIORITY);
+		thread.start();
 	}
 
 	@Override
 	public void stop() {
 		this.isRunning = false;
 		this.doClose = true;
-		
-		for ( SCTPMessageChannel c : channels ) {
-			c.closeNoRemove();	// avoids call to removeChannel -> ConcurrentModification
+
+		for (SCTPMessageChannel c : channels) {
+			c.closeNoRemove(); // avoids call to removeChannel -> ConcurrentModification
 		}
 		channels.clear();
 		try {
 			key.cancel();
-			sctpServerChannel.close();			
+			sctpServerChannel.close();
 		} catch (IOException e) {
 			e.printStackTrace();
 		} finally {
@@ -171,7 +168,7 @@ public final class SCTPMessageProcessor extends MessageProcessor implements Runn
 	}
 
 	void removeChannel(SCTPMessageChannel messageChannel) {
-		channels.remove( messageChannel );
+		channels.remove(messageChannel);
 	}
 
 }

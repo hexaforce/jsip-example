@@ -31,30 +31,24 @@ import java.net.InetAddress;
 import javax.sip.ListeningPoint;
 
 /**
- * Default stack implementation of the MessageProcessorFactory.
- * This Factory creates MessageProcessor instances using the Old IO (as opposed to NIO)
+ * Default stack implementation of the MessageProcessorFactory. This Factory creates MessageProcessor instances using the Old IO (as opposed to NIO)
  * 
  * @author jean.deruelle@gmail.com
  *
  */
 public class OIOMessageProcessorFactory implements MessageProcessorFactory {
 
-	public MessageProcessor createMessageProcessor(
-			SIPTransactionStack sipStack, InetAddress ipAddress, int port,
-			String transport) throws IOException {
+	public MessageProcessor createMessageProcessor(SIPTransactionStack sipStack, InetAddress ipAddress, int port, String transport) throws IOException {
 		if (transport.equalsIgnoreCase(ListeningPoint.UDP)) {
-			UDPMessageProcessor udpMessageProcessor = new UDPMessageProcessor(
-					ipAddress, sipStack, port);			
+			UDPMessageProcessor udpMessageProcessor = new UDPMessageProcessor(ipAddress, sipStack, port);
 			sipStack.udpFlag = true;
 			return udpMessageProcessor;
 		} else if (transport.equalsIgnoreCase(ListeningPoint.TCP)) {
-			TCPMessageProcessor tcpMessageProcessor = new TCPMessageProcessor(
-					ipAddress, sipStack, port);			
+			TCPMessageProcessor tcpMessageProcessor = new TCPMessageProcessor(ipAddress, sipStack, port);
 			// this.tcpFlag = true;
 			return tcpMessageProcessor;
 		} else if (transport.equalsIgnoreCase(ListeningPoint.TLS)) {
-			TLSMessageProcessor tlsMessageProcessor = new TLSMessageProcessor(
-					ipAddress, sipStack, port);			
+			TLSMessageProcessor tlsMessageProcessor = new TLSMessageProcessor(ipAddress, sipStack, port);
 			// this.tlsFlag = true;
 			return tlsMessageProcessor;
 		} else if (transport.equalsIgnoreCase(ListeningPoint.SCTP)) {
@@ -63,20 +57,16 @@ public class OIOMessageProcessorFactory implements MessageProcessorFactory {
 			// jar
 			// Try to load it indirectly, if fails report an error
 			try {
-				Class<?> mpc = ClassLoader.getSystemClassLoader().loadClass(
-						"gov.nist.javax.sip.stack.sctp.SCTPMessageProcessor");
+				Class<?> mpc = ClassLoader.getSystemClassLoader().loadClass("gov.nist.javax.sip.stack.sctp.SCTPMessageProcessor");
 				MessageProcessor mp = (MessageProcessor) mpc.newInstance();
-				mp.initialize(ipAddress, port, sipStack);				
+				mp.initialize(ipAddress, port, sipStack);
 				return mp;
 			} catch (ClassNotFoundException e) {
-				throw new IllegalArgumentException(
-						"SCTP not supported (needs Java 7 and SCTP jar in classpath)");
+				throw new IllegalArgumentException("SCTP not supported (needs Java 7 and SCTP jar in classpath)");
 			} catch (InstantiationException ie) {
-				throw new IllegalArgumentException("Error initializing SCTP",
-						ie);
+				throw new IllegalArgumentException("Error initializing SCTP", ie);
 			} catch (IllegalAccessException ie) {
-				throw new IllegalArgumentException("Error initializing SCTP",
-						ie);
+				throw new IllegalArgumentException("Error initializing SCTP", ie);
 			}
 		} else {
 			throw new IllegalArgumentException("bad transport");

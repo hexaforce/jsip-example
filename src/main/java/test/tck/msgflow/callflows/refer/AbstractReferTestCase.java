@@ -15,71 +15,66 @@ import test.tck.msgflow.callflows.ScenarioHarness;
  * @author Ivelin Ivanov
  *
  */
-public abstract class AbstractReferTestCase extends ScenarioHarness implements
-        SipListener {
+public abstract class AbstractReferTestCase extends ScenarioHarness implements SipListener {
 
+	protected Referee referee;
 
-    protected Referee referee;
+	protected Referrer referrer;
 
-    protected Referrer referrer;
+	private static Logger logger = Logger.getLogger("test.tck");
 
-    private static Logger logger = Logger.getLogger("test.tck");
+	static {
+		if (!logger.isAttached(console)) {
 
-    static {
-        if (!logger.isAttached(console)) {
+			logger.addAppender(console);
 
-            logger.addAppender(console);
+		}
+	}
 
-        }
-    }
+	public AbstractReferTestCase() {
+		super("refer", true);
+	}
 
-    public AbstractReferTestCase() {
-        super("refer", true);
-    }
+	public void setUp() throws Exception {
+		try {
+			super.setUp();
 
-    public void setUp() throws Exception {
-        try {
-            super.setUp();
+			logger.info("ReferTest: setup()");
+			referee = new Referee(getTiProtocolObjects());
+			SipProvider refereeProvider = referee.createProvider();
+			providerTable.put(refereeProvider, referee);
 
-            logger.info("ReferTest: setup()");
-            referee = new Referee(getTiProtocolObjects());
-            SipProvider refereeProvider = referee.createProvider();
-            providerTable.put(refereeProvider, referee);
+			referrer = new Referrer(getRiProtocolObjects());
+			SipProvider referrerProvider = referrer.createProvider();
+			providerTable.put(referrerProvider, referrer);
 
-            referrer = new Referrer(getRiProtocolObjects());
-            SipProvider referrerProvider = referrer.createProvider();
-            providerTable.put(referrerProvider, referrer);
+			refereeProvider.addSipListener(this);
+			referrerProvider.addSipListener(this);
 
-            refereeProvider.addSipListener(this);
-            referrerProvider.addSipListener(this);
+			if (getTiProtocolObjects() != getRiProtocolObjects())
+				getTiProtocolObjects().start();
+			getRiProtocolObjects().start();
+		} catch (Exception ex) {
+			logger.error("unexpected excecption ", ex);
+			fail("unexpected exception");
+		}
+	}
 
-            if (getTiProtocolObjects() != getRiProtocolObjects())
-                getTiProtocolObjects().start();
-            getRiProtocolObjects().start();
-        } catch (Exception ex) {
-            logger.error("unexpected excecption ", ex);
-            fail("unexpected exception");
-        }
-    }
+	public void tearDown() throws Exception {
+		try {
+			Thread.sleep(4000);
+			super.tearDown();
+			Thread.sleep(1000);
+			this.providerTable.clear();
 
-    public void tearDown() throws Exception {
-        try {
-            Thread.sleep(4000);
-            super.tearDown();
-            Thread.sleep(1000);
-            this.providerTable.clear();
+			super.assertTrue(" Should have at least 3 NOTIFY", referrer.count >= 3); // Should have 3 NOTIFYs
 
-            super.assertTrue(" Should have at least 3 NOTIFY", referrer.count >= 3);  // Should have 3 NOTIFYs
-
-            logTestCompleted();
-        } catch (Exception ex) {
-            logger.error("unexpected exception", ex);
-            fail("unexpected exception ");
-        }
-        super.tearDown();
-    }
-
-
-
+			logTestCompleted();
+		} catch (Exception ex) {
+			logger.error("unexpected exception", ex);
+			fail("unexpected exception ");
+		}
+		super.tearDown();
+	}
 
 }

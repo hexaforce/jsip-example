@@ -1,4 +1,5 @@
 package gov.nist.javax.sip.header.ims;
+
 /*
 * Conditions Of Use
 *
@@ -25,39 +26,33 @@ package gov.nist.javax.sip.header.ims;
 *
 */
 import javax.sip.header.Header;
+
 /**
  *
- * @author aayush.bhatnagar
- * Rancore Technologies Pvt Ltd, Mumbai India.
+ * @author aayush.bhatnagar Rancore Technologies Pvt Ltd, Mumbai India.
  *
- * The ABNF for this header is all follows:
+ *         The ABNF for this header is all follows:
  *
- *  PAssertedService = "P-Asserted-Service"
- *                       HCOLON PAssertedService-value
+ *         PAssertedService = "P-Asserted-Service" HCOLON PAssertedService-value
  *
- *  PAssertedService-value = Service-ID *(COMMA Service-ID)
+ *         PAssertedService-value = Service-ID *(COMMA Service-ID)
  *
- *  where,
+ *         where,
  *
- *     Service-ID      = "urn:urn-7:" urn-service-id
- *     urn-service-id  = top-level *("." sub-service-id)
- *     top-level       = let-dig [ *26let-dig ]
- *     sub-service-id  = let-dig [ *let-dig ]
- *     let-dig         = ALPHA / DIGIT / "-"
+ *         Service-ID = "urn:urn-7:" urn-service-id urn-service-id = top-level *("." sub-service-id) top-level = let-dig [ *26let-dig ] sub-service-id = let-dig [ *let-dig ] let-dig = ALPHA / DIGIT / "-"
  *
- * Egs: P-Asserted-Service: urn:urn-7:3gpp-service.exampletelephony.version1
- *      P-Asserted-Service: urn:urn-7:3gpp-application.exampletelephony.version1
+ *         Egs: P-Asserted-Service: urn:urn-7:3gpp-service.exampletelephony.version1 P-Asserted-Service: urn:urn-7:3gpp-application.exampletelephony.version1
  *
  */
-public interface PAssertedServiceHeader extends Header{
+public interface PAssertedServiceHeader extends Header {
 
-    public static final String NAME = "P-Asserted-Service";
+	public static final String NAME = "P-Asserted-Service";
 
-    public void setSubserviceIdentifiers(String subservices);
+	public void setSubserviceIdentifiers(String subservices);
 
-    public String getSubserviceIdentifiers();
+	public String getSubserviceIdentifiers();
 
-    public void setApplicationIdentifiers(String appids);
+	public void setApplicationIdentifiers(String appids);
 
-    public String getApplicationIdentifiers();
+	public String getApplicationIdentifiers();
 }

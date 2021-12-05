@@ -32,30 +32,31 @@ import javax.sip.header.ProxyAuthenticateHeader;
 
 /**
  * List of ProxyAuthenticate headers.
+ * 
  * @version 1.2 $Revision: 1.6 $ $Date: 2009-07-17 18:57:34 $
  *
- * @author M. Ranganathan   <br/>
+ * @author M. Ranganathan <br/>
  *
  *
  *
  */
 public class ProxyAuthenticateList extends SIPHeaderList<ProxyAuthenticate> {
 
+	/**
+	 * Comment for <code>serialVersionUID</code>
+	 */
+	private static final long serialVersionUID = 1L;
 
-    /**
-     * Comment for <code>serialVersionUID</code>
-     */
-    private static final long serialVersionUID = 1L;
+	public Object clone() {
+		ProxyAuthenticateList retval = new ProxyAuthenticateList();
+		retval.clonehlist(this.hlist);
+		return retval;
+	}
 
-    public Object clone() {
-        ProxyAuthenticateList retval = new ProxyAuthenticateList();
-        retval.clonehlist(this.hlist);
-        return retval;
-    }
-
-    /** Default constructor
-     */
-    public ProxyAuthenticateList() {
-        super(ProxyAuthenticate.class, ProxyAuthenticateHeader.NAME);
-    }
+	/**
+	 * Default constructor
+	 */
+	public ProxyAuthenticateList() {
+		super(ProxyAuthenticate.class, ProxyAuthenticateHeader.NAME);
+	}
 }

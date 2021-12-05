@@ -31,14 +31,15 @@ package gov.nist.javax.sip.header;
 import javax.sip.header.ErrorInfoHeader;
 
 /**
-* Error Info sip header.
-*
-*@version 1.2 $Revision: 1.6 $ $Date: 2009-07-17 18:57:30 $
-*
-*@author M. Ranganathan   <br/>
-*@since 1.1
-*@see ErrorInfoList
-*<pre>
+ * Error Info sip header.
+ *
+ * @version 1.2 $Revision: 1.6 $ $Date: 2009-07-17 18:57:30 $
+ *
+ * @author M. Ranganathan <br/>
+ * @since 1.1
+ * @see ErrorInfoList
+ * 
+ *      <pre>
 *
 * 6.24 Error-Info
 *
@@ -49,25 +50,26 @@ import javax.sip.header.ErrorInfoHeader;
 *
 *
 *       Error-Info  =  "Error-Info" ":" # ( "<" URI ">" *( ";" generic-param ))
-*</pre>
-*
-*/
-public class ErrorInfoList extends SIPHeaderList<ErrorInfo>{
+ *      </pre>
+ *
+ */
+public class ErrorInfoList extends SIPHeaderList<ErrorInfo> {
 
-    /**
-     *
-     */
-    private static final long serialVersionUID = 1L;
+	/**
+	 *
+	 */
+	private static final long serialVersionUID = 1L;
 
-    public Object clone() {
-        ErrorInfoList retval = new ErrorInfoList();
-        retval.clonehlist(this.hlist);
-        return retval;
-    }
-    /**
-     * Default constructor.
-     */
-    public ErrorInfoList() {
-        super(ErrorInfo.class, ErrorInfoHeader.NAME);
-    }
+	public Object clone() {
+		ErrorInfoList retval = new ErrorInfoList();
+		retval.clonehlist(this.hlist);
+		return retval;
+	}
+
+	/**
+	 * Default constructor.
+	 */
+	public ErrorInfoList() {
+		super(ErrorInfo.class, ErrorInfoHeader.NAME);
+	}
 }

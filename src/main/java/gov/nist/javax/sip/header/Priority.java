@@ -43,61 +43,68 @@ import javax.sip.header.PriorityHeader;
  */
 public class Priority extends SIPHeader implements PriorityHeader {
 
-    /**
-     * Comment for <code>serialVersionUID</code>
-     */
-    private static final long serialVersionUID = 3837543366074322106L;
+	/**
+	 * Comment for <code>serialVersionUID</code>
+	 */
+	private static final long serialVersionUID = 3837543366074322106L;
 
-    /** constant EMERGENCY field
-    */
-    public static final String EMERGENCY = ParameterNames.EMERGENCY;
+	/**
+	 * constant EMERGENCY field
+	 */
+	public static final String EMERGENCY = ParameterNames.EMERGENCY;
 
-    /** constant URGENT field
-     */
-    public static final String URGENT = ParameterNames.URGENT;
+	/**
+	 * constant URGENT field
+	 */
+	public static final String URGENT = ParameterNames.URGENT;
 
-    /** constant NORMAL field
-     */
-    public static final String NORMAL = ParameterNames.NORMAL;
+	/**
+	 * constant NORMAL field
+	 */
+	public static final String NORMAL = ParameterNames.NORMAL;
 
-    /** constant NON_URGENT field
-     */
-    public static final String NON_URGENT = ParameterNames.NON_URGENT;
-    /** priority field
-     */
-    protected String priority;
+	/**
+	 * constant NON_URGENT field
+	 */
+	public static final String NON_URGENT = ParameterNames.NON_URGENT;
+	/**
+	 * priority field
+	 */
+	protected String priority;
 
-    /** Default constructor
-     */
-    public Priority() {
-        super(NAME);
-    }
+	/**
+	 * Default constructor
+	 */
+	public Priority() {
+		super(NAME);
+	}
 
-    /**
-     * Encode into canonical form.
-     * @return String
-     */
-    public StringBuilder encodeBody(StringBuilder buffer) {
-        return buffer.append(priority);
-    }
+	/**
+	 * Encode into canonical form.
+	 * 
+	 * @return String
+	 */
+	public StringBuilder encodeBody(StringBuilder buffer) {
+		return buffer.append(priority);
+	}
 
-    /**
-     * get the priority value.
-     * @return String
-     */
-    public String getPriority() {
-        return priority;
-    }
+	/**
+	 * get the priority value.
+	 * 
+	 * @return String
+	 */
+	public String getPriority() {
+		return priority;
+	}
 
-    /**
-     * Set the priority member
-     * @param p String to set
-     */
-    public void setPriority(String p) throws ParseException {
-        if (p == null)
-            throw new NullPointerException(
-                "JAIN-SIP Exception,"
-                    + "Priority, setPriority(), the priority parameter is null");
-        priority = p;
-    }
+	/**
+	 * Set the priority member
+	 * 
+	 * @param p String to set
+	 */
+	public void setPriority(String p) throws ParseException {
+		if (p == null)
+			throw new NullPointerException("JAIN-SIP Exception," + "Priority, setPriority(), the priority parameter is null");
+		priority = p;
+	}
 }

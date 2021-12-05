@@ -30,28 +30,20 @@ import javax.sip.header.HeaderAddress;
 import javax.sip.header.Parameters;
 
 /**
- * This header is described in a draft RFC which has expired. HOwever it appears to be
- * in wide use. 
+ * This header is described in a draft RFC which has expired. HOwever it appears to be in wide use.
  * 
- * This interface represents the ReferredBy SIP header, as defined by 
- * <a href = "http://www.ietf.org/rfc/rfc3515.txt">RFC3892</a>, this header is 
- * not part of RFC3261.
- * <p> 
- * A ReferredByHeader only appears in a REFER request. It provides a URL to 
- * reference. The ReferredByHeader field MAY be encrypted as part of end-to-end 
- * encryption. The resource identified by the Refer-To URI is contacted using 
- * the normal mechanisms for that URI type. 
+ * This interface represents the ReferredBy SIP header, as defined by <a href = "http://www.ietf.org/rfc/rfc3515.txt">RFC3892</a>, this header is not part of RFC3261.
+ * <p>
+ * A ReferredByHeader only appears in a REFER request. It provides a URL to reference. The ReferredByHeader field MAY be encrypted as part of end-to-end encryption. The resource identified by the Refer-To URI is contacted using the normal mechanisms for that URI type.
  *
  * @since v1.1
  * @author Peter Musgrave (modified Sun code)
  */
 public interface ReferredByHeader extends HeaderAddress, Parameters, Header {
-    
-    /**
-     * Name of ReferToHeader
-     */
-    public final static String NAME = "Referred-By";
+
+	/**
+	 * Name of ReferToHeader
+	 */
+	public final static String NAME = "Referred-By";
 
 }
-
-

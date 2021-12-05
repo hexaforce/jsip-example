@@ -15,7 +15,6 @@
  */
 package gov.nist.javax.sip.stack;
 
-
 import java.util.EventObject;
 
 import gov.nist.javax.sip.DialogTimeoutEvent;
@@ -28,87 +27,81 @@ import gov.nist.javax.sip.DialogTimeoutEvent;
  */
 public class SIPDialogErrorEvent extends EventObject {
 
+	/**
+	 * This event ID indicates that the transaction has timed out.
+	 */
+	public static final int DIALOG_ACK_NOT_RECEIVED_TIMEOUT = 1;
 
-    /**
-     * This event ID indicates that the transaction has timed out.
-     */
-    public static final int DIALOG_ACK_NOT_RECEIVED_TIMEOUT = 1;
+	/**
+	 * This event ID indicates that there was an error sending a message using the underlying transport.
+	 */
+	public static final int DIALOG_ACK_NOT_SENT_TIMEOUT = 2;
 
-    /**
-     * This event ID indicates that there was an error sending a message using
-     * the underlying transport.
-     */
-    public static final int DIALOG_ACK_NOT_SENT_TIMEOUT = 2;
-    
-    /**
-     * This event ID indicates a timeout occured waiting to send re-INVITE ( for B2BUA)
-     */
-    public static final int DIALOG_REINVITE_TIMEOUT = 3;
-    
-    /*
-     * Dialog in early state for too long.
-     */
-    public static final int EARLY_STATE_TIMEOUT = 4;
-    
-    /*
-     * This event Id indicates that some internal error happened and the ACK semaphore could not be acquired.
-     */
-    public static final int DIALOG_ERROR_INTERNAL_COULD_NOT_TAKE_ACK_SEM = 5;
-    
+	/**
+	 * This event ID indicates a timeout occured waiting to send re-INVITE ( for B2BUA)
+	 */
+	public static final int DIALOG_REINVITE_TIMEOUT = 3;
 
-    // ID of this error event
-    private int errorID;
+	/*
+	 * Dialog in early state for too long.
+	 */
+	public static final int EARLY_STATE_TIMEOUT = 4;
+
+	/*
+	 * This event Id indicates that some internal error happened and the ACK semaphore could not be acquired.
+	 */
+	public static final int DIALOG_ERROR_INTERNAL_COULD_NOT_TAKE_ACK_SEM = 5;
+
+	// ID of this error event
+	private int errorID;
 
 	private SIPClientTransaction clientTransaction;
-    
-    
-    /**
-     * Creates a dialog error event.
-     *
-     * @param sourceDialog Dialog which is raising the error.
-     * @param dialogErrorID ID of the error that has ocurred.
-     */
-    SIPDialogErrorEvent(
-        SIPDialog sourceDialog,
-        int dialogErrorID) {
 
-        super(sourceDialog);
-        errorID = dialogErrorID;
+	/**
+	 * Creates a dialog error event.
+	 *
+	 * @param sourceDialog  Dialog which is raising the error.
+	 * @param dialogErrorID ID of the error that has ocurred.
+	 */
+	SIPDialogErrorEvent(SIPDialog sourceDialog, int dialogErrorID) {
 
-    }
-    
-    public SIPDialogErrorEvent (SIPDialog sourceDialog, DialogTimeoutEvent.Reason reason) {
-    	super(sourceDialog);
-    	if ( reason == DialogTimeoutEvent.Reason.AckNotReceived) {
-    		this.errorID = DIALOG_ACK_NOT_RECEIVED_TIMEOUT;
-    	} else if ( reason == DialogTimeoutEvent.Reason.AckNotSent ) {
-    		this.errorID = DIALOG_ACK_NOT_SENT_TIMEOUT;
-    	} else if ( reason == DialogTimeoutEvent.Reason.ReInviteTimeout) {
-    		this.errorID = DIALOG_REINVITE_TIMEOUT;
-    	} else if (reason == DialogTimeoutEvent.Reason.CannotAcquireAckSemaphoreForOk) {
-    		this.errorID = DIALOG_ERROR_INTERNAL_COULD_NOT_TAKE_ACK_SEM;
-    	} else if ( reason == DialogTimeoutEvent.Reason.EarlyStateTimeout) {
-    	    this.errorID = EARLY_STATE_TIMEOUT;
-    	}
-    }
+		super(sourceDialog);
+		errorID = dialogErrorID;
 
-    public SIPDialogErrorEvent (SIPDialog sourceDialog, SIPClientTransaction clientTransaction, DialogTimeoutEvent.Reason reason) {
-    	this(sourceDialog,reason);
-    	this.clientTransaction = clientTransaction;
-    }
-    /**
-     * Returns the ID of the error.
-     *
-     * @return Error ID.
-     */
-    public int getErrorID() {
-        return errorID;
-    }
-    
-    
-    public SIPClientTransaction getClientTransaction() {
-    	return this.clientTransaction;
-    }
+	}
+
+	public SIPDialogErrorEvent(SIPDialog sourceDialog, DialogTimeoutEvent.Reason reason) {
+		super(sourceDialog);
+		if (reason == DialogTimeoutEvent.Reason.AckNotReceived) {
+			this.errorID = DIALOG_ACK_NOT_RECEIVED_TIMEOUT;
+		} else if (reason == DialogTimeoutEvent.Reason.AckNotSent) {
+			this.errorID = DIALOG_ACK_NOT_SENT_TIMEOUT;
+		} else if (reason == DialogTimeoutEvent.Reason.ReInviteTimeout) {
+			this.errorID = DIALOG_REINVITE_TIMEOUT;
+		} else if (reason == DialogTimeoutEvent.Reason.CannotAcquireAckSemaphoreForOk) {
+			this.errorID = DIALOG_ERROR_INTERNAL_COULD_NOT_TAKE_ACK_SEM;
+		} else if (reason == DialogTimeoutEvent.Reason.EarlyStateTimeout) {
+			this.errorID = EARLY_STATE_TIMEOUT;
+		}
+	}
+
+	public SIPDialogErrorEvent(SIPDialog sourceDialog, SIPClientTransaction clientTransaction, DialogTimeoutEvent.Reason reason) {
+		this(sourceDialog, reason);
+		this.clientTransaction = clientTransaction;
+	}
+
+	/**
+	 * Returns the ID of the error.
+	 *
+	 * @return Error ID.
+	 */
+	public int getErrorID() {
+		return errorID;
+	}
+
+	public SIPClientTransaction getClientTransaction() {
+		return this.clientTransaction;
+	}
 
 	public void setClientTransaction(SIPClientTransaction clientTransaction) {
 		this.clientTransaction = clientTransaction;

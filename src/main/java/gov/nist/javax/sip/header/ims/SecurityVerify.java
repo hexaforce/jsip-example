@@ -29,44 +29,32 @@
  * PRODUCT OF PT INOVACAO - EST DEPARTMENT and Telecommunications Institute (Aveiro, Portugal)  *
  ************************************************************************************************/
 
-
 package gov.nist.javax.sip.header.ims;
-
-
 
 import java.text.ParseException;
 
 import javax.sip.header.ExtensionHeader;
 
-
 /**
- * Security-Verify header
- *  - sec-agree: RFC 3329 + 3GPP TS33.203 (Annex H).
+ * Security-Verify header - sec-agree: RFC 3329 + 3GPP TS33.203 (Annex H).
  *
- * <p></p>
+ * <p>
+ * </p>
  *
  * @author Miguel Freitas (IT) PT-Inovacao
  */
 
+public class SecurityVerify extends SecurityAgree implements SecurityVerifyHeader, ExtensionHeader {
 
-public class SecurityVerify
-    extends SecurityAgree
-    implements SecurityVerifyHeader, ExtensionHeader
-{
+	// TODO serialVersionUID
 
-    // TODO serialVersionUID
+	public SecurityVerify() {
+		super(SecurityVerifyHeader.NAME);
 
-    public SecurityVerify()
-    {
-        super(SecurityVerifyHeader.NAME);
+	}
 
-    }
-
-
-    public void setValue(String value) throws ParseException
-    {
-        throw new ParseException(value,0);
-    }
-
+	public void setValue(String value) throws ParseException {
+		throw new ParseException(value, 0);
+	}
 
 }

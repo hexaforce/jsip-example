@@ -1,4 +1,5 @@
 package gov.nist.javax.sip.header.ims;
+
 /*
 * Conditions Of Use
 *
@@ -29,18 +30,15 @@ import javax.sip.header.HeaderAddress;
 
 /**
  *
- * @author aayush.bhatnagar
- * Rancore Technologies Pvt Ltd, Mumbai India.
+ * @author aayush.bhatnagar Rancore Technologies Pvt Ltd, Mumbai India.
  *
- * The ABNF syntax of this header is as follows:
- * P-Profile-Key            = "P-Profile-Key" HCOLON {name-addr / addr-spec}
- *                          *{ SEMI generic-param }
+ *         The ABNF syntax of this header is as follows: P-Profile-Key = "P-Profile-Key" HCOLON {name-addr / addr-spec} *{ SEMI generic-param }
  *
- * Eg: P-Profile-Key: <sip:chatroom-!.*!@example.com>
+ *         Eg: P-Profile-Key: <sip:chatroom-!.*!@example.com>
  *
  */
-public interface PProfileKeyHeader extends HeaderAddress, Header{
+public interface PProfileKeyHeader extends HeaderAddress, Header {
 
-    public final static String NAME = "P-Profile-Key";
+	public final static String NAME = "P-Profile-Key";
 
 }

@@ -24,20 +24,21 @@ import javax.sip.message.MessageFactory;
 import javax.sip.message.Request;
 
 public class Test implements SipListener {
- 
+
 	private static final String SIP_BIND_ADDRESS = "javax.sip.IP_ADDRESS";
 	private static final String SIP_PORT_BIND = "javax.sip.PORT";
 	private static final String TRANSPORTS_BIND = "javax.sip.TRANSPORT";
-	//private static final String STACK_NAME_BIND = "javax.sip.STACK_NAME";
-	
+	// private static final String STACK_NAME_BIND = "javax.sip.STACK_NAME";
+
 	private SipFactory sipFactory;
 	private SipStack sipStack;
 	private ListeningPoint listeningPoint;
 	private SipProvider provider;
 	private HeaderFactory headerFactory;
 	private MessageFactory messageFactory;
-		
+
 	private static Properties properties = loadProperties();
+
 	private static Properties loadProperties() {
 		Properties props = new Properties();
 		// Load default values
@@ -48,21 +49,17 @@ public class Test implements SipListener {
 		}
 		return props;
 	}
-	
+
 	public Test() throws NumberFormatException, SipException, TooManyListenersException, InvalidArgumentException, ParseException {
 		initStack();
 	}
-	
-	private void initStack() throws SipException, TooManyListenersException,
-			NumberFormatException, InvalidArgumentException, ParseException {
+
+	private void initStack() throws SipException, TooManyListenersException, NumberFormatException, InvalidArgumentException, ParseException {
 		this.sipFactory = SipFactory.getInstance();
 		this.sipFactory.setPathName("gov.nist");
 		this.sipStack = this.sipFactory.createSipStack(Test.properties);
 		this.sipStack.start();
-		this.listeningPoint = this.sipStack.createListeningPoint(properties.getProperty(
-				SIP_BIND_ADDRESS, "127.0.0.1"), Integer.valueOf(properties
-				.getProperty(SIP_PORT_BIND, "5060")), properties.getProperty(
-				TRANSPORTS_BIND, "udp"));
+		this.listeningPoint = this.sipStack.createListeningPoint(properties.getProperty(SIP_BIND_ADDRESS, "127.0.0.1"), Integer.valueOf(properties.getProperty(SIP_PORT_BIND, "5060")), properties.getProperty(TRANSPORTS_BIND, "udp"));
 		this.provider = this.sipStack.createSipProvider(this.listeningPoint);
 		this.provider.addSipListener(this);
 		this.headerFactory = sipFactory.createHeaderFactory();
@@ -70,37 +67,35 @@ public class Test implements SipListener {
 	}
 
 	private AtomicLong counter = new AtomicLong();
-	
+
 	private String getNextCounter() {
 		long l = counter.incrementAndGet();
 		return Long.toString(l);
 	}
-	
+
 	// XXX -- SipListenerMethods - here we process incoming data
 
-	public void processIOException(IOExceptionEvent arg0) {}
+	public void processIOException(IOExceptionEvent arg0) {
+	}
 
 	public void processRequest(RequestEvent requestEvent) {
 
 		if (requestEvent.getRequest().getMethod().equals(Request.INVITE)) {
-			TestCall call = new TestCall(getNextCounter(),provider,headerFactory,messageFactory);
+			TestCall call = new TestCall(getNextCounter(), provider, headerFactory, messageFactory);
 			call.processInvite(requestEvent);
-			
-		}
-		else if (requestEvent.getRequest().getMethod().equals(Request.BYE)) {
+
+		} else if (requestEvent.getRequest().getMethod().equals(Request.BYE)) {
 			Dialog dialog = requestEvent.getDialog();
 			if (dialog != null) {
-				((TestCall)dialog.getApplicationData()).processBye(requestEvent);
+				((TestCall) dialog.getApplicationData()).processBye(requestEvent);
 			}
-		}
-		else if (requestEvent.getRequest().getMethod().equals(Request.ACK)) {
+		} else if (requestEvent.getRequest().getMethod().equals(Request.ACK)) {
 			Dialog dialog = requestEvent.getDialog();
 			if (dialog != null) {
-				((TestCall)dialog.getApplicationData()).processAck(requestEvent);
+				((TestCall) dialog.getApplicationData()).processAck(requestEvent);
 			}
-		}
-		else {
-			System.err.println("Received unexpected sip request: "+requestEvent.getRequest());
+		} else {
+			System.err.println("Received unexpected sip request: " + requestEvent.getRequest());
 			Dialog dialog = requestEvent.getDialog();
 			if (dialog != null) {
 				dialog.setApplicationData(null);
@@ -117,7 +112,7 @@ public class Test implements SipListener {
 				return;
 			}
 			TestCall call = (TestCall) dialog.getApplicationData();
-			if (call != null) {				
+			if (call != null) {
 				switch (responseEvent.getResponse().getStatusCode()) {
 				case 100:
 					// ignore
@@ -127,30 +122,30 @@ public class Test implements SipListener {
 					break;
 				case 200:
 					call.process200(responseEvent);
-					break;	
+					break;
 				default:
-					System.err.println("Received unexpected sip response: "+responseEvent.getResponse());
+					System.err.println("Received unexpected sip response: " + responseEvent.getResponse());
 					dialog.setApplicationData(null);
 					break;
 				}
 			} else {
-				System.err
-						.println("Received response on dialog with id that does not matches a active call: "+responseEvent.getResponse());
+				System.err.println("Received response on dialog with id that does not matches a active call: " + responseEvent.getResponse());
 			}
 		} else {
-			System.err.println("Received response without dialog: "+responseEvent.getResponse());
+			System.err.println("Received response without dialog: " + responseEvent.getResponse());
 		}
 	}
 
-	public void processTimeout(TimeoutEvent arg0) {}
+	public void processTimeout(TimeoutEvent arg0) {
+	}
 
-	public void processTransactionTerminated(
-			TransactionTerminatedEvent txTerminatedEvent) {}
+	public void processTransactionTerminated(TransactionTerminatedEvent txTerminatedEvent) {
+	}
 
 	public void processDialogTerminated(DialogTerminatedEvent dte) {
 		dte.getDialog().setApplicationData(null);
 	}
-	
+
 	public static void main(String[] args) {
 		try {
 			new Test();

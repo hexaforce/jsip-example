@@ -36,11 +36,9 @@ import java.util.ListIterator;
 import javax.sip.header.AllowEventsHeader;
 
 /**
- * List of AllowEvents headers.
- * The sip message can have multiple AllowEvents headers which are strung
- * together in a list.
+ * List of AllowEvents headers. The sip message can have multiple AllowEvents headers which are strung together in a list.
  *
- * @author M. Ranganathan  <br/>
+ * @author M. Ranganathan <br/>
  * @author Olivier Deruelle <br/>
  *
  *
@@ -48,67 +46,67 @@ import javax.sip.header.AllowEventsHeader;
  * @since 1.1
  *
  */
-public class AllowEventsList extends SIPHeaderList<AllowEvents>  {
+public class AllowEventsList extends SIPHeaderList<AllowEvents> {
 
-    private static final long serialVersionUID = -684763195336212992L;
+	private static final long serialVersionUID = -684763195336212992L;
 
-    public Object clone() {
-        AllowEventsList retval = new AllowEventsList();
-        retval.clonehlist(this.hlist);
-        return retval;
-    }
+	public Object clone() {
+		AllowEventsList retval = new AllowEventsList();
+		retval.clonehlist(this.hlist);
+		return retval;
+	}
 
+	/**
+	 * default constructor
+	 */
+	public AllowEventsList() {
+		super(AllowEvents.class, AllowEventsHeader.NAME);
+	}
 
-    /** default constructor
-     */
-    public AllowEventsList() {
-        super(AllowEvents.class, AllowEventsHeader.NAME);
-    }
+	/**
+	 * Gets an Iterator of all the methods of the AllowEventsHeader. Returns an empty
+	 *
+	 * Iterator if no methods are defined in this AllowEvents Header.
+	 *
+	 *
+	 *
+	 * @return Iterator of String objects each identifing the methods of
+	 *
+	 *         AllowEventsHeader.
+	 *
+	 *
+	 */
+	public ListIterator<String> getMethods() {
+		ListIterator<AllowEvents> li = super.hlist.listIterator();
+		LinkedList<String> ll = new LinkedList<String>();
+		while (li.hasNext()) {
+			AllowEvents allowEvents = (AllowEvents) li.next();
+			ll.add(allowEvents.getEventType());
+		}
+		return ll.listIterator();
+	}
 
-    /**
-     * Gets an Iterator of all the methods of the AllowEventsHeader. Returns an empty
-     *
-     * Iterator if no methods are defined in this AllowEvents Header.
-     *
-     *
-     *
-     * @return Iterator of String objects each identifing the methods of
-     *
-     * AllowEventsHeader.
-     *
-     *
-     */
-    public ListIterator<String> getMethods() {
-        ListIterator<AllowEvents> li = super.hlist.listIterator();
-        LinkedList<String>  ll = new LinkedList<String> ();
-        while (li.hasNext()) {
-            AllowEvents allowEvents = (AllowEvents) li.next();
-            ll.add(allowEvents.getEventType());
-        }
-        return ll.listIterator();
-    }
-
-    /**
-     * Sets the methods supported defined by this AllowEventsHeader.
-     *
-     *
-     *
-     * @param methods - the Iterator of Strings defining the methods supported
-     *
-     * in this AllowEventsHeader
-     *
-     * @throws ParseException which signals that an error has been reached
-     *
-     * unexpectedly while parsing the Strings defining the methods supported.
-     *
-     *
-     */
-    public void setMethods(List<String> methods) throws ParseException {
-        ListIterator<String> it = methods.listIterator();
-        while (it.hasNext()) {
-            AllowEvents allowEvents = new AllowEvents();
-            allowEvents.setEventType((String) it.next());
-            this.add(allowEvents);
-        }
-    }
+	/**
+	 * Sets the methods supported defined by this AllowEventsHeader.
+	 *
+	 *
+	 *
+	 * @param methods - the Iterator of Strings defining the methods supported
+	 *
+	 *                in this AllowEventsHeader
+	 *
+	 * @throws ParseException which signals that an error has been reached
+	 *
+	 *                        unexpectedly while parsing the Strings defining the methods supported.
+	 *
+	 *
+	 */
+	public void setMethods(List<String> methods) throws ParseException {
+		ListIterator<String> it = methods.listIterator();
+		while (it.hasNext()) {
+			AllowEvents allowEvents = new AllowEvents();
+			allowEvents.setEventType((String) it.next());
+			this.add(allowEvents);
+		}
+	}
 }

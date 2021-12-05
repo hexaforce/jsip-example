@@ -42,104 +42,71 @@ import gov.nist.javax.sip.parser.HeaderParser;
 import gov.nist.javax.sip.parser.Lexer;
 import gov.nist.javax.sip.parser.TokenTypes;
 
-
 /**
  * P-Media-Authorization header parser.
  *
  * @author Miguel Freitas (IT) PT-Inovacao
  */
 
-public class PMediaAuthorizationParser
-    extends HeaderParser
-    implements TokenTypes
-{
+public class PMediaAuthorizationParser extends HeaderParser implements TokenTypes {
 
-    public PMediaAuthorizationParser(String mediaAuthorization)
-    {
-        super(mediaAuthorization);
+	public PMediaAuthorizationParser(String mediaAuthorization) {
+		super(mediaAuthorization);
 
-    }
+	}
 
-    public PMediaAuthorizationParser(Lexer lexer)
-    {
-        super(lexer);
+	public PMediaAuthorizationParser(Lexer lexer) {
+		super(lexer);
 
-    }
+	}
 
+	public SIPHeader parse() throws ParseException {
+		PMediaAuthorizationList mediaAuthorizationList = new PMediaAuthorizationList();
 
+		if (debug)
+			dbg_enter("MediaAuthorizationParser.parse");
 
+		try {
+			headerName(TokenTypes.P_MEDIA_AUTHORIZATION);
 
+			PMediaAuthorization mediaAuthorization = new PMediaAuthorization();
+			mediaAuthorization.setHeaderName(SIPHeaderNamesIms.P_MEDIA_AUTHORIZATION);
 
-    public SIPHeader parse() throws ParseException
-    {
-        PMediaAuthorizationList mediaAuthorizationList = new PMediaAuthorizationList();
+			while (lexer.lookAhead(0) != '\n') {
+				this.lexer.match(TokenTypes.ID);
+				Token token = lexer.getNextToken();
+				try {
+					mediaAuthorization.setMediaAuthorizationToken(token.getTokenValue());
+				} catch (InvalidArgumentException e) {
+					throw createParseException(e.getMessage());
+				}
+				mediaAuthorizationList.add(mediaAuthorization);
 
-        if (debug)
-            dbg_enter("MediaAuthorizationParser.parse");
+				this.lexer.SPorHT();
+				if (lexer.lookAhead(0) == ',') {
+					this.lexer.match(',');
+					mediaAuthorization = new PMediaAuthorization();
+				}
+				this.lexer.SPorHT();
+			}
 
+			return mediaAuthorizationList;
 
-        try
-        {
-            headerName(TokenTypes.P_MEDIA_AUTHORIZATION);
+		} finally {
+			if (debug)
+				dbg_leave("MediaAuthorizationParser.parse");
+		}
 
-            PMediaAuthorization mediaAuthorization = new PMediaAuthorization();
-            mediaAuthorization.setHeaderName(SIPHeaderNamesIms.P_MEDIA_AUTHORIZATION);
+	}
 
-            while (lexer.lookAhead(0) != '\n')
-            {
-                this.lexer.match(TokenTypes.ID);
-                Token token = lexer.getNextToken();
-                try {
-                    mediaAuthorization.setMediaAuthorizationToken(token.getTokenValue());
-                } catch (InvalidArgumentException e) {
-                    throw createParseException(e.getMessage());
-                }
-                mediaAuthorizationList.add(mediaAuthorization);
-
-                this.lexer.SPorHT();
-                if (lexer.lookAhead(0) == ',')
-                {
-                    this.lexer.match(',');
-                    mediaAuthorization = new PMediaAuthorization();
-                }
-                this.lexer.SPorHT();
-            }
-
-            return mediaAuthorizationList;
-
-        }
-        finally
-        {
-            if (debug)
-                dbg_leave("MediaAuthorizationParser.parse");
-        }
-
-    }
-
-
-
-
-    /*
-     * test
-     *
-    public static void main(String args[]) throws ParseException
-    {
-        String pHeader[] = {
-            "P-Media-Authorization: 0123456789 \n",
-            "P-Media-Authorization: 0123456789, ABCDEF\n"
-            };
-
-        for (int i = 0; i < pHeader.length; i++ )
-        {
-            PMediaAuthorizationParser mParser =
-                new PMediaAuthorizationParser(pHeader[i]);
-
-            PMediaAuthorizationList mList= (PMediaAuthorizationList) mParser.parse();
-            System.out.println("encoded = " + mList.encode());
-        }
-    }
-     */
-
-
+	/*
+	 * test
+	 *
+	 * public static void main(String args[]) throws ParseException { String pHeader[] = { "P-Media-Authorization: 0123456789 \n", "P-Media-Authorization: 0123456789, ABCDEF\n" };
+	 * 
+	 * for (int i = 0; i < pHeader.length; i++ ) { PMediaAuthorizationParser mParser = new PMediaAuthorizationParser(pHeader[i]);
+	 * 
+	 * PMediaAuthorizationList mList= (PMediaAuthorizationList) mParser.parse(); System.out.println("encoded = " + mList.encode()); } }
+	 */
 
 }

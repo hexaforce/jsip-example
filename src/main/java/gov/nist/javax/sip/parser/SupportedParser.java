@@ -38,8 +38,8 @@ import gov.nist.javax.sip.header.SupportedList;
  *
  * @version 1.2 $Revision: 1.7 $ $Date: 2009-07-17 18:58:06 $
  *
- * @author Olivier Deruelle   <br/>
- * @author M. Ranganathan   <br/>
+ * @author Olivier Deruelle <br/>
+ * @author M. Ranganathan <br/>
  *
  *
  *
@@ -47,149 +47,102 @@ import gov.nist.javax.sip.header.SupportedList;
  */
 public class SupportedParser extends HeaderParser {
 
-    /**
-     * Creates a new instance of SupportedParser
-     * @param supported the header to parse
-     */
-    public SupportedParser(String supported) {
-        super(supported);
-    }
+	/**
+	 * Creates a new instance of SupportedParser
+	 * 
+	 * @param supported the header to parse
+	 */
+	public SupportedParser(String supported) {
+		super(supported);
+	}
 
-    /**
-     * Constructor
-     * @param lexer the lexer to use to parse the header
-     */
-    protected SupportedParser(Lexer lexer) {
-        super(lexer);
-    }
+	/**
+	 * Constructor
+	 * 
+	 * @param lexer the lexer to use to parse the header
+	 */
+	protected SupportedParser(Lexer lexer) {
+		super(lexer);
+	}
 
-    /**
-     * parse the String message
-     * @return SIPHeader (Supported object)
-     * @throws SIPParseException if the message does not respect the spec.
-     */
-    public SIPHeader parse() throws ParseException {
-        SupportedList supportedList = new SupportedList();
-        if (debug)
-            dbg_enter("SupportedParser.parse");
+	/**
+	 * parse the String message
+	 * 
+	 * @return SIPHeader (Supported object)
+	 * @throws SIPParseException if the message does not respect the spec.
+	 */
+	public SIPHeader parse() throws ParseException {
+		SupportedList supportedList = new SupportedList();
+		if (debug)
+			dbg_enter("SupportedParser.parse");
 
-        try {
-            Token token;
+		try {
+			Token token;
 
-            headerName(TokenTypes.SUPPORTED);
+			headerName(TokenTypes.SUPPORTED);
 
-            this.lexer.SPorHT();
-            Supported supported = new Supported();
-            supported.setHeaderName(SIPHeaderNames.SUPPORTED);
+			this.lexer.SPorHT();
+			Supported supported = new Supported();
+			supported.setHeaderName(SIPHeaderNames.SUPPORTED);
 
-            if (lexer.lookAhead(0) != '\n') {
-                // Parsing the option tag
-                this.lexer.match(TokenTypes.ID);
-                token = lexer.getNextToken();
-                supported.setOptionTag(token.getTokenValue());
-                this.lexer.SPorHT();
-            }
+			if (lexer.lookAhead(0) != '\n') {
+				// Parsing the option tag
+				this.lexer.match(TokenTypes.ID);
+				token = lexer.getNextToken();
+				supported.setOptionTag(token.getTokenValue());
+				this.lexer.SPorHT();
+			}
 
-            supportedList.add(supported);
+			supportedList.add(supported);
 
-            while (lexer.lookAhead(0) == ',') {
-                this.lexer.match(',');
-                this.lexer.SPorHT();
+			while (lexer.lookAhead(0) == ',') {
+				this.lexer.match(',');
+				this.lexer.SPorHT();
 
-                supported = new Supported();
+				supported = new Supported();
 
-                // Parsing the option tag
-                this.lexer.match(TokenTypes.ID);
-                token = lexer.getNextToken();
-                supported.setOptionTag(token.getTokenValue());
-                this.lexer.SPorHT();
+				// Parsing the option tag
+				this.lexer.match(TokenTypes.ID);
+				token = lexer.getNextToken();
+				supported.setOptionTag(token.getTokenValue());
+				this.lexer.SPorHT();
 
-                supportedList.add(supported);
-            }
-        } finally {
-            if (debug)
-                dbg_leave("SupportedParser.parse");
-        }
+				supportedList.add(supported);
+			}
+		} finally {
+			if (debug)
+				dbg_leave("SupportedParser.parse");
+		}
 
-        return supportedList;
-    }
+		return supportedList;
+	}
 
-    /** Test program
-    public static void main(String args[]) throws ParseException {
-        String supported[] = {
-            "Supported: \n",
-            "Supported: 100rel \n",
-            "Supported: foo1, foo2 ,foo3 , foo4 \n"
-        };
-
-        for (int i = 0; i < supported.length; i++ ) {
-            SupportedParser parser =
-            new SupportedParser(supported[i]);
-            SupportedList s= (SupportedList) parser.parse();
-            System.out.println("encoded = " + s.encode());
-        }
-
-    }
-    */
+	/**
+	 * Test program public static void main(String args[]) throws ParseException { String supported[] = { "Supported: \n", "Supported: 100rel \n", "Supported: foo1, foo2 ,foo3 , foo4 \n" };
+	 * 
+	 * for (int i = 0; i < supported.length; i++ ) { SupportedParser parser = new SupportedParser(supported[i]); SupportedList s= (SupportedList) parser.parse(); System.out.println("encoded = " + s.encode()); }
+	 * 
+	 * }
+	 */
 }
 /*
- * $Log: not supported by cvs2svn $
- * Revision 1.6  2006/07/13 09:02:02  mranga
- * Issue number:
- * Obtained from:
- * Submitted by:  jeroen van bemmel
- * Reviewed by:   mranga
- * Moved some changes from jain-sip-1.2 to java.net
+ * $Log: not supported by cvs2svn $ Revision 1.6 2006/07/13 09:02:02 mranga Issue number: Obtained from: Submitted by: jeroen van bemmel Reviewed by: mranga Moved some changes from jain-sip-1.2 to java.net
  *
- * CVS: ----------------------------------------------------------------------
- * CVS: Issue number:
- * CVS:   If this change addresses one or more issues,
- * CVS:   then enter the issue number(s) here.
- * CVS: Obtained from:
- * CVS:   If this change has been taken from another system,
- * CVS:   then name the system in this line, otherwise delete it.
- * CVS: Submitted by:
- * CVS:   If this code has been contributed to the project by someone else; i.e.,
- * CVS:   they sent us a patch or a set of diffs, then include their name/email
- * CVS:   address here. If this is your work then delete this line.
- * CVS: Reviewed by:
- * CVS:   If we are doing pre-commit code reviews and someone else has
- * CVS:   reviewed your changes, include their name(s) here.
- * CVS:   If you have not had it reviewed then delete this line.
+ * CVS: ---------------------------------------------------------------------- CVS: Issue number: CVS: If this change addresses one or more issues, CVS: then enter the issue number(s) here. CVS: Obtained from: CVS: If this change has been taken from another system, CVS: then name the system in this line, otherwise delete it. CVS: Submitted by: CVS: If this code has been contributed to the project by someone else; i.e., CVS: they sent us a patch or a set of diffs, then include their name/email CVS: address here. If this is your work then delete this line. CVS: Reviewed by: CVS: If we are doing pre-commit code reviews and someone else has CVS: reviewed your changes, include their name(s) here. CVS: If you have not had it reviewed then delete this line.
  *
- * Revision 1.3  2006/06/19 06:47:27  mranga
- * javadoc fixups
+ * Revision 1.3 2006/06/19 06:47:27 mranga javadoc fixups
  *
- * Revision 1.2  2006/06/16 15:26:28  mranga
- * Added NIST disclaimer to all public domain files. Clean up some javadoc. Fixed a leak
+ * Revision 1.2 2006/06/16 15:26:28 mranga Added NIST disclaimer to all public domain files. Clean up some javadoc. Fixed a leak
  *
- * Revision 1.1.1.1  2005/10/04 17:12:36  mranga
+ * Revision 1.1.1.1 2005/10/04 17:12:36 mranga
  *
  * Import
  *
  *
- * Revision 1.4  2004/01/22 13:26:32  sverker
- * Issue number:
- * Obtained from:
- * Submitted by:  sverker
- * Reviewed by:   mranga
+ * Revision 1.4 2004/01/22 13:26:32 sverker Issue number: Obtained from: Submitted by: sverker Reviewed by: mranga
  *
  * Major reformat of code to conform with style guide. Resolved compiler and javadoc warnings. Added CVS tags.
  *
- * CVS: ----------------------------------------------------------------------
- * CVS: Issue number:
- * CVS:   If this change addresses one or more issues,
- * CVS:   then enter the issue number(s) here.
- * CVS: Obtained from:
- * CVS:   If this change has been taken from another system,
- * CVS:   then name the system in this line, otherwise delete it.
- * CVS: Submitted by:
- * CVS:   If this code has been contributed to the project by someone else; i.e.,
- * CVS:   they sent us a patch or a set of diffs, then include their name/email
- * CVS:   address here. If this is your work then delete this line.
- * CVS: Reviewed by:
- * CVS:   If we are doing pre-commit code reviews and someone else has
- * CVS:   reviewed your changes, include their name(s) here.
- * CVS:   If you have not had it reviewed then delete this line.
+ * CVS: ---------------------------------------------------------------------- CVS: Issue number: CVS: If this change addresses one or more issues, CVS: then enter the issue number(s) here. CVS: Obtained from: CVS: If this change has been taken from another system, CVS: then name the system in this line, otherwise delete it. CVS: Submitted by: CVS: If this code has been contributed to the project by someone else; i.e., CVS: they sent us a patch or a set of diffs, then include their name/email CVS: address here. If this is your work then delete this line. CVS: Reviewed by: CVS: If we are doing pre-commit code reviews and someone else has CVS: reviewed your changes, include their name(s) here. CVS: If you have not had it reviewed then delete this line.
  *
  */

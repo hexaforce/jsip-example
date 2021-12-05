@@ -33,11 +33,13 @@
 package gov.nist.javax.sip.header;
 
 /**
-*   Media Range
-* @see Accept
-* @since 0.9
-* @version 1.2 $Revision: 1.7 $ $Date: 2010-05-06 14:07:55 $
-* <pre>
+ * Media Range
+ * 
+ * @see Accept
+ * @since 0.9
+ * @version 1.2 $Revision: 1.7 $ $Date: 2010-05-06 14:07:55 $
+ * 
+ *          <pre>
 * Revisions:
 *
 * Version 1.0
@@ -49,69 +51,77 @@ package gov.nist.javax.sip.header;
 *                        ) *( ";" parameter )
 *
 * HTTP RFC 2616 Section 14.1
-* </pre>
-*/
+ *          </pre>
+ */
 public class MediaRange extends SIPObject {
 
-    /**
-     * Comment for <code>serialVersionUID</code>
-     */
-    private static final long serialVersionUID = -6297125815438079210L;
+	/**
+	 * Comment for <code>serialVersionUID</code>
+	 */
+	private static final long serialVersionUID = -6297125815438079210L;
 
-    /** type field
-     */
-    protected String type;
+	/**
+	 * type field
+	 */
+	protected String type;
 
-    /** subtype field
-     */
-    protected String subtype;
+	/**
+	 * subtype field
+	 */
+	protected String subtype;
 
-    /** Default constructor
-     */
-    public MediaRange() {
-    }
+	/**
+	 * Default constructor
+	 */
+	public MediaRange() {
+	}
 
-    /** get type field
-     * @return String
-     */
-    public String getType() {
-        return type;
-    }
+	/**
+	 * get type field
+	 * 
+	 * @return String
+	 */
+	public String getType() {
+		return type;
+	}
 
-    /** get the subType field.
-     * @return String
-     */
-    public String getSubtype() {
-        return subtype;
-    }
+	/**
+	 * get the subType field.
+	 * 
+	 * @return String
+	 */
+	public String getSubtype() {
+		return subtype;
+	}
 
-    /**
-     * Set the type member
-     * @param t String to set
-     */
-    public void setType(String t) {
-        type = t;
-    }
+	/**
+	 * Set the type member
+	 * 
+	 * @param t String to set
+	 */
+	public void setType(String t) {
+		type = t;
+	}
 
-    /**
-     * Set the subtype member
-     * @param s String to set
-     */
-    public void setSubtype(String s) {
-        subtype = s;
-    }
+	/**
+	 * Set the subtype member
+	 * 
+	 * @param s String to set
+	 */
+	public void setSubtype(String s) {
+		subtype = s;
+	}
 
-    /**
-     * Encode the object.
-     * @return String
-     */
-    public String encode() {
-        return encode(new StringBuilder()).toString();
-    }
+	/**
+	 * Encode the object.
+	 * 
+	 * @return String
+	 */
+	public String encode() {
+		return encode(new StringBuilder()).toString();
+	}
 
-    public StringBuilder encode(StringBuilder buffer) {
-        return buffer.append(type)
-                .append(SLASH)
-                .append(subtype);
-    }
+	public StringBuilder encode(StringBuilder buffer) {
+		return buffer.append(type).append(SLASH).append(subtype);
+	}
 }

@@ -36,19 +36,16 @@ import javax.sip.header.Parameters;
  *
  */
 
+public interface SessionExpiresHeader extends Parameters, Header, ExtensionHeader {
 
-public interface SessionExpiresHeader extends Parameters, Header, ExtensionHeader{
+	public final static String NAME = "Session-Expires";
 
-    public final static String NAME = "Session-Expires";
+	public int getExpires();
 
-    public int getExpires();
+	public void setExpires(int expires) throws InvalidArgumentException;
 
-    public void setExpires(int expires) throws InvalidArgumentException;
+	public String getRefresher();
 
-    public String getRefresher() ;
-
-    public void setRefresher(String refresher);
-
-
+	public void setRefresher(String refresher);
 
 }

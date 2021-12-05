@@ -24,11 +24,9 @@ import gov.nist.javax.sip.parser.AcceptEncodingParser;
 
 public class AcceptEncodingParserTest extends ParserTestCase {
 
-    public void testParser() {
-        String data[] = { "Accept-Encoding: gzip \n"
-                };
-        super.testParser(AcceptEncodingParser.class,data);
-    }
+	public void testParser() {
+		String data[] = { "Accept-Encoding: gzip \n" };
+		super.testParser(AcceptEncodingParser.class, data);
+	}
 
 }
-

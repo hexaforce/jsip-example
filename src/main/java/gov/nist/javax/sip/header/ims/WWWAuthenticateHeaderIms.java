@@ -33,14 +33,12 @@ import java.text.ParseException;
 
 import javax.sip.header.WWWAuthenticateHeader;
 
-
-
 /**
  * Extension to WWW-authenticate header (3GPP TS 24229-5d0).
  *
- * <p>Defines a new authentication parameter (auth-param) for the WWW-Authenticate header
- * used in a 401 (Unauthorized) response to the REGISTER request.
- * For more information, see RFC 2617 [21] subclause 3.2.1.</p>
+ * <p>
+ * Defines a new authentication parameter (auth-param) for the WWW-Authenticate header used in a 401 (Unauthorized) response to the REGISTER request. For more information, see RFC 2617 [21] subclause 3.2.1.
+ * </p>
  *
  * <pre>
  *  auth-param = 1#( integrity-key / cipher-key )
@@ -53,20 +51,17 @@ import javax.sip.header.WWWAuthenticateHeader;
  * @author ALEXANDRE MIGUEL SILVA SANTOS - Nú 10045401
  */
 
+public interface WWWAuthenticateHeaderIms extends WWWAuthenticateHeader {
+	// issued by Miguel Freitas
+	public static final String IK = ParameterNamesIms.IK;
+	public static final String CK = ParameterNamesIms.CK;
 
-public interface WWWAuthenticateHeaderIms extends WWWAuthenticateHeader
-{
-    // issued by Miguel Freitas
-    public static final String IK = ParameterNamesIms.IK;
-    public static final String CK = ParameterNamesIms.CK;
+	public void setIK(String ik) throws ParseException;
 
+	public String getIK();
 
-    public void setIK(String ik) throws ParseException;
+	public void setCK(String ck) throws ParseException;
 
-    public String getIK();
-
-    public void setCK(String ck) throws ParseException;
-
-    public String getCK();
+	public String getCK();
 
 }

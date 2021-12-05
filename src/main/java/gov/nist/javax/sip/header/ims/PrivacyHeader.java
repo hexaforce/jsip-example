@@ -27,10 +27,7 @@
  * PRODUCT OF PT INOVACAO - EST DEPARTMENT and Aveiro University - Portugal)   *
  *****************************************************************************/
 
-
 package gov.nist.javax.sip.header.ims;
-
-
 
 import java.text.ParseException;
 
@@ -39,8 +36,11 @@ import javax.sip.header.Header;
 /**
  * Privacy Header RFC 3323.
  *
- * <p>Sintax: </p>
- *<pre>
+ * <p>
+ * Sintax:
+ * </p>
+ * 
+ * <pre>
  * Privacy-hdr  = "Privacy" HCOLON priv-value *(";" priv-value)
  * priv-value   = "header" / "session" / "user" /
  *                "id" / "none" / "critical" / token
@@ -51,28 +51,25 @@ import javax.sip.header.Header;
  * @author Miguel Freitas (IT) PT-Inovacao
  */
 
+public interface PrivacyHeader extends Header {
 
-public interface PrivacyHeader extends Header
-{
+	/**
+	 * Name of PrivacyHeader
+	 */
+	public final static String NAME = "Privacy";
 
-    /**
-     * Name of PrivacyHeader
-     */
-    public final static String NAME = "Privacy";
+	/**
+	 * Set Privacy header value
+	 * 
+	 * @param privacy -- privacy type to set.
+	 */
+	public void setPrivacy(String privacy) throws ParseException;
 
-
-    /**
-     * Set Privacy header value
-     * @param  privacy -- privacy type to set.
-     */
-    public void setPrivacy(String privacy) throws ParseException;
-
-    /**
-     * Get Privacy header value
-     * @return privacy token name
-     */
-    public String getPrivacy();
-
+	/**
+	 * Get Privacy header value
+	 * 
+	 * @return privacy token name
+	 */
+	public String getPrivacy();
 
 }
-

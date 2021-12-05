@@ -27,6 +27,7 @@
 * Product of NIST/ITL Advanced Networking Technologies Division (ANTD).        *
 *******************************************************************************/
 package gov.nist.javax.sip.header;
+
 import java.text.ParseException;
 
 import javax.sip.header.CallIdHeader;
@@ -34,115 +35,119 @@ import javax.sip.header.CallIdHeader;
 /**
  * Call ID SIPHeader.
  *
- * @author M. Ranganathan   <br/>
+ * @author M. Ranganathan <br/>
  * @version 1.2 $Revision: 1.8 $ $Date: 2010-05-06 14:07:54 $
  * @since 1.1
  */
-public class CallID
-    extends SIPHeader
-    implements javax.sip.header.CallIdHeader {
+public class CallID extends SIPHeader implements javax.sip.header.CallIdHeader {
 
-    /**
-     * Comment for <code>serialVersionUID</code>
-     */
-    private static final long serialVersionUID = -6463630258703731156L;
-    /**
-     * callIdentifier field
-     */
-    protected CallIdentifier callIdentifier;
+	/**
+	 * Comment for <code>serialVersionUID</code>
+	 */
+	private static final long serialVersionUID = -6463630258703731156L;
+	/**
+	 * callIdentifier field
+	 */
+	protected CallIdentifier callIdentifier;
 
-    /**
-     * Default constructor
-     */
-    public CallID() {
-        super(NAME);
-    }
+	/**
+	 * Default constructor
+	 */
+	public CallID() {
+		super(NAME);
+	}
 
-    /* (non-Javadoc)
-     * @see java.lang.Object#equals(java.lang.Object)
-     *
-     * CallIDs are compared case-insensitively
-     */
-    public boolean equals( Object other ) {
+	/*
+	 * (non-Javadoc)
+	 * 
+	 * @see java.lang.Object#equals(java.lang.Object)
+	 *
+	 * CallIDs are compared case-insensitively
+	 */
+	public boolean equals(Object other) {
 
-        if (this==other) return true;
+		if (this == other)
+			return true;
 
-        if (other instanceof CallIdHeader) {
-            final CallIdHeader o = (CallIdHeader) other;
-            return this.getCallId().equalsIgnoreCase( o.getCallId() );
-        }
-        return false;
-    }
+		if (other instanceof CallIdHeader) {
+			final CallIdHeader o = (CallIdHeader) other;
+			return this.getCallId().equalsIgnoreCase(o.getCallId());
+		}
+		return false;
+	}
 
+	/**
+	 * Encode the body part of this header (i.e. leave out the hdrName).
+	 * 
+	 * @return String encoded body part of the header.
+	 */
+	public String encodeBody() {
+		return encodeBody(new StringBuilder()).toString();
+	}
 
-    /**
-     * Encode the body part of this header (i.e. leave out the hdrName).
-     *@return String encoded body part of the header.
-     */
-    public String encodeBody() {
-        return encodeBody(new StringBuilder()).toString();
-    }
+	protected StringBuilder encodeBody(StringBuilder buffer) {
+		if (callIdentifier != null)
+			callIdentifier.encode(buffer);
 
-    protected StringBuilder encodeBody(StringBuilder buffer) {
-        if (callIdentifier != null)
-            callIdentifier.encode(buffer);
+		return buffer;
+	}
 
-        return buffer;
-    }
+	/**
+	 * get the CallId field. This does the same thing as encodeBody
+	 * 
+	 * @return String the encoded body part of the
+	 */
+	public String getCallId() {
+		return encodeBody();
+	}
 
-    /**
-     * get the CallId field. This does the same thing as
-     * encodeBody
-     * @return String the encoded body part of the
-     */
-    public String getCallId() {
-        return encodeBody();
-    }
+	/**
+	 * get the call Identifer member.
+	 * 
+	 * @return CallIdentifier
+	 */
+	public CallIdentifier getCallIdentifer() {
+		return callIdentifier;
+	}
 
-    /**
-     * get the call Identifer member.
-     * @return CallIdentifier
-     */
-    public CallIdentifier getCallIdentifer() {
-        return callIdentifier;
-    }
+	/**
+	 * set the CallId field
+	 * 
+	 * @param cid String to set. This is the body part of the Call-Id header. It must have the form localId@host or localId.
+	 * @throws IllegalArgumentException if cid is null, not a token, or is not a token@token.
+	 */
+	public void setCallId(String cid) throws ParseException {
+		try {
+			callIdentifier = new CallIdentifier(cid);
+		} catch (IllegalArgumentException ex) {
+			throw new ParseException(cid, 0);
+		}
+	}
 
-    /**
-     * set the CallId field
-     * @param cid String to set. This is the body part of the Call-Id
-     *  header. It must have the form localId@host or localId.
-     * @throws IllegalArgumentException if cid is null, not a token, or is
-     * not a token@token.
-     */
-    public void setCallId(String cid) throws ParseException {
-        try {
-            callIdentifier = new CallIdentifier(cid);
-        } catch (IllegalArgumentException ex) {
-            throw new ParseException(cid, 0);
-        }
-    }
+	/**
+	 * Set the callIdentifier member.
+	 * 
+	 * @param cid CallIdentifier to set (localId@host).
+	 */
+	public void setCallIdentifier(CallIdentifier cid) {
+		callIdentifier = cid;
+	}
 
-    /**
-     * Set the callIdentifier member.
-     * @param cid CallIdentifier to set (localId@host).
-     */
-    public void setCallIdentifier(CallIdentifier cid) {
-        callIdentifier = cid;
-    }
+	/**
+	 * Constructor given the call Identifier.
+	 * 
+	 * @param callId string call identifier (should be localid@host)
+	 * @throws IllegalArgumentException if call identifier is bad.
+	 */
+	public CallID(String callId) throws IllegalArgumentException {
+		super(NAME);
+		this.callIdentifier = new CallIdentifier(callId);
+	}
 
-    /** Constructor given the call Identifier.
-     *@param callId string call identifier (should be localid@host)
-     *@throws IllegalArgumentException if call identifier is bad.
-     */
-    public CallID(String callId) throws IllegalArgumentException {
-        super(NAME);
-        this.callIdentifier = new CallIdentifier(callId);
-    }
-
-    public Object clone() {
-        CallID retval = (CallID) super.clone();
-        if (this.callIdentifier != null)
-            retval.callIdentifier = (CallIdentifier) this.callIdentifier.clone();
-        return retval;
-    }
+	public Object clone() {
+		CallID retval = (CallID) super.clone();
+		if (this.callIdentifier != null)
+			retval.callIdentifier = (CallIdentifier) this.callIdentifier.clone();
+		return retval;
+	}
 }

@@ -30,75 +30,71 @@ import gov.nist.core.CommonLogger;
 import gov.nist.core.StackLogger;
 
 public class HandshakeCompletedListenerImpl implements HandshakeCompletedListener {
-	private static StackLogger logger = CommonLogger.getLogger(HandshakeCompletedListenerImpl.class);          
-	
-    private HandshakeCompletedEvent handshakeCompletedEvent;
-    private final Object eventWaitObject = new Object();
+	private static StackLogger logger = CommonLogger.getLogger(HandshakeCompletedListenerImpl.class);
 
-    private HandshakeWatchdog watchdog;
-    private SIPTransactionStack sipStack;
-    
-    // Added for https://java.net/jira/browse/JSIP-483, NIO doesn't provide a HandshakeCompletedEvent 
-    private Certificate[] peerCertificates;
-    private Certificate[] localCertificates;
-    private String cipherSuite;
+	private HandshakeCompletedEvent handshakeCompletedEvent;
+	private final Object eventWaitObject = new Object();
 
-    public HandshakeCompletedListenerImpl(TLSMessageChannel tlsMessageChannel, Socket socket) {
-        tlsMessageChannel.setHandshakeCompletedListener(this);
-        sipStack = tlsMessageChannel.getSIPStack();
-        if(sipStack.getSslHandshakeTimeout() > 0) {
-        	this.watchdog = new HandshakeWatchdog(socket);        	
-        }
-    }
-    
-    public HandshakeCompletedListenerImpl(NioTlsMessageChannel tlsMessageChannel, SocketChannel socket) {
-        tlsMessageChannel.setHandshakeCompletedListener(this);
-        sipStack = tlsMessageChannel.getSIPStack();
-        if(sipStack.getSslHandshakeTimeout() > 0) {
-        	this.watchdog = new HandshakeWatchdog(socket.socket());        	
-        }
-    }
+	private HandshakeWatchdog watchdog;
+	private SIPTransactionStack sipStack;
 
-    public void handshakeCompleted(HandshakeCompletedEvent handshakeCompletedEvent) {
-        if (this.watchdog != null) {
-            sipStack.getTimer().cancel(watchdog);
-            this.watchdog = null;
-        }
-        this.handshakeCompletedEvent = handshakeCompletedEvent;
-        synchronized (eventWaitObject) {
-            eventWaitObject.notify();
-        }
-    }
+	// Added for https://java.net/jira/browse/JSIP-483, NIO doesn't provide a HandshakeCompletedEvent
+	private Certificate[] peerCertificates;
+	private Certificate[] localCertificates;
+	private String cipherSuite;
 
-    /**
-     * Gets the event indicating that the SSL handshake has completed. The
-     * method waits until the event has been obtained by the listener or a
-     * timeout of 5 seconds has elapsed.
-     * 
-     * @return the handshakeCompletedEvent or null when the timeout elapsed
-     */
-    public HandshakeCompletedEvent getHandshakeCompletedEvent() {
-        try {
-            synchronized (eventWaitObject) {
-                if (handshakeCompletedEvent == null)
-                    eventWaitObject.wait(5000);
-            }
-        }
-        catch (InterruptedException e) {
-            // we don't care
-        }
-        return handshakeCompletedEvent;
-    }
+	public HandshakeCompletedListenerImpl(TLSMessageChannel tlsMessageChannel, Socket socket) {
+		tlsMessageChannel.setHandshakeCompletedListener(this);
+		sipStack = tlsMessageChannel.getSIPStack();
+		if (sipStack.getSslHandshakeTimeout() > 0) {
+			this.watchdog = new HandshakeWatchdog(socket);
+		}
+	}
 
-    public void startHandshakeWatchdog() {
-        if (this.watchdog != null) {
-        	logger.logInfo("starting watchdog for socket " + watchdog.socket + " on sslhandshake " + sipStack.getSslHandshakeTimeout());
-        	sipStack.getTimer().schedule(watchdog, sipStack.getSslHandshakeTimeout());
-        }
-    }
+	public HandshakeCompletedListenerImpl(NioTlsMessageChannel tlsMessageChannel, SocketChannel socket) {
+		tlsMessageChannel.setHandshakeCompletedListener(this);
+		sipStack = tlsMessageChannel.getSIPStack();
+		if (sipStack.getSslHandshakeTimeout() > 0) {
+			this.watchdog = new HandshakeWatchdog(socket.socket());
+		}
+	}
 
-    
-    /**
+	public void handshakeCompleted(HandshakeCompletedEvent handshakeCompletedEvent) {
+		if (this.watchdog != null) {
+			sipStack.getTimer().cancel(watchdog);
+			this.watchdog = null;
+		}
+		this.handshakeCompletedEvent = handshakeCompletedEvent;
+		synchronized (eventWaitObject) {
+			eventWaitObject.notify();
+		}
+	}
+
+	/**
+	 * Gets the event indicating that the SSL handshake has completed. The method waits until the event has been obtained by the listener or a timeout of 5 seconds has elapsed.
+	 * 
+	 * @return the handshakeCompletedEvent or null when the timeout elapsed
+	 */
+	public HandshakeCompletedEvent getHandshakeCompletedEvent() {
+		try {
+			synchronized (eventWaitObject) {
+				if (handshakeCompletedEvent == null)
+					eventWaitObject.wait(5000);
+			}
+		} catch (InterruptedException e) {
+			// we don't care
+		}
+		return handshakeCompletedEvent;
+	}
+
+	public void startHandshakeWatchdog() {
+		if (this.watchdog != null) {
+			logger.logInfo("starting watchdog for socket " + watchdog.socket + " on sslhandshake " + sipStack.getSslHandshakeTimeout());
+			sipStack.getTimer().schedule(watchdog, sipStack.getSslHandshakeTimeout());
+		}
+	}
+
+	/**
 	 * @return the peerCertificates
 	 */
 	public Certificate[] getPeerCertificates() {
@@ -111,7 +107,6 @@ public class HandshakeCompletedListenerImpl implements HandshakeCompletedListene
 	public void setPeerCertificates(Certificate[] peerCertificates) {
 		this.peerCertificates = peerCertificates;
 	}
-
 
 	/**
 	 * @return the cipherSuite
@@ -127,7 +122,6 @@ public class HandshakeCompletedListenerImpl implements HandshakeCompletedListene
 		this.cipherSuite = cipherSuite;
 	}
 
-
 	/**
 	 * @return the localCertificates
 	 */
@@ -142,26 +136,24 @@ public class HandshakeCompletedListenerImpl implements HandshakeCompletedListene
 		this.localCertificates = localCertificates;
 	}
 
-
 	class HandshakeWatchdog extends SIPStackTimerTask {
-    	Socket  socket;
-    	 
-    	private HandshakeWatchdog(Socket socket) {
-    		this.socket = socket;
-    	}
-    	
+		Socket socket;
+
+		private HandshakeWatchdog(Socket socket) {
+			this.socket = socket;
+		}
+
 		@Override
 		public void runTask() {
 			logger.logInfo("closing socket " + socket + " on sslhandshaketimeout");
-			 try {
-                 socket.close();
-             } catch (IOException ex) {
-                 logger.logInfo("couldn't close socket on sslhandshaketimeout");
-             }
-			 logger.logInfo("socket closed " + socket + " on sslhandshaketimeout");
+			try {
+				socket.close();
+			} catch (IOException ex) {
+				logger.logInfo("couldn't close socket on sslhandshaketimeout");
+			}
+			logger.logInfo("socket closed " + socket + " on sslhandshaketimeout");
 		}
-    	
-    }
 
+	}
 
 }

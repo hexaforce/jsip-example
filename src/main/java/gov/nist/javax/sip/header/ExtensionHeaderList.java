@@ -32,37 +32,35 @@ import java.util.ListIterator;
 
 /**
  * A generic extension header list.
+ * 
  * @version 1.2 $Revision: 1.9 $ $Date: 2010-05-06 14:07:49 $
  * @since 1.1
  */
 public class ExtensionHeaderList extends SIPHeaderList<ExtensionHeaderImpl> {
 
+	private static final long serialVersionUID = 4681326807149890197L;
 
+	public Object clone() {
+		ExtensionHeaderList retval = new ExtensionHeaderList(headerName);
+		retval.clonehlist(this.hlist);
+		return retval;
+	}
 
-    private static final long serialVersionUID = 4681326807149890197L;
+	public ExtensionHeaderList(String hName) {
+		super(ExtensionHeaderImpl.class, hName);
+	}
 
+	public ExtensionHeaderList() {
+		super(ExtensionHeaderImpl.class, null);
+	}
 
-    public Object clone() {
-        ExtensionHeaderList retval = new ExtensionHeaderList(headerName);
-        retval.clonehlist(this.hlist);
-        return retval;
-    }
-    public ExtensionHeaderList(String hName) {
-        super( ExtensionHeaderImpl.class, hName);
-    }
-
-    public ExtensionHeaderList() {
-        super(ExtensionHeaderImpl.class,null);
-    }
-
-
-    public String encode() {
-        StringBuilder retval = new StringBuilder();
-        ListIterator<ExtensionHeaderImpl> it = this.listIterator();
-        while(it.hasNext()) {
-           ExtensionHeaderImpl eh = (ExtensionHeaderImpl) it.next();
-           retval.append(eh.encode());
-        }
-        return retval.toString();
-    }
+	public String encode() {
+		StringBuilder retval = new StringBuilder();
+		ListIterator<ExtensionHeaderImpl> it = this.listIterator();
+		while (it.hasNext()) {
+			ExtensionHeaderImpl eh = (ExtensionHeaderImpl) it.next();
+			retval.append(eh.encode());
+		}
+		return retval.toString();
+	}
 }

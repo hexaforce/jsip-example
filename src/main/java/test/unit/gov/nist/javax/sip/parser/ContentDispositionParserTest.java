@@ -23,21 +23,18 @@
  *The Open SLEE project
  */
 package test.unit.gov.nist.javax.sip.parser;
-import gov.nist.javax.sip.parser.ContentDispositionParser;
 
+import gov.nist.javax.sip.parser.ContentDispositionParser;
 
 /**
  *
  */
 public class ContentDispositionParserTest extends ParserTestCase {
-    public void testParser() {
+	public void testParser() {
 
-        String r[] = {
-            "Content-Disposition: session\n",
-            "Content-Disposition: render;handling=hand;optional=opt \n"
-        };
+		String r[] = { "Content-Disposition: session\n", "Content-Disposition: render;handling=hand;optional=opt \n" };
 
-        super.testParser(ContentDispositionParser.class,r);
-    }
+		super.testParser(ContentDispositionParser.class, r);
+	}
 
 }

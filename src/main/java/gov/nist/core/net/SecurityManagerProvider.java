@@ -40,9 +40,9 @@ import javax.net.ssl.TrustManager;
  */
 public interface SecurityManagerProvider {
 
-    void init(Properties properties) throws GeneralSecurityException, IOException;
+	void init(Properties properties) throws GeneralSecurityException, IOException;
 
-    KeyManager[] getKeyManagers(boolean client);
+	KeyManager[] getKeyManagers(boolean client);
 
-    TrustManager[] getTrustManagers(boolean client);
+	TrustManager[] getTrustManagers(boolean client);
 }

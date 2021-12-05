@@ -48,145 +48,142 @@ import gov.nist.javax.sip.parser.Parser;
  *
  */
 
-public final class To extends AddressParametersHeader implements
-        javax.sip.header.ToHeader {
+public final class To extends AddressParametersHeader implements javax.sip.header.ToHeader {
 
-    /**
-     * Comment for <code>serialVersionUID</code>
-     */
-    private static final long serialVersionUID = -4057413800584586316L;
+	/**
+	 * Comment for <code>serialVersionUID</code>
+	 */
+	private static final long serialVersionUID = -4057413800584586316L;
 
-    /**
-     * default Constructor.
-     */
-    public To() {
-        super(TO,true);
-    }
+	/**
+	 * default Constructor.
+	 */
+	public To() {
+		super(TO, true);
+	}
 
-    /**
-     * Generate a TO header from a FROM header
-     */
-    public To(From from) {
-        super(TO);
-        setAddress(from.address);
-        setParameters(from.parameters);
-    }
+	/**
+	 * Generate a TO header from a FROM header
+	 */
+	public To(From from) {
+		super(TO);
+		setAddress(from.address);
+		setParameters(from.parameters);
+	}
 
-    /**
-     * Encode the header into a String.
-     *
-     * @since 1.0
-     * @return String
-     */
-    public String encode() {
-        return headerName + COLON + SP + encodeBody() + NEWLINE;
-    }
+	/**
+	 * Encode the header into a String.
+	 *
+	 * @since 1.0
+	 * @return String
+	 */
+	public String encode() {
+		return headerName + COLON + SP + encodeBody() + NEWLINE;
+	}
 
-    /**
-     * Encode the header content into a String.
-     *
-     * @return String
-     */
-    protected String encodeBody() {
-        return encodeBody(new StringBuilder()).toString();
-    }
+	/**
+	 * Encode the header content into a String.
+	 *
+	 * @return String
+	 */
+	protected String encodeBody() {
+		return encodeBody(new StringBuilder()).toString();
+	}
 
-    protected StringBuilder encodeBody(StringBuilder buffer) {
-        if (address != null) {
-            if (address.getAddressType() == AddressImpl.ADDRESS_SPEC) {
-                buffer.append(LESS_THAN);
-            }
-            address.encode(buffer);
-            if (address.getAddressType() == AddressImpl.ADDRESS_SPEC) {
-                buffer.append(GREATER_THAN);
-            }
+	protected StringBuilder encodeBody(StringBuilder buffer) {
+		if (address != null) {
+			if (address.getAddressType() == AddressImpl.ADDRESS_SPEC) {
+				buffer.append(LESS_THAN);
+			}
+			address.encode(buffer);
+			if (address.getAddressType() == AddressImpl.ADDRESS_SPEC) {
+				buffer.append(GREATER_THAN);
+			}
 
-            if (!parameters.isEmpty()) {
-                buffer.append(SEMICOLON);
-                parameters.encode(buffer);
-            }
-        }
-        return buffer;
-    }
+			if (!parameters.isEmpty()) {
+				buffer.append(SEMICOLON);
+				parameters.encode(buffer);
+			}
+		}
+		return buffer;
+	}
 
-    /**
-     * Conveniance accessor function to get the hostPort field from the address.
-     * Warning -- this assumes that the embedded URI is a SipURL.
-     *
-     * @return hostport field
-     */
-    public HostPort getHostPort() {
-        if (address == null)
-            return null;
-        return address.getHostPort();
-    }
+	/**
+	 * Conveniance accessor function to get the hostPort field from the address. Warning -- this assumes that the embedded URI is a SipURL.
+	 *
+	 * @return hostport field
+	 */
+	public HostPort getHostPort() {
+		if (address == null)
+			return null;
+		return address.getHostPort();
+	}
 
-    /**
-     * Get the display name from the address.
-     *
-     * @return Display name
-     */
-    public String getDisplayName() {
-        if (address == null)
-            return null;
-        return address.getDisplayName();
-    }
+	/**
+	 * Get the display name from the address.
+	 *
+	 * @return Display name
+	 */
+	public String getDisplayName() {
+		if (address == null)
+			return null;
+		return address.getDisplayName();
+	}
 
-    /**
-     * Get the tag parameter from the address parm list.
-     *
-     * @return tag field
-     */
-    public String getTag() {
-        if (parameters == null)
-            return null;
-        return getParameter(ParameterNames.TAG);
+	/**
+	 * Get the tag parameter from the address parm list.
+	 *
+	 * @return tag field
+	 */
+	public String getTag() {
+		if (parameters == null)
+			return null;
+		return getParameter(ParameterNames.TAG);
 
-    }
+	}
 
-    /**
-     * Boolean function
-     *
-     * @return true if the Tag exist
-     */
-    public boolean hasTag() {
-        if (parameters == null)
-            return false;
-        return hasParameter(ParameterNames.TAG);
+	/**
+	 * Boolean function
+	 *
+	 * @return true if the Tag exist
+	 */
+	public boolean hasTag() {
+		if (parameters == null)
+			return false;
+		return hasParameter(ParameterNames.TAG);
 
-    }
+	}
 
-    /**
-     * remove Tag member
-     */
-    public void removeTag() {
-            if (parameters != null)
-                parameters.delete(ParameterNames.TAG);
+	/**
+	 * remove Tag member
+	 */
+	public void removeTag() {
+		if (parameters != null)
+			parameters.delete(ParameterNames.TAG);
 
-    }
+	}
 
-    /**
-     * Set the tag member. This should remain empty for the initial request in
-     * a dialog.
-     *
-     * @param t - tag String to set.
-     */
-    public void setTag(String t) throws ParseException {
-        // JvB: check that it is a valid token
-        Parser.checkToken(t);
-        this.setParameter(ParameterNames.TAG, t);
-    }
+	/**
+	 * Set the tag member. This should remain empty for the initial request in a dialog.
+	 *
+	 * @param t - tag String to set.
+	 */
+	public void setTag(String t) throws ParseException {
+		// JvB: check that it is a valid token
+		Parser.checkToken(t);
+		this.setParameter(ParameterNames.TAG, t);
+	}
 
-    /**
-     * Get the user@host port string.
-     */
-    public String getUserAtHostPort() {
-        if (address == null)
-            return null;
-        return address.getUserAtHostPort();
-    }
+	/**
+	 * Get the user@host port string.
+	 */
+	public String getUserAtHostPort() {
+		if (address == null)
+			return null;
+		return address.getUserAtHostPort();
+	}
 
-    public boolean equals(Object other) {
-        return (other instanceof ToHeader) && super.equals(other);
-    }
+	public boolean equals(Object other) {
+		return (other instanceof ToHeader) && super.equals(other);
+	}
 }

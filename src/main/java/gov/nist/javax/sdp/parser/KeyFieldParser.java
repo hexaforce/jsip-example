@@ -34,142 +34,84 @@ import gov.nist.javax.sdp.fields.SDPField;
 /**
  * Parser for key field. Ack: bug fix contributed by espen@java.net
  *
- * @author  deruelle
+ * @author deruelle
  * @version JAIN-SDP-PUBLIC-RELEASE $Revision: 1.7 $ $Date: 2009-07-17 18:57:16 $
  */
 public class KeyFieldParser extends SDPParser {
 
-    /** Creates new KeyFieldParser */
-    public KeyFieldParser(String keyField) {
-        this.lexer = new Lexer("charLexer", keyField);
-    }
+	/** Creates new KeyFieldParser */
+	public KeyFieldParser(String keyField) {
+		this.lexer = new Lexer("charLexer", keyField);
+	}
 
-    public KeyField keyField() throws ParseException {
-        try {
-            this.lexer.match('k');
-            this.lexer.SPorHT();
-            this.lexer.match('=');
-            this.lexer.SPorHT();
+	public KeyField keyField() throws ParseException {
+		try {
+			this.lexer.match('k');
+			this.lexer.SPorHT();
+			this.lexer.match('=');
+			this.lexer.SPorHT();
 
-            KeyField keyField = new KeyField();
-            //Espen: Stealing the approach from AttributeFieldParser from from here...
-            NameValue nameValue = new NameValue();
+			KeyField keyField = new KeyField();
+			// Espen: Stealing the approach from AttributeFieldParser from from here...
+			NameValue nameValue = new NameValue();
 
-            int ptr = this.lexer.markInputPosition();
-            try {
-                String name = lexer.getNextToken(':');
-                this.lexer.consume(1);
-                String value = lexer.getRest();
-                nameValue = new NameValue(name.trim(), value.trim());
-            } catch (ParseException ex) {
-                this.lexer.rewindInputPosition(ptr);
-                String rest = this.lexer.getRest();
-                if (rest == null)
-                    throw new ParseException(
-                        this.lexer.getBuffer(),
-                        this.lexer.getPtr());
-                nameValue = new NameValue(rest.trim(), null);
-            }
-            keyField.setType(nameValue.getName());
-            keyField.setKeyData((String) nameValue.getValueAsObject());
-            this.lexer.SPorHT();
+			int ptr = this.lexer.markInputPosition();
+			try {
+				String name = lexer.getNextToken(':');
+				this.lexer.consume(1);
+				String value = lexer.getRest();
+				nameValue = new NameValue(name.trim(), value.trim());
+			} catch (ParseException ex) {
+				this.lexer.rewindInputPosition(ptr);
+				String rest = this.lexer.getRest();
+				if (rest == null)
+					throw new ParseException(this.lexer.getBuffer(), this.lexer.getPtr());
+				nameValue = new NameValue(rest.trim(), null);
+			}
+			keyField.setType(nameValue.getName());
+			keyField.setKeyData((String) nameValue.getValueAsObject());
+			this.lexer.SPorHT();
 
-            return keyField;
-        } catch (Exception e) {
-            throw new ParseException(lexer.getBuffer(), lexer.getPtr());
-        }
-    }
+			return keyField;
+		} catch (Exception e) {
+			throw new ParseException(lexer.getBuffer(), lexer.getPtr());
+		}
+	}
 
-    public SDPField parse() throws ParseException {
-        return this.keyField();
-    }
+	public SDPField parse() throws ParseException {
+		return this.keyField();
+	}
 
-    /**
-        public static void main(String[] args) throws ParseException {
-            String key[] = {
-                "k=clear:1234124\n",
-                            "k=base64:12\n",
-                            "k=http://www.cs.ucl.ac.uk/staff/M.Handley/sdp.03.ps\n",
-                            "k=prompt\n"
-                    };
-
-            for (int i = 0; i < key.length; i++) {
-               KeyFieldParser keyFieldParser=new KeyFieldParser(
-                    key[i] );
-            KeyField keyField=keyFieldParser.keyField();
-            System.out.println("toParse: " +key[i]);
-            System.out.println("encoded: " +keyField.encode());
-            }
-
-        }
-    **/
+	/**
+	 * public static void main(String[] args) throws ParseException { String key[] = { "k=clear:1234124\n", "k=base64:12\n", "k=http://www.cs.ucl.ac.uk/staff/M.Handley/sdp.03.ps\n", "k=prompt\n" };
+	 * 
+	 * for (int i = 0; i < key.length; i++) { KeyFieldParser keyFieldParser=new KeyFieldParser( key[i] ); KeyField keyField=keyFieldParser.keyField(); System.out.println("toParse: " +key[i]); System.out.println("encoded: " +keyField.encode()); }
+	 * 
+	 * }
+	 **/
 }
 /*
- * $Log: not supported by cvs2svn $
- * Revision 1.6  2007/10/22 03:38:26  mranga
- * Issue number:
- * Obtained from:
- * Submitted by:  mranga
- * Reviewed by:   mranga
+ * $Log: not supported by cvs2svn $ Revision 1.6 2007/10/22 03:38:26 mranga Issue number: Obtained from: Submitted by: mranga Reviewed by: mranga
  *
  * Java 5 porting.
  *
- * Revision 1.5  2006/07/13 09:02:42  mranga
- * Issue number:
- * Obtained from:
- * Submitted by:  jeroen van bemmel
- * Reviewed by:   mranga
- * Moved some changes from jain-sip-1.2 to java.net
+ * Revision 1.5 2006/07/13 09:02:42 mranga Issue number: Obtained from: Submitted by: jeroen van bemmel Reviewed by: mranga Moved some changes from jain-sip-1.2 to java.net
  *
- * CVS: ----------------------------------------------------------------------
- * CVS: Issue number:
- * CVS:   If this change addresses one or more issues,
- * CVS:   then enter the issue number(s) here.
- * CVS: Obtained from:
- * CVS:   If this change has been taken from another system,
- * CVS:   then name the system in this line, otherwise delete it.
- * CVS: Submitted by:
- * CVS:   If this code has been contributed to the project by someone else; i.e.,
- * CVS:   they sent us a patch or a set of diffs, then include their name/email
- * CVS:   address here. If this is your work then delete this line.
- * CVS: Reviewed by:
- * CVS:   If we are doing pre-commit code reviews and someone else has
- * CVS:   reviewed your changes, include their name(s) here.
- * CVS:   If you have not had it reviewed then delete this line.
+ * CVS: ---------------------------------------------------------------------- CVS: Issue number: CVS: If this change addresses one or more issues, CVS: then enter the issue number(s) here. CVS: Obtained from: CVS: If this change has been taken from another system, CVS: then name the system in this line, otherwise delete it. CVS: Submitted by: CVS: If this code has been contributed to the project by someone else; i.e., CVS: they sent us a patch or a set of diffs, then include their name/email CVS: address here. If this is your work then delete this line. CVS: Reviewed by: CVS: If we are doing pre-commit code reviews and someone else has CVS: reviewed your changes, include their name(s) here. CVS: If you have not had it reviewed then delete this line.
  *
- * Revision 1.3  2006/06/19 06:47:26  mranga
- * javadoc fixups
+ * Revision 1.3 2006/06/19 06:47:26 mranga javadoc fixups
  *
- * Revision 1.2  2006/06/16 15:26:28  mranga
- * Added NIST disclaimer to all public domain files. Clean up some javadoc. Fixed a leak
+ * Revision 1.2 2006/06/16 15:26:28 mranga Added NIST disclaimer to all public domain files. Clean up some javadoc. Fixed a leak
  *
- * Revision 1.1.1.1  2005/10/04 17:12:34  mranga
+ * Revision 1.1.1.1 2005/10/04 17:12:34 mranga
  *
  * Import
  *
  *
- * Revision 1.3  2004/01/22 13:26:28  sverker
- * Issue number:
- * Obtained from:
- * Submitted by:  sverker
- * Reviewed by:   mranga
+ * Revision 1.3 2004/01/22 13:26:28 sverker Issue number: Obtained from: Submitted by: sverker Reviewed by: mranga
  *
  * Major reformat of code to conform with style guide. Resolved compiler and javadoc warnings. Added CVS tags.
  *
- * CVS: ----------------------------------------------------------------------
- * CVS: Issue number:
- * CVS:   If this change addresses one or more issues,
- * CVS:   then enter the issue number(s) here.
- * CVS: Obtained from:
- * CVS:   If this change has been taken from another system,
- * CVS:   then name the system in this line, otherwise delete it.
- * CVS: Submitted by:
- * CVS:   If this code has been contributed to the project by someone else; i.e.,
- * CVS:   they sent us a patch or a set of diffs, then include their name/email
- * CVS:   address here. If this is your work then delete this line.
- * CVS: Reviewed by:
- * CVS:   If we are doing pre-commit code reviews and someone else has
- * CVS:   reviewed your changes, include their name(s) here.
- * CVS:   If you have not had it reviewed then delete this line.
+ * CVS: ---------------------------------------------------------------------- CVS: Issue number: CVS: If this change addresses one or more issues, CVS: then enter the issue number(s) here. CVS: Obtained from: CVS: If this change has been taken from another system, CVS: then name the system in this line, otherwise delete it. CVS: Submitted by: CVS: If this code has been contributed to the project by someone else; i.e., CVS: they sent us a patch or a set of diffs, then include their name/email CVS: address here. If this is your work then delete this line. CVS: Reviewed by: CVS: If we are doing pre-commit code reviews and someone else has CVS: reviewed your changes, include their name(s) here. CVS: If you have not had it reviewed then delete this line.
  *
  */

@@ -30,121 +30,81 @@
  */
 
 package gov.nist.javax.sdp.parser;
+
 import java.text.ParseException;
 
 import gov.nist.javax.sdp.fields.SDPField;
 import gov.nist.javax.sdp.fields.SessionNameField;
 
 /**
- * @author  deruelle
+ * @author deruelle
  * @version JAIN-SDP-PUBLIC-RELEASE $Revision: 1.6 $ $Date: 2009-07-17 18:57:17 $
  */
 public class SessionNameFieldParser extends SDPParser {
 
-    /** Creates new SessionNameFieldParser */
-    public SessionNameFieldParser(String sessionNameField) {
-        this.lexer = new Lexer("charLexer", sessionNameField);
-    }
+	/** Creates new SessionNameFieldParser */
+	public SessionNameFieldParser(String sessionNameField) {
+		this.lexer = new Lexer("charLexer", sessionNameField);
+	}
 
-    /** Get the SessionNameField
-     * @return SessionNameField
-     */
-    public SessionNameField sessionNameField() throws ParseException {
-        try {
-            this.lexer.match('s');
-            this.lexer.SPorHT();
-            this.lexer.match('=');
-            this.lexer.SPorHT();
+	/**
+	 * Get the SessionNameField
+	 * 
+	 * @return SessionNameField
+	 */
+	public SessionNameField sessionNameField() throws ParseException {
+		try {
+			this.lexer.match('s');
+			this.lexer.SPorHT();
+			this.lexer.match('=');
+			this.lexer.SPorHT();
 
-            SessionNameField sessionNameField = new SessionNameField();
-            String rest = lexer.getRest();
-            // Some endpoints may send us a blank session name ("s=") -- [rborba]
-            sessionNameField.setSessionName(rest == null ? "" : rest.trim());
+			SessionNameField sessionNameField = new SessionNameField();
+			String rest = lexer.getRest();
+			// Some endpoints may send us a blank session name ("s=") -- [rborba]
+			sessionNameField.setSessionName(rest == null ? "" : rest.trim());
 
-            return sessionNameField;
-        } catch (Exception e) {
-            throw lexer.createParseException();
-        }
+			return sessionNameField;
+		} catch (Exception e) {
+			throw lexer.createParseException();
+		}
 
-    }
+	}
 
-    public SDPField parse() throws ParseException {
-        return this.sessionNameField();
-    }
+	public SDPField parse() throws ParseException {
+		return this.sessionNameField();
+	}
 
-    public static void main(String[] args) throws ParseException {
-        String session[] = { "s=SDP Seminar \n", "s= Session SDP\n" };
+	public static void main(String[] args) throws ParseException {
+		String session[] = { "s=SDP Seminar \n", "s= Session SDP\n" };
 
-        for (int i = 0; i < session.length; i++) {
-            SessionNameFieldParser sessionNameFieldParser =
-                new SessionNameFieldParser(session[i]);
-            SessionNameField sessionNameField =
-                sessionNameFieldParser.sessionNameField();
-            System.out.println("encoded: " + sessionNameField.encode());
-        }
-    }
+		for (int i = 0; i < session.length; i++) {
+			SessionNameFieldParser sessionNameFieldParser = new SessionNameFieldParser(session[i]);
+			SessionNameField sessionNameField = sessionNameFieldParser.sessionNameField();
+			System.out.println("encoded: " + sessionNameField.encode());
+		}
+	}
 }
 /*
- * $Log: not supported by cvs2svn $
- * Revision 1.5  2006/11/22 04:22:01  rborba
- * Made the SDPAnnounceParser constructor a little more robust in order to handle SDPs with mixed CR, LF, CR/LF anf LF/CR lines.
+ * $Log: not supported by cvs2svn $ Revision 1.5 2006/11/22 04:22:01 rborba Made the SDPAnnounceParser constructor a little more robust in order to handle SDPs with mixed CR, LF, CR/LF anf LF/CR lines.
  *
- * Revision 1.4  2006/07/13 09:02:38  mranga
- * Issue number:
- * Obtained from:
- * Submitted by:  jeroen van bemmel
- * Reviewed by:   mranga
- * Moved some changes from jain-sip-1.2 to java.net
+ * Revision 1.4 2006/07/13 09:02:38 mranga Issue number: Obtained from: Submitted by: jeroen van bemmel Reviewed by: mranga Moved some changes from jain-sip-1.2 to java.net
  *
- * CVS: ----------------------------------------------------------------------
- * CVS: Issue number:
- * CVS:   If this change addresses one or more issues,
- * CVS:   then enter the issue number(s) here.
- * CVS: Obtained from:
- * CVS:   If this change has been taken from another system,
- * CVS:   then name the system in this line, otherwise delete it.
- * CVS: Submitted by:
- * CVS:   If this code has been contributed to the project by someone else; i.e.,
- * CVS:   they sent us a patch or a set of diffs, then include their name/email
- * CVS:   address here. If this is your work then delete this line.
- * CVS: Reviewed by:
- * CVS:   If we are doing pre-commit code reviews and someone else has
- * CVS:   reviewed your changes, include their name(s) here.
- * CVS:   If you have not had it reviewed then delete this line.
+ * CVS: ---------------------------------------------------------------------- CVS: Issue number: CVS: If this change addresses one or more issues, CVS: then enter the issue number(s) here. CVS: Obtained from: CVS: If this change has been taken from another system, CVS: then name the system in this line, otherwise delete it. CVS: Submitted by: CVS: If this code has been contributed to the project by someone else; i.e., CVS: they sent us a patch or a set of diffs, then include their name/email CVS: address here. If this is your work then delete this line. CVS: Reviewed by: CVS: If we are doing pre-commit code reviews and someone else has CVS: reviewed your changes, include their name(s) here. CVS: If you have not had it reviewed then delete this line.
  *
- * Revision 1.3  2006/06/19 06:47:26  mranga
- * javadoc fixups
+ * Revision 1.3 2006/06/19 06:47:26 mranga javadoc fixups
  *
- * Revision 1.2  2006/06/16 15:26:28  mranga
- * Added NIST disclaimer to all public domain files. Clean up some javadoc. Fixed a leak
+ * Revision 1.2 2006/06/16 15:26:28 mranga Added NIST disclaimer to all public domain files. Clean up some javadoc. Fixed a leak
  *
- * Revision 1.1.1.1  2005/10/04 17:12:34  mranga
+ * Revision 1.1.1.1 2005/10/04 17:12:34 mranga
  *
  * Import
  *
  *
- * Revision 1.2  2004/01/22 13:26:28  sverker
- * Issue number:
- * Obtained from:
- * Submitted by:  sverker
- * Reviewed by:   mranga
+ * Revision 1.2 2004/01/22 13:26:28 sverker Issue number: Obtained from: Submitted by: sverker Reviewed by: mranga
  *
  * Major reformat of code to conform with style guide. Resolved compiler and javadoc warnings. Added CVS tags.
  *
- * CVS: ----------------------------------------------------------------------
- * CVS: Issue number:
- * CVS:   If this change addresses one or more issues,
- * CVS:   then enter the issue number(s) here.
- * CVS: Obtained from:
- * CVS:   If this change has been taken from another system,
- * CVS:   then name the system in this line, otherwise delete it.
- * CVS: Submitted by:
- * CVS:   If this code has been contributed to the project by someone else; i.e.,
- * CVS:   they sent us a patch or a set of diffs, then include their name/email
- * CVS:   address here. If this is your work then delete this line.
- * CVS: Reviewed by:
- * CVS:   If we are doing pre-commit code reviews and someone else has
- * CVS:   reviewed your changes, include their name(s) here.
- * CVS:   If you have not had it reviewed then delete this line.
+ * CVS: ---------------------------------------------------------------------- CVS: Issue number: CVS: If this change addresses one or more issues, CVS: then enter the issue number(s) here. CVS: Obtained from: CVS: If this change has been taken from another system, CVS: then name the system in this line, otherwise delete it. CVS: Submitted by: CVS: If this code has been contributed to the project by someone else; i.e., CVS: they sent us a patch or a set of diffs, then include their name/email CVS: address here. If this is your work then delete this line. CVS: Reviewed by: CVS: If we are doing pre-commit code reviews and someone else has CVS: reviewed your changes, include their name(s) here. CVS: If you have not had it reviewed then delete this line.
  *
  */

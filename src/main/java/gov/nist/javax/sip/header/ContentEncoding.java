@@ -32,8 +32,10 @@ import java.text.ParseException;
 
 /**
  * Content encoding part of a content encoding header list.
+ * 
  * @see ContentEncodingList
- *<pre>
+ * 
+ *      <pre>
  * From HTTP RFC 2616
  *14.11 Content-Encoding
  *
@@ -70,66 +72,67 @@ import java.text.ParseException;
  *   codings MUST be listed in the order in which they were applied.
  *   Additional information about the encoding parameters MAY be provided
  *   by other entity-header fields not defined by this specification.
- *</pre>
+ *      </pre>
  *
- * @author M. Ranganathan   <br/>
+ * @author M. Ranganathan <br/>
  * @author Olivier Deruelle <br/>
  * @version 1.2 $Revision: 1.6 $ $Date: 2010-05-06 14:07:53 $
  * @since 1.1
  */
-public class ContentEncoding
-    extends SIPHeader
-    implements javax.sip.header.ContentEncodingHeader {
+public class ContentEncoding extends SIPHeader implements javax.sip.header.ContentEncodingHeader {
 
-    /**
-     * Comment for <code>serialVersionUID</code>
-     */
-    private static final long serialVersionUID = 2034230276579558857L;
-    /**
-     * ContentEncoding field.
-     */
-    protected String contentEncoding;
+	/**
+	 * Comment for <code>serialVersionUID</code>
+	 */
+	private static final long serialVersionUID = 2034230276579558857L;
+	/**
+	 * ContentEncoding field.
+	 */
+	protected String contentEncoding;
 
-    /**
-     * Default constructor.
-     */
-    public ContentEncoding() {
-        super(CONTENT_ENCODING);
-    }
+	/**
+	 * Default constructor.
+	 */
+	public ContentEncoding() {
+		super(CONTENT_ENCODING);
+	}
 
-    /**
-     * Constructor.
-     * @param enc String to set.
-     */
-    public ContentEncoding(String enc) {
-        super(CONTENT_ENCODING);
-        contentEncoding = enc;
-    }
+	/**
+	 * Constructor.
+	 * 
+	 * @param enc String to set.
+	 */
+	public ContentEncoding(String enc) {
+		super(CONTENT_ENCODING);
+		contentEncoding = enc;
+	}
 
-    /**
-     * Canonical encoding of body of the header.
-     * @return  encoded body of the header.
-     */
-    public StringBuilder encodeBody(StringBuilder buffer) {
-        return buffer.append(contentEncoding);
-    }
+	/**
+	 * Canonical encoding of body of the header.
+	 * 
+	 * @return encoded body of the header.
+	 */
+	public StringBuilder encodeBody(StringBuilder buffer) {
+		return buffer.append(contentEncoding);
+	}
 
-    /**
-     * Get the ContentEncoding field.
-     * @return String
-     */
-    public String getEncoding() {
-        return contentEncoding;
-    }
+	/**
+	 * Get the ContentEncoding field.
+	 * 
+	 * @return String
+	 */
+	public String getEncoding() {
+		return contentEncoding;
+	}
 
-    /**
-     * Set the ConentEncoding field.
-     * @param encoding String to set
-     */
-    public void setEncoding(String encoding) throws ParseException {
-        if (encoding == null)
-            throw new NullPointerException(
-                "JAIN-SIP Exception, " + " encoding is null");
-        contentEncoding = encoding;
-    }
+	/**
+	 * Set the ConentEncoding field.
+	 * 
+	 * @param encoding String to set
+	 */
+	public void setEncoding(String encoding) throws ParseException {
+		if (encoding == null)
+			throw new NullPointerException("JAIN-SIP Exception, " + " encoding is null");
+		contentEncoding = encoding;
+	}
 }

@@ -1,4 +1,5 @@
 package test.unit.gov.nist.javax.sip.parser.ims;
+
 /*
 * Conditions Of Use
 *
@@ -33,45 +34,41 @@ import gov.nist.javax.sip.header.HeaderFactoryImpl;
 import gov.nist.javax.sip.header.ims.PProfileKeyHeader;
 import gov.nist.javax.sip.parser.ims.PProfileKeyParser;
 import test.unit.gov.nist.javax.sip.parser.ParserTestCase;
+
 /**
  *
- * @author aayush.bhatnagar
- * Rancore Technologies Pvt Ltd, Mumbai India.
+ * @author aayush.bhatnagar Rancore Technologies Pvt Ltd, Mumbai India.
  *
  */
-public class PProfileKeyParserTest extends ParserTestCase{
+public class PProfileKeyParserTest extends ParserTestCase {
 
-    @Override
-    public void testParser() {
+	@Override
+	public void testParser() {
 
-        System.out.println("*****************************************************");
-        System.out.println("parsie parsie.....");
-        System.out.println("*****************************************************");
+		System.out.println("*****************************************************");
+		System.out.println("parsie parsie.....");
+		System.out.println("*****************************************************");
 
-        String p_prof_key[] = {"P-Profile-Key: <sip:chatroom-12@rancore.com>\n",
-                               "P-Profile-Key: <sip:chatroom-!.*!@rancore.com>\n",
-                               "P-Profile-Key: <sip:chatroom-19A@rancore.com>\n"};
+		String p_prof_key[] = { "P-Profile-Key: <sip:chatroom-12@rancore.com>\n", "P-Profile-Key: <sip:chatroom-!.*!@rancore.com>\n", "P-Profile-Key: <sip:chatroom-19A@rancore.com>\n" };
 
-        super.testParser(PProfileKeyParser.class, p_prof_key);
+		super.testParser(PProfileKeyParser.class, p_prof_key);
 
-        System.out.println("*****************************************************");
-        System.out.println("From the perspective of the application, let us test");
-        System.out.println("The creation of this header.....");
-        System.out.println("*****************************************************");
+		System.out.println("*****************************************************");
+		System.out.println("From the perspective of the application, let us test");
+		System.out.println("The creation of this header.....");
+		System.out.println("*****************************************************");
 
-        HeaderFactoryImpl himpl = new HeaderFactoryImpl();
-        AddressFactory addFactory = new AddressFactoryImpl();
+		HeaderFactoryImpl himpl = new HeaderFactoryImpl();
+		AddressFactory addFactory = new AddressFactoryImpl();
 
-        try {
-            PProfileKeyHeader ppkey = himpl.createPProfileKeyHeader
-                (addFactory.createAddress("aayush's room",
-                         addFactory.createSipURI("aayushzChatRoom-19", "rancoremumbai.com")));
+		try {
+			PProfileKeyHeader ppkey = himpl.createPProfileKeyHeader(addFactory.createAddress("aayush's room", addFactory.createSipURI("aayushzChatRoom-19", "rancoremumbai.com")));
 
-            System.out.println("The newly encoded header is---> "+ppkey.toString());
-        } catch (ParseException e) {
-            // TODO Auto-generated catch block
-            e.printStackTrace();
-        }
-    }
+			System.out.println("The newly encoded header is---> " + ppkey.toString());
+		} catch (ParseException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+	}
 
 }

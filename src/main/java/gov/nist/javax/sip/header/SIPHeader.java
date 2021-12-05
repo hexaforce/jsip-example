@@ -31,93 +31,99 @@ package gov.nist.javax.sip.header;
 /**
  * Root class from which all SIPHeader objects are subclassed.
  *
- * @author M. Ranganathan   <br/>
+ * @author M. Ranganathan <br/>
  * @version 1.2 $Revision: 1.9 $ $Date: 2010-05-06 14:07:52 $
  *
  *
  */
-public abstract class SIPHeader
-    extends SIPObject
-    implements SIPHeaderNames, javax.sip.header.Header, HeaderExt {
+public abstract class SIPHeader extends SIPObject implements SIPHeaderNames, javax.sip.header.Header, HeaderExt {
 
-    /** name of this header
-     */
-    protected String headerName;
+	/**
+	 * name of this header
+	 */
+	protected String headerName;
 
-    /** Value of the header.
-    */
+	/**
+	 * Value of the header.
+	 */
 
-    /** Constructor
-     * @param hname String to set
-     */
-    protected SIPHeader(String hname) {
-        headerName = hname.intern();
-    }
+	/**
+	 * Constructor
+	 * 
+	 * @param hname String to set
+	 */
+	protected SIPHeader(String hname) {
+		headerName = hname.intern();
+	}
 
-    /** Default constructor
-     */
-    public SIPHeader() {
-    }
+	/**
+	 * Default constructor
+	 */
+	public SIPHeader() {
+	}
 
-    /**
-     * Name of the SIPHeader
-     * @return String
-     */
-    public String getHeaderName() {
-        return headerName;
-    }
+	/**
+	 * Name of the SIPHeader
+	 * 
+	 * @return String
+	 */
+	public String getHeaderName() {
+		return headerName;
+	}
 
-    /** Alias for getHaderName above.
-    *
-    *@return String headerName
-    *
-    */
-    public String getName() {
-        return this.headerName;
-    }
+	/**
+	 * Alias for getHaderName above.
+	 *
+	 * @return String headerName
+	 *
+	 */
+	public String getName() {
+		return this.headerName;
+	}
 
-    /**
-         * Set the name of the header .
-         * @param hdrname String to set
-         */
-    public void setHeaderName(String hdrname) {
-        headerName = hdrname;
-    }
+	/**
+	 * Set the name of the header .
+	 * 
+	 * @param hdrname String to set
+	 */
+	public void setHeaderName(String hdrname) {
+		headerName = hdrname;
+	}
 
-    /** Get the header value (i.e. what follows the name:).
-    * This merely goes through and lops off the portion that follows
-    * the headerName:
-    */
-    public String getHeaderValue() {
-      return encodeBody(new StringBuilder()).toString();
-    }
+	/**
+	 * Get the header value (i.e. what follows the name:). This merely goes through and lops off the portion that follows the headerName:
+	 */
+	public String getHeaderValue() {
+		return encodeBody(new StringBuilder()).toString();
+	}
 
-    /** Return false if this is not a header list
-    * (SIPHeaderList overrrides this method).
-    *@return false
-    */
-    public boolean isHeaderList() {
-        return false;
-    }
+	/**
+	 * Return false if this is not a header list (SIPHeaderList overrrides this method).
+	 * 
+	 * @return false
+	 */
+	public boolean isHeaderList() {
+		return false;
+	}
 
-    /** Encode this header into canonical form.
-    */
-    public String encode() {
-        return encode(new StringBuilder()).toString();
-    }
+	/**
+	 * Encode this header into canonical form.
+	 */
+	public String encode() {
+		return encode(new StringBuilder()).toString();
+	}
 
-    public StringBuilder encode(StringBuilder buffer) {
-        buffer.append(this.headerName).append(COLON).append(SP);
-        this.encodeBody(buffer);
-        buffer.append(NEWLINE);
-        return buffer;
-    }
+	public StringBuilder encode(StringBuilder buffer) {
+		buffer.append(this.headerName).append(COLON).append(SP);
+		this.encodeBody(buffer);
+		buffer.append(NEWLINE);
+		return buffer;
+	}
 
-    /** Encode the body of this header (the stuff that follows headerName).
-    * A.K.A headerValue.
-    */
-    protected abstract StringBuilder encodeBody(StringBuilder buffer);
-        
+	/**
+	 * Encode the body of this header (the stuff that follows headerName). A.K.A headerValue.
+	 */
+	protected abstract StringBuilder encodeBody(StringBuilder buffer);
 
 //    /** Encode the body of this header in the given buffer.
 //     * Default implementation calls encodeBody();
@@ -126,21 +132,22 @@ public abstract class SIPHeader
 //        return buffer.append(encodeBody());
 //    }
 
-    /** Alias for getHeaderValue.
-     */
-    public String getValue() {
-        return this.getHeaderValue();
-    }
+	/**
+	 * Alias for getHeaderValue.
+	 */
+	public String getValue() {
+		return this.getHeaderValue();
+	}
 
-    /**
-     * This is a pretty simple hashCode but satisfies requirements.
-     *
-     */
-    public int hashCode() {
-        return this.headerName.hashCode();
-    }
+	/**
+	 * This is a pretty simple hashCode but satisfies requirements.
+	 *
+	 */
+	public int hashCode() {
+		return this.headerName.hashCode();
+	}
 
-    public final String toString() {
-        return this.encode();
-    }
+	public final String toString() {
+		return this.encode();
+	}
 }

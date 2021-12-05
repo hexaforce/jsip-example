@@ -37,28 +37,17 @@ import javax.sip.header.HeaderAddress;
  * @author ALEXANDRE MIGUEL SILVA SANTOS - Nú 10045401
  */
 
-
 /**
- * P-Asserted-Identity header
- * Private Header: RFC 3455.
- * Contains a URI (commonly a SIP URI) and an optional display-name
- * enable a network of trusted SIP servers to assert
- * the identity of authenticated users, and the application of existing
- * privacy mechanisms to the identity problem.
- * The use of this extension is only applicable inside an administrative
- * domain with previously agreed-upon policies for generation,
- * transport and usage of such information.
+ * P-Asserted-Identity header Private Header: RFC 3455. Contains a URI (commonly a SIP URI) and an optional display-name enable a network of trusted SIP servers to assert the identity of authenticated users, and the application of existing privacy mechanisms to the identity problem. The use of this extension is only applicable inside an administrative domain with previously agreed-upon policies for generation, transport and usage of such information.
  *
  *
  */
 
-
-
 public interface PAssertedIdentityHeader extends HeaderAddress, Header {
 
-    /**
-     * Name of AssertIdentityHeader
-     */
-    public final static String NAME = "P-Asserted-Identity";
+	/**
+	 * Name of AssertIdentityHeader
+	 */
+	public final static String NAME = "P-Asserted-Identity";
 
 }

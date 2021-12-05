@@ -34,7 +34,7 @@ import javax.sip.InvalidArgumentException;
 import javax.sip.header.SubscriptionStateHeader;
 
 /**
- *SubscriptionState header
+ * SubscriptionState header
  *
  * @version 1.2 $Revision: 1.8 $ $Date: 2010-05-06 14:07:47 $
  *
@@ -42,147 +42,131 @@ import javax.sip.header.SubscriptionStateHeader;
  *
  *
  */
-public class SubscriptionState
-    extends ParametersHeader
-    implements SubscriptionStateHeader {
+public class SubscriptionState extends ParametersHeader implements SubscriptionStateHeader {
 
-    /**
-     * Comment for <code>serialVersionUID</code>
-     */
-    private static final long serialVersionUID = -6673833053927258745L;
-    protected int expires;
-    protected int retryAfter;
-    protected String reasonCode;
-    protected String state;
+	/**
+	 * Comment for <code>serialVersionUID</code>
+	 */
+	private static final long serialVersionUID = -6673833053927258745L;
+	protected int expires;
+	protected int retryAfter;
+	protected String reasonCode;
+	protected String state;
 
-    /** Creates a new instance of SubscriptionState */
-    public SubscriptionState() {
-        super(SIPHeaderNames.SUBSCRIPTION_STATE);
-        expires = -1;
-        retryAfter = -1;
-    }
+	/** Creates a new instance of SubscriptionState */
+	public SubscriptionState() {
+		super(SIPHeaderNames.SUBSCRIPTION_STATE);
+		expires = -1;
+		retryAfter = -1;
+	}
 
-    /**
-    * Sets the relative expires value of the SubscriptionStateHeader. The
-    * expires value MUST be greater than zero and MUST be less than 2**31.
-    *
-    * @param expires - the new expires value of this SubscriptionStateHeader.
-    * @throws InvalidArgumentException if supplied value is less than zero.
-    */
-    public void setExpires(int expires) throws InvalidArgumentException {
-        if (expires < 0)
-            throw new InvalidArgumentException(
-                "JAIN-SIP "
-                    + "Exception, SubscriptionState, setExpires(), the expires parameter is  < 0");
-        this.expires = expires;
-    }
+	/**
+	 * Sets the relative expires value of the SubscriptionStateHeader. The expires value MUST be greater than zero and MUST be less than 2**31.
+	 *
+	 * @param expires - the new expires value of this SubscriptionStateHeader.
+	 * @throws InvalidArgumentException if supplied value is less than zero.
+	 */
+	public void setExpires(int expires) throws InvalidArgumentException {
+		if (expires < 0)
+			throw new InvalidArgumentException("JAIN-SIP " + "Exception, SubscriptionState, setExpires(), the expires parameter is  < 0");
+		this.expires = expires;
+	}
 
-    /**
-     * Gets the expires value of the SubscriptionStateHeader. This expires value is
-     * relative time.
-     *
-     * @return the expires value of the SubscriptionStateHeader.
-     */
-    public int getExpires() {
-        return expires;
-    }
+	/**
+	 * Gets the expires value of the SubscriptionStateHeader. This expires value is relative time.
+	 *
+	 * @return the expires value of the SubscriptionStateHeader.
+	 */
+	public int getExpires() {
+		return expires;
+	}
 
-    /**
-     * Sets the retry after value of the SubscriptionStateHeader. The retry after value
-     * MUST be greater than zero and MUST be less than 2**31.
-     *
-     * @param retryAfter - the new retry after value of this SubscriptionStateHeader
-     * @throws InvalidArgumentException if supplied value is less than zero.
-     */
-    public void setRetryAfter(int retryAfter) throws InvalidArgumentException {
-        if (retryAfter <= 0)
-            throw new InvalidArgumentException(
-                "JAIN-SIP "
-                    + "Exception, SubscriptionState, setRetryAfter(), the retryAfter parameter is <=0");
-        this.retryAfter = retryAfter;
-    }
+	/**
+	 * Sets the retry after value of the SubscriptionStateHeader. The retry after value MUST be greater than zero and MUST be less than 2**31.
+	 *
+	 * @param retryAfter - the new retry after value of this SubscriptionStateHeader
+	 * @throws InvalidArgumentException if supplied value is less than zero.
+	 */
+	public void setRetryAfter(int retryAfter) throws InvalidArgumentException {
+		if (retryAfter <= 0)
+			throw new InvalidArgumentException("JAIN-SIP " + "Exception, SubscriptionState, setRetryAfter(), the retryAfter parameter is <=0");
+		this.retryAfter = retryAfter;
+	}
 
-    /**
-     * Gets the retry after value of the SubscriptionStateHeader. This retry after
-     * value is relative time.
-     *
-     * @return the retry after value of the SubscriptionStateHeader.
-     */
-    public int getRetryAfter() {
-        return retryAfter;
-    }
+	/**
+	 * Gets the retry after value of the SubscriptionStateHeader. This retry after value is relative time.
+	 *
+	 * @return the retry after value of the SubscriptionStateHeader.
+	 */
+	public int getRetryAfter() {
+		return retryAfter;
+	}
 
-    /**
-     * Gets the reason code of SubscriptionStateHeader.
-     *
-     * @return the comment of this SubscriptionStateHeader, return null if no reason code
-     * is available.
-     */
-    public String getReasonCode() {
-        return reasonCode;
-    }
+	/**
+	 * Gets the reason code of SubscriptionStateHeader.
+	 *
+	 * @return the comment of this SubscriptionStateHeader, return null if no reason code is available.
+	 */
+	public String getReasonCode() {
+		return reasonCode;
+	}
 
-    /**
-     * Sets the reason code value of the SubscriptionStateHeader.
-     *
-     * @param reasonCode - the new reason code string value of the SubscriptionStateHeader.
-     * @throws ParseException which signals that an error has been reached
-     * unexpectedly while parsing the reason code.
-     */
-    public void setReasonCode(String reasonCode) throws ParseException {
-        if (reasonCode == null)
-            throw new NullPointerException(
-                "JAIN-SIP "
-                    + "Exception, SubscriptionState, setReasonCode(), the reasonCode parameter is null");
-        this.reasonCode = reasonCode;
-    }
+	/**
+	 * Sets the reason code value of the SubscriptionStateHeader.
+	 *
+	 * @param reasonCode - the new reason code string value of the SubscriptionStateHeader.
+	 * @throws ParseException which signals that an error has been reached unexpectedly while parsing the reason code.
+	 */
+	public void setReasonCode(String reasonCode) throws ParseException {
+		if (reasonCode == null)
+			throw new NullPointerException("JAIN-SIP " + "Exception, SubscriptionState, setReasonCode(), the reasonCode parameter is null");
+		this.reasonCode = reasonCode;
+	}
 
-    /**
-     * Gets the state of SubscriptionStateHeader.
-     *
-     * @return the state of this SubscriptionStateHeader.
-     */
-    public String getState() {
-        return state;
-    }
+	/**
+	 * Gets the state of SubscriptionStateHeader.
+	 *
+	 * @return the state of this SubscriptionStateHeader.
+	 */
+	public String getState() {
+		return state;
+	}
 
-    /**
-     * Sets the state value of the SubscriptionStateHeader.
-     *
-     * @param state - the new state string value of the SubscriptionStateHeader.
-     * @throws ParseException which signals that an error has been reached
-     * unexpectedly while parsing the state.
-     */
-    public void setState(String state) throws ParseException {
-        if (state == null)
-            throw new NullPointerException(
-                "JAIN-SIP "
-                    + "Exception, SubscriptionState, setState(), the state parameter is null");
-        this.state = state;
-    }
+	/**
+	 * Sets the state value of the SubscriptionStateHeader.
+	 *
+	 * @param state - the new state string value of the SubscriptionStateHeader.
+	 * @throws ParseException which signals that an error has been reached unexpectedly while parsing the state.
+	 */
+	public void setState(String state) throws ParseException {
+		if (state == null)
+			throw new NullPointerException("JAIN-SIP " + "Exception, SubscriptionState, setState(), the state parameter is null");
+		this.state = state;
+	}
 
-    /** Just the encoded body of the header.
-     * @return the string encoded header body.
-     */
-    public String encodeBody() {
-        return encodeBody(new StringBuilder()).toString();
-    }
+	/**
+	 * Just the encoded body of the header.
+	 * 
+	 * @return the string encoded header body.
+	 */
+	public String encodeBody() {
+		return encodeBody(new StringBuilder()).toString();
+	}
 
-    protected StringBuilder encodeBody(StringBuilder buffer) {
-        if (state != null)
-            buffer.append(state);
-        if (reasonCode != null)
-            buffer.append(";reason=").append(reasonCode);
-        if (expires != -1)
-            buffer.append(";expires=").append(expires);
-        if (retryAfter != -1)
-            buffer.append(";retry-after=").append(retryAfter);
+	protected StringBuilder encodeBody(StringBuilder buffer) {
+		if (state != null)
+			buffer.append(state);
+		if (reasonCode != null)
+			buffer.append(";reason=").append(reasonCode);
+		if (expires != -1)
+			buffer.append(";expires=").append(expires);
+		if (retryAfter != -1)
+			buffer.append(";retry-after=").append(retryAfter);
 
-        if (!parameters.isEmpty()) {
-            buffer.append(SEMICOLON);
-            parameters.encode(buffer);
-        }
-        return buffer;
-    }
+		if (!parameters.isEmpty()) {
+			buffer.append(SEMICOLON);
+			parameters.encode(buffer);
+		}
+		return buffer;
+	}
 }
-

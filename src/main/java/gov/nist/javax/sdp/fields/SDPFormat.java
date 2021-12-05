@@ -29,36 +29,35 @@
 package gov.nist.javax.sdp.fields;
 
 /**
-* Media Description SDP header
-*
-*@version 1.2
-*
-*@author M. Ranganathan   <br/>
-*
-*
-*
-*/
+ * Media Description SDP header
+ *
+ * @version 1.2
+ *
+ * @author M. Ranganathan <br/>
+ *
+ *
+ *
+ */
 public class SDPFormat extends SDPObject {
-    protected String format;
+	protected String format;
 
-    public void setFormat(String fmt) {
-        format = fmt;
-    }
+	public void setFormat(String fmt) {
+		format = fmt;
+	}
 
-    public String getFormat() {
-        return format;
-    }
+	public String getFormat() {
+		return format;
+	}
 
-    public SDPFormat(String s) {
-        format = s;
-    }
+	public SDPFormat(String s) {
+		format = s;
+	}
 
-    public SDPFormat() {
-    }
+	public SDPFormat() {
+	}
 
-    public String encode() {
-        return format;
-    }
+	public String encode() {
+		return format;
+	}
 
 }
-

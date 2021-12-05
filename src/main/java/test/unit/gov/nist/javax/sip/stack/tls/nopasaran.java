@@ -3,8 +3,7 @@ package test.unit.gov.nist.javax.sip.stack.tls;
 import java.net.Socket;
 
 /**
- * To test http://java.net/jira/browse/JSIP-415
- * Run Shootme, run this class do a thread dump to make sure there is no thread leaks
+ * To test http://java.net/jira/browse/JSIP-415 Run Shootme, run this class do a thread dump to make sure there is no thread leaks
  */
 public class nopasaran {
 

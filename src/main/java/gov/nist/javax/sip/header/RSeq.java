@@ -31,60 +31,58 @@ import javax.sip.InvalidArgumentException;
  *
  * @version 1.2 $Revision: 1.8 $ $Date: 2010-05-06 14:07:55 $
  *
- * @author M. Ranganathan   <br/>
+ * @author M. Ranganathan <br/>
  *
  *
  */
 public class RSeq extends SIPHeader implements javax.sip.header.RSeqHeader {
-    /**
-     * Comment for <code>serialVersionUID</code>
-     */
-    private static final long serialVersionUID = 8765762413224043394L;
-    protected long sequenceNumber;
+	/**
+	 * Comment for <code>serialVersionUID</code>
+	 */
+	private static final long serialVersionUID = 8765762413224043394L;
+	protected long sequenceNumber;
 
-    /** Creates a new instance of RSeq */
-    public RSeq() {
-        super(NAME);
-    }
+	/** Creates a new instance of RSeq */
+	public RSeq() {
+		super(NAME);
+	}
 
-    /** Gets the sequence number of this RSeqHeader.
-     * @deprecated
-     * @return the integer value of the Sequence number of the RSeqHeader
-     */
-    public int getSequenceNumber() {
-        return (int)this.sequenceNumber;
-    }
+	/**
+	 * Gets the sequence number of this RSeqHeader.
+	 * 
+	 * @deprecated
+	 * @return the integer value of the Sequence number of the RSeqHeader
+	 */
+	public int getSequenceNumber() {
+		return (int) this.sequenceNumber;
+	}
 
+	/**
+	 * Encode the body of this header (the stuff that follows headerName). A.K.A headerValue.
+	 */
+	public StringBuilder encodeBody(StringBuilder retval) {
+		return retval.append(Long.toString(this.sequenceNumber));
+	}
 
-    /** Encode the body of this header (the stuff that follows headerName).
-     * A.K.A headerValue.
-     */
-    public StringBuilder encodeBody(StringBuilder retval) {
-        return retval.append(Long.toString(this.sequenceNumber));
-    }
+	public long getSeqNumber() {
+		return this.sequenceNumber;
+	}
 
-    public long getSeqNumber() {
-        return this.sequenceNumber;
-    }
+	public void setSeqNumber(long sequenceNumber) throws InvalidArgumentException {
 
-    public void setSeqNumber(long sequenceNumber) throws InvalidArgumentException {
+		if (sequenceNumber <= 0 || sequenceNumber > ((long) 1) << 32 - 1)
+			throw new InvalidArgumentException("Bad seq number " + sequenceNumber);
+		this.sequenceNumber = sequenceNumber;
 
-            if (sequenceNumber <= 0 ||sequenceNumber > ((long)1)<<32 - 1)
-                throw new InvalidArgumentException(
-                    "Bad seq number " + sequenceNumber);
-            this.sequenceNumber = sequenceNumber;
+	}
 
-    }
+	/**
+	 * @deprecated
+	 * @see javax.sip.header.RSeqHeader#setSequenceNumber(int)
+	 */
+	public void setSequenceNumber(int sequenceNumber) throws InvalidArgumentException {
+		this.setSeqNumber(sequenceNumber);
 
-    /**
-     * @deprecated
-     * @see javax.sip.header.RSeqHeader#setSequenceNumber(int)
-     */
-    public void setSequenceNumber(int sequenceNumber) throws InvalidArgumentException {
-        this.setSeqNumber(sequenceNumber);
-
-    }
-
-
+	}
 
 }

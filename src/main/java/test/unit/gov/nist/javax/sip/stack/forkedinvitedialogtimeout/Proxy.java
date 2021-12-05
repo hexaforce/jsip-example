@@ -39,199 +39,192 @@ import junit.framework.TestCase;
  */
 public class Proxy implements SipListener {
 
-    // private ServerTransaction st;
+	// private ServerTransaction st;
 
-    private SipProvider inviteServerTxProvider;
+	private SipProvider inviteServerTxProvider;
 
-    private Hashtable clientTxTable = new Hashtable();
+	private Hashtable clientTxTable = new Hashtable();
 
-    private static String host = "127.0.0.1";
+	private static String host = "127.0.0.1";
 
-    private int port = 5070;
+	private int port = 5070;
 
-    private SipProvider sipProvider;
+	private SipProvider sipProvider;
 
-    private static String unexpectedException = "Unexpected exception";
+	private static String unexpectedException = "Unexpected exception";
 
-    private static Logger logger = Logger.getLogger(Proxy.class);
+	private static Logger logger = Logger.getLogger(Proxy.class);
 
-    private static AddressFactory addressFactory;
+	private static AddressFactory addressFactory;
 
-    private static MessageFactory messageFactory;
+	private static MessageFactory messageFactory;
 
-    private static HeaderFactory headerFactory;
+	private static HeaderFactory headerFactory;
 
-    private static String transport = "udp";
+	private static String transport = "udp";
 
-    private SipStack sipStack;
+	private SipStack sipStack;
 
-    private int ntargets;
-    
-    
-    private void sendTo(ServerTransaction st, Request request, int targetPort) throws Exception {
-        Request newRequest = (Request) request.clone();
-        
-        SipURI sipUri = addressFactory.createSipURI("UA1", "127.0.0.1");
-        sipUri.setPort(targetPort);
-        sipUri.setLrParam();
-        Address address = addressFactory.createAddress("client1", sipUri);
-        RouteHeader rheader = headerFactory.createRouteHeader(address);
+	private int ntargets;
 
-        newRequest.addFirst(rheader);
-        ViaHeader viaHeader = headerFactory.createViaHeader(host, this.port, transport, null);
-        newRequest.addFirst(viaHeader);
-        ClientTransaction ct1 = sipProvider.getNewClientTransaction(newRequest);
-        sipUri = addressFactory.createSipURI("proxy", "127.0.0.1");
-        address = addressFactory.createAddress("proxy", sipUri);
-        sipUri.setPort(5070);
-        sipUri.setLrParam();
-        RecordRouteHeader recordRoute = headerFactory.createRecordRouteHeader(address);
-        newRequest.addHeader(recordRoute);
-        ct1.setApplicationData(st);
-        this.clientTxTable.put(Integer.valueOf(targetPort), ct1);
-        ct1.sendRequest();
-    }
+	private void sendTo(ServerTransaction st, Request request, int targetPort) throws Exception {
+		Request newRequest = (Request) request.clone();
 
-    public void processRequest(RequestEvent requestEvent) {
-        try {
-            Request request = requestEvent.getRequest();
-            SipProvider sipProvider = (SipProvider) requestEvent.getSource();
-            this.inviteServerTxProvider = sipProvider;
-            if (request.getMethod().equals(Request.INVITE)) {
+		SipURI sipUri = addressFactory.createSipURI("UA1", "127.0.0.1");
+		sipUri.setPort(targetPort);
+		sipUri.setLrParam();
+		Address address = addressFactory.createAddress("client1", sipUri);
+		RouteHeader rheader = headerFactory.createRouteHeader(address);
 
-                ListeningPoint lp = sipProvider.getListeningPoint(transport);
-                String host = lp.getIPAddress();
-                int port = lp.getPort();
+		newRequest.addFirst(rheader);
+		ViaHeader viaHeader = headerFactory.createViaHeader(host, this.port, transport, null);
+		newRequest.addFirst(viaHeader);
+		ClientTransaction ct1 = sipProvider.getNewClientTransaction(newRequest);
+		sipUri = addressFactory.createSipURI("proxy", "127.0.0.1");
+		address = addressFactory.createAddress("proxy", sipUri);
+		sipUri.setPort(5070);
+		sipUri.setLrParam();
+		RecordRouteHeader recordRoute = headerFactory.createRecordRouteHeader(address);
+		newRequest.addHeader(recordRoute);
+		ct1.setApplicationData(st);
+		this.clientTxTable.put(Integer.valueOf(targetPort), ct1);
+		ct1.sendRequest();
+	}
 
-                ServerTransaction st = null;
-                if (requestEvent.getServerTransaction() == null) {
-                    st = sipProvider.getNewServerTransaction(request);
+	public void processRequest(RequestEvent requestEvent) {
+		try {
+			Request request = requestEvent.getRequest();
+			SipProvider sipProvider = (SipProvider) requestEvent.getSource();
+			this.inviteServerTxProvider = sipProvider;
+			if (request.getMethod().equals(Request.INVITE)) {
 
-                }
-                
-                for ( int i = 0; i < ntargets; i++ ) {
-                    this.sendTo(st,request,5080 + i);
-                }
+				ListeningPoint lp = sipProvider.getListeningPoint(transport);
+				String host = lp.getIPAddress();
+				int port = lp.getPort();
 
-             
-               
+				ServerTransaction st = null;
+				if (requestEvent.getServerTransaction() == null) {
+					st = sipProvider.getNewServerTransaction(request);
 
-            } else {
-                // Remove the topmost route header
-                // The route header will make sure it gets to the right place.
-                logger.info("proxy: Got a request " + request.getMethod());
-                Request newRequest = (Request) request.clone();
-                newRequest.removeFirst(RouteHeader.NAME);
-                sipProvider.sendRequest(newRequest);
-            }
+				}
 
-        } catch (Exception ex) {
-            ex.printStackTrace();
-            System.exit(0);
-        }
+				for (int i = 0; i < ntargets; i++) {
+					this.sendTo(st, request, 5080 + i);
+				}
 
-    }
+			} else {
+				// Remove the topmost route header
+				// The route header will make sure it gets to the right place.
+				logger.info("proxy: Got a request " + request.getMethod());
+				Request newRequest = (Request) request.clone();
+				newRequest.removeFirst(RouteHeader.NAME);
+				sipProvider.sendRequest(newRequest);
+			}
 
-    public void processResponse(ResponseEvent responseEvent) {
-        try {
-            Response response = responseEvent.getResponse();
-            CSeqHeader cseq = (CSeqHeader) response.getHeader(CSeqHeader.NAME);
-            logger.info("ClientTxID = " + responseEvent.getClientTransaction() + " client tx id "
-                    + ((ViaHeader) response.getHeader(ViaHeader.NAME)).getBranch()
-                    + " CSeq header = " + response.getHeader(CSeqHeader.NAME) + " status code = "
-                    + response.getStatusCode());
+		} catch (Exception ex) {
+			ex.printStackTrace();
+			System.exit(0);
+		}
 
-            // JvB: stateful proxy MUST NOT forward 100 Trying
-            if (response.getStatusCode() == 100)
-                return;
+	}
 
-            if (cseq.getMethod().equals(Request.INVITE)) {
-                ClientTransaction ct = responseEvent.getClientTransaction();
-                if (ct != null) {
-                    ServerTransaction st = (ServerTransaction) ct.getApplicationData();
+	public void processResponse(ResponseEvent responseEvent) {
+		try {
+			Response response = responseEvent.getResponse();
+			CSeqHeader cseq = (CSeqHeader) response.getHeader(CSeqHeader.NAME);
+			logger.info("ClientTxID = " + responseEvent.getClientTransaction() + " client tx id " + ((ViaHeader) response.getHeader(ViaHeader.NAME)).getBranch() + " CSeq header = " + response.getHeader(CSeqHeader.NAME) + " status code = " + response.getStatusCode());
 
-                    // Strip the topmost via header
-                    Response newResponse = (Response) response.clone();
-                    newResponse.removeFirst(ViaHeader.NAME);
-                    // The server tx goes to the terminated state.
+			// JvB: stateful proxy MUST NOT forward 100 Trying
+			if (response.getStatusCode() == 100)
+				return;
 
-                    st.sendResponse(newResponse);
-                } else {
-                    // Client tx has already terminated but the UA is
-                    // retransmitting
-                    // just forward the response statelessly.
-                    // Strip the topmost via header
+			if (cseq.getMethod().equals(Request.INVITE)) {
+				ClientTransaction ct = responseEvent.getClientTransaction();
+				if (ct != null) {
+					ServerTransaction st = (ServerTransaction) ct.getApplicationData();
 
-                    Response newResponse = (Response) response.clone();
-                    newResponse.removeFirst(ViaHeader.NAME);
-                    // Send the retransmission statelessly
-                    this.inviteServerTxProvider.sendResponse(newResponse);
-                }
-            } else {
-                // this is the OK for the cancel.
-                logger.info("Got a non-invite response " + response);
-            }
-        } catch (Exception ex) {
-            ex.printStackTrace();
-            TestCase.fail("unexpected exception");
-        }
-    }
+					// Strip the topmost via header
+					Response newResponse = (Response) response.clone();
+					newResponse.removeFirst(ViaHeader.NAME);
+					// The server tx goes to the terminated state.
 
-    public void processTimeout(TimeoutEvent timeoutEvent) {
-        logger.error("Timeout occured");
-        TestCase.fail("unexpected event");
-    }
+					st.sendResponse(newResponse);
+				} else {
+					// Client tx has already terminated but the UA is
+					// retransmitting
+					// just forward the response statelessly.
+					// Strip the topmost via header
 
-    public void processIOException(IOExceptionEvent exceptionEvent) {
-        logger.info("IOException occured");
-        TestCase.fail("unexpected exception io exception");
-    }
+					Response newResponse = (Response) response.clone();
+					newResponse.removeFirst(ViaHeader.NAME);
+					// Send the retransmission statelessly
+					this.inviteServerTxProvider.sendResponse(newResponse);
+				}
+			} else {
+				// this is the OK for the cancel.
+				logger.info("Got a non-invite response " + response);
+			}
+		} catch (Exception ex) {
+			ex.printStackTrace();
+			TestCase.fail("unexpected exception");
+		}
+	}
 
-    public SipProvider createSipProvider() {
-        try {
-            ListeningPoint listeningPoint = sipStack.createListeningPoint(host, port, transport);
+	public void processTimeout(TimeoutEvent timeoutEvent) {
+		logger.error("Timeout occured");
+		TestCase.fail("unexpected event");
+	}
 
-            sipProvider = sipStack.createSipProvider(listeningPoint);
-            return sipProvider;
-        } catch (Exception ex) {
-            logger.error(unexpectedException, ex);
-            TestCase.fail(unexpectedException);
-            return null;
-        }
+	public void processIOException(IOExceptionEvent exceptionEvent) {
+		logger.info("IOException occured");
+		TestCase.fail("unexpected exception io exception");
+	}
 
-    }
+	public SipProvider createSipProvider() {
+		try {
+			ListeningPoint listeningPoint = sipStack.createListeningPoint(host, port, transport);
 
-    public void processTransactionTerminated(TransactionTerminatedEvent transactionTerminatedEvent) {
-        logger.info("Transaction terminated event occured -- cleaning up");
-        if (!transactionTerminatedEvent.isServerTransaction()) {
-            ClientTransaction ct = transactionTerminatedEvent.getClientTransaction();
-            for (Iterator it = this.clientTxTable.values().iterator(); it.hasNext();) {
-                if (it.next().equals(ct)) {
-                    it.remove();
-                }
-            }
-        } else {
-            logger.info("Server tx terminated! ");
-        }
-    }
+			sipProvider = sipStack.createSipProvider(listeningPoint);
+			return sipProvider;
+		} catch (Exception ex) {
+			logger.error(unexpectedException, ex);
+			TestCase.fail(unexpectedException);
+			return null;
+		}
 
-    public void processDialogTerminated(DialogTerminatedEvent dialogTerminatedEvent) {
-        TestCase.fail("unexpected event");
-    }
+	}
 
-    public Proxy(int myPort, int ntargets) {
-        this.port = myPort;
-        this.ntargets = ntargets;
-        SipObjects sipObjects = new SipObjects(myPort, "proxy","off");
-        addressFactory = sipObjects.addressFactory;
-        messageFactory = sipObjects.messageFactory;
-        headerFactory = sipObjects.headerFactory;
-        this.sipStack = sipObjects.sipStack;
-  
-    }
+	public void processTransactionTerminated(TransactionTerminatedEvent transactionTerminatedEvent) {
+		logger.info("Transaction terminated event occured -- cleaning up");
+		if (!transactionTerminatedEvent.isServerTransaction()) {
+			ClientTransaction ct = transactionTerminatedEvent.getClientTransaction();
+			for (Iterator it = this.clientTxTable.values().iterator(); it.hasNext();) {
+				if (it.next().equals(ct)) {
+					it.remove();
+				}
+			}
+		} else {
+			logger.info("Server tx terminated! ");
+		}
+	}
 
-    public void stop() {
-       this.sipStack.stop();
-    }
+	public void processDialogTerminated(DialogTerminatedEvent dialogTerminatedEvent) {
+		TestCase.fail("unexpected event");
+	}
+
+	public Proxy(int myPort, int ntargets) {
+		this.port = myPort;
+		this.ntargets = ntargets;
+		SipObjects sipObjects = new SipObjects(myPort, "proxy", "off");
+		addressFactory = sipObjects.addressFactory;
+		messageFactory = sipObjects.messageFactory;
+		headerFactory = sipObjects.headerFactory;
+		this.sipStack = sipObjects.sipStack;
+
+	}
+
+	public void stop() {
+		this.sipStack.stop();
+	}
 
 }

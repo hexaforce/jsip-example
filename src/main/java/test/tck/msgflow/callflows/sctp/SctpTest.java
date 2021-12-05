@@ -40,112 +40,106 @@ import test.tck.msgflow.callflows.ScenarioHarness;
 /**
  * @author M. Ranganathan
  *
- * JvB: copied from TLS test
- * Note: SCTP only works with Java7 on Linux
+ *         JvB: copied from TLS test Note: SCTP only works with Java7 on Linux
  */
 public class SctpTest extends ScenarioHarness implements SipListener {
 
+	protected Shootist shootist;
 
-    protected Shootist shootist;
+	private Shootme shootme;
 
-    private Shootme shootme;
+	private static Logger logger = Logger.getLogger("test.tck");
 
-    private static Logger logger = Logger.getLogger("test.tck");
+	static {
+		if (!logger.isAttached(console))
+			logger.addAppender(console);
+	}
 
-    static {
-        if (!logger.isAttached(console))
-            logger.addAppender(console);
-    }
+	private SipListener getSipListener(EventObject sipEvent) {
+		SipProvider source = (SipProvider) sipEvent.getSource();
+		SipListener listener = (SipListener) providerTable.get(source);
+		assertTrue(listener != null);
+		return listener;
+	}
 
-    private SipListener getSipListener(EventObject sipEvent) {
-        SipProvider source = (SipProvider) sipEvent.getSource();
-        SipListener listener = (SipListener) providerTable.get(source);
-        assertTrue(listener != null);
-        return listener;
-    }
+	public SctpTest() {
+		super("SctpTest", true);
+	}
 
-    public SctpTest() {
-        super("SctpTest", true);
-    }
+	public void setUp() {
 
-    public void setUp() {
+		try {
+			this.transport = "sctp";
 
-        try {
-            this.transport = "sctp";
+			super.setUp();
+			shootist = new Shootist(getRiProtocolObjects());
+			SipProvider shootistProvider = shootist.createSipProvider();
+			providerTable.put(shootistProvider, shootist);
 
-            super.setUp();
-            shootist = new Shootist(getRiProtocolObjects());
-            SipProvider shootistProvider = shootist.createSipProvider();
-            providerTable.put(shootistProvider, shootist);
+			shootme = new Shootme(getTiProtocolObjects());
+			SipProvider shootmeProvider = shootme.createSipProvider();
+			providerTable.put(shootmeProvider, shootme);
+			shootistProvider.addSipListener(this);
+			shootmeProvider.addSipListener(this);
 
-            shootme = new Shootme(getTiProtocolObjects());
-            SipProvider shootmeProvider = shootme.createSipProvider();
-            providerTable.put(shootmeProvider, shootme);
-            shootistProvider.addSipListener(this);
-            shootmeProvider.addSipListener(this);
+			getRiProtocolObjects().start();
+			if (getTiProtocolObjects() != getRiProtocolObjects())
+				getTiProtocolObjects().start();
+		} catch (Exception ex) {
+			ex.printStackTrace();
+			fail("unexpected exception ");
+		}
+	}
 
-            getRiProtocolObjects().start();
-            if (getTiProtocolObjects() != getRiProtocolObjects())
-                getTiProtocolObjects().start();
-        } catch (Exception ex) {
-            ex.printStackTrace();
-            fail("unexpected exception ");
-        }
-    }
+	public void testSendInvite() {
+		this.shootist.sendInvite();
+	}
 
-    public void testSendInvite() {
-        this.shootist.sendInvite();
-    }
+	public void tearDown() {
+		try {
+			Thread.sleep(4000); // needs some time
+			this.shootist.checkState();
+			this.shootme.checkState();
+			getTiProtocolObjects().destroy();
+			if (getTiProtocolObjects() != getRiProtocolObjects())
+				getRiProtocolObjects().destroy();
+			Thread.sleep(1000);
+			this.providerTable.clear();
 
-    public void tearDown() {
-        try {
-            Thread.sleep(4000); // needs some time
-            this.shootist.checkState();
-            this.shootme.checkState();
-            getTiProtocolObjects().destroy();
-            if (getTiProtocolObjects() != getRiProtocolObjects())
-                getRiProtocolObjects().destroy();
-            Thread.sleep(1000);
-            this.providerTable.clear();
+			logTestCompleted();
+		} catch (Exception ex) {
+			ex.printStackTrace();
+		}
 
-            logTestCompleted();
-        } catch (Exception ex) {
-            ex.printStackTrace();
-        }
+	}
 
-    }
+	public void processRequest(RequestEvent requestEvent) {
+		getSipListener(requestEvent).processRequest(requestEvent);
 
-    public void processRequest(RequestEvent requestEvent) {
-        getSipListener(requestEvent).processRequest(requestEvent);
+	}
 
-    }
+	public void processResponse(ResponseEvent responseEvent) {
+		getSipListener(responseEvent).processResponse(responseEvent);
 
-    public void processResponse(ResponseEvent responseEvent) {
-        getSipListener(responseEvent).processResponse(responseEvent);
+	}
 
-    }
+	public void processTimeout(TimeoutEvent timeoutEvent) {
+		getSipListener(timeoutEvent).processTimeout(timeoutEvent);
+	}
 
-    public void processTimeout(TimeoutEvent timeoutEvent) {
-        getSipListener(timeoutEvent).processTimeout(timeoutEvent);
-    }
+	public void processIOException(IOExceptionEvent exceptionEvent) {
+		fail("unexpected exception");
 
-    public void processIOException(IOExceptionEvent exceptionEvent) {
-        fail("unexpected exception");
+	}
 
-    }
+	public void processTransactionTerminated(TransactionTerminatedEvent transactionTerminatedEvent) {
+		getSipListener(transactionTerminatedEvent).processTransactionTerminated(transactionTerminatedEvent);
 
-    public void processTransactionTerminated(
-            TransactionTerminatedEvent transactionTerminatedEvent) {
-        getSipListener(transactionTerminatedEvent)
-                .processTransactionTerminated(transactionTerminatedEvent);
+	}
 
-    }
+	public void processDialogTerminated(DialogTerminatedEvent dialogTerminatedEvent) {
+		getSipListener(dialogTerminatedEvent).processDialogTerminated(dialogTerminatedEvent);
 
-    public void processDialogTerminated(
-            DialogTerminatedEvent dialogTerminatedEvent) {
-        getSipListener(dialogTerminatedEvent).processDialogTerminated(
-                dialogTerminatedEvent);
-
-    }
+	}
 
 }

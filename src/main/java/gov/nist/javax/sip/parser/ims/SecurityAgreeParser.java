@@ -27,7 +27,6 @@
  * PRODUCT OF PT INOVACAO - EST DEPARTMENT and Telecommunications Institute (Aveiro, Portugal)  *
  ************************************************************************************************/
 
-
 package gov.nist.javax.sip.parser.ims;
 
 import java.text.ParseException;
@@ -38,7 +37,6 @@ import java.text.ParseException;
  *
  * @author Miguel Freitas (IT) PT-Inovacao
  */
-
 
 import gov.nist.core.NameValue;
 import gov.nist.core.Token;
@@ -54,120 +52,100 @@ import gov.nist.javax.sip.parser.HeaderParser;
 import gov.nist.javax.sip.parser.Lexer;
 import gov.nist.javax.sip.parser.TokenTypes;
 
+public class SecurityAgreeParser extends HeaderParser {
 
+	public SecurityAgreeParser(String security) {
+		super(security);
+	}
 
-public class SecurityAgreeParser extends HeaderParser
-{
+	protected SecurityAgreeParser(Lexer lexer) {
+		super(lexer);
+	}
 
-    public SecurityAgreeParser(String security) {
-        super(security);
-    }
+	protected void parseParameter(SecurityAgree header) throws ParseException {
+		if (debug)
+			dbg_enter("parseParameter");
+		try {
+			NameValue nv = this.nameValue('=');
+			header.setParameter(nv);
+		} finally {
+			if (debug)
+				dbg_leave("parseParameter");
+		}
+	}
 
+	public SIPHeaderList parse(SecurityAgree header) throws ParseException {
 
-    protected SecurityAgreeParser(Lexer lexer) {
-        super(lexer);
-    }
+		SIPHeaderList list;
 
+		if (header.getClass().isInstance(new SecurityClient())) {
+			list = new SecurityClientList();
+		} else if (header.getClass().isInstance(new SecurityServer())) {
+			list = new SecurityServerList();
+		} else if (header.getClass().isInstance(new SecurityVerify())) {
+			list = new SecurityVerifyList();
+		} else
+			return null;
 
-    protected void parseParameter(SecurityAgree header)
-        throws ParseException
-    {
-        if (debug)
-            dbg_enter("parseParameter");
-        try {
-            NameValue nv = this.nameValue('=');
-            header.setParameter(nv);
-        } finally {
-            if (debug)
-                dbg_leave("parseParameter");
-        }
-    }
+		// the security-mechanism:
+		this.lexer.SPorHT();
+		lexer.match(TokenTypes.ID);
+		Token type = lexer.getNextToken();
+		header.setSecurityMechanism(type.getTokenValue());
+		this.lexer.SPorHT();
 
+		char la = lexer.lookAhead(0);
+		if (la == '\n') {
+			list.add(header);
+			return list;
+		} else if (la == ';')
+			this.lexer.match(';');
 
-    public SIPHeaderList parse(SecurityAgree header) throws ParseException
-    {
+		this.lexer.SPorHT();
 
-        SIPHeaderList list;
+		// The parameters:
+		try {
+			while (lexer.lookAhead(0) != '\n') {
 
-        if (header.getClass().isInstance(new SecurityClient())) {
-            list = new SecurityClientList();
-        } else if (header.getClass().isInstance(new SecurityServer())) {
-            list = new SecurityServerList();
-        } else if (header.getClass().isInstance(new SecurityVerify())) {
-            list = new SecurityVerifyList();
-        }
-        else
-            return null;
+				this.parseParameter(header);
+				this.lexer.SPorHT();
+				char laInLoop = lexer.lookAhead(0);
+				if (laInLoop == '\n' || laInLoop == '\0')
+					break;
+				else if (laInLoop == ',') {
+					list.add(header);
+					if (header.getClass().isInstance(new SecurityClient())) {
+						header = new SecurityClient();
+					} else if (header.getClass().isInstance(new SecurityServer())) {
+						header = new SecurityServer();
+					} else if (header.getClass().isInstance(new SecurityVerify())) {
+						header = new SecurityVerify();
+					}
 
+					this.lexer.match(',');
+					// the security-mechanism:
+					this.lexer.SPorHT();
+					lexer.match(TokenTypes.ID);
+					type = lexer.getNextToken();
+					header.setSecurityMechanism(type.getTokenValue());
 
-        // the security-mechanism:
-        this.lexer.SPorHT();
-        lexer.match(TokenTypes.ID);
-        Token type = lexer.getNextToken();
-        header.setSecurityMechanism(type.getTokenValue());
-        this.lexer.SPorHT();
+				}
+				this.lexer.SPorHT();
 
-        char la = lexer.lookAhead(0);
-        if (la == '\n')
-        {
-            list.add(header);
-            return list;
-        }
-        else if (la == ';')
-            this.lexer.match(';');
+				if (lexer.lookAhead(0) == ';')
+					this.lexer.match(';');
 
-        this.lexer.SPorHT();
+				this.lexer.SPorHT();
 
-        // The parameters:
-        try {
-            while (lexer.lookAhead(0) != '\n') {
+			}
+			list.add(header);
 
-                this.parseParameter(header);
-                this.lexer.SPorHT();
-                char laInLoop = lexer.lookAhead(0);
-                if (laInLoop == '\n' || laInLoop == '\0')
-                    break;
-                else if (laInLoop == ',')
-                {
-                    list.add(header);
-                    if (header.getClass().isInstance(new SecurityClient())) {
-                        header = new SecurityClient();
-                    } else if (header.getClass().isInstance(new SecurityServer())) {
-                        header = new SecurityServer();
-                    } else if (header.getClass().isInstance(new SecurityVerify())) {
-                        header = new SecurityVerify();
-                    }
+			return list;
 
-                    this.lexer.match(',');
-                    // the security-mechanism:
-                    this.lexer.SPorHT();
-                    lexer.match(TokenTypes.ID);
-                    type = lexer.getNextToken();
-                    header.setSecurityMechanism(type.getTokenValue());
+		} catch (ParseException ex) {
+			throw ex;
+		}
 
-                }
-                this.lexer.SPorHT();
-
-                if (lexer.lookAhead(0) == ';')
-                    this.lexer.match(';');
-
-                this.lexer.SPorHT();
-
-            }
-            list.add(header);
-
-            return list;
-
-        } catch (ParseException ex) {
-            throw ex;
-        }
-
-
-    }
-
-
-
+	}
 
 }
-
-

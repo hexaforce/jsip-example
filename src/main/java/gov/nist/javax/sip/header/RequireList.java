@@ -32,32 +32,32 @@ import javax.sip.header.RequireHeader;
 
 /**
  * List of Require headers.
+ * 
  * <pre>
  * Require  =  "Require" ":" 1#option-tag
  * </pre>
  *
  * @version 1.2 $Revision: 1.6 $ $Date: 2009-07-17 18:57:36 $
  *
- * @author M. Ranganathan   <br/>
+ * @author M. Ranganathan <br/>
  *
  *
  */
 public final class RequireList extends SIPHeaderList<Require> {
 
+	private static final long serialVersionUID = -1760629092046963213L;
 
-    private static final long serialVersionUID = -1760629092046963213L;
+	public Object clone() {
+		RequireList retval = new RequireList();
+		retval.clonehlist(this.hlist);
+		return retval;
+	}
 
-    public Object clone() {
-        RequireList retval = new RequireList();
-        retval.clonehlist(this.hlist);
-        return retval;
-    }
-
-    /** Default constructor
-     */
-    public RequireList() {
-        super(Require.class, RequireHeader.NAME);
-    }
-
+	/**
+	 * Default constructor
+	 */
+	public RequireList() {
+		super(Require.class, RequireHeader.NAME);
+	}
 
 }

@@ -24,6 +24,7 @@
 *
 */
 package gov.nist.javax.sip.address;
+
 import java.text.ParseException;
 
 import javax.sip.address.URI;
@@ -31,104 +32,112 @@ import javax.sip.address.URI;
 /**
  * Implementation of the URI class. This relies on the 1.4 URI class.
  *
- * @author M. Ranganathan   <br/>
+ * @author M. Ranganathan <br/>
  * @version 1.2 $Revision: 1.11 $ $Date: 2010-05-06 14:08:06 $
  *
  *
  */
 public class GenericURI extends NetObject implements javax.sip.address.URI {
-    /**
-     *
-     */
-    private static final long serialVersionUID = 3237685256878068790L;
-    public static final String SIP = ParameterNames.SIP_URI_SCHEME;
-    public static final String SIPS = ParameterNames.SIPS_URI_SCHEME;
-    public static final String TEL = ParameterNames.TEL_URI_SCHEME;
-    public static final String POSTDIAL = ParameterNames.POSTDIAL;
-    public static final String PHONE_CONTEXT_TAG =
-        ParameterNames.PHONE_CONTEXT_TAG;
-    public static final String ISUB = ParameterNames.ISUB;
-    public static final String PROVIDER_TAG = ParameterNames.PROVIDER_TAG;
+	/**
+	 *
+	 */
+	private static final long serialVersionUID = 3237685256878068790L;
+	public static final String SIP = ParameterNames.SIP_URI_SCHEME;
+	public static final String SIPS = ParameterNames.SIPS_URI_SCHEME;
+	public static final String TEL = ParameterNames.TEL_URI_SCHEME;
+	public static final String POSTDIAL = ParameterNames.POSTDIAL;
+	public static final String PHONE_CONTEXT_TAG = ParameterNames.PHONE_CONTEXT_TAG;
+	public static final String ISUB = ParameterNames.ISUB;
+	public static final String PROVIDER_TAG = ParameterNames.PROVIDER_TAG;
 
-    /** Imbedded URI
-     */
-    protected String uriString;
+	/**
+	 * Imbedded URI
+	 */
+	protected String uriString;
 
-    /**
-     * The URI Scheme.
-     */
-    protected String scheme;
+	/**
+	 * The URI Scheme.
+	 */
+	protected String scheme;
 
-    /** Consturctor
-     */
-    protected GenericURI() {
-    }
+	/**
+	 * Consturctor
+	 */
+	protected GenericURI() {
+	}
 
-    /** Constructor given the URI string
-     * @param uriString The imbedded URI string.
-     * @throws java.net.URISyntaxException When there is a syntaz error in the imbedded URI.
-     */
-    public GenericURI(String uriString) throws ParseException {
-        try {
-            this.uriString = uriString;
-            int i = uriString.indexOf(":");
-            scheme = uriString.substring(0, i);
-        } catch (Exception e) {
-            throw new ParseException("GenericURI, Bad URI format", 0);
-        }
-    }
+	/**
+	 * Constructor given the URI string
+	 * 
+	 * @param uriString The imbedded URI string.
+	 * @throws java.net.URISyntaxException When there is a syntaz error in the imbedded URI.
+	 */
+	public GenericURI(String uriString) throws ParseException {
+		try {
+			this.uriString = uriString;
+			int i = uriString.indexOf(":");
+			scheme = uriString.substring(0, i);
+		} catch (Exception e) {
+			throw new ParseException("GenericURI, Bad URI format", 0);
+		}
+	}
 
-    /** Encode the URI.
-     * @return The encoded URI
-     */
-    public String encode() {
-        return uriString;
-    }
+	/**
+	 * Encode the URI.
+	 * 
+	 * @return The encoded URI
+	 */
+	public String encode() {
+		return uriString;
+	}
 
-    public StringBuilder encode(StringBuilder buffer) {
-        return buffer.append(uriString);
-    }
+	public StringBuilder encode(StringBuilder buffer) {
+		return buffer.append(uriString);
+	}
 
-    /** Encode this URI.
-     * @return The encoded URI
-     */
-    public String toString() {
-        return this.encode();
+	/**
+	 * Encode this URI.
+	 * 
+	 * @return The encoded URI
+	 */
+	public String toString() {
+		return this.encode();
 
-    }
+	}
 
-    /** Returns the value of the "scheme" of
-     * this URI, for example "sip", "sips" or "tel".
-     *
-     * @return the scheme paramter of the URI
-     */
-    public String getScheme() {
-        return scheme;
-    }
+	/**
+	 * Returns the value of the "scheme" of this URI, for example "sip", "sips" or "tel".
+	 *
+	 * @return the scheme paramter of the URI
+	 */
+	public String getScheme() {
+		return scheme;
+	}
 
-    /** This method determines if this is a URI with a scheme of
-     * "sip" or "sips".
-     *
-     * @return true if the scheme is "sip" or "sips", false otherwise.
-     */
-    public boolean isSipURI() {
-        return this instanceof SipUri;
-    }
+	/**
+	 * This method determines if this is a URI with a scheme of "sip" or "sips".
+	 *
+	 * @return true if the scheme is "sip" or "sips", false otherwise.
+	 */
+	public boolean isSipURI() {
+		return this instanceof SipUri;
+	}
 
-    // @Override
-    public boolean equals(Object that) {
-        if (this==that) return true;
-        else if (that instanceof URI) {
-            final URI o = (URI) that;
+	// @Override
+	public boolean equals(Object that) {
+		if (this == that)
+			return true;
+		else if (that instanceof URI) {
+			final URI o = (URI) that;
 
-            // This is not sufficient for equality; revert to String equality...
-            // return this.getScheme().equalsIgnoreCase( o.getScheme() )
-            return this.toString().equalsIgnoreCase( o.toString() );
-        }
-        return false;
-    }
+			// This is not sufficient for equality; revert to String equality...
+			// return this.getScheme().equalsIgnoreCase( o.getScheme() )
+			return this.toString().equalsIgnoreCase(o.toString());
+		}
+		return false;
+	}
 
-    public int hashCode() {
-        return this.toString().hashCode();
-    }
+	public int hashCode() {
+		return this.toString().hashCode();
+	}
 }

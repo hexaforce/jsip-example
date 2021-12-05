@@ -27,6 +27,7 @@
 * Product of NIST/ITL Advanced Networking Technologies Division (ANTD).        *
 *******************************************************************************/
 package gov.nist.javax.sip.header;
+
 import javax.sip.header.RecordRouteHeader;
 
 /**
@@ -34,22 +35,25 @@ import javax.sip.header.RecordRouteHeader;
  *
  * @version 1.2 $Revision: 1.6 $ $Date: 2009-07-17 18:57:35 $
  *
- * @author M. Ranganathan   <br/>
+ * @author M. Ranganathan <br/>
  *
  *
  *
  */
-public class RecordRouteList extends SIPHeaderList<RecordRoute>  {
+public class RecordRouteList extends SIPHeaderList<RecordRoute> {
 
-    private static final long serialVersionUID = 1724940469426766691L;
-    public Object clone() {
-        RecordRouteList retval = new RecordRouteList();
-        retval.clonehlist(this.hlist);
-        return retval;
-    }
-    /** Default constructor
-     */
-    public RecordRouteList() {
-        super(RecordRoute.class, RecordRouteHeader.NAME);
-    }
+	private static final long serialVersionUID = 1724940469426766691L;
+
+	public Object clone() {
+		RecordRouteList retval = new RecordRouteList();
+		retval.clonehlist(this.hlist);
+		return retval;
+	}
+
+	/**
+	 * Default constructor
+	 */
+	public RecordRouteList() {
+		super(RecordRoute.class, RecordRouteHeader.NAME);
+	}
 }

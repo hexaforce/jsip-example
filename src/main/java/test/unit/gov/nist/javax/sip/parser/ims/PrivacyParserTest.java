@@ -27,18 +27,15 @@ package test.unit.gov.nist.javax.sip.parser.ims;
 import gov.nist.javax.sip.parser.ims.PrivacyParser;
 import test.unit.gov.nist.javax.sip.parser.ParserTestCase;
 
-public class PrivacyParserTest extends ParserTestCase
-{
-    public void testParser() {
-        // TODO Auto-generated method stub
+public class PrivacyParserTest extends ParserTestCase {
+	public void testParser() {
+		// TODO Auto-generated method stub
 
-        String[] privacy =  {
-         "Privacy: none\n",
-         "Privacy: id;user\n"
+		String[] privacy = { "Privacy: none\n", "Privacy: id;user\n"
 
-        };
+		};
 
-        super.testParser(PrivacyParser.class,privacy);
-    }
+		super.testParser(PrivacyParser.class, privacy);
+	}
 
 }

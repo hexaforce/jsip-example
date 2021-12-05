@@ -34,71 +34,66 @@ import test.tck.msgflow.callflows.ScenarioHarness;
  * @author M. Ranganathan
  *
  */
-public abstract class AbstractRouterTestCase extends ScenarioHarness implements
-        SipListener {
+public abstract class AbstractRouterTestCase extends ScenarioHarness implements SipListener {
 
+	protected Shootist shootist;
 
-    protected Shootist shootist;
+	protected Shootme shootme;
 
-    protected Shootme shootme;
+	private static Logger logger = Logger.getLogger("test.tck");
 
-    private static Logger logger = Logger.getLogger("test.tck");
+	static {
+		if (!logger.isAttached(console)) {
+			logger.addAppender(console);
+		}
+	}
 
-    static {
-        if (!logger.isAttached(console)) {
-            logger.addAppender(console);
-        }
-    }
+	public AbstractRouterTestCase() {
+		super("routeteluri", true);
+	}
 
-    public AbstractRouterTestCase() {
-        super("routeteluri", true);
-    }
+	public void setUp() throws Exception {
+		try {
+			super.setUp();
 
-    public void setUp() throws Exception {
-        try {
-            super.setUp();
+			logger.info("RouterTest: setup()");
+			shootist = new Shootist(getTiProtocolObjects());
+			SipProvider shootistProvider = shootist.createProvider();
+			providerTable.put(shootistProvider, shootist);
 
-            logger.info("RouterTest: setup()");
-            shootist = new Shootist(getTiProtocolObjects());
-            SipProvider shootistProvider = shootist.createProvider();
-            providerTable.put(shootistProvider, shootist);
+			shootme = new Shootme(getRiProtocolObjects());
+			SipProvider shootmeProvider = shootme.createProvider();
+			providerTable.put(shootmeProvider, shootme);
 
-            shootme = new Shootme(getRiProtocolObjects());
-            SipProvider shootmeProvider = shootme.createProvider();
-            providerTable.put(shootmeProvider, shootme);
+			shootistProvider.addSipListener(this);
+			shootmeProvider.addSipListener(this);
 
-            shootistProvider.addSipListener(this);
-            shootmeProvider.addSipListener(this);
+			if (getTiProtocolObjects() != getRiProtocolObjects())
+				getTiProtocolObjects().start();
+			getRiProtocolObjects().start();
+		} catch (Exception ex) {
+			logger.error("unexpected excecption ", ex);
+			fail("unexpected exception");
+		}
+	}
 
-            if (getTiProtocolObjects() != getRiProtocolObjects())
-                getTiProtocolObjects().start();
-            getRiProtocolObjects().start();
-        } catch (Exception ex) {
-            logger.error("unexpected excecption ", ex);
-            fail("unexpected exception");
-        }
-    }
+	public void tearDown() throws Exception {
+		try {
+			Thread.sleep(2000);
+			this.shootist.checkState();
+			this.shootme.checkState();
+			assertTrue("Router was not consulted", NonSipUriRouter.routerWasConsulted);
+			NonSipUriRouter.routerWasConsulted = false;
+			super.tearDown();
+			Thread.sleep(1000);
+			this.providerTable.clear();
 
-    public void tearDown() throws Exception {
-        try {
-            Thread.sleep(2000);
-            this.shootist.checkState();
-            this.shootme.checkState();
-            assertTrue("Router was not consulted", NonSipUriRouter.routerWasConsulted);
-            NonSipUriRouter.routerWasConsulted = false;
-            super.tearDown();
-            Thread.sleep(1000);
-            this.providerTable.clear();
-
-            logTestCompleted();
-        } catch (Exception ex) {
-            logger.error("unexpected exception", ex);
-            fail("unexpected exception ");
-        }
-        super.tearDown();
-    }
-
-
-
+			logTestCompleted();
+		} catch (Exception ex) {
+			logger.error("unexpected exception", ex);
+			fail("unexpected exception ");
+		}
+		super.tearDown();
+	}
 
 }

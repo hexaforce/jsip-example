@@ -45,74 +45,65 @@ import gov.nist.javax.sip.parser.TokenTypes;
  * @author ALEXANDRE MIGUEL SILVA SANTOS
  */
 
-public class PChargingVectorParser
-extends ParametersParser implements TokenTypes {
+public class PChargingVectorParser extends ParametersParser implements TokenTypes {
 
-    public PChargingVectorParser(String chargingVector) {
+	public PChargingVectorParser(String chargingVector) {
 
-        super(chargingVector);
+		super(chargingVector);
 
-    }
+	}
 
-    protected PChargingVectorParser(Lexer lexer) {
+	protected PChargingVectorParser(Lexer lexer) {
 
-        super(lexer);
+		super(lexer);
 
-    }
+	}
 
+	public SIPHeader parse() throws ParseException {
 
+		if (debug)
+			dbg_enter("parse");
+		try {
+			headerName(TokenTypes.P_VECTOR_CHARGING);
+			PChargingVector chargingVector = new PChargingVector();
 
-    public SIPHeader parse() throws ParseException {
+			try {
+				while (lexer.lookAhead(0) != '\n') {
+					this.parseParameter(chargingVector);
+					this.lexer.SPorHT();
+					char la = lexer.lookAhead(0);
+					if (la == '\n' || la == '\0')
+						break;
+					this.lexer.match(';');
+					this.lexer.SPorHT();
+				}
 
+			} catch (ParseException ex) {
+				throw ex;
+			}
 
-        if (debug)
-            dbg_enter("parse");
-        try {
-            headerName(TokenTypes.P_VECTOR_CHARGING);
-            PChargingVector chargingVector = new PChargingVector();
+			super.parse(chargingVector);
+			if (chargingVector.getParameter(ParameterNamesIms.ICID_VALUE) == null)
+				throw new ParseException("Missing a required Parameter : " + ParameterNamesIms.ICID_VALUE, 0);
+			return chargingVector;
+		} finally {
+			if (debug)
+				dbg_leave("parse");
+		}
+	}
 
-            try {
-                while (lexer.lookAhead(0) != '\n') {
-                    this.parseParameter(chargingVector);
-                    this.lexer.SPorHT();
-                    char la = lexer.lookAhead(0);
-                    if (la == '\n' || la == '\0')
-                        break;
-                    this.lexer.match(';');
-                    this.lexer.SPorHT();
-                }
+	protected void parseParameter(PChargingVector chargingVector) throws ParseException {
 
-            } catch (ParseException ex) {
-                throw ex;
-            }
+		if (debug)
+			dbg_enter("parseParameter");
+		try {
+			NameValue nv = this.nameValue('=');
+			chargingVector.setParameter(nv);
+		} finally {
+			if (debug)
+				dbg_leave("parseParameter");
+		}
 
-
-            super.parse(chargingVector);
-            if ( chargingVector.getParameter(ParameterNamesIms.ICID_VALUE) == null )
-                throw new ParseException("Missing a required Parameter : " + ParameterNamesIms.ICID_VALUE, 0);
-            return chargingVector;
-        } finally {
-            if (debug)
-                dbg_leave("parse");
-        }
-    }
-
-    protected void parseParameter(PChargingVector chargingVector) throws ParseException {
-
-        if (debug)
-            dbg_enter("parseParameter");
-        try {
-            NameValue nv = this.nameValue('=');
-            chargingVector.setParameter(nv);
-        } finally {
-            if (debug)
-                dbg_leave("parseParameter");
-        }
-
-
-
-    }
-
-
+	}
 
 }

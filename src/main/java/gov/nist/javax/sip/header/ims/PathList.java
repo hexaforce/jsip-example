@@ -36,16 +36,16 @@ import gov.nist.javax.sip.header.SIPHeaderList;
 
 public class PathList extends SIPHeaderList<Path> {
 
-    /** Default constructor
-     */
-    public PathList() {
-        super(Path.class, PathHeader.NAME);
-    }
+	/**
+	 * Default constructor
+	 */
+	public PathList() {
+		super(Path.class, PathHeader.NAME);
+	}
 
-
-    public Object clone() {
-        PathList retval = new PathList();
-        return retval.clonehlist(this.hlist);
-    }
+	public Object clone() {
+		PathList retval = new PathList();
+		return retval.clonehlist(this.hlist);
+	}
 
 }

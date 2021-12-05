@@ -29,32 +29,38 @@
 package gov.nist.javax.sdp.fields;
 
 /**
-* Internal utility class for pretty printing and header formatting.
-*/
+ * Internal utility class for pretty printing and header formatting.
+ */
 class Indentation {
-    private int indentation;
-    protected Indentation() {
-        indentation = 0;
-    }
-    protected Indentation(int initval) {
-        indentation = initval;
-    }
-    protected void setIndentation(int initval) {
-        indentation = initval;
-    }
-    protected int getCount() {
-        return indentation;
-    }
-    protected void increment() {
-        indentation++;
-    }
-    protected void decrement() {
-        indentation--;
-    }
-    protected String getIndentation() {
-    char [] chars = new char [indentation];
-    java.util.Arrays.fill (chars, ' ');
-    return new String (chars);
-    }
-}
+	private int indentation;
 
+	protected Indentation() {
+		indentation = 0;
+	}
+
+	protected Indentation(int initval) {
+		indentation = initval;
+	}
+
+	protected void setIndentation(int initval) {
+		indentation = initval;
+	}
+
+	protected int getCount() {
+		return indentation;
+	}
+
+	protected void increment() {
+		indentation++;
+	}
+
+	protected void decrement() {
+		indentation--;
+	}
+
+	protected String getIndentation() {
+		char[] chars = new char[indentation];
+		java.util.Arrays.fill(chars, ' ');
+		return new String(chars);
+	}
+}

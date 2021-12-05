@@ -31,8 +31,9 @@ package gov.nist.javax.sip.header;
 import java.util.Locale;
 
 /**
-* ContentLanguage header
-* <pre>
+ * ContentLanguage header
+ * 
+ * <pre>
 *Fielding, et al.            Standards Track                   [Page 118]
 *RFC 2616                        HTTP/1.1                       June 1999
 *
@@ -74,97 +75,103 @@ import java.util.Locale;
 *
 *   Content-Language MAY be applied to any media type -- it is not
 *   limited to textual documents.
-*</pre>
-* @author M. Ranganathan
-* @version 1.2 $Revision: 1.9 $ $Date: 2010-05-06 14:07:51 $
-* @since 1.1
-*/
-public class ContentLanguage
-    extends SIPHeader
-    implements javax.sip.header.ContentLanguageHeader {
+ * </pre>
+ * 
+ * @author M. Ranganathan
+ * @version 1.2 $Revision: 1.9 $ $Date: 2010-05-06 14:07:51 $
+ * @since 1.1
+ */
+public class ContentLanguage extends SIPHeader implements javax.sip.header.ContentLanguageHeader {
 
-    /**
-     * Comment for <code>serialVersionUID</code>
-     */
-    private static final long serialVersionUID = -5195728427134181070L;
-    /** languageTag field.
-     */
-    protected Locale locale;
+	/**
+	 * Comment for <code>serialVersionUID</code>
+	 */
+	private static final long serialVersionUID = -5195728427134181070L;
+	/**
+	 * languageTag field.
+	 */
+	protected Locale locale;
 
-    public ContentLanguage() {
-        super(CONTENT_LANGUAGE);
-    }
+	public ContentLanguage() {
+		super(CONTENT_LANGUAGE);
+	}
 
-    /**
-     * Default constructor.
-     * @param languageTag String to set
-     */
-    public ContentLanguage(String languageTag) {
-        super(CONTENT_LANGUAGE);
-        this.setLanguageTag( languageTag );
-    }
+	/**
+	 * Default constructor.
+	 * 
+	 * @param languageTag String to set
+	 */
+	public ContentLanguage(String languageTag) {
+		super(CONTENT_LANGUAGE);
+		this.setLanguageTag(languageTag);
+	}
 
-    /**
-     * Canonical encoding of the  value of the header.
-     * @return encoded body of header.
-     */
-    public StringBuilder encodeBody(StringBuilder buffer) {
-        return buffer.append(getLanguageTag());
-    }
+	/**
+	 * Canonical encoding of the value of the header.
+	 * 
+	 * @return encoded body of header.
+	 */
+	public StringBuilder encodeBody(StringBuilder buffer) {
+		return buffer.append(getLanguageTag());
+	}
 
-    /** get the languageTag field.
-     * @return String
-     */
-    public String getLanguageTag() {
-        // JvB: Need to take sub-tags into account
-        if ( "".equals(locale.getCountry())) {
-            return locale.getLanguage();
-        } else {
-            return locale.getLanguage() + '-' + locale.getCountry();
-        }
-    }
+	/**
+	 * get the languageTag field.
+	 * 
+	 * @return String
+	 */
+	public String getLanguageTag() {
+		// JvB: Need to take sub-tags into account
+		if ("".equals(locale.getCountry())) {
+			return locale.getLanguage();
+		} else {
+			return locale.getLanguage() + '-' + locale.getCountry();
+		}
+	}
 
-    /** set the languageTag field
-     * @param languageTag -- language tag to set.
-     */
-    public void setLanguageTag(String languageTag) {
+	/**
+	 * set the languageTag field
+	 * 
+	 * @param languageTag -- language tag to set.
+	 */
+	public void setLanguageTag(String languageTag) {
 
-        final int slash = languageTag.indexOf('-');
-        if (slash>=0) {
-            this.locale = new Locale(languageTag.substring(0,slash), languageTag.substring(slash+1) );
-        } else {
-            this.locale = new Locale(languageTag);
-        }
-    }
+		final int slash = languageTag.indexOf('-');
+		if (slash >= 0) {
+			this.locale = new Locale(languageTag.substring(0, slash), languageTag.substring(slash + 1));
+		} else {
+			this.locale = new Locale(languageTag);
+		}
+	}
 
-    /**
-     * Gets the language value of the ContentLanguageHeader.
-     *
-     *
-     *
-     * @return the Locale value of this ContentLanguageHeader
-     *
-     */
-    public Locale getContentLanguage() {
-        return locale;
-    }
+	/**
+	 * Gets the language value of the ContentLanguageHeader.
+	 *
+	 *
+	 *
+	 * @return the Locale value of this ContentLanguageHeader
+	 *
+	 */
+	public Locale getContentLanguage() {
+		return locale;
+	}
 
-    /**
-     * Sets the language parameter of this ContentLanguageHeader.
-     *
-     * @param language - the new Locale value of the language of
-     *
-     * ContentLanguageHeader
-     *
-     */
-    public void setContentLanguage(Locale language) {
-        this.locale = language;
-    }
+	/**
+	 * Sets the language parameter of this ContentLanguageHeader.
+	 *
+	 * @param language - the new Locale value of the language of
+	 *
+	 *                 ContentLanguageHeader
+	 *
+	 */
+	public void setContentLanguage(Locale language) {
+		this.locale = language;
+	}
 
-    public Object clone() {
-        ContentLanguage retval = (ContentLanguage) super.clone();
-        if (this.locale != null)
-            retval.locale = (Locale) this.locale.clone();
-        return retval;
-    }
+	public Object clone() {
+		ContentLanguage retval = (ContentLanguage) super.clone();
+		if (this.locale != null)
+			retval.locale = (Locale) this.locale.clone();
+		return retval;
+	}
 }

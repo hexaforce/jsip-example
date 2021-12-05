@@ -40,178 +40,165 @@ import javax.sip.header.ExtensionHeader;
  * @author ALEXANDRE MIGUEL SILVA SANTOS
  */
 
-public class PChargingVector extends gov.nist.javax.sip.header.ParametersHeader
-        implements PChargingVectorHeader, SIPHeaderNamesIms, ExtensionHeader {
+public class PChargingVector extends gov.nist.javax.sip.header.ParametersHeader implements PChargingVectorHeader, SIPHeaderNamesIms, ExtensionHeader {
 
-    /**
-     * Default Constructor
-     */
-    public PChargingVector() {
+	/**
+	 * Default Constructor
+	 */
+	public PChargingVector() {
 
-        super(P_CHARGING_VECTOR);
-    }
+		super(P_CHARGING_VECTOR);
+	}
 
-    /*
-     * (non-Javadoc)
-     *
-     * @see gov.nist.javax.sip.header.ParametersHeader#encodeBody()
-     */
-    public StringBuilder encodeBody(StringBuilder encoding) {
+	/*
+	 * (non-Javadoc)
+	 *
+	 * @see gov.nist.javax.sip.header.ParametersHeader#encodeBody()
+	 */
+	public StringBuilder encodeBody(StringBuilder encoding) {
 
 //        StringBuilder encoding = new StringBuilder();
-        /*
-         * no need to check for the presence of icid-value. According to the
-         * spec above this is a mandatory field. if it does not exist, then we
-         * should throw an exception
-         *
-         * JvB 26/5: fix for issue #159, check for quotes around icid value
-         * 
-         * Aayush: 29th November 2011 : Added fix for P-Charging-Vector header's parameters to accept quoted string values.
-         */
-       gov.nist.core.NameValue nv = getNameValue( ParameterNamesIms.ICID_VALUE );
-       		if(nv!=null)
-        this.parameters.encode(encoding);
-			else
-				try {
-					throw new SipException("icid-value is mandatory");
-				} catch (SipException e) {
-					e.printStackTrace();
-					
-				}
+		/*
+		 * no need to check for the presence of icid-value. According to the spec above this is a mandatory field. if it does not exist, then we should throw an exception
+		 *
+		 * JvB 26/5: fix for issue #159, check for quotes around icid value
+		 * 
+		 * Aayush: 29th November 2011 : Added fix for P-Charging-Vector header's parameters to accept quoted string values.
+		 */
+		gov.nist.core.NameValue nv = getNameValue(ParameterNamesIms.ICID_VALUE);
+		if (nv != null)
+			this.parameters.encode(encoding);
+		else
+			try {
+				throw new SipException("icid-value is mandatory");
+			} catch (SipException e) {
+				e.printStackTrace();
 
-        return encoding;
-    }
+			}
 
-    /**
-     * <p>
-     * Get the icid-value parameter value
-     * </p>
-     *
-     * @return the value of the icid-value parameter
-     */
-    public String getICID() {
+		return encoding;
+	}
 
-        return getParameter(ParameterNamesIms.ICID_VALUE);
-    }
+	/**
+	 * <p>
+	 * Get the icid-value parameter value
+	 * </p>
+	 *
+	 * @return the value of the icid-value parameter
+	 */
+	public String getICID() {
 
-    /**
-     * <p>
-     * Set the icid-value parameter
-     * </p>
-     *
-     * @param icid -
-     *            value to set in the icid-value parameter
-     * @throws ParseException
-     */
-    public void setICID(String icid) throws ParseException {
+		return getParameter(ParameterNamesIms.ICID_VALUE);
+	}
 
-        if (icid == null)
-            throw new NullPointerException(
-                    "JAIN-SIP Exception, "
-                            + "P-Charging-Vector, setICID(), the icid parameter is null.");
+	/**
+	 * <p>
+	 * Set the icid-value parameter
+	 * </p>
+	 *
+	 * @param icid - value to set in the icid-value parameter
+	 * @throws ParseException
+	 */
+	public void setICID(String icid) throws ParseException {
 
-        setParameter(ParameterNamesIms.ICID_VALUE, icid);
+		if (icid == null)
+			throw new NullPointerException("JAIN-SIP Exception, " + "P-Charging-Vector, setICID(), the icid parameter is null.");
 
-    }
+		setParameter(ParameterNamesIms.ICID_VALUE, icid);
 
-    /**
-     * <p>
-     * Get the icid-generated-at parameter value
-     * </p>
-     *
-     * @return the icid-generated-at parameter value
-     */
-    public String getICIDGeneratedAt() {
+	}
 
-        return getParameter(ParameterNamesIms.ICID_GENERATED_AT);
+	/**
+	 * <p>
+	 * Get the icid-generated-at parameter value
+	 * </p>
+	 *
+	 * @return the icid-generated-at parameter value
+	 */
+	public String getICIDGeneratedAt() {
 
-    }
+		return getParameter(ParameterNamesIms.ICID_GENERATED_AT);
 
-    /**
-     * <p>
-     * Set the icid-generated-at parameter
-     * </p>
-     *
-     * @param host -
-     *            value to set in the icid-generated-at parameter
-     * @throws ParseException
-     */
-    public void setICIDGeneratedAt(String host) throws ParseException {
+	}
 
-        if (host == null)
-            throw new NullPointerException(
-                    "JAIN-SIP Exception, "
-                            + "P-Charging-Vector, setICIDGeneratedAt(), the host parameter is null.");
+	/**
+	 * <p>
+	 * Set the icid-generated-at parameter
+	 * </p>
+	 *
+	 * @param host - value to set in the icid-generated-at parameter
+	 * @throws ParseException
+	 */
+	public void setICIDGeneratedAt(String host) throws ParseException {
 
-        setParameter(ParameterNamesIms.ICID_GENERATED_AT, host);
+		if (host == null)
+			throw new NullPointerException("JAIN-SIP Exception, " + "P-Charging-Vector, setICIDGeneratedAt(), the host parameter is null.");
 
-    }
+		setParameter(ParameterNamesIms.ICID_GENERATED_AT, host);
 
-    /**
-     * <p>
-     * Get the orig-ioi parameter value
-     * </p>
-     *
-     * @return the orig-ioi parameter value
-     */
-    public String getOriginatingIOI() {
+	}
 
-        return getParameter(ParameterNamesIms.ORIG_IOI);
-    }
+	/**
+	 * <p>
+	 * Get the orig-ioi parameter value
+	 * </p>
+	 *
+	 * @return the orig-ioi parameter value
+	 */
+	public String getOriginatingIOI() {
 
-    /**
-     * <p>
-     * Set the orig-ioi parameter
-     * </p>
-     *
-     * @param origIOI -
-     *            value to set in the orig-ioi parameter. If value is null or
-     *            empty, the parameter is removed
-     * @throws ParseException
-     */
-    public void setOriginatingIOI(String origIOI) throws ParseException {
+		return getParameter(ParameterNamesIms.ORIG_IOI);
+	}
 
-        if (origIOI == null || origIOI.length() == 0) {
-            removeParameter(ParameterNamesIms.ORIG_IOI);
-        } else
-            this.parameters.set(ParameterNamesIms.ORIG_IOI, origIOI);
+	/**
+	 * <p>
+	 * Set the orig-ioi parameter
+	 * </p>
+	 *
+	 * @param origIOI - value to set in the orig-ioi parameter. If value is null or empty, the parameter is removed
+	 * @throws ParseException
+	 */
+	public void setOriginatingIOI(String origIOI) throws ParseException {
 
-    }
+		if (origIOI == null || origIOI.length() == 0) {
+			removeParameter(ParameterNamesIms.ORIG_IOI);
+		} else
+			this.parameters.set(ParameterNamesIms.ORIG_IOI, origIOI);
 
-    /**
-     * <p>
-     * Get the term-ioi parameter value
-     * </p>
-     *
-     * @return the term-ioi parameter value
-     */
-    public String getTerminatingIOI() {
+	}
 
-        return getParameter(ParameterNamesIms.TERM_IOI);
-    }
+	/**
+	 * <p>
+	 * Get the term-ioi parameter value
+	 * </p>
+	 *
+	 * @return the term-ioi parameter value
+	 */
+	public String getTerminatingIOI() {
 
-    /**
-     * <p>
-     * Set the term-ioi parameter
-     * </p>
-     *
-     * @param termIOI -
-     *            value to set in the term-ioi parameter. If value is null or
-     *            empty, the parameter is removed
-     * @throws ParseException
-     */
-    public void setTerminatingIOI(String termIOI) throws ParseException {
+		return getParameter(ParameterNamesIms.TERM_IOI);
+	}
 
-        if (termIOI == null || termIOI.length() == 0) {
-            removeParameter(ParameterNamesIms.TERM_IOI);
-        } else
-        	this.parameters.set(ParameterNamesIms.TERM_IOI, termIOI);
+	/**
+	 * <p>
+	 * Set the term-ioi parameter
+	 * </p>
+	 *
+	 * @param termIOI - value to set in the term-ioi parameter. If value is null or empty, the parameter is removed
+	 * @throws ParseException
+	 */
+	public void setTerminatingIOI(String termIOI) throws ParseException {
 
-    }
+		if (termIOI == null || termIOI.length() == 0) {
+			removeParameter(ParameterNamesIms.TERM_IOI);
+		} else
+			this.parameters.set(ParameterNamesIms.TERM_IOI, termIOI);
 
-    public void setValue(String value) throws ParseException {
-        throw new ParseException(value, 0);
+	}
 
-    }
+	public void setValue(String value) throws ParseException {
+		throw new ParseException(value, 0);
+
+	}
 
 }

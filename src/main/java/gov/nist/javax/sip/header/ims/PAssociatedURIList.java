@@ -28,9 +28,7 @@
 
 package gov.nist.javax.sip.header.ims;
 
-
 import gov.nist.javax.sip.header.SIPHeaderList;
-
 
 /**
  * List of P-Associated-URI headers
@@ -39,27 +37,22 @@ import gov.nist.javax.sip.header.SIPHeaderList;
  */
 
 /*
- * P-Associated-URI  =  "P-Associated-URI" ":" # ( "<" URI ">" *( ";" generic-param ))
+ * P-Associated-URI = "P-Associated-URI" ":" # ( "<" URI ">" *( ";" generic-param ))
  */
-
 
 public class PAssociatedURIList extends SIPHeaderList<PAssociatedURI> {
 
+	private static final long serialVersionUID = 4454306052557362851L;
 
-    private static final long serialVersionUID = 4454306052557362851L;
+	/**
+	 * constructor.
+	 */
+	public PAssociatedURIList() {
+		super(PAssociatedURI.class, PAssociatedURI.NAME);
+	}
 
-
-    /**
-     * constructor.
-     */
-    public PAssociatedURIList()
-    {
-        super(PAssociatedURI.class, PAssociatedURI.NAME);
-    }
-
-
-    public Object clone() {
-        PAssociatedURIList retval = new PAssociatedURIList();
-        return retval.clonehlist(this.hlist);
-    }
+	public Object clone() {
+		PAssociatedURIList retval = new PAssociatedURIList();
+		return retval.clonehlist(this.hlist);
+	}
 }

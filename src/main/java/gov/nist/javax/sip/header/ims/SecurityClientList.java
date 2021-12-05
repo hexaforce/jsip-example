@@ -29,13 +29,9 @@
  * PRODUCT OF PT INOVACAO - EST DEPARTMENT and Telecommunications Institute (Aveiro, Portugal)  *
  ************************************************************************************************/
 
-
 package gov.nist.javax.sip.header.ims;
 
-
-
 import gov.nist.javax.sip.header.SIPHeaderList;
-
 
 /**
  * List of Security-Client headers.
@@ -43,25 +39,17 @@ import gov.nist.javax.sip.header.SIPHeaderList;
  * @author Miguel Freitas (IT) PT-Inovacao
  */
 
+public class SecurityClientList extends SIPHeaderList<SecurityClient> {
 
-public class SecurityClientList extends SIPHeaderList<SecurityClient>
-{
+	private static final long serialVersionUID = 3094231003329176217L;
 
+	public SecurityClientList() {
+		super(SecurityClient.class, SecurityClientHeader.NAME);
+	}
 
-    private static final long serialVersionUID = 3094231003329176217L;
-
-
-    public SecurityClientList()
-    {
-        super(SecurityClient.class, SecurityClientHeader.NAME);
-    }
-
-
-    public Object clone() {
-        SecurityClientList retval = new SecurityClientList();
-        return retval.clonehlist(this.hlist);
-    }
+	public Object clone() {
+		SecurityClientList retval = new SecurityClientList();
+		return retval.clonehlist(this.hlist);
+	}
 
 }
-
-

@@ -31,7 +31,7 @@ package gov.nist.javax.sip.header;
 /**
  * The call identifer that goes into a callID header and a in-reply-to header.
  *
- * @author M. Ranganathan   <br/>
+ * @author M. Ranganathan <br/>
  * @version 1.2 $Revision: 1.8 $ $Date: 2010-05-06 14:07:46 $
  * @see CallID
  * @see InReplyTo
@@ -39,145 +39,154 @@ package gov.nist.javax.sip.header;
  */
 public final class CallIdentifier extends SIPObject {
 
-    /**
-     * Comment for <code>serialVersionUID</code>
-     */
-    private static final long serialVersionUID = 7314773655675451377L;
+	/**
+	 * Comment for <code>serialVersionUID</code>
+	 */
+	private static final long serialVersionUID = 7314773655675451377L;
 
-    /**
-     * localId field
-     */
-    protected String localId;
+	/**
+	 * localId field
+	 */
+	protected String localId;
 
-    /**
-     * host field
-     */
-    protected String host;
+	/**
+	 * host field
+	 */
+	protected String host;
 
-    /**
-     * Default constructor
-     */
-    public CallIdentifier() {
-    }
+	/**
+	 * Default constructor
+	 */
+	public CallIdentifier() {
+	}
 
-    /**
-     * Constructor
-     * @param localId id is the local id.
-     * @param host is the host.
-     */
-    public CallIdentifier(String localId, String host) {
-        this.localId = localId;
-        this.host = host;
-    }
+	/**
+	 * Constructor
+	 * 
+	 * @param localId id is the local id.
+	 * @param host    is the host.
+	 */
+	public CallIdentifier(String localId, String host) {
+		this.localId = localId;
+		this.host = host;
+	}
 
-    /**
-     * constructor
-     * @param cid String to set
-     * @throws IllegalArgumentException if cid is null or is not a token,
-     * or token@token
-     */
-    public CallIdentifier(String cid) throws IllegalArgumentException {
-        setCallID(cid);
-    }
+	/**
+	 * constructor
+	 * 
+	 * @param cid String to set
+	 * @throws IllegalArgumentException if cid is null or is not a token, or token@token
+	 */
+	public CallIdentifier(String cid) throws IllegalArgumentException {
+		setCallID(cid);
+	}
 
-    /**
-     * Get the encoded version of this id.
-     * @return String to set
-     */
-    public String encode() {
-        return encode(new StringBuilder()).toString();
-    }
+	/**
+	 * Get the encoded version of this id.
+	 * 
+	 * @return String to set
+	 */
+	public String encode() {
+		return encode(new StringBuilder()).toString();
+	}
 
-    public StringBuilder encode(StringBuilder buffer) {
-        buffer.append(localId);
-        if (host != null) {
-            buffer.append(AT).append(host);
-        }
-        return buffer;
-    }
+	public StringBuilder encode(StringBuilder buffer) {
+		buffer.append(localId);
+		if (host != null) {
+			buffer.append(AT).append(host);
+		}
+		return buffer;
+	}
 
-    /**
-     * Compare two call identifiers for equality.
-     * @param other Object to set
-     * @return true if the two call identifiers are equals, false
-     * otherwise
-     */
-    public boolean equals(Object other) {
-        if (other == null ) return false;
-        if (!other.getClass().equals(this.getClass())) {
-            return false;
-        }
-        CallIdentifier that = (CallIdentifier) other;
-        if (this.localId.compareTo(that.localId) != 0) {
-            return false;
-        }
-        if (this.host == that.host)
-            return true;
-        if ((this.host == null && that.host != null)
-            || (this.host != null && that.host == null))
-            return false;
-        if (host.compareToIgnoreCase(that.host) != 0) {
-            return false;
-        }
-        return true;
-    }
-    
-    @Override
-    public int hashCode() {
-        if (this.localId  == null ) {
-             throw new UnsupportedOperationException("Hash code called before id is set");
-        }
-        return this.localId.hashCode();
-    }
+	/**
+	 * Compare two call identifiers for equality.
+	 * 
+	 * @param other Object to set
+	 * @return true if the two call identifiers are equals, false otherwise
+	 */
+	public boolean equals(Object other) {
+		if (other == null)
+			return false;
+		if (!other.getClass().equals(this.getClass())) {
+			return false;
+		}
+		CallIdentifier that = (CallIdentifier) other;
+		if (this.localId.compareTo(that.localId) != 0) {
+			return false;
+		}
+		if (this.host == that.host)
+			return true;
+		if ((this.host == null && that.host != null) || (this.host != null && that.host == null))
+			return false;
+		if (host.compareToIgnoreCase(that.host) != 0) {
+			return false;
+		}
+		return true;
+	}
 
-    /** get the LocalId field
-     * @return String
-     */
-    public String getLocalId() {
-        return localId;
-    }
+	@Override
+	public int hashCode() {
+		if (this.localId == null) {
+			throw new UnsupportedOperationException("Hash code called before id is set");
+		}
+		return this.localId.hashCode();
+	}
 
-    /** get the host field
-     * @return host member String
-     */
-    public String getHost() {
-        return host;
-    }
+	/**
+	 * get the LocalId field
+	 * 
+	 * @return String
+	 */
+	public String getLocalId() {
+		return localId;
+	}
 
-    /**
-     * Set the localId member
-     * @param localId String to set
-     */
-    public void setLocalId(String localId) {
-        this.localId = localId;
-    }
+	/**
+	 * get the host field
+	 * 
+	 * @return host member String
+	 */
+	public String getHost() {
+		return host;
+	}
 
-    /** set the callId field
-     * @param cid Strimg to set
-     * @throws IllegalArgumentException if cid is null or is not a token or
-     * token@token
-     */
-    public void setCallID(String cid) throws IllegalArgumentException {
-        if (cid == null)
-            throw new IllegalArgumentException("NULL!");
-        int index = cid.indexOf('@');
-        if (index == -1) {
-            localId = cid;
-            host = null;
-        } else {
-            localId = cid.substring(0, index);
-            host = cid.substring(index + 1, cid.length());
-            if (localId == null || host == null) {
-                throw new IllegalArgumentException("CallID  must be token@token or token");
-            }
-        }
-    }
+	/**
+	 * Set the localId member
+	 * 
+	 * @param localId String to set
+	 */
+	public void setLocalId(String localId) {
+		this.localId = localId;
+	}
 
-    /**
-     * Set the host member
-     * @param host String to set
-     */
-    public void setHost(String host) {
-        this.host = host;
-    }
+	/**
+	 * set the callId field
+	 * 
+	 * @param cid Strimg to set
+	 * @throws IllegalArgumentException if cid is null or is not a token or token@token
+	 */
+	public void setCallID(String cid) throws IllegalArgumentException {
+		if (cid == null)
+			throw new IllegalArgumentException("NULL!");
+		int index = cid.indexOf('@');
+		if (index == -1) {
+			localId = cid;
+			host = null;
+		} else {
+			localId = cid.substring(0, index);
+			host = cid.substring(index + 1, cid.length());
+			if (localId == null || host == null) {
+				throw new IllegalArgumentException("CallID  must be token@token or token");
+			}
+		}
+	}
+
+	/**
+	 * Set the host member
+	 * 
+	 * @param host String to set
+	 */
+	public void setHost(String host) {
+		this.host = host;
+	}
 }

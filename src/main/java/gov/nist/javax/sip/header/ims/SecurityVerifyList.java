@@ -29,41 +29,30 @@
  * PRODUCT OF PT INOVACAO - EST DEPARTMENT and Telecommunications Institute (Aveiro, Portugal)  *
  ************************************************************************************************/
 
-
 package gov.nist.javax.sip.header.ims;
 
-
-
 import gov.nist.javax.sip.header.SIPHeaderList;
-
 
 /**
  * List of Security-Verify headers.
  *
- * <p></p>
+ * <p>
+ * </p>
  *
  * @author Miguel Freitas (IT) PT-Inovacao
  */
 
+public class SecurityVerifyList extends SIPHeaderList<SecurityVerify> {
 
+	private static final long serialVersionUID = 563201040577795125L;
 
-public class SecurityVerifyList extends SIPHeaderList<SecurityVerify>
-{
+	public SecurityVerifyList() {
+		super(SecurityVerify.class, SecurityVerifyHeader.NAME);
+	}
 
-
-    private static final long serialVersionUID = 563201040577795125L;
-
-    public SecurityVerifyList()
-    {
-        super(SecurityVerify.class, SecurityVerifyHeader.NAME);
-    }
-
-    public Object clone() {
-        SecurityVerifyList retval = new SecurityVerifyList();
-        return retval.clonehlist(this.hlist);
-    }
-
+	public Object clone() {
+		SecurityVerifyList retval = new SecurityVerifyList();
+		return retval.clonehlist(this.hlist);
+	}
 
 }
-
-

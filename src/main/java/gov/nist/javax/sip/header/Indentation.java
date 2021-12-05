@@ -36,68 +36,65 @@ package gov.nist.javax.sip.header;
  */
 class Indentation {
 
-    private int indentation;
+	private int indentation;
 
-    /**
-     * Default constructor
-     */
-    protected Indentation() {
-        indentation = 0;
-    }
+	/**
+	 * Default constructor
+	 */
+	protected Indentation() {
+		indentation = 0;
+	}
 
-    /**
-     * Constructor
-     *
-     * @param initval
-     *            int to set
-     */
-    protected Indentation(int initval) {
-        indentation = initval;
-    }
+	/**
+	 * Constructor
+	 *
+	 * @param initval int to set
+	 */
+	protected Indentation(int initval) {
+		indentation = initval;
+	}
 
-    /**
-     * set the indentation field
-     *
-     * @param initval
-     *            int to set
-     */
-    protected void setIndentation(int initval) {
-        indentation = initval;
-    }
+	/**
+	 * set the indentation field
+	 *
+	 * @param initval int to set
+	 */
+	protected void setIndentation(int initval) {
+		indentation = initval;
+	}
 
-    /**
-     * get the number of indentation.
-     *
-     * @return int
-     */
-    protected int getCount() {
-        return indentation;
-    }
+	/**
+	 * get the number of indentation.
+	 *
+	 * @return int
+	 */
+	protected int getCount() {
+		return indentation;
+	}
 
-    /**
-     * increment the indentation field
-     */
-    protected void increment() {
-        indentation++;
-    }
+	/**
+	 * increment the indentation field
+	 */
+	protected void increment() {
+		indentation++;
+	}
 
-    /**
-     * decrement the indentation field
-     */
-    protected void decrement() {
-        indentation--;
-    }
+	/**
+	 * decrement the indentation field
+	 */
+	protected void decrement() {
+		indentation--;
+	}
 
-    /**
-     * get the indentation
-     *
-     * @return String
-     */
-    protected String getIndentation() {
-        char[] chars = new char[indentation];
-        java.util.Arrays.fill(chars, ' ');
-        return new String(chars);
-    }
+	/**
+	 * get the indentation
+	 *
+	 * @return String
+	 */
+	protected String getIndentation() {
+		char[] chars = new char[indentation];
+		java.util.Arrays.fill(chars, ' ');
+		return new String(chars);
+	}
 
 }
-

@@ -27,6 +27,7 @@
 * Product of NIST/ITL Advanced Networking Technologies Division (ANTD).        *
 *******************************************************************************/
 package gov.nist.javax.sip.header;
+
 import javax.sip.header.WWWAuthenticateHeader;
 
 /**
@@ -34,25 +35,24 @@ import javax.sip.header.WWWAuthenticateHeader;
  *
  * @version 1.2 $Revision: 1.7 $ $Date: 2009-07-17 18:57:41 $
  *
- * @author M. Ranganathan   <br/>
+ * @author M. Ranganathan <br/>
  *
  *
  *
  */
 public class WWWAuthenticateList extends SIPHeaderList<WWWAuthenticate> {
 
+	private static final long serialVersionUID = -6978902284285501346L;
 
-    private static final long serialVersionUID = -6978902284285501346L;
+	public Object clone() {
+		WWWAuthenticateList retval = new WWWAuthenticateList();
+		return retval.clonehlist(this.hlist);
+	}
 
-
-    public Object clone() {
-        WWWAuthenticateList retval = new WWWAuthenticateList();
-        return retval.clonehlist(this.hlist);
-    }
-    /**
-     * constructor.
-     */
-    public WWWAuthenticateList() {
-        super(WWWAuthenticate.class, WWWAuthenticateHeader.NAME);
-    }
+	/**
+	 * constructor.
+	 */
+	public WWWAuthenticateList() {
+		super(WWWAuthenticate.class, WWWAuthenticateHeader.NAME);
+	}
 }

@@ -32,68 +32,64 @@ import gov.nist.javax.sip.parser.HeaderParser;
 import junit.framework.TestCase;
 
 /**
- * Superclass for all test cases in this directory. The printlns will be replaced with logger
- * calls.
+ * Superclass for all test cases in this directory. The printlns will be replaced with logger calls.
  * 
  */
 public abstract class ParserTestCase extends TestCase {
-    static {
-        SIPHeaderList.setPrettyEncode(false);
-    }
-    protected HeaderParser createParser(Class parserClass, String header) {
+	static {
+		SIPHeaderList.setPrettyEncode(false);
+	}
 
-        try {
-            Constructor constructor = parserClass.getConstructor(new Class[] {
-                String.class
-            });
-            return (HeaderParser) constructor.newInstance(new String[] {
-                header
-            });
-        } catch (Exception ex) {
-            ex.printStackTrace();
-            System.out.println("fatal error");
-        }
-        return null;
-    }
+	protected HeaderParser createParser(Class parserClass, String header) {
 
-    protected void setUp() throws Exception {
-        super.setUp();
-        System.out.println("start " + getClass().getName());
-    }
+		try {
+			Constructor constructor = parserClass.getConstructor(new Class[] { String.class });
+			return (HeaderParser) constructor.newInstance(new String[] { header });
+		} catch (Exception ex) {
+			ex.printStackTrace();
+			System.out.println("fatal error");
+		}
+		return null;
+	}
 
-    protected void tearDown() throws Exception {
-        super.tearDown();
-        System.out.println("done " + getClass().getName());
-    }
+	protected void setUp() throws Exception {
+		super.setUp();
+		System.out.println("start " + getClass().getName());
+	}
 
-    protected void testParser(Class parserClass, String[] headers) {
-        try {
-            for (int i = 0; i < headers.length; i++) {
-                System.out.print(headers[i]);
-                HeaderParser hp = createParser(parserClass, headers[i]);
-                SIPHeader hdr = (SIPHeader) hp.parse();
+	protected void tearDown() throws Exception {
+		super.tearDown();
+		System.out.println("done " + getClass().getName());
+	}
 
-                if ( hdr instanceof SIPHeaderList<?> ) {
-                	SIPHeaderList<?> list = (SIPHeaderList<?>) hdr;
-                	assertNotNull( "Header should be added to list", list.getFirst() );
-                	// JvB: Should be consistent, some parser classes override getFirst but leave list empty
-                	assertTrue( "List should contain at least 1 header", list.size() > 0 );	
-                }
-                
-                hp = createParser(parserClass, ((SIPHeader) hdr.clone()).encode().trim() + "\n");
-                System.out.println("Encoded header = " + hdr.encode());
-                assertEquals(hdr, hp.parse());
+	protected void testParser(Class parserClass, String[] headers) {
+		try {
+			for (int i = 0; i < headers.length; i++) {
+				System.out.print(headers[i]);
+				HeaderParser hp = createParser(parserClass, headers[i]);
+				SIPHeader hdr = (SIPHeader) hp.parse();
 
-            }
-        } catch (java.text.ParseException ex) {
-            ex.printStackTrace();
-            fail(getClass().getName());
-        } catch (Exception e) {
-            e.printStackTrace();
-            fail("Unexpected exception " + getClass().getName());
-        }
-    }
+				if (hdr instanceof SIPHeaderList<?>) {
+					SIPHeaderList<?> list = (SIPHeaderList<?>) hdr;
+					assertNotNull("Header should be added to list", list.getFirst());
+					// JvB: Should be consistent, some parser classes override getFirst but leave list empty
+					assertTrue("List should contain at least 1 header", list.size() > 0);
+				}
 
-    public abstract void testParser();
+				hp = createParser(parserClass, ((SIPHeader) hdr.clone()).encode().trim() + "\n");
+				System.out.println("Encoded header = " + hdr.encode());
+				assertEquals(hdr, hp.parse());
+
+			}
+		} catch (java.text.ParseException ex) {
+			ex.printStackTrace();
+			fail(getClass().getName());
+		} catch (Exception e) {
+			e.printStackTrace();
+			fail("Unexpected exception " + getClass().getName());
+		}
+	}
+
+	public abstract void testParser();
 
 }

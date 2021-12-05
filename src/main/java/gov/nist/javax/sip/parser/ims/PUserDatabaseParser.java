@@ -35,78 +35,67 @@ import gov.nist.javax.sip.parser.TokenTypes;
 
 /**
  *
- * @author aayush.bhatnagar
- * Rancore Technologies Pvt Ltd, Mumbai India.
+ * @author aayush.bhatnagar Rancore Technologies Pvt Ltd, Mumbai India.
  *
- * This is the parser for the P-user-database header.
- * The syntax for the P-user-database header as per
- * RFC 4457 is given below:
+ *         This is the parser for the P-user-database header. The syntax for the P-user-database header as per RFC 4457 is given below:
  *
- * P-User-Database = "P-User-Database" HCOLON database
- *                    *( SEMI generic-param )
- * database        = LAQUOT DiameterURI RAQUOT
+ *         P-User-Database = "P-User-Database" HCOLON database *( SEMI generic-param ) database = LAQUOT DiameterURI RAQUOT
  *
- * Eg: P-User-Database: <aaa://host.example.com;transport=tcp>
+ *         Eg: P-User-Database: <aaa://host.example.com;transport=tcp>
  *
  */
-public class PUserDatabaseParser extends ParametersParser implements TokenTypes{
+public class PUserDatabaseParser extends ParametersParser implements TokenTypes {
 
-    /**
-     *
-     * @param databaseName
-     */
-    public PUserDatabaseParser(String databaseName)
-    {
-        super(databaseName);
-    }
+	/**
+	 *
+	 * @param databaseName
+	 */
+	public PUserDatabaseParser(String databaseName) {
+		super(databaseName);
+	}
 
-    /**
-     *
-     * @param lexer
-     */
-    public PUserDatabaseParser(Lexer lexer)
-    {
-        super(lexer);
-    }
+	/**
+	 *
+	 * @param lexer
+	 */
+	public PUserDatabaseParser(Lexer lexer) {
+		super(lexer);
+	}
 
-    public SIPHeader parse() throws ParseException {
+	public SIPHeader parse() throws ParseException {
 
-        if (debug)
-            dbg_enter("PUserDatabase.parse");
+		if (debug)
+			dbg_enter("PUserDatabase.parse");
 
-        try{
-            this.lexer.match(TokenTypes.P_USER_DATABASE);
-            this.lexer.SPorHT();
-            this.lexer.match(':');
-            this.lexer.SPorHT();
+		try {
+			this.lexer.match(TokenTypes.P_USER_DATABASE);
+			this.lexer.SPorHT();
+			this.lexer.match(':');
+			this.lexer.SPorHT();
 
-            PUserDatabase userDatabase = new PUserDatabase();
-            this.parseheader(userDatabase);
+			PUserDatabase userDatabase = new PUserDatabase();
+			this.parseheader(userDatabase);
 
-             return userDatabase;
-        }
-        finally{
-            if(debug)
-            dbg_leave("PUserDatabase.parse");
-        }
-    }
+			return userDatabase;
+		} finally {
+			if (debug)
+				dbg_leave("PUserDatabase.parse");
+		}
+	}
 
-    private void parseheader(PUserDatabase userDatabase) throws ParseException
-    {
-        StringBuilder dbname = new StringBuilder();
-        this.lexer.match(LESS_THAN);
+	private void parseheader(PUserDatabase userDatabase) throws ParseException {
+		StringBuilder dbname = new StringBuilder();
+		this.lexer.match(LESS_THAN);
 
-        while(this.lexer.hasMoreChars())
-        {
-            char next = this.lexer.getNextChar();
-          if (next!='>'&&next!='\n')
-          {
-          dbname.append(next);
-          }
+		while (this.lexer.hasMoreChars()) {
+			char next = this.lexer.getNextChar();
+			if (next != '>' && next != '\n') {
+				dbname.append(next);
+			}
 
-         }
-        userDatabase.setDatabaseName(dbname.toString());
-          super.parse(userDatabase);
+		}
+		userDatabase.setDatabaseName(dbname.toString());
+		super.parse(userDatabase);
 
-}
+	}
 }

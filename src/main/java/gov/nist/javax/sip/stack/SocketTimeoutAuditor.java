@@ -39,37 +39,31 @@ import gov.nist.core.StackLogger;
 public class SocketTimeoutAuditor extends SIPStackTimerTask {
 	private static StackLogger logger = CommonLogger.getLogger(SocketTimeoutAuditor.class);
 	long nioSocketMaxIdleTime;
-	
+
 	public SocketTimeoutAuditor(long nioSocketMaxIdleTime) {
 		this.nioSocketMaxIdleTime = nioSocketMaxIdleTime;
 	}
-	
+
 	public void runTask() {
 		try {
 			// Reworked the method for https://java.net/jira/browse/JSIP-471
-			if(logger.isLoggingEnabled(LogWriter.TRACE_DEBUG)) {
+			if (logger.isLoggingEnabled(LogWriter.TRACE_DEBUG)) {
 				logger.logDebug("keys to check for inactivity removal " + NioTcpMessageChannel.channelMap.keySet());
 			}
 			Iterator<Entry<SocketChannel, NioTcpMessageChannel>> entriesIterator = NioTcpMessageChannel.channelMap.entrySet().iterator();
-			while(entriesIterator.hasNext()) {
+			while (entriesIterator.hasNext()) {
 				Entry<SocketChannel, NioTcpMessageChannel> entry = entriesIterator.next();
 				SocketChannel socketChannel = entry.getKey();
 				NioTcpMessageChannel messageChannel = entry.getValue();
-				if(System.currentTimeMillis() - messageChannel.getLastActivityTimestamp() > nioSocketMaxIdleTime) {
-					if(logger.isLoggingEnabled(LogWriter.TRACE_DEBUG)) {
-						logger.logDebug("Will remove socket " + messageChannel.key + " lastActivity="
-								+ messageChannel.getLastActivityTimestamp() + " current= " +
-								System.currentTimeMillis() + " socketChannel = "
-								+ socketChannel);
+				if (System.currentTimeMillis() - messageChannel.getLastActivityTimestamp() > nioSocketMaxIdleTime) {
+					if (logger.isLoggingEnabled(LogWriter.TRACE_DEBUG)) {
+						logger.logDebug("Will remove socket " + messageChannel.key + " lastActivity=" + messageChannel.getLastActivityTimestamp() + " current= " + System.currentTimeMillis() + " socketChannel = " + socketChannel);
 					}
 					messageChannel.close();
 					entriesIterator = NioTcpMessageChannel.channelMap.entrySet().iterator();
 				} else {
-					if(logger.isLoggingEnabled(LogWriter.TRACE_DEBUG)) {
-						logger.logDebug("don't remove socket " + messageChannel.key + " as lastActivity="
-								+ messageChannel.getLastActivityTimestamp() + " and current= " +
-								System.currentTimeMillis() + " socketChannel = "
-								+ socketChannel);
+					if (logger.isLoggingEnabled(LogWriter.TRACE_DEBUG)) {
+						logger.logDebug("don't remove socket " + messageChannel.key + " as lastActivity=" + messageChannel.getLastActivityTimestamp() + " and current= " + System.currentTimeMillis() + " socketChannel = " + socketChannel);
 					}
 				}
 			}

@@ -40,39 +40,35 @@ import gov.nist.javax.sip.header.AddressParametersHeader;
  */
 public class AddressParametersParser extends ParametersParser {
 
-    protected AddressParametersParser(Lexer lexer) {
-        super(lexer);
-    }
+	protected AddressParametersParser(Lexer lexer) {
+		super(lexer);
+	}
 
-    protected AddressParametersParser(String buffer) {
-        super(buffer);
-    }
+	protected AddressParametersParser(String buffer) {
+		super(buffer);
+	}
 
-    protected void parse(AddressParametersHeader addressParametersHeader)
-        throws ParseException {
-    	if (debug)
-    		dbg_enter("AddressParametersParser.parse");
-        try {
-            AddressParser addressParser = new AddressParser(this.getLexer());
-            AddressImpl addr = addressParser.address(false);
-            addressParametersHeader.setAddress(addr);
-            lexer.SPorHT();
-            char la = this.lexer.lookAhead(0);
-            if ( this.lexer.hasMoreChars() &&
-                 la != '\0' &&
-                 la != '\n' &&
-                 this.lexer.startsId()) {
+	protected void parse(AddressParametersHeader addressParametersHeader) throws ParseException {
+		if (debug)
+			dbg_enter("AddressParametersParser.parse");
+		try {
+			AddressParser addressParser = new AddressParser(this.getLexer());
+			AddressImpl addr = addressParser.address(false);
+			addressParametersHeader.setAddress(addr);
+			lexer.SPorHT();
+			char la = this.lexer.lookAhead(0);
+			if (this.lexer.hasMoreChars() && la != '\0' && la != '\n' && this.lexer.startsId()) {
 
-                 super.parseNameValueList(addressParametersHeader);
+				super.parseNameValueList(addressParametersHeader);
 
+			} else
+				super.parse(addressParametersHeader);
 
-            }  else super.parse(addressParametersHeader);
-
-        } catch (ParseException ex) {
-            throw ex;
-        } finally {
-        	if (debug)
-        		dbg_leave("AddressParametersParser.parse");
-        }
-    }
+		} catch (ParseException ex) {
+			throw ex;
+		} finally {
+			if (debug)
+				dbg_leave("AddressParametersParser.parse");
+		}
+	}
 }

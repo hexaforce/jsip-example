@@ -27,19 +27,17 @@ package test.unit.gov.nist.javax.sip.parser.ims;
 import gov.nist.javax.sip.parser.ims.PPreferredIdentityParser;
 import test.unit.gov.nist.javax.sip.parser.ParserTestCase;
 
-public class PPreferredIdentityParserTest extends ParserTestCase
-{
-    public void testParser() {
-        // TODO Auto-generated method stub
+public class PPreferredIdentityParserTest extends ParserTestCase {
+	public void testParser() {
+		// TODO Auto-generated method stub
 
-        String[] preferredID =  {
-         "P-Preferred-Identity: <sip:bob@atlanta.com>\n",
+		String[] preferredID = { "P-Preferred-Identity: <sip:bob@atlanta.com>\n",
 
-         "P-Preferred-Identity: \"AliceA\" <sip:alice@atlanta.com>\n"
+				"P-Preferred-Identity: \"AliceA\" <sip:alice@atlanta.com>\n"
 
-        };
+		};
 
-        super.testParser(PPreferredIdentityParser.class,preferredID);
-    }
+		super.testParser(PPreferredIdentityParser.class, preferredID);
+	}
 
 }

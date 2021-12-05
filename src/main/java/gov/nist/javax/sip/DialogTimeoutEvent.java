@@ -22,8 +22,7 @@ import javax.sip.Dialog;
 
 /**
  * 
- * DialogAckTimeoutEvent is delivered to the Listener when the
- * dialog does not receive or send an ACK. 
+ * DialogAckTimeoutEvent is delivered to the Listener when the dialog does not receive or send an ACK.
  *
  * 
  * @author jean deruelle
@@ -32,65 +31,63 @@ import javax.sip.Dialog;
  */
 public class DialogTimeoutEvent extends EventObject {
 	private static final long serialVersionUID = -2514000059989311925L;
-	public enum Reason {AckNotReceived, AckNotSent,ReInviteTimeout,EarlyStateTimeout,CannotAcquireAckSemaphoreForOk};	    
-	/**
-     * Constructs a DialogTerminatedEvent to indicate a dialog
-     * timeout.
-     *
-     * @param source - the source of TimeoutEvent. 
-     * @param dialog - the dialog that timed out.
-     */
-     public DialogTimeoutEvent(Object source, Dialog dialog, Reason reason) {
-         super(source);
-         m_dialog = dialog;
-         m_reason = reason;
-      
-    }
-     
-     /**
-      * Set the re-INVITE client transaction. 
-      * This method will be used by Implementations (not applications).
-      * 
-      * @since v1.2
-      */
-     public void setClientTransaction(ClientTransaction clientTransaction) {
-    	 this.m_reInviteTransaction = clientTransaction;
-     }
+
+	public enum Reason {
+		AckNotReceived, AckNotSent, ReInviteTimeout, EarlyStateTimeout, CannotAcquireAckSemaphoreForOk
+	};
 
 	/**
-     * Gets the Dialog associated with the event. This 
-     * enables application developers to access the dialog associated to this 
-     * event. 
-     * 
-     * @return the dialog associated with the response event or null if there is no dialog.
-     * @since v1.2
-     */
-    public Dialog getDialog() {
-        return m_dialog;
-    }    
-    
-    /**
-     * The reason for the Dialog Timeout Event being delivered to the application.
-     * 
-     * @return the reason for the timeout event.
-     */
-    public Reason getReason() {
-    	return m_reason;
-    }
-    
-    /**
-     * Get the re-INVITE client transaction that 
-     * could not be sent.
-     * 
-     * @return the re-INVITE client transaction that could not be sent.
-     */
-    public ClientTransaction getClientTransaction() {
-    	return m_reInviteTransaction;
-    }
-     
-    // internal variables
-    private Dialog m_dialog = null;    
-    private Reason m_reason = null;
-    private ClientTransaction m_reInviteTransaction = null;
+	 * Constructs a DialogTerminatedEvent to indicate a dialog timeout.
+	 *
+	 * @param source - the source of TimeoutEvent.
+	 * @param dialog - the dialog that timed out.
+	 */
+	public DialogTimeoutEvent(Object source, Dialog dialog, Reason reason) {
+		super(source);
+		m_dialog = dialog;
+		m_reason = reason;
+
+	}
+
+	/**
+	 * Set the re-INVITE client transaction. This method will be used by Implementations (not applications).
+	 * 
+	 * @since v1.2
+	 */
+	public void setClientTransaction(ClientTransaction clientTransaction) {
+		this.m_reInviteTransaction = clientTransaction;
+	}
+
+	/**
+	 * Gets the Dialog associated with the event. This enables application developers to access the dialog associated to this event.
+	 * 
+	 * @return the dialog associated with the response event or null if there is no dialog.
+	 * @since v1.2
+	 */
+	public Dialog getDialog() {
+		return m_dialog;
+	}
+
+	/**
+	 * The reason for the Dialog Timeout Event being delivered to the application.
+	 * 
+	 * @return the reason for the timeout event.
+	 */
+	public Reason getReason() {
+		return m_reason;
+	}
+
+	/**
+	 * Get the re-INVITE client transaction that could not be sent.
+	 * 
+	 * @return the re-INVITE client transaction that could not be sent.
+	 */
+	public ClientTransaction getClientTransaction() {
+		return m_reInviteTransaction;
+	}
+
+	// internal variables
+	private Dialog m_dialog = null;
+	private Reason m_reason = null;
+	private ClientTransaction m_reInviteTransaction = null;
 }
-

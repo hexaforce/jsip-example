@@ -27,26 +27,20 @@ package test.unit.gov.nist.javax.sip.parser.ims;
 import gov.nist.javax.sip.parser.ims.SecurityServerParser;
 import test.unit.gov.nist.javax.sip.parser.ParserTestCase;
 
-public class SecurityServerParserTest extends ParserTestCase
-{
-    public void testParser() {
-        // TODO Auto-generated method stub
+public class SecurityServerParserTest extends ParserTestCase {
+	public void testParser() {
+		// TODO Auto-generated method stub
 
-        String[] securityServer =  {
-         "Security-Server: ipsec-3gpp; alg=hmac-sha-1-96; spi-c=23456789; spi-s=12345678; " +
-             "port-c=2468; port-s=1357; q=0.1\n" ,
+		String[] securityServer = { "Security-Server: ipsec-3gpp; alg=hmac-sha-1-96; spi-c=23456789; spi-s=12345678; " + "port-c=2468; port-s=1357; q=0.1\n",
 
-         // list
-         "Security-Server: ipsec-3gpp; alg=hmac-sha-1-96; spi-c=23456789; spi-s=12345678; " +
-             "port-c=2468; port-s=1357; q=0.1, " +
+				// list
+				"Security-Server: ipsec-3gpp; alg=hmac-sha-1-96; spi-c=23456789; spi-s=12345678; " + "port-c=2468; port-s=1357; q=0.1, " +
 
-             "ipsec-3gpp; alg=hmac-sha-1-96; spi-c=98765432; spi-s=87654321; " +
-             "port-c=8642; port-s=7531; q=0.5 \n"
+						"ipsec-3gpp; alg=hmac-sha-1-96; spi-c=98765432; spi-s=87654321; " + "port-c=8642; port-s=7531; q=0.5 \n"
 
+		};
 
-        };
-
-        super.testParser(SecurityServerParser.class,securityServer);
-    }
+		super.testParser(SecurityServerParser.class, securityServer);
+	}
 
 }

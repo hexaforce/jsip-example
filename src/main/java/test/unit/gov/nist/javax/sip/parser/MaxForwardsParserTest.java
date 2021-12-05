@@ -31,21 +31,17 @@ import gov.nist.javax.sip.parser.MaxForwardsParser;
  */
 public class MaxForwardsParserTest extends ParserTestCase {
 
-    /* (non-Javadoc)
-     * @see test.unit.gov.nist.javax.sip.parser.ParserTestCase#testParser()
-     */
-    public void testParser() {
+	/*
+	 * (non-Javadoc)
+	 * 
+	 * @see test.unit.gov.nist.javax.sip.parser.ParserTestCase#testParser()
+	 */
+	public void testParser() {
 
-        String content[] = {
-            "Max-Forwards: 10\n",
-            "Max-Forwards: 34\n",
-            "Max-Forwards: 0 \n"
-                };
+		String content[] = { "Max-Forwards: 10\n", "Max-Forwards: 34\n", "Max-Forwards: 0 \n" };
 
+		super.testParser(MaxForwardsParser.class, content);
 
-
-        super.testParser(MaxForwardsParser.class,content);
-
-    }
+	}
 
 }

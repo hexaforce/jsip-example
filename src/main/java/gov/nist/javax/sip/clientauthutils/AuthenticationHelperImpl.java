@@ -50,8 +50,7 @@ import gov.nist.javax.sip.stack.SIPClientTransaction;
 import gov.nist.javax.sip.stack.SIPTransactionStack;
 
 /**
- * The class handles authentication challenges, caches user credentials and takes care (through
- * the SecurityAuthority interface) about retrieving passwords.
+ * The class handles authentication challenges, caches user credentials and takes care (through the SecurityAuthority interface) about retrieving passwords.
  *
  *
  * @author Emil Ivov
@@ -63,427 +62,380 @@ import gov.nist.javax.sip.stack.SIPTransactionStack;
 
 public class AuthenticationHelperImpl implements AuthenticationHelper {
 	private static StackLogger logger = CommonLogger.getLogger(AuthenticationHelperImpl.class);
-    /**
-     * Credentials cached so far.
-     */
-    private CredentialsCache cachedCredentials;
+	/**
+	 * Credentials cached so far.
+	 */
+	private CredentialsCache cachedCredentials;
 
-    /**
-     * The account manager for the system. Stores user credentials.
-     */
-    private Object accountManager = null;
+	/**
+	 * The account manager for the system. Stores user credentials.
+	 */
+	private Object accountManager = null;
 
-    /*
-     * Header factory for this security manager.
-     */
-    private HeaderFactory headerFactory;
+	/*
+	 * Header factory for this security manager.
+	 */
+	private HeaderFactory headerFactory;
 
-    private SIPTransactionStack sipStack;
+	private SIPTransactionStack sipStack;
 
-    Timer timer;
+	Timer timer;
 
-    /**
-     * Default constructor for the security manager. There is one Account manager. There is one
-     * SipSecurity manager for every user name,
-     *
-     * @param sipStack -- our stack.
-     * @param accountManager -- an implementation of the AccountManager interface.
-     * @param headerFactory -- header factory.
-     */
-    public AuthenticationHelperImpl(SIPTransactionStack sipStack, AccountManager accountManager,
-            HeaderFactory headerFactory) {
-        this.accountManager = accountManager;
-        this.headerFactory = headerFactory;
-        this.sipStack = sipStack;
+	/**
+	 * Default constructor for the security manager. There is one Account manager. There is one SipSecurity manager for every user name,
+	 *
+	 * @param sipStack       -- our stack.
+	 * @param accountManager -- an implementation of the AccountManager interface.
+	 * @param headerFactory  -- header factory.
+	 */
+	public AuthenticationHelperImpl(SIPTransactionStack sipStack, AccountManager accountManager, HeaderFactory headerFactory) {
+		this.accountManager = accountManager;
+		this.headerFactory = headerFactory;
+		this.sipStack = sipStack;
 
-        this.cachedCredentials = new CredentialsCache(((SIPTransactionStack) sipStack).getTimer());
-    }
-    
-    /**
-     * Default constructor for the security manager. There is one Account manager. There is one
-     * SipSecurity manager for every user name,
-     *
-     * @param sipStack -- our stack.
-     * @param accountManager -- an implementation of the AccountManager interface.
-     * @param headerFactory -- header factory.
-     */
-    public AuthenticationHelperImpl(SIPTransactionStack sipStack, SecureAccountManager accountManager,
-            HeaderFactory headerFactory) {
-        this.accountManager = accountManager;
-        this.headerFactory = headerFactory;
-        this.sipStack = sipStack;
+		this.cachedCredentials = new CredentialsCache(((SIPTransactionStack) sipStack).getTimer());
+	}
 
-        this.cachedCredentials = new CredentialsCache(((SIPTransactionStack) sipStack).getTimer());
-    }
-    
+	/**
+	 * Default constructor for the security manager. There is one Account manager. There is one SipSecurity manager for every user name,
+	 *
+	 * @param sipStack       -- our stack.
+	 * @param accountManager -- an implementation of the AccountManager interface.
+	 * @param headerFactory  -- header factory.
+	 */
+	public AuthenticationHelperImpl(SIPTransactionStack sipStack, SecureAccountManager accountManager, HeaderFactory headerFactory) {
+		this.accountManager = accountManager;
+		this.headerFactory = headerFactory;
+		this.sipStack = sipStack;
 
-    /*
-     * (non-Javadoc)
-     *
-     * @see gov.nist.javax.sip.clientauthutils.AuthenticationHelper#handleChallenge(javax.sip.message.Response,
-     *      javax.sip.ClientTransaction, javax.sip.SipProvider)
-     */
-    public ClientTransaction handleChallenge(Response challenge,
-            ClientTransaction challengedTransaction, SipProvider transactionCreator, int cacheTime)
-            throws SipException, NullPointerException {
-        return handleChallenge(challenge, challengedTransaction, transactionCreator, cacheTime, false);
-    }
-    
-    /*
-     * (non-Javadoc)
-     *
-     * @see gov.nist.javax.sip.clientauthutils.AuthenticationHelper#handleChallenge(javax.sip.message.Response,
-     *      javax.sip.ClientTransaction, javax.sip.SipProvider)
-     */
-    public ClientTransaction handleChallenge(Response challenge,
-            ClientTransaction challengedTransaction, SipProvider transactionCreator, int cacheTime, boolean looseRouting)
-            throws SipException, NullPointerException {
-        try {
-          
-            if ( logger.isLoggingEnabled(LogWriter.TRACE_DEBUG))
-                 logger.logDebug("handleChallenge: " + challenge);
-           
+		this.cachedCredentials = new CredentialsCache(((SIPTransactionStack) sipStack).getTimer());
+	}
 
-            SIPRequest challengedRequest = ((SIPRequest) challengedTransaction.getRequest());
+	/*
+	 * (non-Javadoc)
+	 *
+	 * @see gov.nist.javax.sip.clientauthutils.AuthenticationHelper#handleChallenge(javax.sip.message.Response, javax.sip.ClientTransaction, javax.sip.SipProvider)
+	 */
+	public ClientTransaction handleChallenge(Response challenge, ClientTransaction challengedTransaction, SipProvider transactionCreator, int cacheTime) throws SipException, NullPointerException {
+		return handleChallenge(challenge, challengedTransaction, transactionCreator, cacheTime, false);
+	}
 
-            Request reoriginatedRequest = null;
-            /*
-             * If the challenged request is part of a Dialog and the
-             * Dialog is confirmed the re-originated request should be
-             * generated as an in-Dialog request.
-             */
-            if (  challengedRequest.getToTag() != null  ||
-                    challengedTransaction.getDialog() == null ||
-                    challengedTransaction.getDialog().getState() != DialogState.CONFIRMED)  {
-                reoriginatedRequest = (Request) challengedRequest.clone();
-            } else {
-                /*
-                 * Re-originate the request by consulting the dialog. In particular
-                 * the route set could change between the original request and the 
-                 * in-dialog challenge.
-                 */
-            	reoriginatedRequest =
-            			challengedTransaction.getDialog().createRequest(challengedRequest.getMethod());
-            	Iterator<String> headerNames = challengedRequest.getHeaderNames();
-            	while (headerNames.hasNext()) {
-            		String headerName = headerNames.next();
-            		if ( reoriginatedRequest.getHeader(headerName) == null) {
-            			ListIterator<SIPHeader> iterator = challengedRequest.getHeaders(headerName);
-            			while (iterator.hasNext()) { reoriginatedRequest.addHeader(iterator.next()); }
-            		}
-            	}
-            }
+	/*
+	 * (non-Javadoc)
+	 *
+	 * @see gov.nist.javax.sip.clientauthutils.AuthenticationHelper#handleChallenge(javax.sip.message.Response, javax.sip.ClientTransaction, javax.sip.SipProvider)
+	 */
+	public ClientTransaction handleChallenge(Response challenge, ClientTransaction challengedTransaction, SipProvider transactionCreator, int cacheTime, boolean looseRouting) throws SipException, NullPointerException {
+		try {
 
+			if (logger.isLoggingEnabled(LogWriter.TRACE_DEBUG))
+				logger.logDebug("handleChallenge: " + challenge);
 
+			SIPRequest challengedRequest = ((SIPRequest) challengedTransaction.getRequest());
 
-            // remove the branch id so that we could use the request in a new
-            // transaction
-            removeBranchID(reoriginatedRequest);
+			Request reoriginatedRequest = null;
+			/*
+			 * If the challenged request is part of a Dialog and the Dialog is confirmed the re-originated request should be generated as an in-Dialog request.
+			 */
+			if (challengedRequest.getToTag() != null || challengedTransaction.getDialog() == null || challengedTransaction.getDialog().getState() != DialogState.CONFIRMED) {
+				reoriginatedRequest = (Request) challengedRequest.clone();
+			} else {
+				/*
+				 * Re-originate the request by consulting the dialog. In particular the route set could change between the original request and the in-dialog challenge.
+				 */
+				reoriginatedRequest = challengedTransaction.getDialog().createRequest(challengedRequest.getMethod());
+				Iterator<String> headerNames = challengedRequest.getHeaderNames();
+				while (headerNames.hasNext()) {
+					String headerName = headerNames.next();
+					if (reoriginatedRequest.getHeader(headerName) == null) {
+						ListIterator<SIPHeader> iterator = challengedRequest.getHeaders(headerName);
+						while (iterator.hasNext()) {
+							reoriginatedRequest.addHeader(iterator.next());
+						}
+					}
+				}
+			}
 
-            if (challenge == null || reoriginatedRequest == null) {
-                throw new NullPointerException("A null argument was passed to handle challenge.");
-            }
+			// remove the branch id so that we could use the request in a new
+			// transaction
+			removeBranchID(reoriginatedRequest);
 
-            ListIterator authHeaders = null;
+			if (challenge == null || reoriginatedRequest == null) {
+				throw new NullPointerException("A null argument was passed to handle challenge.");
+			}
 
-            if (challenge.getStatusCode() == Response.UNAUTHORIZED) {
-                authHeaders = challenge.getHeaders(WWWAuthenticateHeader.NAME);
-            } else if (challenge.getStatusCode() == Response.PROXY_AUTHENTICATION_REQUIRED) {
-                authHeaders = challenge.getHeaders(ProxyAuthenticateHeader.NAME);
-            } else {
-                throw new IllegalArgumentException("Unexpected status code ");
-            }
+			ListIterator authHeaders = null;
 
-            if (authHeaders == null) {
-                throw new IllegalArgumentException(
-                        "Could not find WWWAuthenticate or ProxyAuthenticate headers");
-            }
+			if (challenge.getStatusCode() == Response.UNAUTHORIZED) {
+				authHeaders = challenge.getHeaders(WWWAuthenticateHeader.NAME);
+			} else if (challenge.getStatusCode() == Response.PROXY_AUTHENTICATION_REQUIRED) {
+				authHeaders = challenge.getHeaders(ProxyAuthenticateHeader.NAME);
+			} else {
+				throw new IllegalArgumentException("Unexpected status code ");
+			}
 
-            // Remove all authorization headers from the request (we'll re-add them
-            // from cache)
-            reoriginatedRequest.removeHeader(AuthorizationHeader.NAME);
-            reoriginatedRequest.removeHeader(ProxyAuthorizationHeader.NAME);
+			if (authHeaders == null) {
+				throw new IllegalArgumentException("Could not find WWWAuthenticate or ProxyAuthenticate headers");
+			}
 
-            // rfc 3261 says that the cseq header should be augmented for the new
-            // request. do it here so that the new dialog (created together with
-            // the new client transaction) takes it into account.
-            // Bug report - Fredrik Wickstrom
-            CSeqHeader cSeq = (CSeqHeader) reoriginatedRequest.getHeader((CSeqHeader.NAME));
-            try {
-                cSeq.setSeqNumber(cSeq.getSeqNumber() + 1l);
-            } catch (InvalidArgumentException ex) {
-                throw new SipException("Invalid CSeq -- could not increment : "
-                        + cSeq.getSeqNumber());
-            }
+			// Remove all authorization headers from the request (we'll re-add them
+			// from cache)
+			reoriginatedRequest.removeHeader(AuthorizationHeader.NAME);
+			reoriginatedRequest.removeHeader(ProxyAuthorizationHeader.NAME);
 
+			// rfc 3261 says that the cseq header should be augmented for the new
+			// request. do it here so that the new dialog (created together with
+			// the new client transaction) takes it into account.
+			// Bug report - Fredrik Wickstrom
+			CSeqHeader cSeq = (CSeqHeader) reoriginatedRequest.getHeader((CSeqHeader.NAME));
+			try {
+				cSeq.setSeqNumber(cSeq.getSeqNumber() + 1l);
+			} catch (InvalidArgumentException ex) {
+				throw new SipException("Invalid CSeq -- could not increment : " + cSeq.getSeqNumber());
+			}
 
-            /* Resolve this to the next hop based on the previous lookup. If we are not using
-             * lose routing (RFC2543) then just attach hop as a maddr param.
-             */
-            if (!looseRouting && challengedRequest.getRouteHeaders() == null ) {
-                Hop hop   = ((SIPClientTransaction) challengedTransaction).getNextHop();
-                SipURI sipUri = (SipURI) reoriginatedRequest.getRequestURI();
-                sipUri.setMAddrParam(hop.getHost());
-                if ( hop.getPort() != -1 ) sipUri.setPort(hop.getPort());
-            }
-            ClientTransaction retryTran = transactionCreator
-            .getNewClientTransaction(reoriginatedRequest);
+			/*
+			 * Resolve this to the next hop based on the previous lookup. If we are not using lose routing (RFC2543) then just attach hop as a maddr param.
+			 */
+			if (!looseRouting && challengedRequest.getRouteHeaders() == null) {
+				Hop hop = ((SIPClientTransaction) challengedTransaction).getNextHop();
+				SipURI sipUri = (SipURI) reoriginatedRequest.getRequestURI();
+				sipUri.setMAddrParam(hop.getHost());
+				if (hop.getPort() != -1)
+					sipUri.setPort(hop.getPort());
+			}
+			ClientTransaction retryTran = transactionCreator.getNewClientTransaction(reoriginatedRequest);
 
-            WWWAuthenticateHeader authHeader = null;
-            SipURI requestUri = (SipURI) challengedTransaction.getRequest().getRequestURI();
-            while (authHeaders.hasNext()) {
-                authHeader = (WWWAuthenticateHeader) authHeaders.next();
-                String realm = authHeader.getRealm();
-                AuthorizationHeader authorization = null;
-                String sipDomain;
-                if ( this.accountManager instanceof SecureAccountManager ) {
-                    UserCredentialHash credHash =
-                        ((SecureAccountManager)this.accountManager).getCredentialHash(challengedTransaction,realm);
-                    if ( credHash == null ) {
-                        logger.logDebug("Could not find creds");
-                        throw new SipException(
-                        "Cannot find user creds for the given user name and realm");
-                    }
-                    URI uri = reoriginatedRequest.getRequestURI();
-                    sipDomain = credHash.getSipDomain();
-                    authorization = this.getAuthorization(reoriginatedRequest
-                            .getMethod(), uri.toString(),
-                            (reoriginatedRequest.getContent() == null) ? "" : new String(
-                            reoriginatedRequest.getRawContent()), authHeader, credHash);
-                } else {
-                    UserCredentials userCreds = ((AccountManager) this.accountManager).getCredentials(challengedTransaction, realm);
-                    
-                     if (userCreds == null) {
-                         throw new SipException(
-                            "Cannot find user creds for the given user name and realm");
-                     }
-                     sipDomain = userCreds.getSipDomain();
-                     
-                    // we haven't yet authenticated this realm since we were
-                    // started.
+			WWWAuthenticateHeader authHeader = null;
+			SipURI requestUri = (SipURI) challengedTransaction.getRequest().getRequestURI();
+			while (authHeaders.hasNext()) {
+				authHeader = (WWWAuthenticateHeader) authHeaders.next();
+				String realm = authHeader.getRealm();
+				AuthorizationHeader authorization = null;
+				String sipDomain;
+				if (this.accountManager instanceof SecureAccountManager) {
+					UserCredentialHash credHash = ((SecureAccountManager) this.accountManager).getCredentialHash(challengedTransaction, realm);
+					if (credHash == null) {
+						logger.logDebug("Could not find creds");
+						throw new SipException("Cannot find user creds for the given user name and realm");
+					}
+					URI uri = reoriginatedRequest.getRequestURI();
+					sipDomain = credHash.getSipDomain();
+					authorization = this.getAuthorization(reoriginatedRequest.getMethod(), uri.toString(), (reoriginatedRequest.getContent() == null) ? "" : new String(reoriginatedRequest.getRawContent()), authHeader, credHash);
+				} else {
+					UserCredentials userCreds = ((AccountManager) this.accountManager).getCredentials(challengedTransaction, realm);
 
-                       authorization = this.getAuthorization(reoriginatedRequest
-                                .getMethod(), reoriginatedRequest.getRequestURI().toString(),
-                                (reoriginatedRequest.getContent() == null) ? "" : new String(
-                                reoriginatedRequest.getRawContent()), authHeader, userCreds);
-                }
-                
-                if ( logger.isLoggingEnabled(LogWriter.TRACE_DEBUG)) {
-                    logger.logDebug(
-                            "Created authorization header: " + authorization.toString());
-                }
-              
+					if (userCreds == null) {
+						throw new SipException("Cannot find user creds for the given user name and realm");
+					}
+					sipDomain = userCreds.getSipDomain();
 
-                if (cacheTime != 0) {
-                    String callId = challengedRequest.getCallId().getCallId();
-                    cachedCredentials.cacheAuthorizationHeader(callId,
-                            authorization, cacheTime);
-                }
-                reoriginatedRequest.addHeader(authorization);
-            }
+					// we haven't yet authenticated this realm since we were
+					// started.
 
-           
-            if ( logger.isLoggingEnabled(LogWriter.TRACE_DEBUG)) {
-                logger.logDebug(
-                        "Returning authorization transaction." + retryTran);
-            }
-          
-            return retryTran;
-        } catch (SipException ex) {
-            throw ex;
-        } catch (Exception ex) {
-            logger.logError("Unexpected exception ", ex);
-            throw new SipException("Unexpected exception ", ex);
-        }
-    }
-    
-    
-   
+					authorization = this.getAuthorization(reoriginatedRequest.getMethod(), reoriginatedRequest.getRequestURI().toString(), (reoriginatedRequest.getContent() == null) ? "" : new String(reoriginatedRequest.getRawContent()), authHeader, userCreds);
+				}
 
-    /**
-     * Generates an authorisation header in response to wwwAuthHeader.
-     *
-     * @param method method of the request being authenticated
-     * @param uri digest-uri
-     * @param requestBody the body of the request.
-     * @param authHeader the challenge that we should respond to
-     * @param userCredentials username and pass
-     *
-     * @return an authorisation header in response to authHeader.
-     *
-     * @throws OperationFailedException if auth header was malformated.
-     */
-    private AuthorizationHeader getAuthorization(String method, String uri, String requestBody,
-            WWWAuthenticateHeader authHeader, UserCredentials userCredentials) {
-        String response = null;
+				if (logger.isLoggingEnabled(LogWriter.TRACE_DEBUG)) {
+					logger.logDebug("Created authorization header: " + authorization.toString());
+				}
 
-        // JvB: authHeader.getQop() is a quoted _list_ of qop values
-        // (e.g. "auth,auth-int") Client is supposed to pick one
-        String qopList = authHeader.getQop();
-        String qop = (qopList != null) ? "auth" : null;
-        String nc_value = "00000001";
-        String cnonce = "xyz";
+				if (cacheTime != 0) {
+					String callId = challengedRequest.getCallId().getCallId();
+					cachedCredentials.cacheAuthorizationHeader(callId, authorization, cacheTime);
+				}
+				reoriginatedRequest.addHeader(authorization);
+			}
 
-        response = MessageDigestAlgorithm.calculateResponse(authHeader.getAlgorithm(),
-                userCredentials.getUserName(), authHeader.getRealm(), userCredentials
-                        .getPassword(), authHeader.getNonce(), nc_value, // JvB added
-                cnonce, // JvB added
-                method, uri, requestBody, qop,logger);// jvb changed
+			if (logger.isLoggingEnabled(LogWriter.TRACE_DEBUG)) {
+				logger.logDebug("Returning authorization transaction." + retryTran);
+			}
 
-        AuthorizationHeader authorization = null;
-        try {
-            if (authHeader instanceof ProxyAuthenticateHeader) {
-                authorization = headerFactory.createProxyAuthorizationHeader(authHeader
-                        .getScheme());
-            } else {
-                authorization = headerFactory.createAuthorizationHeader(authHeader.getScheme());
-            }
+			return retryTran;
+		} catch (SipException ex) {
+			throw ex;
+		} catch (Exception ex) {
+			logger.logError("Unexpected exception ", ex);
+			throw new SipException("Unexpected exception ", ex);
+		}
+	}
 
-            authorization.setUsername(userCredentials.getUserName());
-            authorization.setRealm(authHeader.getRealm());
-            authorization.setNonce(authHeader.getNonce());
-            authorization.setParameter("uri", uri);
-            authorization.setResponse(response);
-            if (authHeader.getAlgorithm() != null) {
-                authorization.setAlgorithm(authHeader.getAlgorithm());
-            }
+	/**
+	 * Generates an authorisation header in response to wwwAuthHeader.
+	 *
+	 * @param method          method of the request being authenticated
+	 * @param uri             digest-uri
+	 * @param requestBody     the body of the request.
+	 * @param authHeader      the challenge that we should respond to
+	 * @param userCredentials username and pass
+	 *
+	 * @return an authorisation header in response to authHeader.
+	 *
+	 * @throws OperationFailedException if auth header was malformated.
+	 */
+	private AuthorizationHeader getAuthorization(String method, String uri, String requestBody, WWWAuthenticateHeader authHeader, UserCredentials userCredentials) {
+		String response = null;
 
-            if (authHeader.getOpaque() != null) {
-                authorization.setOpaque(authHeader.getOpaque());
-            }
+		// JvB: authHeader.getQop() is a quoted _list_ of qop values
+		// (e.g. "auth,auth-int") Client is supposed to pick one
+		String qopList = authHeader.getQop();
+		String qop = (qopList != null) ? "auth" : null;
+		String nc_value = "00000001";
+		String cnonce = "xyz";
 
-            // jvb added
-            if (qop != null) {
-                authorization.setQop(qop);
-                authorization.setCNonce(cnonce);
-                authorization.setNonceCount(Integer.parseInt(nc_value));
-            }
+		response = MessageDigestAlgorithm.calculateResponse(authHeader.getAlgorithm(), userCredentials.getUserName(), authHeader.getRealm(), userCredentials.getPassword(), authHeader.getNonce(), nc_value, // JvB added
+				cnonce, // JvB added
+				method, uri, requestBody, qop, logger);// jvb changed
 
-            authorization.setResponse(response);
+		AuthorizationHeader authorization = null;
+		try {
+			if (authHeader instanceof ProxyAuthenticateHeader) {
+				authorization = headerFactory.createProxyAuthorizationHeader(authHeader.getScheme());
+			} else {
+				authorization = headerFactory.createAuthorizationHeader(authHeader.getScheme());
+			}
 
-        } catch (ParseException ex) {
-            throw new RuntimeException("Failed to create an authorization header!");
-        }
+			authorization.setUsername(userCredentials.getUserName());
+			authorization.setRealm(authHeader.getRealm());
+			authorization.setNonce(authHeader.getNonce());
+			authorization.setParameter("uri", uri);
+			authorization.setResponse(response);
+			if (authHeader.getAlgorithm() != null) {
+				authorization.setAlgorithm(authHeader.getAlgorithm());
+			}
 
-        return authorization;
-    }
-    /**
-     * Generates an authorisation header in response to wwwAuthHeader.
-     *
-     * @param method method of the request being authenticated
-     * @param uri digest-uri
-     * @param requestBody the body of the request.
-     * @param authHeader the challenge that we should respond to
-     * @param userCredentials username and pass
-     *
-     * @return an authorisation header in response to authHeader.
-     *
-     * @throws OperationFailedException if auth header was malformated.
-     */
-    private AuthorizationHeader getAuthorization(String method, String uri, String requestBody,
-            WWWAuthenticateHeader authHeader, UserCredentialHash userCredentials) {
-        String response = null;
+			if (authHeader.getOpaque() != null) {
+				authorization.setOpaque(authHeader.getOpaque());
+			}
 
-        // JvB: authHeader.getQop() is a quoted _list_ of qop values
-        // (e.g. "auth,auth-int") Client is supposed to pick one
-        String qopList = authHeader.getQop();
-        String qop = (qopList != null) ? "auth" : null;
-        String nc_value = "00000001";
-        String cnonce = "xyz";
+			// jvb added
+			if (qop != null) {
+				authorization.setQop(qop);
+				authorization.setCNonce(cnonce);
+				authorization.setNonceCount(Integer.parseInt(nc_value));
+			}
 
-        response = MessageDigestAlgorithm.calculateResponse(authHeader.getAlgorithm(),
-              userCredentials.getHashUserDomainPassword(), authHeader.getNonce(), nc_value, // JvB added
-                cnonce, // JvB added
-                method, uri, requestBody, qop,logger);// jvb changed
+			authorization.setResponse(response);
 
-        AuthorizationHeader authorization = null;
-        try {
-            if (authHeader instanceof ProxyAuthenticateHeader) {
-                authorization = headerFactory.createProxyAuthorizationHeader(authHeader
-                        .getScheme());
-            } else {
-                authorization = headerFactory.createAuthorizationHeader(authHeader.getScheme());
-            }
+		} catch (ParseException ex) {
+			throw new RuntimeException("Failed to create an authorization header!");
+		}
 
-            authorization.setUsername(userCredentials.getUserName());
-            authorization.setRealm(authHeader.getRealm());
-            authorization.setNonce(authHeader.getNonce());
-            authorization.setParameter("uri", uri);
-            authorization.setResponse(response);
-            if (authHeader.getAlgorithm() != null) {
-                authorization.setAlgorithm(authHeader.getAlgorithm());
-            }
+		return authorization;
+	}
 
-            if (authHeader.getOpaque() != null) {
-                authorization.setOpaque(authHeader.getOpaque());
-            }
+	/**
+	 * Generates an authorisation header in response to wwwAuthHeader.
+	 *
+	 * @param method          method of the request being authenticated
+	 * @param uri             digest-uri
+	 * @param requestBody     the body of the request.
+	 * @param authHeader      the challenge that we should respond to
+	 * @param userCredentials username and pass
+	 *
+	 * @return an authorisation header in response to authHeader.
+	 *
+	 * @throws OperationFailedException if auth header was malformated.
+	 */
+	private AuthorizationHeader getAuthorization(String method, String uri, String requestBody, WWWAuthenticateHeader authHeader, UserCredentialHash userCredentials) {
+		String response = null;
 
-            // jvb added
-            if (qop != null) {
-                authorization.setQop(qop);
-                authorization.setCNonce(cnonce);
-                authorization.setNonceCount(Integer.parseInt(nc_value));
-            }
+		// JvB: authHeader.getQop() is a quoted _list_ of qop values
+		// (e.g. "auth,auth-int") Client is supposed to pick one
+		String qopList = authHeader.getQop();
+		String qop = (qopList != null) ? "auth" : null;
+		String nc_value = "00000001";
+		String cnonce = "xyz";
 
-            authorization.setResponse(response);
+		response = MessageDigestAlgorithm.calculateResponse(authHeader.getAlgorithm(), userCredentials.getHashUserDomainPassword(), authHeader.getNonce(), nc_value, // JvB added
+				cnonce, // JvB added
+				method, uri, requestBody, qop, logger);// jvb changed
 
-        } catch (ParseException ex) {
-            throw new RuntimeException("Failed to create an authorization header!");
-        }
+		AuthorizationHeader authorization = null;
+		try {
+			if (authHeader instanceof ProxyAuthenticateHeader) {
+				authorization = headerFactory.createProxyAuthorizationHeader(authHeader.getScheme());
+			} else {
+				authorization = headerFactory.createAuthorizationHeader(authHeader.getScheme());
+			}
 
-        return authorization;
-    }
-    /**
-     * Removes all via headers from <tt>request</tt> and replaces them with a new one, equal to
-     * the one that was top most.
-     *
-     * @param request the Request whose branchID we'd like to remove.
-     *
-     */
-    private void removeBranchID(Request request) {
+			authorization.setUsername(userCredentials.getUserName());
+			authorization.setRealm(authHeader.getRealm());
+			authorization.setNonce(authHeader.getNonce());
+			authorization.setParameter("uri", uri);
+			authorization.setResponse(response);
+			if (authHeader.getAlgorithm() != null) {
+				authorization.setAlgorithm(authHeader.getAlgorithm());
+			}
 
-        ViaHeader viaHeader = (ViaHeader) request.getHeader(ViaHeader.NAME);
+			if (authHeader.getOpaque() != null) {
+				authorization.setOpaque(authHeader.getOpaque());
+			}
 
-        viaHeader.removeParameter("branch");
+			// jvb added
+			if (qop != null) {
+				authorization.setQop(qop);
+				authorization.setCNonce(cnonce);
+				authorization.setNonceCount(Integer.parseInt(nc_value));
+			}
 
-    }
+			authorization.setResponse(response);
 
-    /*
-     * (non-Javadoc)
-     *
-     * @see gov.nist.javax.sip.clientauthutils.AuthenticationHelper#attachAuthenticationHeaders(javax.sip.message.Request)
-     */
-    public void setAuthenticationHeaders(Request request) {
-        SIPRequest sipRequest = (SIPRequest) request;
+		} catch (ParseException ex) {
+			throw new RuntimeException("Failed to create an authorization header!");
+		}
 
-        String callId = sipRequest.getCallId().getCallId();
+		return authorization;
+	}
 
-        request.removeHeader(AuthorizationHeader.NAME);
-        Collection<AuthorizationHeader> authHeaders = this.cachedCredentials
-                .getCachedAuthorizationHeaders(callId);
-        if (authHeaders == null) {
-        	if (logger.isLoggingEnabled(LogWriter.TRACE_DEBUG)) 
-        		logger.logDebug(
-                    "Could not find authentication headers for " + callId);
-            return;
-        }
+	/**
+	 * Removes all via headers from <tt>request</tt> and replaces them with a new one, equal to the one that was top most.
+	 *
+	 * @param request the Request whose branchID we'd like to remove.
+	 *
+	 */
+	private void removeBranchID(Request request) {
 
-        for (AuthorizationHeader authHeader : authHeaders) {
-            request.addHeader(authHeader);
-        }
+		ViaHeader viaHeader = (ViaHeader) request.getHeader(ViaHeader.NAME);
 
-    }
+		viaHeader.removeParameter("branch");
 
-    /*
-     * (non-Javadoc)
-     *
-     * @see gov.nist.javax.sip.clientauthutils.AuthenticationHelper#removeCachedAuthenticationHeaders(java.lang.String)
-     */
-    public void removeCachedAuthenticationHeaders(String callId) {
-        if (callId == null)
-            throw new NullPointerException("Null callId argument ");
-        this.cachedCredentials.removeAuthenticationHeader(callId);
+	}
 
-    }
+	/*
+	 * (non-Javadoc)
+	 *
+	 * @see gov.nist.javax.sip.clientauthutils.AuthenticationHelper#attachAuthenticationHeaders(javax.sip.message.Request)
+	 */
+	public void setAuthenticationHeaders(Request request) {
+		SIPRequest sipRequest = (SIPRequest) request;
+
+		String callId = sipRequest.getCallId().getCallId();
+
+		request.removeHeader(AuthorizationHeader.NAME);
+		Collection<AuthorizationHeader> authHeaders = this.cachedCredentials.getCachedAuthorizationHeaders(callId);
+		if (authHeaders == null) {
+			if (logger.isLoggingEnabled(LogWriter.TRACE_DEBUG))
+				logger.logDebug("Could not find authentication headers for " + callId);
+			return;
+		}
+
+		for (AuthorizationHeader authHeader : authHeaders) {
+			request.addHeader(authHeader);
+		}
+
+	}
+
+	/*
+	 * (non-Javadoc)
+	 *
+	 * @see gov.nist.javax.sip.clientauthutils.AuthenticationHelper#removeCachedAuthenticationHeaders(java.lang.String)
+	 */
+	public void removeCachedAuthenticationHeaders(String callId) {
+		if (callId == null)
+			throw new NullPointerException("Null callId argument ");
+		this.cachedCredentials.removeAuthenticationHeader(callId);
+
+	}
 
 }

@@ -54,149 +54,130 @@ import gov.nist.javax.sip.SipStackImpl;
  */
 public class DefaultNetworkLayer implements NetworkLayer {
 
-    private SSLSocketFactory sslSocketFactory;
+	private SSLSocketFactory sslSocketFactory;
 
-    private SSLServerSocketFactory sslServerSocketFactory;
+	private SSLServerSocketFactory sslServerSocketFactory;
 
-    /**
-     * single default network layer; for flexibility, it may be better not to
-     * make it a singleton, but singleton seems to make sense currently.
-     */
-    public static final DefaultNetworkLayer SINGLETON = new DefaultNetworkLayer();
+	/**
+	 * single default network layer; for flexibility, it may be better not to make it a singleton, but singleton seems to make sense currently.
+	 */
+	public static final DefaultNetworkLayer SINGLETON = new DefaultNetworkLayer();
 
-    private DefaultNetworkLayer() {
-        sslServerSocketFactory = (SSLServerSocketFactory) SSLServerSocketFactory
-                .getDefault();
-        sslSocketFactory = (SSLSocketFactory) SSLSocketFactory.getDefault();
-    }
+	private DefaultNetworkLayer() {
+		sslServerSocketFactory = (SSLServerSocketFactory) SSLServerSocketFactory.getDefault();
+		sslSocketFactory = (SSLSocketFactory) SSLSocketFactory.getDefault();
+	}
 
-    public ServerSocket createServerSocket(int port, int backlog,
-            InetAddress bindAddress) throws IOException {
-        return new ServerSocket(port, backlog, bindAddress);
-    }
+	public ServerSocket createServerSocket(int port, int backlog, InetAddress bindAddress) throws IOException {
+		return new ServerSocket(port, backlog, bindAddress);
+	}
 
-    public Socket createSocket(InetAddress address, int port)
-            throws IOException {
-        return new Socket(address, port);
-    }
+	public Socket createSocket(InetAddress address, int port) throws IOException {
+		return new Socket(address, port);
+	}
 
-    public DatagramSocket createDatagramSocket() throws SocketException {
-        return new DatagramSocket();
-    }
+	public DatagramSocket createDatagramSocket() throws SocketException {
+		return new DatagramSocket();
+	}
 
-    public DatagramSocket createDatagramSocket(int port, InetAddress laddr)
-            throws SocketException {
+	public DatagramSocket createDatagramSocket(int port, InetAddress laddr) throws SocketException {
 
-        if ( laddr.isMulticastAddress() ) {
-            try {
-                MulticastSocket ds = new MulticastSocket( port );
-                ds.joinGroup( laddr );
-                return ds;
-            } catch (IOException e) {
-                throw new SocketException( e.getLocalizedMessage() );
-            }
-        } else return new DatagramSocket(port, laddr);
-    }
+		if (laddr.isMulticastAddress()) {
+			try {
+				MulticastSocket ds = new MulticastSocket(port);
+				ds.joinGroup(laddr);
+				return ds;
+			} catch (IOException e) {
+				throw new SocketException(e.getLocalizedMessage());
+			}
+		} else
+			return new DatagramSocket(port, laddr);
+	}
 
-    /* Added by Daniel J. Martinez Manzano <dani@dif.um.es> */
-    public SSLServerSocket createSSLServerSocket(int port, int backlog,
-            InetAddress bindAddress) throws IOException {
-        return (SSLServerSocket) sslServerSocketFactory.createServerSocket(
-                port, backlog, bindAddress);
-    }
+	/* Added by Daniel J. Martinez Manzano <dani@dif.um.es> */
+	public SSLServerSocket createSSLServerSocket(int port, int backlog, InetAddress bindAddress) throws IOException {
+		return (SSLServerSocket) sslServerSocketFactory.createServerSocket(port, backlog, bindAddress);
+	}
 
-    /* Added by Daniel J. Martinez Manzano <dani@dif.um.es> */
-    public SSLSocket createSSLSocket(InetAddress address, int port)
-    	throws IOException {
-    	return createSSLSocket(address, port, null);
-    }
+	/* Added by Daniel J. Martinez Manzano <dani@dif.um.es> */
+	public SSLSocket createSSLSocket(InetAddress address, int port) throws IOException {
+		return createSSLSocket(address, port, null);
+	}
 
-    /* Added by Daniel J. Martinez Manzano <dani@dif.um.es> */
-    public SSLSocket createSSLSocket(InetAddress address, int port,
-            InetAddress myAddress) throws IOException {
-    	SSLSocket sock = (SSLSocket) sslSocketFactory.createSocket();
-    	if (myAddress != null) {
-    		// trying to bind to the correct ipaddress (in case of multiple vip addresses by example)
-    		// and let the JDK pick an ephemeral port
-    		sock.bind(new InetSocketAddress(myAddress, 0));
-    	}
-    	try {
-    		sock.connect(new InetSocketAddress(address, port), 8000);
-    	} catch (SocketTimeoutException e) {
-    		throw new ConnectException("Socket timeout error (8sec)" + address + ":" + port);
-    	}
-    	return sock;
-    }
+	/* Added by Daniel J. Martinez Manzano <dani@dif.um.es> */
+	public SSLSocket createSSLSocket(InetAddress address, int port, InetAddress myAddress) throws IOException {
+		SSLSocket sock = (SSLSocket) sslSocketFactory.createSocket();
+		if (myAddress != null) {
+			// trying to bind to the correct ipaddress (in case of multiple vip addresses by example)
+			// and let the JDK pick an ephemeral port
+			sock.bind(new InetSocketAddress(myAddress, 0));
+		}
+		try {
+			sock.connect(new InetSocketAddress(address, port), 8000);
+		} catch (SocketTimeoutException e) {
+			throw new ConnectException("Socket timeout error (8sec)" + address + ":" + port);
+		}
+		return sock;
+	}
 
-    public Socket createSocket(InetAddress address, int port,
-            InetAddress myAddress) throws IOException {
-    	if (myAddress != null) {
-        	Socket sock = new Socket();
-        	// http://java.net/jira/browse/JSIP-440 trying to bind to the correct ipaddress (in case of multiple vip addresses by example)
-        	// and let the JDK pick an ephemeral port
-        	sock.bind(new InetSocketAddress(myAddress, 0));
-        	try {
-	        	sock.connect(new InetSocketAddress(address, port), 8000);
-	        } catch (SocketTimeoutException e) {
-	        	throw new ConnectException("Socket timeout error (8sec)" + address + ":" + port);
-	        }
-        	return sock;
-        }
-        else {
-        	Socket sock =  new Socket();
-        	try {
-        		sock.connect(new InetSocketAddress(address, port), 8000);
-        	} catch (SocketTimeoutException e) {
-        		throw new ConnectException("Socket timeout error (8sec)" + address + ":" + port);
-        	}
-        	return sock;
-        }
-    }
+	public Socket createSocket(InetAddress address, int port, InetAddress myAddress) throws IOException {
+		if (myAddress != null) {
+			Socket sock = new Socket();
+			// http://java.net/jira/browse/JSIP-440 trying to bind to the correct ipaddress (in case of multiple vip addresses by example)
+			// and let the JDK pick an ephemeral port
+			sock.bind(new InetSocketAddress(myAddress, 0));
+			try {
+				sock.connect(new InetSocketAddress(address, port), 8000);
+			} catch (SocketTimeoutException e) {
+				throw new ConnectException("Socket timeout error (8sec)" + address + ":" + port);
+			}
+			return sock;
+		} else {
+			Socket sock = new Socket();
+			try {
+				sock.connect(new InetSocketAddress(address, port), 8000);
+			} catch (SocketTimeoutException e) {
+				throw new ConnectException("Socket timeout error (8sec)" + address + ":" + port);
+			}
+			return sock;
+		}
+	}
 
-    /**
-     * Creates a new Socket, binds it to myAddress:myPort and connects it to
-     * address:port.
-     *
-     * @param address the InetAddress that we'd like to connect to.
-     * @param port the port that we'd like to connect to
-     * @param myAddress the address that we are supposed to bind on or null
-     *        for the "any" address.
-     * @param myPort the port that we are supposed to bind on or 0 for a random
-     * one.
-     *
-     * @return a new Socket, bound on myAddress:myPort and connected to
-     * address:port.
-     * @throws IOException if binding or connecting the socket fail for a reason
-     * (exception relayed from the correspoonding Socket methods)
-     */
-    public Socket createSocket(InetAddress address, int port,
-                    InetAddress myAddress, int myPort)
-        throws IOException
-    {
-    	if (myAddress != null) {
-            Socket sock = new Socket();
-            // http://java.net/jira/browse/JSIP-440 trying to bind to the correct ipaddress (in case of multiple vip addresses by example)
-            // and let the JDK pick an ephemeral port
-            sock.bind(new InetSocketAddress(myAddress, 0));
-            try {
-                    sock.connect(new InetSocketAddress(address, port), 8000);
-            } catch (SocketTimeoutException e) {
-                    throw new ConnectException("Socket timeout error (8sec)" + address + ":" + port);
-            }
-            return sock;
-	    }
-	    else {
-	            Socket sock =  new Socket();
-	            if(myPort != 0) {
-	                    sock.bind(new InetSocketAddress(port));
-	            }
-	            try {
-	                    sock.connect(new InetSocketAddress(address, port), 8000);
-	            } catch (SocketTimeoutException e) {
-	                    throw new ConnectException("Socket timeout error (8sec)" + address + ":" + port);
-	            }
-	            return sock;
-	    }
+	/**
+	 * Creates a new Socket, binds it to myAddress:myPort and connects it to address:port.
+	 *
+	 * @param address   the InetAddress that we'd like to connect to.
+	 * @param port      the port that we'd like to connect to
+	 * @param myAddress the address that we are supposed to bind on or null for the "any" address.
+	 * @param myPort    the port that we are supposed to bind on or 0 for a random one.
+	 *
+	 * @return a new Socket, bound on myAddress:myPort and connected to address:port.
+	 * @throws IOException if binding or connecting the socket fail for a reason (exception relayed from the correspoonding Socket methods)
+	 */
+	public Socket createSocket(InetAddress address, int port, InetAddress myAddress, int myPort) throws IOException {
+		if (myAddress != null) {
+			Socket sock = new Socket();
+			// http://java.net/jira/browse/JSIP-440 trying to bind to the correct ipaddress (in case of multiple vip addresses by example)
+			// and let the JDK pick an ephemeral port
+			sock.bind(new InetSocketAddress(myAddress, 0));
+			try {
+				sock.connect(new InetSocketAddress(address, port), 8000);
+			} catch (SocketTimeoutException e) {
+				throw new ConnectException("Socket timeout error (8sec)" + address + ":" + port);
+			}
+			return sock;
+		} else {
+			Socket sock = new Socket();
+			if (myPort != 0) {
+				sock.bind(new InetSocketAddress(port));
+			}
+			try {
+				sock.connect(new InetSocketAddress(address, port), 8000);
+			} catch (SocketTimeoutException e) {
+				throw new ConnectException("Socket timeout error (8sec)" + address + ":" + port);
+			}
+			return sock;
+		}
 //    if (myAddress != null)
 //        return new Socket(address, port, myAddress, myPort);
 //    else if (port != 0)
@@ -209,9 +190,10 @@ public class DefaultNetworkLayer implements NetworkLayer {
 //    }
 //    else
 //        return new Socket(address, port);
-    }
+	}
 
 	@Override
-	public void setSipStack(SipStackImpl sipStackImpl) {}
+	public void setSipStack(SipStackImpl sipStackImpl) {
+	}
 
 }

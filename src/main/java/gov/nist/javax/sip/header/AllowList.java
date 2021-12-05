@@ -39,79 +39,77 @@ import javax.sip.header.AllowHeader;
 /**
  * List of ALLOW headers. The sip message can have multiple Allow headers
  *
- * @author M. Ranganathan  <br/>
+ * @author M. Ranganathan <br/>
  * @version 1.2 $Revision: 1.7 $ $Date: 2009-07-17 18:57:26 $
  * @since 1.1
  *
  */
 public class AllowList extends SIPHeaderList<Allow> {
 
+	/**
+	 * Comment for <code>serialVersionUID</code>
+	 */
+	private static final long serialVersionUID = -4699795429662562358L;
 
-    /**
-     * Comment for <code>serialVersionUID</code>
-     */
-    private static final long serialVersionUID = -4699795429662562358L;
+	public Object clone() {
+		AllowList retval = new AllowList();
+		retval.clonehlist(this.hlist);
+		return retval;
+	}
 
+	/**
+	 * default constructor
+	 */
+	public AllowList() {
+		super(Allow.class, AllowHeader.NAME);
+	}
 
-    public Object clone() {
-        AllowList retval = new AllowList();
-        retval.clonehlist(this.hlist);
-        return retval;
-    }
+	/**
+	 * Gets an Iterator of all the methods of the AllowHeader. Returns an empty
+	 *
+	 * Iterator if no methods are defined in this Allow Header.
+	 *
+	 *
+	 *
+	 * @return Iterator of String objects each identifing the methods of
+	 *
+	 *         AllowHeader.
+	 *
+	 *
+	 */
+	public ListIterator<String> getMethods() {
 
+		LinkedList<String> ll = new LinkedList<String>();
 
-    /** default constructor
-     */
-    public AllowList() {
-        super(Allow.class, AllowHeader.NAME);
-    }
+		for (Iterator<Allow> it = this.hlist.iterator(); it.hasNext();) {
+			Allow a = (Allow) it.next();
+			ll.add(a.getMethod());
+		}
 
-    /**
-     * Gets an Iterator of all the methods of the AllowHeader. Returns an empty
-     *
-     * Iterator if no methods are defined in this Allow Header.
-     *
-     *
-     *
-     * @return Iterator of String objects each identifing the methods of
-     *
-     * AllowHeader.
-     *
-     *
-     */
-    public ListIterator<String> getMethods() {
+		return ll.listIterator();
+	}
 
-        LinkedList<String> ll = new LinkedList<String> ();
-
-        for ( Iterator<Allow> it = this.hlist.iterator(); it.hasNext();) {
-            Allow a = (Allow)it.next();
-            ll.add(a.getMethod());
-        }
-
-        return ll.listIterator();
-    }
-
-    /**
-     * Sets the methods supported defined by this AllowHeader.
-     *
-     *
-     *
-     * @param methods - the Iterator of Strings defining the methods supported
-     *
-     * in this AllowHeader
-     *
-     * @throws ParseException which signals that an error has been reached
-     *
-     * unexpectedly while parsing the Strings defining the methods supported.
-     *
-     *
-     */
-    public void setMethods(List<String> methods) throws ParseException {
-        ListIterator<String> it = methods.listIterator();
-        while (it.hasNext()) {
-            Allow allow = new Allow();
-            allow.setMethod((String) it.next());
-            this.add(allow);
-        }
-    }
+	/**
+	 * Sets the methods supported defined by this AllowHeader.
+	 *
+	 *
+	 *
+	 * @param methods - the Iterator of Strings defining the methods supported
+	 *
+	 *                in this AllowHeader
+	 *
+	 * @throws ParseException which signals that an error has been reached
+	 *
+	 *                        unexpectedly while parsing the Strings defining the methods supported.
+	 *
+	 *
+	 */
+	public void setMethods(List<String> methods) throws ParseException {
+		ListIterator<String> it = methods.listIterator();
+		while (it.hasNext()) {
+			Allow allow = new Allow();
+			allow.setMethod((String) it.next());
+			this.add(allow);
+		}
+	}
 }

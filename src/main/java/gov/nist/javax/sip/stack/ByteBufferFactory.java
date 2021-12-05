@@ -32,38 +32,36 @@ import gov.nist.core.LogWriter;
 import gov.nist.core.StackLogger;
 
 /**
- * Contributed by Alexander Saveliev, Avistar Communications for Issue http://java.net/jira/browse/JSIP-430
- * Allows to choose between direct vs non direct buffers
+ * Contributed by Alexander Saveliev, Avistar Communications for Issue http://java.net/jira/browse/JSIP-430 Allows to choose between direct vs non direct buffers
  * 
  */
 public class ByteBufferFactory {
 
-    private static StackLogger logger = CommonLogger.getLogger(ByteBufferFactory.class);
+	private static StackLogger logger = CommonLogger.getLogger(ByteBufferFactory.class);
 
-    private static ByteBufferFactory instance = new ByteBufferFactory();
+	private static ByteBufferFactory instance = new ByteBufferFactory();
 
-    private boolean useDirect = true;
+	private boolean useDirect = true;
 
-    public static ByteBufferFactory getInstance() {
-        return instance;
-    }
+	public static ByteBufferFactory getInstance() {
+		return instance;
+	}
 
-    public ByteBuffer allocateDirect(int capacity) {
-        if (logger.isLoggingEnabled(LogWriter.TRACE_DEBUG))
-            logger.logTrace("Allocating direct buffer " + capacity);
-        return useDirect ? ByteBuffer.allocateDirect(capacity) : ByteBuffer.allocate(capacity);
-    }
+	public ByteBuffer allocateDirect(int capacity) {
+		if (logger.isLoggingEnabled(LogWriter.TRACE_DEBUG))
+			logger.logTrace("Allocating direct buffer " + capacity);
+		return useDirect ? ByteBuffer.allocateDirect(capacity) : ByteBuffer.allocate(capacity);
+	}
 
-    public ByteBuffer allocate(int capacity) {
-        if (logger.isLoggingEnabled(LogWriter.TRACE_DEBUG))
-            logger.logTrace("Allocating buffer " + capacity);
-        return ByteBuffer.allocate(capacity);
-    }
+	public ByteBuffer allocate(int capacity) {
+		if (logger.isLoggingEnabled(LogWriter.TRACE_DEBUG))
+			logger.logTrace("Allocating buffer " + capacity);
+		return ByteBuffer.allocate(capacity);
+	}
 
-
-    public void setUseDirect(boolean useDirect) {
-        if (logger.isLoggingEnabled(LogWriter.TRACE_DEBUG))
-            logger.logTrace("Direct buffers are " + (useDirect ? "enabled" : "disabled"));
-        this.useDirect = useDirect;
-    }
+	public void setUseDirect(boolean useDirect) {
+		if (logger.isLoggingEnabled(LogWriter.TRACE_DEBUG))
+			logger.logTrace("Direct buffers are " + (useDirect ? "enabled" : "disabled"));
+		this.useDirect = useDirect;
+	}
 }

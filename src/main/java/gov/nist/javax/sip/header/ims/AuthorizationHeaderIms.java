@@ -35,34 +35,27 @@ import java.text.ParseException;
 import javax.sip.InvalidArgumentException;
 import javax.sip.header.AuthorizationHeader;
 
-
 /**
  *
  * Extension to Authorization header (3GPP TS 24299-5d0)
  *
- * This extension defines a new auth-param for the Authorization header used
- * in REGISTER requests.
- * For more information, see RFC 2617 [21] subclause 3.2.2.
+ * This extension defines a new auth-param for the Authorization header used in REGISTER requests. For more information, see RFC 2617 [21] subclause 3.2.2.
  *
  * @author ALEXANDRE MIGUEL SILVA SANTOS
  */
 
-public interface AuthorizationHeaderIms extends AuthorizationHeader
-{
+public interface AuthorizationHeaderIms extends AuthorizationHeader {
 
-    // issued by Miguel Freitas (IT) PT-Inovacao
-    public static final String YES  = "yes";
-    public static final String NO   = "no";
+	// issued by Miguel Freitas (IT) PT-Inovacao
+	public static final String YES = "yes";
+	public static final String NO = "no";
 
+	/**
+	 * @param integrityProtected
+	 * @throws ParseException
+	 */
+	public void setIntegrityProtected(String integrityProtected) throws InvalidArgumentException, ParseException;
 
-
-    /**
-     * @param integrityProtected
-     * @throws ParseException
-     */
-    public void setIntegrityProtected(String integrityProtected) throws InvalidArgumentException, ParseException;
-
-
-    public String getIntegrityProtected();
+	public String getIntegrityProtected();
 
 }

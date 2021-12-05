@@ -27,7 +27,6 @@
  * PRODUCT OF PT INOVACAO - EST DEPARTMENT and Telecommunications Institute (Aveiro, Portugal)  *
  ************************************************************************************************/
 
-
 package gov.nist.javax.sip.parser.ims;
 
 import java.text.ParseException;
@@ -38,44 +37,30 @@ import gov.nist.javax.sip.header.ims.SecurityClientList;
 import gov.nist.javax.sip.parser.Lexer;
 import gov.nist.javax.sip.parser.TokenTypes;
 
+public class SecurityClientParser extends SecurityAgreeParser {
 
-public class SecurityClientParser extends SecurityAgreeParser
-{
+	public SecurityClientParser(String security) {
+		super(security);
+	}
 
-    public SecurityClientParser(String security)
-    {
-        super(security);
-    }
+	protected SecurityClientParser(Lexer lexer) {
+		super(lexer);
+	}
 
-    protected SecurityClientParser(Lexer lexer)
-    {
-        super(lexer);
-    }
+	public SIPHeader parse() throws ParseException {
+		if (debug)
+			dbg_enter("SecuriryClient parse");
+		try {
 
+			headerName(TokenTypes.SECURITY_CLIENT);
+			SecurityClient secClient = new SecurityClient();
+			SecurityClientList secClientList = (SecurityClientList) super.parse(secClient);
+			return secClientList;
 
-    public SIPHeader parse() throws ParseException
-    {
-    	if (debug)
-    		dbg_enter("SecuriryClient parse");
-        try {
-
-            headerName(TokenTypes.SECURITY_CLIENT);
-            SecurityClient secClient = new SecurityClient();
-            SecurityClientList secClientList =
-                (SecurityClientList) super.parse(secClient);
-            return secClientList;
-
-
-        } finally {
-        	if (debug)
-        		dbg_leave("SecuriryClient parse");
-        }
-    }
-
-
-
-
+		} finally {
+			if (debug)
+				dbg_leave("SecuriryClient parse");
+		}
+	}
 
 }
-
-

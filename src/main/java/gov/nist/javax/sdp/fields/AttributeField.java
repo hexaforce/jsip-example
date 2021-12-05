@@ -27,6 +27,7 @@
 * Product of NIST/ITL Advanced Networking Technologies Division (ANTD).        *
 *******************************************************************************/
 package gov.nist.javax.sdp.fields;
+
 import javax.sdp.SdpException;
 import javax.sdp.SdpParseException;
 
@@ -34,172 +35,186 @@ import gov.nist.core.NameValue;
 import gov.nist.core.Separators;
 
 /**
-* Attribute Field.
-*
-*@version  JSR141-PUBLIC-REVIEW (subject to change).
-*
-*@author Olivier Deruelle <deruelle@antd.nist.gov>
-*@author M. Ranganathan   <br/>
-*
-*
-*
-*/
+ * Attribute Field.
+ *
+ * @version JSR141-PUBLIC-REVIEW (subject to change).
+ *
+ * @author Olivier Deruelle <deruelle@antd.nist.gov>
+ * @author M. Ranganathan <br/>
+ *
+ *
+ *
+ */
 public class AttributeField extends SDPField implements javax.sdp.Attribute {
-    protected NameValue attribute;
+	protected NameValue attribute;
 
-    public NameValue getAttribute() {
-        return attribute;
-    }
+	public NameValue getAttribute() {
+		return attribute;
+	}
 
-    public AttributeField() {
-        super(ATTRIBUTE_FIELD);
-    }
-    /**
-    * Set the attribute member
-    */
-    public void setAttribute(NameValue a) {
-        attribute = a;
-        attribute.setSeparator(Separators.COLON);
-    }
+	public AttributeField() {
+		super(ATTRIBUTE_FIELD);
+	}
 
-    /**
-    *  Get the string encoded version of this object
-    * @since v1.0
-    */
-    public String encode() {
-        String encoded_string = ATTRIBUTE_FIELD;
-        if (attribute != null)
-            encoded_string += attribute.encode();
-        return encoded_string + Separators.NEWLINE;
-    }
+	/**
+	 * Set the attribute member
+	 */
+	public void setAttribute(NameValue a) {
+		attribute = a;
+		attribute.setSeparator(Separators.COLON);
+	}
 
-    public String toString() {
-        return this.encode();
-    }
+	/**
+	 * Get the string encoded version of this object
+	 * 
+	 * @since v1.0
+	 */
+	public String encode() {
+		String encoded_string = ATTRIBUTE_FIELD;
+		if (attribute != null)
+			encoded_string += attribute.encode();
+		return encoded_string + Separators.NEWLINE;
+	}
 
-    /** Returns the name of this attribute
-    * @throws SdpParseException if the name is not well formatted.
-    * @return a String identity or null.
-    */
-    public String getName() throws SdpParseException {
-        NameValue nameValue = getAttribute();
-        if (nameValue == null)
-            return null;
-        else {
-            String name = nameValue.getName();
-            if (name == null)
-                return null;
-            else
-                return name;
-        }
-    }
+	public String toString() {
+		return this.encode();
+	}
 
-    /** Sets the id of this attribute.
-     * @param name  the string name/id of the attribute.
-     * @throws SdpException if the name is null
-     */
-    public void setName(String name) throws SdpException {
-        if (name == null)
-            throw new SdpException("The name is null");
-        else {
-            NameValue nameValue = getAttribute();
-            if (nameValue == null)
-                nameValue = new NameValue();
-            nameValue.setName(name);
-            setAttribute(nameValue);
-        }
-    }
+	/**
+	 * Returns the name of this attribute
+	 * 
+	 * @throws SdpParseException if the name is not well formatted.
+	 * @return a String identity or null.
+	 */
+	public String getName() throws SdpParseException {
+		NameValue nameValue = getAttribute();
+		if (nameValue == null)
+			return null;
+		else {
+			String name = nameValue.getName();
+			if (name == null)
+				return null;
+			else
+				return name;
+		}
+	}
 
-    /** Determines if this attribute has an associated value.
-     * @throws SdpParseException if the value is not well formatted.
-     * @return true if the attribute has a value.
-     */
-    public boolean hasValue() throws SdpParseException {
-        NameValue nameValue = getAttribute();
-        if (nameValue == null)
-            return false;
-        else {
-            Object value = nameValue.getValueAsObject();
-            if (value == null)
-                return false;
-            else
-                return true;
-        }
-    }
+	/**
+	 * Sets the id of this attribute.
+	 * 
+	 * @param name the string name/id of the attribute.
+	 * @throws SdpException if the name is null
+	 */
+	public void setName(String name) throws SdpException {
+		if (name == null)
+			throw new SdpException("The name is null");
+		else {
+			NameValue nameValue = getAttribute();
+			if (nameValue == null)
+				nameValue = new NameValue();
+			nameValue.setName(name);
+			setAttribute(nameValue);
+		}
+	}
 
-    /** Returns the value of this attribute.
-     * @throws SdpParseException if the value is not well formatted.
-     * @return the value; null if the attribute has no associated value.
-     */
-    public String getValue() throws SdpParseException {
-        NameValue nameValue = getAttribute();
-        if (nameValue == null)
-            return null;
-        else {
-            Object value = nameValue.getValueAsObject();
-            if (value == null)
-                return null;
-            else if (value instanceof String)
-                return (String) value;
-            else
-                return value.toString();
-        }
-    }
+	/**
+	 * Determines if this attribute has an associated value.
+	 * 
+	 * @throws SdpParseException if the value is not well formatted.
+	 * @return true if the attribute has a value.
+	 */
+	public boolean hasValue() throws SdpParseException {
+		NameValue nameValue = getAttribute();
+		if (nameValue == null)
+			return false;
+		else {
+			Object value = nameValue.getValueAsObject();
+			if (value == null)
+				return false;
+			else
+				return true;
+		}
+	}
 
-    /** Sets the value of this attribute.
-     * @param value the - attribute value
-     * @throws SdpException if the value is null.
-     */
-    public void setValue(String value) throws SdpException {
-        if (value == null)
-            throw new SdpException("The value is null");
-        else {
-            NameValue nameValue = getAttribute();
-            if (nameValue == null)
-                nameValue = new NameValue();
-            nameValue.setValueAsObject(value);
-            setAttribute(nameValue);
-        }
-    }
+	/**
+	 * Returns the value of this attribute.
+	 * 
+	 * @throws SdpParseException if the value is not well formatted.
+	 * @return the value; null if the attribute has no associated value.
+	 */
+	public String getValue() throws SdpParseException {
+		NameValue nameValue = getAttribute();
+		if (nameValue == null)
+			return null;
+		else {
+			Object value = nameValue.getValueAsObject();
+			if (value == null)
+				return null;
+			else if (value instanceof String)
+				return (String) value;
+			else
+				return value.toString();
+		}
+	}
 
-    /**
-     * Allow for null value when setting the value.
-     *
-     * @param value -- can be null.
-     */
+	/**
+	 * Sets the value of this attribute.
+	 * 
+	 * @param value the - attribute value
+	 * @throws SdpException if the value is null.
+	 */
+	public void setValue(String value) throws SdpException {
+		if (value == null)
+			throw new SdpException("The value is null");
+		else {
+			NameValue nameValue = getAttribute();
+			if (nameValue == null)
+				nameValue = new NameValue();
+			nameValue.setValueAsObject(value);
+			setAttribute(nameValue);
+		}
+	}
 
-    public void setValueAllowNull(String value)  {
-        NameValue nameValue = getAttribute();
-        if (nameValue == null)
-            nameValue = new NameValue();
-        nameValue.setValueAsObject(value);
-        setAttribute(nameValue);
-    }
+	/**
+	 * Allow for null value when setting the value.
+	 *
+	 * @param value -- can be null.
+	 */
 
-    public Object clone() {
-        AttributeField retval = (AttributeField) super.clone();
-        if (this.attribute != null)
-            retval.attribute = (NameValue) this.attribute.clone();
-        return retval;
-    }
+	public void setValueAllowNull(String value) {
+		NameValue nameValue = getAttribute();
+		if (nameValue == null)
+			nameValue = new NameValue();
+		nameValue.setValueAsObject(value);
+		setAttribute(nameValue);
+	}
 
-    public boolean equals(Object that ) {
-        if ( ! (that instanceof AttributeField)) return false;
-        AttributeField other = (AttributeField) that;
-        boolean equalNames = other.getAttribute().getName().equalsIgnoreCase(this.getAttribute().getName());
-        boolean equalValues;
-        if(this.getAttribute().getValueAsObject() != null) {
-        	equalValues = this.getAttribute().getValueAsObject().equals(other.getAttribute().getValueAsObject());
-        } else {
-        	equalValues = (other.getAttribute().getValueAsObject() == null);
-        }
-        
-        return equalNames && equalValues;
-    }
-    
-    @Override
-    public int hashCode() {
-        if (getAttribute() == null ) throw new UnsupportedOperationException("Attribute is null cannot compute hashCode ");
-        return this.encode().hashCode();
-    }
+	public Object clone() {
+		AttributeField retval = (AttributeField) super.clone();
+		if (this.attribute != null)
+			retval.attribute = (NameValue) this.attribute.clone();
+		return retval;
+	}
+
+	public boolean equals(Object that) {
+		if (!(that instanceof AttributeField))
+			return false;
+		AttributeField other = (AttributeField) that;
+		boolean equalNames = other.getAttribute().getName().equalsIgnoreCase(this.getAttribute().getName());
+		boolean equalValues;
+		if (this.getAttribute().getValueAsObject() != null) {
+			equalValues = this.getAttribute().getValueAsObject().equals(other.getAttribute().getValueAsObject());
+		} else {
+			equalValues = (other.getAttribute().getValueAsObject() == null);
+		}
+
+		return equalNames && equalValues;
+	}
+
+	@Override
+	public int hashCode() {
+		if (getAttribute() == null)
+			throw new UnsupportedOperationException("Attribute is null cannot compute hashCode ");
+		return this.encode().hashCode();
+	}
 }

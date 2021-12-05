@@ -31,12 +31,9 @@ import gov.nist.javax.sip.parser.AllowEventsParser;
  */
 public class AllowEventsParserTest extends ParserTestCase {
 
-
-
-    public void testParser() {
-        String r[] = { "Allow-Events: pack1.pack2, pack3 , pack4\n",
-                "Allow-Events: pack1\n" /* empty not allowed */ };
-        super.testParser(AllowEventsParser.class,r);
-    }
+	public void testParser() {
+		String r[] = { "Allow-Events: pack1.pack2, pack3 , pack4\n", "Allow-Events: pack1\n" /* empty not allowed */ };
+		super.testParser(AllowEventsParser.class, r);
+	}
 
 }

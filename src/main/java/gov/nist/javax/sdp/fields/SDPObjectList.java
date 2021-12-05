@@ -27,6 +27,7 @@
 * Product of NIST/ITL Advanced Networking Technologies Division (ANTD).        *
 *******************************************************************************/
 package gov.nist.javax.sdp.fields;
+
 import java.util.Iterator;
 
 import gov.nist.core.GenericObject;
@@ -34,84 +35,70 @@ import gov.nist.core.GenericObjectList;
 import gov.nist.core.PackageNames;
 
 public class SDPObjectList extends GenericObjectList {
-    protected static final String SDPFIELDS_PACKAGE =
-        PackageNames.SDP_PACKAGE + ".fields";
+	protected static final String SDPFIELDS_PACKAGE = PackageNames.SDP_PACKAGE + ".fields";
 
-    /**
-     * Do a merge of the GenericObjects contained in this list with the
-     * GenericObjects in the mergeList. Note that this does an inplace
-     * modification of the given list. This does an object by object
-     * merge of the given objects.
-     *
-     *@param mergeList is the list of Generic objects that we want to do
-     * an object by object merge with. Note that no new objects are
-     * added to this list.
-     *
-     */
+	/**
+	 * Do a merge of the GenericObjects contained in this list with the GenericObjects in the mergeList. Note that this does an inplace modification of the given list. This does an object by object merge of the given objects.
+	 *
+	 * @param mergeList is the list of Generic objects that we want to do an object by object merge with. Note that no new objects are added to this list.
+	 *
+	 */
 
-    public void mergeObjects(GenericObjectList mergeList) {
+	public void mergeObjects(GenericObjectList mergeList) {
 
-        Iterator<GenericObject> it1 = this.listIterator();
-        Iterator<GenericObject> it2 = mergeList.listIterator();
-        while (it1.hasNext()) {
-            GenericObject outerObj = (GenericObject) it1.next();
-            while (it2.hasNext()) {
-                Object innerObj = it2.next();
-                outerObj.merge(innerObj);
-            }
-        }
-    }
+		Iterator<GenericObject> it1 = this.listIterator();
+		Iterator<GenericObject> it2 = mergeList.listIterator();
+		while (it1.hasNext()) {
+			GenericObject outerObj = (GenericObject) it1.next();
+			while (it2.hasNext()) {
+				Object innerObj = it2.next();
+				outerObj.merge(innerObj);
+			}
+		}
+	}
 
-    /**
-     * Add an sdp object to this list.
-     */
-    public void add(SDPObject s) {
-        super.add(s);
-    }
+	/**
+	 * Add an sdp object to this list.
+	 */
+	public void add(SDPObject s) {
+		super.add(s);
+	}
 
-    /**
-     * Get the input text of the sdp object (from which the object was
-     * generated).
-     */
+	/**
+	 * Get the input text of the sdp object (from which the object was generated).
+	 */
 
-    public SDPObjectList(String lname, String classname) {
-        super(lname, classname);
-    }
+	public SDPObjectList(String lname, String classname) {
+		super(lname, classname);
+	}
 
-    public SDPObjectList() {
-        super(null, SDPObject.class);
-    }
+	public SDPObjectList() {
+		super(null, SDPObject.class);
+	}
 
-    public SDPObjectList(String lname) {
-        super(lname, SDPFIELDS_PACKAGE + ".SDPObject");
-    }
+	public SDPObjectList(String lname) {
+		super(lname, SDPFIELDS_PACKAGE + ".SDPObject");
+	}
 
-    public GenericObject first() {
-        return (SDPObject) super.first();
-    }
+	public GenericObject first() {
+		return (SDPObject) super.first();
+	}
 
-    public GenericObject next() {
-        return (SDPObject) super.next();
-    }
+	public GenericObject next() {
+		return (SDPObject) super.next();
+	}
 
+	public String encode() {
+		StringBuilder retval = new StringBuilder();
+		SDPObject sdpObject;
+		for (sdpObject = (SDPObject) this.first(); sdpObject != null; sdpObject = (SDPObject) this.next()) {
+			retval.append(sdpObject.encode());
+		}
+		return retval.toString();
+	}
 
-
-    public String encode() {
-        StringBuilder retval = new StringBuilder();
-        SDPObject sdpObject;
-        for (sdpObject = (SDPObject) this.first();
-            sdpObject != null;
-            sdpObject = (SDPObject) this.next()) {
-            retval.append (sdpObject.encode());
-        }
-        return retval.toString();
-    }
-
-    public String toString() {
-        return this.encode();
-    }
-    
-
+	public String toString() {
+		return this.encode();
+	}
 
 }
-

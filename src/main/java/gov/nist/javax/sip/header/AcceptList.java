@@ -25,12 +25,13 @@
 * Product of NIST/ITL Advanced Networking Technologies Division (ANTD).        *
 *******************************************************************************/
 package gov.nist.javax.sip.header;
+
 import javax.sip.header.AcceptHeader;
 
 /**
- * Accept List of  SIP headers.
+ * Accept List of SIP headers.
  *
- * @author M. Ranganathan   <br/>
+ * @author M. Ranganathan <br/>
  * @version 1.2 $Revision: 1.6 $ $Date: 2009-07-17 18:57:25 $
  *
  * @since 1.1
@@ -39,23 +40,23 @@ import javax.sip.header.AcceptHeader;
  */
 public class AcceptList extends SIPHeaderList<Accept> {
 
+	/**
+	 * Comment for <code>serialVersionUID</code>
+	 */
+	private static final long serialVersionUID = -1800813338560484831L;
 
-    /**
-     * Comment for <code>serialVersionUID</code>
-     */
-    private static final long serialVersionUID = -1800813338560484831L;
+	@Override
+	public Object clone() {
+		AcceptList retval = new AcceptList();
+		retval.clonehlist(this.hlist);
+		return retval;
+	}
 
-    @Override
-    public Object clone() {
-        AcceptList retval = new AcceptList();
-        retval.clonehlist(this.hlist);
-        return retval;
-    }
-    /**
-     * Default constructor
-     */
-    public AcceptList() {
-        super(Accept.class, AcceptHeader.NAME);
-    }
+	/**
+	 * Default constructor
+	 */
+	public AcceptList() {
+		super(Accept.class, AcceptHeader.NAME);
+	}
 
 }

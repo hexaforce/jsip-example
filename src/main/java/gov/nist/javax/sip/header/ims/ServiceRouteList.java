@@ -36,18 +36,18 @@ import gov.nist.javax.sip.header.SIPHeaderList;
 
 public class ServiceRouteList extends SIPHeaderList<ServiceRoute> {
 
+	private static final long serialVersionUID = -4264811439080938519L;
 
-    private static final long serialVersionUID = -4264811439080938519L;
+	/**
+	 * Default constructor
+	 */
+	public ServiceRouteList() {
+		super(ServiceRoute.class, ServiceRouteHeader.NAME);
+	}
 
-    /** Default constructor
-     */
-    public ServiceRouteList() {
-        super(ServiceRoute.class, ServiceRouteHeader.NAME);
-    }
-
-    public Object clone() {
-        ServiceRouteList retval = new ServiceRouteList();
-        return retval.clonehlist(this.hlist);
-    }
+	public Object clone() {
+		ServiceRouteList retval = new ServiceRouteList();
+		return retval.clonehlist(this.hlist);
+	}
 
 }

@@ -27,33 +27,34 @@
 * Product of NIST/ITL Advanced Networking Technologies Division (ANTD).        *
 *******************************************************************************/
 package gov.nist.javax.sip.header;
+
 import javax.sip.header.CallInfoHeader;
 
 /**
  * A list of CallInfo headers (there can be multiple in a message).
  *
- * @author M. Ranganathan   <br/>
+ * @author M. Ranganathan <br/>
  * @version 1.2 $Revision: 1.6 $ $Date: 2009-07-17 18:57:28 $
  * @since 1.1
  *
  */
 public class CallInfoList extends SIPHeaderList<CallInfo> {
 
+	/**
+	 * Comment for <code>serialVersionUID</code>
+	 */
+	private static final long serialVersionUID = -4949850334388806423L;
 
-    /**
-     * Comment for <code>serialVersionUID</code>
-     */
-    private static final long serialVersionUID = -4949850334388806423L;
+	public Object clone() {
+		CallInfoList retval = new CallInfoList();
+		retval.clonehlist(this.hlist);
+		return retval;
+	}
 
-    public Object clone() {
-        CallInfoList retval = new CallInfoList ();
-        retval.clonehlist(this.hlist);
-        return retval;
-    }
-    /**
-     * Default constructor
-     */
-    public CallInfoList() {
-        super(CallInfo.class, CallInfoHeader.NAME);
-    }
+	/**
+	 * Default constructor
+	 */
+	public CallInfoList() {
+		super(CallInfo.class, CallInfoHeader.NAME);
+	}
 }

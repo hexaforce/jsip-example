@@ -24,6 +24,7 @@
 *
 */
 package gov.nist.javax.sip.parser;
+
 import java.text.ParseException;
 
 import javax.sip.InvalidArgumentException;
@@ -42,7 +43,7 @@ import gov.nist.javax.sip.header.SIPHeader;
  * @author M. Ranganathan
  *
  *
- * <pre>
+ *         <pre>
  *
  *   The Accept-Encoding request-header field is similar to Accept, but
  *   restricts the content-codings (section 3.5) that are acceptable in
@@ -61,147 +62,112 @@ import gov.nist.javax.sip.header.SIPHeader;
  *       Accept-Encoding: *
  *       Accept-Encoding: compress;q=0.5, gzip;q=1.0
  *       Accept-Encoding: gzip;q=1.0, identity; q=0.5, *;q=0
- * </pre>
+ *         </pre>
  *
  */
 public class AcceptEncodingParser extends HeaderParser {
 
-    /**
-     * Constructor
-     * @param acceptEncoding message to parse
-     */
-    public AcceptEncodingParser(String acceptEncoding) {
-        super(acceptEncoding);
-    }
+	/**
+	 * Constructor
+	 * 
+	 * @param acceptEncoding message to parse
+	 */
+	public AcceptEncodingParser(String acceptEncoding) {
+		super(acceptEncoding);
+	}
 
-    /**
-     * Constructor
-     * @param lexer Lexer to set
-     */
-    protected AcceptEncodingParser(Lexer lexer) {
-        super(lexer);
-    }
+	/**
+	 * Constructor
+	 * 
+	 * @param lexer Lexer to set
+	 */
+	protected AcceptEncodingParser(Lexer lexer) {
+		super(lexer);
+	}
 
-    /**
-     * parse the String message
-     * @return SIPHeader (AcceptEncoding object)
-     * @throws ParseException if the message does not respect the spec.
-     */
-    public SIPHeader parse() throws ParseException {
-        AcceptEncodingList acceptEncodingList = new AcceptEncodingList();
-        if (debug)
-            dbg_enter("AcceptEncodingParser.parse");
+	/**
+	 * parse the String message
+	 * 
+	 * @return SIPHeader (AcceptEncoding object)
+	 * @throws ParseException if the message does not respect the spec.
+	 */
+	public SIPHeader parse() throws ParseException {
+		AcceptEncodingList acceptEncodingList = new AcceptEncodingList();
+		if (debug)
+			dbg_enter("AcceptEncodingParser.parse");
 
-        try {
-            headerName(TokenTypes.ACCEPT_ENCODING);
-            // empty body is fine for this header.
-            if (!lexer.startsId()) {
-                AcceptEncoding acceptEncoding = new AcceptEncoding();
-                acceptEncodingList.add(acceptEncoding);
-            } else {
-                do {
-                    AcceptEncoding acceptEncoding = new AcceptEncoding();
-                    if (lexer.startsId()) {
-                        Token value = lexer.match(TokenTypes.ID);
-                        acceptEncoding.setEncoding(value.getTokenValue());
+		try {
+			headerName(TokenTypes.ACCEPT_ENCODING);
+			// empty body is fine for this header.
+			if (!lexer.startsId()) {
+				AcceptEncoding acceptEncoding = new AcceptEncoding();
+				acceptEncodingList.add(acceptEncoding);
+			} else {
+				do {
+					AcceptEncoding acceptEncoding = new AcceptEncoding();
+					if (lexer.startsId()) {
+						Token value = lexer.match(TokenTypes.ID);
+						acceptEncoding.setEncoding(value.getTokenValue());
 
-	                    while (lexer.lookAhead(0) == ';') {
-	                        this.lexer.match(';');
-	                        this.lexer.SPorHT();
-	                        Token pname = lexer.match(TokenTypes.ID);	// JvB Also allows generic param!
-	                        this.lexer.SPorHT();
-	                        if ( lexer.lookAhead() == '=' ) {
-	                        	this.lexer.match('=');
-	                        	this.lexer.SPorHT();
-	                        	value = lexer.match(TokenTypes.ID);
-	                        	if ( pname.getTokenValue().equalsIgnoreCase("q")) {
-			                        try {
-			                            float qv = Float.parseFloat(value.getTokenValue());
-			                            acceptEncoding.setQValue(qv);
-			                        } catch (NumberFormatException ex) {
-			                            throw createParseException(ex.getMessage());
-			                        } catch (InvalidArgumentException ex) {
-			                            throw createParseException(ex.getMessage());
-			                        }
-	                        	} else {
-	                        		acceptEncoding.setParameter( pname.getTokenValue(), value.getTokenValue() );
-	                        	}
-		                        this.lexer.SPorHT();
-	                        } else acceptEncoding.setParameter( pname.getTokenValue(), "" );
-	                    }
-                    }
-                    acceptEncodingList.add(acceptEncoding);
-                    if (lexer.lookAhead(0) == ',') {
-                        this.lexer.match(',');
-                        this.lexer.SPorHT();
-                    } else break;
-                } while (true);
-            }
-            return acceptEncodingList;
-        } finally {
-            if (debug)
-                dbg_leave("AcceptEncodingParser.parse");
-        }
-    }
+						while (lexer.lookAhead(0) == ';') {
+							this.lexer.match(';');
+							this.lexer.SPorHT();
+							Token pname = lexer.match(TokenTypes.ID); // JvB Also allows generic param!
+							this.lexer.SPorHT();
+							if (lexer.lookAhead() == '=') {
+								this.lexer.match('=');
+								this.lexer.SPorHT();
+								value = lexer.match(TokenTypes.ID);
+								if (pname.getTokenValue().equalsIgnoreCase("q")) {
+									try {
+										float qv = Float.parseFloat(value.getTokenValue());
+										acceptEncoding.setQValue(qv);
+									} catch (NumberFormatException ex) {
+										throw createParseException(ex.getMessage());
+									} catch (InvalidArgumentException ex) {
+										throw createParseException(ex.getMessage());
+									}
+								} else {
+									acceptEncoding.setParameter(pname.getTokenValue(), value.getTokenValue());
+								}
+								this.lexer.SPorHT();
+							} else
+								acceptEncoding.setParameter(pname.getTokenValue(), "");
+						}
+					}
+					acceptEncodingList.add(acceptEncoding);
+					if (lexer.lookAhead(0) == ',') {
+						this.lexer.match(',');
+						this.lexer.SPorHT();
+					} else
+						break;
+				} while (true);
+			}
+			return acceptEncodingList;
+		} finally {
+			if (debug)
+				dbg_leave("AcceptEncodingParser.parse");
+		}
+	}
 }
 /*
- * $Log: not supported by cvs2svn $
- * Revision 1.6  2006/07/13 09:02:03  mranga
- * Issue number:
- * Obtained from:
- * Submitted by:  jeroen van bemmel
- * Reviewed by:   mranga
- * Moved some changes from jain-sip-1.2 to java.net
+ * $Log: not supported by cvs2svn $ Revision 1.6 2006/07/13 09:02:03 mranga Issue number: Obtained from: Submitted by: jeroen van bemmel Reviewed by: mranga Moved some changes from jain-sip-1.2 to java.net
  *
- * CVS: ----------------------------------------------------------------------
- * CVS: Issue number:
- * CVS:   If this change addresses one or more issues,
- * CVS:   then enter the issue number(s) here.
- * CVS: Obtained from:
- * CVS:   If this change has been taken from another system,
- * CVS:   then name the system in this line, otherwise delete it.
- * CVS: Submitted by:
- * CVS:   If this code has been contributed to the project by someone else; i.e.,
- * CVS:   they sent us a patch or a set of diffs, then include their name/email
- * CVS:   address here. If this is your work then delete this line.
- * CVS: Reviewed by:
- * CVS:   If we are doing pre-commit code reviews and someone else has
- * CVS:   reviewed your changes, include their name(s) here.
- * CVS:   If you have not had it reviewed then delete this line.
+ * CVS: ---------------------------------------------------------------------- CVS: Issue number: CVS: If this change addresses one or more issues, CVS: then enter the issue number(s) here. CVS: Obtained from: CVS: If this change has been taken from another system, CVS: then name the system in this line, otherwise delete it. CVS: Submitted by: CVS: If this code has been contributed to the project by someone else; i.e., CVS: they sent us a patch or a set of diffs, then include their name/email CVS: address here. If this is your work then delete this line. CVS: Reviewed by: CVS: If we are doing pre-commit code reviews and someone else has CVS: reviewed your changes, include their name(s) here. CVS: If you have not had it reviewed then delete this line.
  *
- * Revision 1.3  2006/06/19 06:47:27  mranga
- * javadoc fixups
+ * Revision 1.3 2006/06/19 06:47:27 mranga javadoc fixups
  *
- * Revision 1.2  2006/06/16 15:26:28  mranga
- * Added NIST disclaimer to all public domain files. Clean up some javadoc. Fixed a leak
+ * Revision 1.2 2006/06/16 15:26:28 mranga Added NIST disclaimer to all public domain files. Clean up some javadoc. Fixed a leak
  *
- * Revision 1.1.1.1  2005/10/04 17:12:35  mranga
+ * Revision 1.1.1.1 2005/10/04 17:12:35 mranga
  *
  * Import
  *
  *
- * Revision 1.4  2004/01/22 13:26:31  sverker
- * Issue number:
- * Obtained from:
- * Submitted by:  sverker
- * Reviewed by:   mranga
+ * Revision 1.4 2004/01/22 13:26:31 sverker Issue number: Obtained from: Submitted by: sverker Reviewed by: mranga
  *
  * Major reformat of code to conform with style guide. Resolved compiler and javadoc warnings. Added CVS tags.
  *
- * CVS: ----------------------------------------------------------------------
- * CVS: Issue number:
- * CVS:   If this change addresses one or more issues,
- * CVS:   then enter the issue number(s) here.
- * CVS: Obtained from:
- * CVS:   If this change has been taken from another system,
- * CVS:   then name the system in this line, otherwise delete it.
- * CVS: Submitted by:
- * CVS:   If this code has been contributed to the project by someone else; i.e.,
- * CVS:   they sent us a patch or a set of diffs, then include their name/email
- * CVS:   address here. If this is your work then delete this line.
- * CVS: Reviewed by:
- * CVS:   If we are doing pre-commit code reviews and someone else has
- * CVS:   reviewed your changes, include their name(s) here.
- * CVS:   If you have not had it reviewed then delete this line.
+ * CVS: ---------------------------------------------------------------------- CVS: Issue number: CVS: If this change addresses one or more issues, CVS: then enter the issue number(s) here. CVS: Obtained from: CVS: If this change has been taken from another system, CVS: then name the system in this line, otherwise delete it. CVS: Submitted by: CVS: If this code has been contributed to the project by someone else; i.e., CVS: they sent us a patch or a set of diffs, then include their name/email CVS: address here. If this is your work then delete this line. CVS: Reviewed by: CVS: If we are doing pre-commit code reviews and someone else has CVS: reviewed your changes, include their name(s) here. CVS: If you have not had it reviewed then delete this line.
  *
  */

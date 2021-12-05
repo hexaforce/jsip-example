@@ -23,20 +23,19 @@ import junit.framework.TestCase;
 
 public class TortureTest extends TestCase {
 
+	public void setUp() {
 
-    public void setUp () {
+	}
 
-    }
+	public void testParser() throws Exception {
+		Torture torture = new Torture();
 
-    public void testParser( ) throws Exception {
-        Torture torture = new Torture();
-
-        torture.doTests();
-        if (torture.failureFlag) {
-            fail(torture.failureReason);
-        } else {
-            System.out.println("Torture tests passed!");
-        }
-    }
+		torture.doTests();
+		if (torture.failureFlag) {
+			fail(torture.failureReason);
+		} else {
+			System.out.println("Torture tests passed!");
+		}
+	}
 
 }

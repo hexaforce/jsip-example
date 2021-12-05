@@ -34,29 +34,28 @@ package gov.nist.javax.sip.header;
  *
  * @version 1.2 $Revision: 1.5 $ $Date: 2009-07-17 18:57:27 $
  *
- * @author M. Ranganathan   <br/>
+ * @author M. Ranganathan <br/>
  *
  *
  *
  */
 public class AuthorizationList extends SIPHeaderList<Authorization> {
 
+	/**
+	 * Comment for <code>serialVersionUID</code>
+	 */
+	private static final long serialVersionUID = 1L;
 
-    /**
-     * Comment for <code>serialVersionUID</code>
-     */
-    private static final long serialVersionUID = 1L;
+	public Object clone() {
+		AuthorizationList retval = new AuthorizationList();
+		retval.clonehlist(this.hlist);
+		return retval;
+	}
 
-
-    public Object clone() {
-        AuthorizationList retval = new AuthorizationList();
-        retval.clonehlist(this.hlist);
-        return retval;
-    }
-    /**
-     * constructor.
-     */
-    public AuthorizationList() {
-        super(Authorization.class, Authorization.NAME);
-    }
+	/**
+	 * constructor.
+	 */
+	public AuthorizationList() {
+		super(Authorization.class, Authorization.NAME);
+	}
 }

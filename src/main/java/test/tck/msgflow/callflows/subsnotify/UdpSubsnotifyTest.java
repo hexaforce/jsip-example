@@ -22,32 +22,33 @@ package test.tck.msgflow.callflows.subsnotify;
 import junit.textui.TestRunner;
 
 public class UdpSubsnotifyTest extends AbstractSubsnotifyTestCase {
-    boolean myFlag;
-    public void setUp() throws Exception {
-        testedImplFlag = !myFlag;
-        myFlag = !testedImplFlag;
-        super.transport = "udp";
-        super.setUp();
-    }
+	boolean myFlag;
 
+	public void setUp() throws Exception {
+		testedImplFlag = !myFlag;
+		myFlag = !testedImplFlag;
+		super.transport = "udp";
+		super.setUp();
+	}
 
-    /**
-     * tests notifier and subscriber in TI (test impl) provider
-     *
-     */
-    public void testSubsnotify() {
-        this.subscriber.sendSubscribe(5065);
-    }
-    /**
-     * tests provider in TI (test impl) provider. Subscriber and Notifier
-     * are the RI.
-     *
-     */
-    public void testSubsnotify2() {
-        this.subscriber.sendSubscribe(5065);
-    }
-    public static void main(String[] args) {
-        String[] nargs = {UdpSubsnotifyTest.class.getName()};
-        TestRunner.main(nargs);
-    }
+	/**
+	 * tests notifier and subscriber in TI (test impl) provider
+	 *
+	 */
+	public void testSubsnotify() {
+		this.subscriber.sendSubscribe(5065);
+	}
+
+	/**
+	 * tests provider in TI (test impl) provider. Subscriber and Notifier are the RI.
+	 *
+	 */
+	public void testSubsnotify2() {
+		this.subscriber.sendSubscribe(5065);
+	}
+
+	public static void main(String[] args) {
+		String[] nargs = { UdpSubsnotifyTest.class.getName() };
+		TestRunner.main(nargs);
+	}
 }

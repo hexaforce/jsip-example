@@ -28,9 +28,7 @@
 
 package gov.nist.javax.sip.header.ims;
 
-
 import gov.nist.javax.sip.header.SIPHeaderList;
-
 
 /**
  * List of P-Asserted-Identity headers
@@ -39,28 +37,22 @@ import gov.nist.javax.sip.header.SIPHeaderList;
  */
 
 /*
- * PAssertedID = "P-Asserted-Identity" HCOLON PAssertedID-value
- *               *(COMMA PAssertedID-value)
- * PAssertedID-value = name-addr / addr-spec
+ * PAssertedID = "P-Asserted-Identity" HCOLON PAssertedID-value *(COMMA PAssertedID-value) PAssertedID-value = name-addr / addr-spec
  */
-
 
 public class PAssertedIdentityList extends SIPHeaderList<PAssertedIdentity> {
 
-    private static final long serialVersionUID = -6465152445570308974L;
+	private static final long serialVersionUID = -6465152445570308974L;
 
+	/**
+	 * constructor.
+	 */
+	public PAssertedIdentityList() {
+		super(PAssertedIdentity.class, PAssertedIdentityHeader.NAME);
+	}
 
-    /**
-     * constructor.
-     */
-    public PAssertedIdentityList()
-    {
-        super(PAssertedIdentity.class, PAssertedIdentityHeader.NAME);
-    }
-
-
-    public Object clone() {
-        PAssertedIdentityList retval = new PAssertedIdentityList();
-        return retval.clonehlist(this.hlist);
-    }
+	public Object clone() {
+		PAssertedIdentityList retval = new PAssertedIdentityList();
+		return retval.clonehlist(this.hlist);
+	}
 }

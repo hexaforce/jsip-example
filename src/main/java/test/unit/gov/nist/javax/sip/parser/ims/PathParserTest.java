@@ -27,18 +27,15 @@ package test.unit.gov.nist.javax.sip.parser.ims;
 import gov.nist.javax.sip.parser.ims.PathParser;
 import test.unit.gov.nist.javax.sip.parser.ParserTestCase;
 
-public class PathParserTest extends ParserTestCase
-{
-    public void testParser() {
-        // TODO Auto-generated method stub
+public class PathParserTest extends ParserTestCase {
+	public void testParser() {
+		// TODO Auto-generated method stub
 
-        String[] path =  {
-         "Path: <sip:term@test.net>\n",
+		String[] path = { "Path: <sip:term@test.net>\n",
 
-         "Path: <sip:term@test.net>, <sip:other@test.net>\n",
-        };
+				"Path: <sip:term@test.net>, <sip:other@test.net>\n", };
 
-        super.testParser(PathParser.class,path);
-    }
+		super.testParser(PathParser.class, path);
+	}
 
 }

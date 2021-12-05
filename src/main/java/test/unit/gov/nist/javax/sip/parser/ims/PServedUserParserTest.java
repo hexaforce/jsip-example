@@ -1,4 +1,5 @@
 package test.unit.gov.nist.javax.sip.parser.ims;
+
 /*
 * Conditions Of Use
 *
@@ -36,47 +37,42 @@ import test.unit.gov.nist.javax.sip.parser.ParserTestCase;
 
 /**
  *
- * @author aayush.bhatnagar
- * Rancore Technologies Pvt Ltd, Mumbai India.
+ * @author aayush.bhatnagar Rancore Technologies Pvt Ltd, Mumbai India.
  *
  */
-public class PServedUserParserTest extends ParserTestCase{
+public class PServedUserParserTest extends ParserTestCase {
 
-    @Override
-    public void testParser() {
+	@Override
+	public void testParser() {
 
-        System.out.println("*****************************************************");
-        System.out.println("parsie parsie.....");
-        System.out.println("*****************************************************");
+		System.out.println("*****************************************************");
+		System.out.println("parsie parsie.....");
+		System.out.println("*****************************************************");
 
-        String[] p_serv_user = {"P-Served-User: <sip:aayush@rancore.com>;regstate=reg;sescase=orig\n",
-                                "P-Served-User: <sip:aayush@rancore.com>;regstate=unreg\n",
-                                "P-Served-User: <sip:aayush@rancore.com>;sescase=term\n",
-                                "P-Served-User: <sip:aayush@rancore.com>\n",
-                                "P-Served-User: <sip:aayush@rancore.com;transport=UDP>;sescase=term;regstate=unreg\n"};
+		String[] p_serv_user = { "P-Served-User: <sip:aayush@rancore.com>;regstate=reg;sescase=orig\n", "P-Served-User: <sip:aayush@rancore.com>;regstate=unreg\n", "P-Served-User: <sip:aayush@rancore.com>;sescase=term\n", "P-Served-User: <sip:aayush@rancore.com>\n", "P-Served-User: <sip:aayush@rancore.com;transport=UDP>;sescase=term;regstate=unreg\n" };
 
-        super.testParser(PServedUserParser.class, p_serv_user);
+		super.testParser(PServedUserParser.class, p_serv_user);
 
-        System.out.println("******************************************************");
-        System.out.println("From the perspective of the application, lets test the");
-        System.out.println("encoding and usage of the P-Served-User header.");
-        System.out.println("******************************************************");
+		System.out.println("******************************************************");
+		System.out.println("From the perspective of the application, lets test the");
+		System.out.println("encoding and usage of the P-Served-User header.");
+		System.out.println("******************************************************");
 
-        HeaderFactoryImpl himpl = new HeaderFactoryImpl();
-        AddressFactory addfact = new AddressFactoryImpl();
-        try {
-            PServedUserHeader psuh = himpl.createPServedUserHeader(addfact.createAddress(addfact.createSipURI("aayush", "rancore.com")));
-            psuh.setSessionCase("orig");
-            psuh.setRegistrationState("reg");
-            System.out.println("The encoded header is---> "+psuh.toString());
-            System.out.println("The sescase is---> "+psuh.getSessionCase());
-            System.out.println("The Regs state is--->"+psuh.getRegistrationState());
+		HeaderFactoryImpl himpl = new HeaderFactoryImpl();
+		AddressFactory addfact = new AddressFactoryImpl();
+		try {
+			PServedUserHeader psuh = himpl.createPServedUserHeader(addfact.createAddress(addfact.createSipURI("aayush", "rancore.com")));
+			psuh.setSessionCase("orig");
+			psuh.setRegistrationState("reg");
+			System.out.println("The encoded header is---> " + psuh.toString());
+			System.out.println("The sescase is---> " + psuh.getSessionCase());
+			System.out.println("The Regs state is--->" + psuh.getRegistrationState());
 
-        } catch (ParseException e) {
+		} catch (ParseException e) {
 
-            assertTrue(false);
-        }
+			assertTrue(false);
+		}
 
-    }
+	}
 
 }

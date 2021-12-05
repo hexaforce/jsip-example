@@ -27,28 +27,31 @@
 * Product of NIST/ITL Advanced Networking Technologies Division (ANTD).        *
 *******************************************************************************/
 package gov.nist.javax.sip.header;
+
 import javax.sip.header.ContentLanguageHeader;
 
 /**
-* ContentLanguage list of headers.
-*
-*@since 1.1
-*@version 1.2
-*@author M. Ranganathan
-*/
+ * ContentLanguage list of headers.
+ *
+ * @since 1.1
+ * @version 1.2
+ * @author M. Ranganathan
+ */
 public final class ContentLanguageList extends SIPHeaderList<ContentLanguage> {
 
-    private static final long serialVersionUID = -5302265987802886465L;
-    public Object clone() {
-        ContentLanguageList retval = new ContentLanguageList();
-        retval.clonehlist(this.hlist);
-        return retval;
-    }
-        /** Default constructor
-         */
-    public ContentLanguageList () {
-        super(ContentLanguage.class,
-            ContentLanguageHeader.NAME);
-    }
+	private static final long serialVersionUID = -5302265987802886465L;
+
+	public Object clone() {
+		ContentLanguageList retval = new ContentLanguageList();
+		retval.clonehlist(this.hlist);
+		return retval;
+	}
+
+	/**
+	 * Default constructor
+	 */
+	public ContentLanguageList() {
+		super(ContentLanguage.class, ContentLanguageHeader.NAME);
+	}
 
 }

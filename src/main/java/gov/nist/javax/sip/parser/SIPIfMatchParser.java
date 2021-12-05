@@ -44,100 +44,66 @@ import gov.nist.javax.sip.header.SIPIfMatch;
  */
 public class SIPIfMatchParser extends HeaderParser {
 
-    /**
-     * Creates a new instance of PriorityParser
-     * @param etag the header to parse
-     */
-    public SIPIfMatchParser(String etag) {
-        super(etag);
-    }
+	/**
+	 * Creates a new instance of PriorityParser
+	 * 
+	 * @param etag the header to parse
+	 */
+	public SIPIfMatchParser(String etag) {
+		super(etag);
+	}
 
-    /**
-     * Constructor
-     * @param lexer the lexer to use to parse the header
-     */
-    protected SIPIfMatchParser(Lexer lexer) {
-        super(lexer);
-    }
+	/**
+	 * Constructor
+	 * 
+	 * @param lexer the lexer to use to parse the header
+	 */
+	protected SIPIfMatchParser(Lexer lexer) {
+		super(lexer);
+	}
 
-    /**
-     * parse the String header
-     * @return SIPHeader (Priority object)
-     * @throws SIPParseException if the message does not respect the spec.
-     */
-    public SIPHeader parse() throws ParseException {
+	/**
+	 * parse the String header
+	 * 
+	 * @return SIPHeader (Priority object)
+	 * @throws SIPParseException if the message does not respect the spec.
+	 */
+	public SIPHeader parse() throws ParseException {
 
-        if (debug)
-            dbg_enter("SIPIfMatch.parse");
+		if (debug)
+			dbg_enter("SIPIfMatch.parse");
 
-        SIPIfMatch sipIfMatch = new SIPIfMatch();
-        try {
-            headerName(TokenTypes.SIP_IF_MATCH);
+		SIPIfMatch sipIfMatch = new SIPIfMatch();
+		try {
+			headerName(TokenTypes.SIP_IF_MATCH);
 
-            this.lexer.SPorHT();
-            this.lexer.match(TokenTypes.ID);
-            Token token = lexer.getNextToken();
+			this.lexer.SPorHT();
+			this.lexer.match(TokenTypes.ID);
+			Token token = lexer.getNextToken();
 
-            sipIfMatch.setETag(token.getTokenValue());
+			sipIfMatch.setETag(token.getTokenValue());
 
-            this.lexer.SPorHT();
-            this.lexer.match('\n');
+			this.lexer.SPorHT();
+			this.lexer.match('\n');
 
-            return sipIfMatch;
-        } finally {
-            if (debug)
-                dbg_leave("SIPIfMatch.parse");
-        }
-    }
+			return sipIfMatch;
+		} finally {
+			if (debug)
+				dbg_leave("SIPIfMatch.parse");
+		}
+	}
 }
 /*
- * $Log: not supported by cvs2svn $
- * Revision 1.2  2006/07/13 09:02:08  mranga
- * Issue number:
- * Obtained from:
- * Submitted by:  jeroen van bemmel
- * Reviewed by:   mranga
- * Moved some changes from jain-sip-1.2 to java.net
+ * $Log: not supported by cvs2svn $ Revision 1.2 2006/07/13 09:02:08 mranga Issue number: Obtained from: Submitted by: jeroen van bemmel Reviewed by: mranga Moved some changes from jain-sip-1.2 to java.net
  *
- * CVS: ----------------------------------------------------------------------
- * CVS: Issue number:
- * CVS:   If this change addresses one or more issues,
- * CVS:   then enter the issue number(s) here.
- * CVS: Obtained from:
- * CVS:   If this change has been taken from another system,
- * CVS:   then name the system in this line, otherwise delete it.
- * CVS: Submitted by:
- * CVS:   If this code has been contributed to the project by someone else; i.e.,
- * CVS:   they sent us a patch or a set of diffs, then include their name/email
- * CVS:   address here. If this is your work then delete this line.
- * CVS: Reviewed by:
- * CVS:   If we are doing pre-commit code reviews and someone else has
- * CVS:   reviewed your changes, include their name(s) here.
- * CVS:   If you have not had it reviewed then delete this line.
+ * CVS: ---------------------------------------------------------------------- CVS: Issue number: CVS: If this change addresses one or more issues, CVS: then enter the issue number(s) here. CVS: Obtained from: CVS: If this change has been taken from another system, CVS: then name the system in this line, otherwise delete it. CVS: Submitted by: CVS: If this code has been contributed to the project by someone else; i.e., CVS: they sent us a patch or a set of diffs, then include their name/email CVS: address here. If this is your work then delete this line. CVS: Reviewed by: CVS: If we are doing pre-commit code reviews and someone else has CVS: reviewed your changes, include their name(s) here. CVS: If you have not had it reviewed then delete this line.
  *
- * Revision 1.3  2006/06/19 06:47:27  mranga
- * javadoc fixups
+ * Revision 1.3 2006/06/19 06:47:27 mranga javadoc fixups
  *
- * Revision 1.2  2006/06/16 15:26:28  mranga
- * Added NIST disclaimer to all public domain files. Clean up some javadoc. Fixed a leak
+ * Revision 1.2 2006/06/16 15:26:28 mranga Added NIST disclaimer to all public domain files. Clean up some javadoc. Fixed a leak
  *
- * Revision 1.1  2005/10/27 20:49:00  jeroen
- * added support for RFC3903 PUBLISH
+ * Revision 1.1 2005/10/27 20:49:00 jeroen added support for RFC3903 PUBLISH
  *
- * CVS: ----------------------------------------------------------------------
- * CVS: Issue number:
- * CVS:   If this change addresses one or more issues,
- * CVS:   then enter the issue number(s) here.
- * CVS: Obtained from:
- * CVS:   If this change has been taken from another system,
- * CVS:   then name the system in this line, otherwise delete it.
- * CVS: Submitted by:
- * CVS:   If this code has been contributed to the project by someone else; i.e.,
- * CVS:   they sent us a patch or a set of diffs, then include their name/email
- * CVS:   address here. If this is your work then delete this line.
- * CVS: Reviewed by:
- * CVS:   If we are doing pre-commit code reviews and someone else has
- * CVS:   reviewed your changes, include their name(s) here.
- * CVS:   If you have not had it reviewed then delete this line.
+ * CVS: ---------------------------------------------------------------------- CVS: Issue number: CVS: If this change addresses one or more issues, CVS: then enter the issue number(s) here. CVS: Obtained from: CVS: If this change has been taken from another system, CVS: then name the system in this line, otherwise delete it. CVS: Submitted by: CVS: If this code has been contributed to the project by someone else; i.e., CVS: they sent us a patch or a set of diffs, then include their name/email CVS: address here. If this is your work then delete this line. CVS: Reviewed by: CVS: If we are doing pre-commit code reviews and someone else has CVS: reviewed your changes, include their name(s) here. CVS: If you have not had it reviewed then delete this line.
  *
  */

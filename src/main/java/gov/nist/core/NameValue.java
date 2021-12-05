@@ -44,255 +44,249 @@ import java.util.Map.Entry;
  *
  *
  */
-public class NameValue extends GenericObject implements Entry<String,String> {
+public class NameValue extends GenericObject implements Entry<String, String> {
 
-    private static final long serialVersionUID = -1857729012596437950L;
+	private static final long serialVersionUID = -1857729012596437950L;
 
-    protected boolean isQuotedString;
+	protected boolean isQuotedString;
 
-    protected final boolean isFlagParameter;
+	protected final boolean isFlagParameter;
 
-    private String separator;
+	private String separator;
 
-    private String quotes;
+	private String quotes;
 
-    private String name;
+	private String name;
 
-    private Object value;
+	private Object value;
 
-    public NameValue() {
-        name = null;
-        value = "";
-        separator = Separators.EQUALS;
-        this.quotes = "";
-        this.isFlagParameter = false;
-    }
+	public NameValue() {
+		name = null;
+		value = "";
+		separator = Separators.EQUALS;
+		this.quotes = "";
+		this.isFlagParameter = false;
+	}
 
-    /**
-     * New constructor, taking a boolean which is set if the NV pair is a flag
-     *
-     * @param n
-     * @param v
-     * @param isFlag
-     */
-    public NameValue(String n, Object v, boolean isFlag) {
+	/**
+	 * New constructor, taking a boolean which is set if the NV pair is a flag
+	 *
+	 * @param n
+	 * @param v
+	 * @param isFlag
+	 */
+	public NameValue(String n, Object v, boolean isFlag) {
 
-        // assert (v != null ); // I dont think this assertion is correct mranga
+		// assert (v != null ); // I dont think this assertion is correct mranga
 
-        name = n;
-        value = v;
-        separator = Separators.EQUALS;
-        quotes = "";
-        this.isFlagParameter = isFlag;
-    }
+		name = n;
+		value = v;
+		separator = Separators.EQUALS;
+		quotes = "";
+		this.isFlagParameter = isFlag;
+	}
 
-    /**
-     * Original constructor, sets isFlagParameter to 'false'
-     *
-     * @param n
-     * @param v
-     */
-    public NameValue(String n, Object v) {
-        this(n, v, false);
-    }
+	/**
+	 * Original constructor, sets isFlagParameter to 'false'
+	 *
+	 * @param n
+	 * @param v
+	 */
+	public NameValue(String n, Object v) {
+		this(n, v, false);
+	}
 
-    /**
-     * Set the separator for the encoding method below.
-     */
-    public void setSeparator(String sep) {
-        separator = sep;
-    }
+	/**
+	 * Set the separator for the encoding method below.
+	 */
+	public void setSeparator(String sep) {
+		separator = sep;
+	}
 
-    /**
-     * A flag that indicates that doublequotes should be put around the value
-     * when encoded (for example name=value when value is doublequoted).
-     */
-    public void setQuotedValue() {
-        isQuotedString = true;
-        this.quotes = Separators.DOUBLE_QUOTE;
-    }
+	/**
+	 * A flag that indicates that doublequotes should be put around the value when encoded (for example name=value when value is doublequoted).
+	 */
+	public void setQuotedValue() {
+		isQuotedString = true;
+		this.quotes = Separators.DOUBLE_QUOTE;
+	}
 
-    /**
-     * Return true if the value is quoted in doublequotes.
-     */
-    public boolean isValueQuoted() {
-        return isQuotedString;
-    }
+	/**
+	 * Return true if the value is quoted in doublequotes.
+	 */
+	public boolean isValueQuoted() {
+		return isQuotedString;
+	}
 
-    public String getName() {
-        return name;
-    }
+	public String getName() {
+		return name;
+	}
 
-    public Object getValueAsObject() {
-        return getValueAsObject(true);
-    }
-    
-    public Object getValueAsObject(boolean stripQuotes) {
-        if(isFlagParameter)
-            return ""; // never return null for flag params
-         
-        // Issue 315 : (https://jain-sip.dev.java.net/issues/show_bug.cgi?id=315)
-        // header.getParameter() doesn't return quoted value
-        if(!stripQuotes && isQuotedString)
-            return quotes + value.toString() + quotes; // add the quotes for quoted string
-        
-        return value;
-    }
+	public Object getValueAsObject() {
+		return getValueAsObject(true);
+	}
 
-    /**
-     * Set the name member
-     */
-    public void setName(String n) {
-        name = n;
-    }
+	public Object getValueAsObject(boolean stripQuotes) {
+		if (isFlagParameter)
+			return ""; // never return null for flag params
 
-    /**
-     * Set the value member
-     */
-    public void setValueAsObject(Object v) {
-        value = v;
-    }
+		// Issue 315 : (https://jain-sip.dev.java.net/issues/show_bug.cgi?id=315)
+		// header.getParameter() doesn't return quoted value
+		if (!stripQuotes && isQuotedString)
+			return quotes + value.toString() + quotes; // add the quotes for quoted string
 
-    /**
-     * Get the encoded representation of this namevalue object. Added
-     * doublequote for encoding doublequoted values.
-     *
-     * Bug: RFC3261 stipulates that an opaque parameter in authenticate header
-     * has to be:
-     * opaque              =  "opaque" EQUAL quoted-string
-     * so returning just the name is not acceptable. (e.g. LinkSys phones
-     * are picky about this)
-     *
-     * @since 1.0
-     * @return an encoded name value (eg. name=value) string.
-     */
-    public String encode() {
-        return encode(new StringBuilder()).toString();
-    }
+		return value;
+	}
 
-    public StringBuilder encode(StringBuilder buffer) {
-        if (name != null && value != null && !isFlagParameter) {
-            if (GenericObject.isMySubclass(value.getClass())) {
-                GenericObject gv = (GenericObject) value;
-                buffer.append(name).append(separator).append(quotes);
-                gv.encode(buffer);
-                buffer.append(quotes);
-                return buffer;
-            } else if (GenericObjectList.isMySubclass(value.getClass())) {
-                GenericObjectList gvlist = (GenericObjectList) value;
-                buffer.append(name).append(separator).append(gvlist.encode());
-                return buffer;
-            } else if ( value.toString().length() == 0) {
-                // opaque="" bug fix - pmusgrave
-                /*if (name.toString().equals(gov.nist.javax.sip.header.ParameterNames.OPAQUE))
-                    return name + separator + quotes + quotes;
-                else
-                    return name;*/
-                if ( this.isQuotedString ) {
-                    buffer.append(name).append(separator).append(quotes).append(quotes);
-                    return buffer;
-                } else {
-                    buffer.append(name).append(separator); // JvB: fix, case: "sip:host?subject="
-                    return buffer;
-                }
-            } else {
-                buffer.append(name).append(separator).append(quotes).append(value.toString()).append(quotes);
-                return buffer;
-            }
-        } else if (name == null && value != null) {
-            if (GenericObject.isMySubclass(value.getClass())) {
-                GenericObject gv = (GenericObject) value;
-                gv.encode(buffer);
-                return buffer;
-            } else if (GenericObjectList.isMySubclass(value.getClass())) {
-                GenericObjectList gvlist = (GenericObjectList) value;
-                buffer.append(gvlist.encode());
-                return buffer;
-            } else {
-                buffer.append(quotes).append(value.toString()).append(quotes);
-                return buffer;
-            }
-        } else if (name != null && (value == null || isFlagParameter)) {
-            buffer.append(name);
-            return buffer;
-        } else {
-            return buffer;
-        }
-    }
+	/**
+	 * Set the name member
+	 */
+	public void setName(String n) {
+		name = n;
+	}
 
-    public Object clone() {
-        NameValue retval = (NameValue) super.clone();
-        if (value != null)
-            retval.value = makeClone(value);
-        return retval;
-    }
+	/**
+	 * Set the value member
+	 */
+	public void setValueAsObject(Object v) {
+		value = v;
+	}
 
-    /**
-     * Equality comparison predicate.
-     */
-    public boolean equals(Object other) {
-        if (other == null ) return false;
-        if (!other.getClass().equals(this.getClass()))
-            return false;
-        NameValue that = (NameValue) other;
-        if (this == that)
-            return true;
-        if (this.name == null && that.name != null || this.name != null
-                && that.name == null)
-            return false;
-        if (this.name != null && that.name != null
-                && this.name.compareToIgnoreCase(that.name) != 0)
-            return false;
-        if (this.value != null && that.value == null || this.value == null
-                && that.value != null)
-            return false;
-        if (this.value == that.value)
-            return true;
-        if (value instanceof String) {
-            // Quoted string comparisions are case sensitive.
-            if (isQuotedString)
-                return this.value.equals(that.value);
-            String val = (String) this.value;
-            String val1 = (String) that.value;
-            return val.compareToIgnoreCase(val1) == 0;
-        } else
-            return this.value.equals(that.value);
-    }
+	/**
+	 * Get the encoded representation of this namevalue object. Added doublequote for encoding doublequoted values.
+	 *
+	 * Bug: RFC3261 stipulates that an opaque parameter in authenticate header has to be: opaque = "opaque" EQUAL quoted-string so returning just the name is not acceptable. (e.g. LinkSys phones are picky about this)
+	 *
+	 * @since 1.0
+	 * @return an encoded name value (eg. name=value) string.
+	 */
+	public String encode() {
+		return encode(new StringBuilder()).toString();
+	}
 
-    /*
-     * (non-Javadoc)
-     * @see java.util.Map$Entry#getKey()
-     */
-    public String getKey() {
+	public StringBuilder encode(StringBuilder buffer) {
+		if (name != null && value != null && !isFlagParameter) {
+			if (GenericObject.isMySubclass(value.getClass())) {
+				GenericObject gv = (GenericObject) value;
+				buffer.append(name).append(separator).append(quotes);
+				gv.encode(buffer);
+				buffer.append(quotes);
+				return buffer;
+			} else if (GenericObjectList.isMySubclass(value.getClass())) {
+				GenericObjectList gvlist = (GenericObjectList) value;
+				buffer.append(name).append(separator).append(gvlist.encode());
+				return buffer;
+			} else if (value.toString().length() == 0) {
+				// opaque="" bug fix - pmusgrave
+				/*
+				 * if (name.toString().equals(gov.nist.javax.sip.header.ParameterNames.OPAQUE)) return name + separator + quotes + quotes; else return name;
+				 */
+				if (this.isQuotedString) {
+					buffer.append(name).append(separator).append(quotes).append(quotes);
+					return buffer;
+				} else {
+					buffer.append(name).append(separator); // JvB: fix, case: "sip:host?subject="
+					return buffer;
+				}
+			} else {
+				buffer.append(name).append(separator).append(quotes).append(value.toString()).append(quotes);
+				return buffer;
+			}
+		} else if (name == null && value != null) {
+			if (GenericObject.isMySubclass(value.getClass())) {
+				GenericObject gv = (GenericObject) value;
+				gv.encode(buffer);
+				return buffer;
+			} else if (GenericObjectList.isMySubclass(value.getClass())) {
+				GenericObjectList gvlist = (GenericObjectList) value;
+				buffer.append(gvlist.encode());
+				return buffer;
+			} else {
+				buffer.append(quotes).append(value.toString()).append(quotes);
+				return buffer;
+			}
+		} else if (name != null && (value == null || isFlagParameter)) {
+			buffer.append(name);
+			return buffer;
+		} else {
+			return buffer;
+		}
+	}
 
-        return this.name;
-    }
+	public Object clone() {
+		NameValue retval = (NameValue) super.clone();
+		if (value != null)
+			retval.value = makeClone(value);
+		return retval;
+	}
 
-    /*
-     * (non-Javadoc)
-     * @see java.util.Map$Entry#getValue()
-     */
-    public String getValue() {
+	/**
+	 * Equality comparison predicate.
+	 */
+	public boolean equals(Object other) {
+		if (other == null)
+			return false;
+		if (!other.getClass().equals(this.getClass()))
+			return false;
+		NameValue that = (NameValue) other;
+		if (this == that)
+			return true;
+		if (this.name == null && that.name != null || this.name != null && that.name == null)
+			return false;
+		if (this.name != null && that.name != null && this.name.compareToIgnoreCase(that.name) != 0)
+			return false;
+		if (this.value != null && that.value == null || this.value == null && that.value != null)
+			return false;
+		if (this.value == that.value)
+			return true;
+		if (value instanceof String) {
+			// Quoted string comparisions are case sensitive.
+			if (isQuotedString)
+				return this.value.equals(that.value);
+			String val = (String) this.value;
+			String val1 = (String) that.value;
+			return val.compareToIgnoreCase(val1) == 0;
+		} else
+			return this.value.equals(that.value);
+	}
 
-        if(value == null)
-            return null;
-        
-        return value.toString();
-    }
+	/*
+	 * (non-Javadoc)
+	 * 
+	 * @see java.util.Map$Entry#getKey()
+	 */
+	public String getKey() {
 
-    /*
-     * (non-Javadoc)
-     * @see java.util.Map$Entry#setValue(java.lang.Object)
-     */
-    public String setValue(String value) {
-        String retval = this.value == null ? null : value;
-        this.value = value;
-        return retval;
+		return this.name;
+	}
 
-    }
-    
-    @Override
-    public int hashCode() {
-        return this.encode().toLowerCase().hashCode();
-    }
+	/*
+	 * (non-Javadoc)
+	 * 
+	 * @see java.util.Map$Entry#getValue()
+	 */
+	public String getValue() {
+
+		if (value == null)
+			return null;
+
+		return value.toString();
+	}
+
+	/*
+	 * (non-Javadoc)
+	 * 
+	 * @see java.util.Map$Entry#setValue(java.lang.Object)
+	 */
+	public String setValue(String value) {
+		String retval = this.value == null ? null : value;
+		this.value = value;
+		return retval;
+
+	}
+
+	@Override
+	public int hashCode() {
+		return this.encode().toLowerCase().hashCode();
+	}
 }
